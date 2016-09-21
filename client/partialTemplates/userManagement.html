@@ -1,0 +1,47 @@
+<template name="userManagement">  
+  <div class="user-container">
+    <div class="panel panel-default userBox">
+      <div class="panel-body">
+        {{# if currentUser}}
+        <!--Mensaje para el usuario registrado-->  
+        <p>Hola <strong>@{{currentUser.username}}</strong>, bienvenido a tuTwitter en miTwitter</p>  
+        <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>
+        <!--
+        <table class="table">  
+          <tr>
+            <td class="tableHeader">Twitts</td>
+            <td class="tableHeader">Siguiendo</td>
+            <td class="tableHeader">Seguidores</td>
+          </tr>
+          <tr>
+            <td class="tableContent">{{tweets}}</td>
+            <td class="tableContent">{{following}}</td>
+            <td class="tableContent">{{followers}}</td>
+          </tr>
+        </table>
+        -->
+        {{else}}
+        <!--módulo de acceso -->
+        <h4>¿Ya tienes una cuenta?</h4>
+        <div class="form-group">
+          <input class="form-control input-sm" id="login-username" placeholder="Nombre de Usuario">
+          <input class="form-control input-sm" id="login-password" placeholder="Contraseña" type="password">
+        </div>
+
+        <button type="button" class="btn btn-info fullbutton login" id="login">Acceder</button>
+
+        <!--módulo de registro-->
+        <h4>¿Nuevo por aquí?</h4>
+        <div class="form-group">
+          <input class="form-control input-sm" id="signup-username" placeholder="Nombre de Usuario">
+          <input class="form-control input-sm" id="signup-fullname" placeholder="Apellido (Opcional)">
+          <input class="form-control input-sm" id="signup-password" placeholder="Contraseña" type="password">
+        </div>
+
+        <button type="button" class="btn btn-info fullbutton" id="signup">Regístrate</button>
+        {{/if}}
+
+      </div>
+    </div>
+  </div>
+</template>

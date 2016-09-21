@@ -1,0 +1,19 @@
+<template name="tweetBox"> 
+  <div class="tweetbox-container">
+    <div class="panel panel-default tweetbox col-md-6">
+      <div class="panel-body">
+        <!--Caja para el texto del twitt -->
+      <textarea class="form-control" id="tweetText" placeholder="¿Qué te cuentas?" rows="3"></textarea>
+          <!--Contador y botón-->
+        <div class="pull-right btnGroup">
+          <strong class="{{charClass}}">{{charCount}}</strong>
+          {{#if currentUser}}
+            <button class="btn btn-info pull-right" type="button" {{disableButton}}>Twittear</button>
+          {{else}}
+            <button class="btn btn-info pull-right" type="button" disabled>Por favor inicia sesión</button>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template> 
