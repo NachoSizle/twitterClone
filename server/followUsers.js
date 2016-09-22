@@ -9,7 +9,7 @@ Meteor.methods({
 
   'followUser': function(username) {
     Relationships.insert({
-      follower: this.user().username,
+      follower: Meteor.user().username,
       following: username
     });
   },
