@@ -6,7 +6,6 @@
         <!--Mensaje para el usuario registrado-->  
         <p>Hola <strong>@{{currentUser.username}}</strong>, bienvenido a tuTwitter en miTwitter</p>  
         <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>
-        <!--
         <table class="table">  
           <tr>
             <td class="tableHeader">Twitts</td>
@@ -14,12 +13,11 @@
             <td class="tableHeader">Seguidores</td>
           </tr>
           <tr>
-            <td class="tableContent">{{tweets}}</td>
+            <td class="tableContent">{{tweets currentUser.username}}</td>
             <td class="tableContent">{{following}}</td>
             <td class="tableContent">{{followers}}</td>
           </tr>
         </table>
-        -->
         {{else}}
         <!--módulo de acceso -->
         <h4>¿Ya tienes una cuenta?</h4>
