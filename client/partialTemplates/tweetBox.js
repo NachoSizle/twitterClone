@@ -15,8 +15,12 @@ if(Meteor.isClient){
 			Session.set('numChars', 0);
 			Meteor.call('insertTweet', tweet);
 			//Twitts.insert({message: twitt, user: Meteor.user().username});
+	    	//UNA VEZ QUE INSERTAMOS EL TWEET HACE FALTA AVISAR A METEOR DE QUE HEMOS METIDO UN NUEVO TWEET
+			//PARA ELLO BASTA CON FORZAR LA REACTIVIDAD
+			UserUtils.observerProperties();
 	    }
 	});
+
 
 	Template.tweetBox.helpers({  
 	  charCount: function() {
