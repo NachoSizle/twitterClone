@@ -3,12 +3,9 @@
 </head>
 
 <body> 
-  <div class="row">
-    <div class="col-md-4 col-sm-4">{{> userManagement}}</div>
-    {{# if currentUser}}
-      <div class="col-md-8 col-sm-8">{{> followUsers}}</div>
-      <div class="col-md-8 col-sm-8">{{> tweetBox}}</div>
-      <div class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
-    {{/if}}
-  </div>
+	<div class="row">
+		{{# if currentUser}}
+	    	{{> navBarTemplate}}
+	  	{{/if}}
+	</div>
 </body>

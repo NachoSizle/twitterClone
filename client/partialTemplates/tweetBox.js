@@ -17,7 +17,9 @@ if(Meteor.isClient){
 			//Twitts.insert({message: twitt, user: Meteor.user().username});
 	    	//UNA VEZ QUE INSERTAMOS EL TWEET HACE FALTA AVISAR A METEOR DE QUE HEMOS METIDO UN NUEVO TWEET
 			//PARA ELLO BASTA CON FORZAR LA REACTIVIDAD
-			UserUtils.observerProperties();
+			if(UserUtils.observerProperties()){
+				console.log("Se han detectado cambios");
+			};
 	    }
 	});
 

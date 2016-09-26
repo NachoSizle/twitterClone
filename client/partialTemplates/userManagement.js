@@ -25,6 +25,10 @@ Template.userManagement.events({
 
   'click #logout': function() {  
     Meteor.logout();
+  },
+
+  'click #recommendationsBtn': function() {  
+    Session.set('recommendations',true);
   }
 });
 
