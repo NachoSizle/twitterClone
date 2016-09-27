@@ -5,7 +5,7 @@ Meteor.methods({
     var resul =  UserUtils.findTweets(Meteor.user().username);
     return resul.length;
   },
-
+  
   'usersFollowers': function() {
     var currentFollowers = UserUtils.findFollowers(Meteor.user().username);
     return currentFollowers.length;

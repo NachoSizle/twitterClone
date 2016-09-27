@@ -3,66 +3,33 @@
   {{# if recommendations}}
     <div id="divFollowUsers" class="col-md-8 col-sm-8 col-lg-2">{{> followUsers}}</div>
   {{else}}
-    <div class="user-container">
-    <div class="panel panel-default userBox">
-      <div class="panel-body">
-        {{# if currentUser}}
-
-        <!--Mensaje para el usuario registrado-->
-        <div class="row">
-          <!--CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO-->
-          <div id="leftDivCurrentUser">
-            <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
-            <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
-            A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
-            <img id="imgCurrentUser" src="/squirtle.png" class="img-responsive">
-          </div>
-          <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
-          <div id="rightDivCurrentUser">
-            20. Una persona que me cambió la vida y siempre me enseñará cosas! Instagram: NachoSizles Vine: NachoSizle
-          </div>
-        </div>
-        <h3><strong>{{currentUser.username}}</strong></h3>
-        <h5>@{{currentUser.username}}</h5>
-        <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>
-        <table class="table">  
-          <tr>
-            <td class="tableHeader">Twitts</td>
-            <td class="tableHeader">Siguiendo</td>
-            <td class="tableHeader">Seguidores</td>
-          </tr>
-          <tr>
-            <td class="tableContent">{{tweets currentUser.username}}</td>
-            <td class="tableContent">{{following}}</td>
-            <td class="tableContent">{{followers}}</td>
-          </tr>
-        </table>
-        {{else}}
-        <!--módulo de acceso -->
-        <h4>¿Ya tienes una cuenta?</h4>
-        <div class="form-group">
-          <input class="form-control input-sm" id="login-username" placeholder="Nombre de Usuario">
-          <input class="form-control input-sm" id="login-password" placeholder="Contraseña" type="password">
-        </div>
-
-        <button type="button" class="btn btn-info fullbutton login" id="login">Acceder</button>
-
-        <!--módulo de registro-->
-        <h4>¿Nuevo por aquí?</h4>
-        <div class="form-group">
-          <input class="form-control input-sm" id="signup-username" placeholder="Nombre de Usuario">
-          <input class="form-control input-sm" id="signup-fullname" placeholder="Apellido (Opcional)">
-          <input class="form-control input-sm" id="signup-password" placeholder="Contraseña" type="password">
-        </div>
-
-        <button type="button" class="btn btn-info fullbutton" id="signup">Regístrate</button>
-        {{/if}}  
-      </div>
-    </div>
-  </div>
-  {{/if}}
   {{# if currentUser}}
     <div id="divTweetBox" class="col-md-8 col-sm-8">{{> tweetBox}}</div>
     <div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
+  {{else}}
+    <div class="user-container">
+      <div class="panel panel-default userBox">
+        <div class="panel-body">
+          <!--módulo de acceso -->
+          <h4>¿Ya tienes una cuenta?</h4>
+          <div class="form-group">
+            <input class="form-control input-sm" id="login-username" placeholder="Nombre de Usuario">
+            <input class="form-control input-sm" id="login-password" placeholder="Contraseña" type="password">
+          </div>
+
+          <button type="button" class="btn btn-info fullbutton login" id="login">Acceder</button>
+
+          <!--módulo de registro-->
+          <h4>¿Nuevo por aquí?</h4>
+          <div class="form-group">
+            <input class="form-control input-sm" id="signup-username" placeholder="Nombre de Usuario">
+            <input class="form-control input-sm" id="signup-fullname" placeholder="Apellido (Opcional)">
+            <input class="form-control input-sm" id="signup-password" placeholder="Contraseña" type="password">
+          </div>
+          <button type="button" class="btn btn-info fullbutton" id="signup">Regístrate</button> 
+        </div>
+      </div>
+    </div>
+  {{/if}} 
   {{/if}}
 </template>

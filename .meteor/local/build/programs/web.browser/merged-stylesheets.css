@@ -8820,8 +8820,16 @@ textarea {
   margin-right: 15px;
 }
 
+#imgProfile {
+  margin-left: 60%;
+}
+
 #leftDivCurrentUser {
   float: left;
+}
+
+#centerDivCurrentUser {
+  margin-left: 46.5%;
 }
 
 #descCurrentUser {
@@ -8835,4 +8843,16 @@ textarea {
 
 #divTweetFeed {
   padding-right: 0px;
+}
+
+#imgLogTwiiterClone {
+  padding-top: 10px;
+}
+
+.navbar {
+  background-color: #fff;
+}
+
+#bodyPpal {
+  background-color: #e6f7ff;
 }

@@ -791,22 +791,22 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=d61fd4f423084ac5dfed6102742d551dbb90f3bc",
+      "url": "/app/app.js?hash=2d5befa6c21335b18d5391658f47b5f5cde25484",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/d61fd4f423084ac5dfed6102742d551dbb90f3bc.map",
-      "size": 80849,
-      "hash": "d61fd4f423084ac5dfed6102742d551dbb90f3bc"
+      "sourceMapUrl": "/app/2d5befa6c21335b18d5391658f47b5f5cde25484.map",
+      "size": 97677,
+      "hash": "2d5befa6c21335b18d5391658f47b5f5cde25484"
     },
     {
       "path": "merged-stylesheets.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/merged-stylesheets.css?hash=b36655b1d920b34990c5a57d03dc49ed2b78257f",
+      "url": "/merged-stylesheets.css?hash=206f933877163d92f4bedf66dd4dd15f7b25fad4",
       "sourceMap": "merged-stylesheets.css.map",
-      "sourceMapUrl": "/b36655b1d920b34990c5a57d03dc49ed2b78257f.map",
-      "size": 157549,
-      "hash": "b36655b1d920b34990c5a57d03dc49ed2b78257f"
+      "sourceMapUrl": "/206f933877163d92f4bedf66dd4dd15f7b25fad4.map",
+      "size": 157764,
+      "hash": "206f933877163d92f4bedf66dd4dd15f7b25fad4"
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
@@ -854,6 +854,15 @@
       "hash": "ca35b697d99cae4d1b60f2d60fcd37771987eb07"
     },
     {
+      "path": "app/imgLogTwiiterClone.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/imgLogTwiiterClone.png",
+      "size": 1066,
+      "hash": "498a7b77325f2b04af6bd1ca6e556781b1cb4ef4"
+    },
+    {
       "path": "app/squirtle.png",
       "where": "client",
       "type": "asset",
@@ -861,6 +870,15 @@
       "url": "/squirtle.png",
       "size": 155045,
       "hash": "1a031913872f4864363cd16eec0f5c2f16c56777"
+    },
+    {
+      "path": "app/imgProfile/squirtle.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/imgProfile/squirtle.png",
+      "size": 4988,
+      "hash": "8d3f357dcacd60deb4a34d6e417870e57ce019c3"
     },
     {
       "path": "head.html",

@@ -332,11 +332,11 @@
       "path": "packages/reload.js"
     },
     {
-      "node_modules": "/C/Users/imartinez/Desktop/MeteorExample/twitterClone/node_modules/",
+      "node_modules": "/C/Users/imartinez/Desktop/twitterClone/node_modules/",
       "path": "packages/global-imports.js"
     },
     {
-      "node_modules": "/C/Users/imartinez/Desktop/MeteorExample/twitterClone/node_modules/",
+      "node_modules": "/C/Users/imartinez/Desktop/twitterClone/node_modules/",
       "sourceMap": "app/app.js.map",
       "path": "app/app.js"
     },

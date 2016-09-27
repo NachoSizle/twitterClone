@@ -9,7 +9,26 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="/">twiiterClone</a>
+	      <!--
+	      EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
+          <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
+          A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO
+          <a class="navbar-brand" href="/">twiiterClone</a>
+          -->
+          <div class="row">
+            <!--CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO-->
+            <div id="leftDivCurrentUser">
+              <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
+              <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
+              A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
+              <img id="imgProfile" src="/imgProfile/squirtle.png" class="img-responsive">
+            </div>
+            <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
+            <div id="centerDivCurrentUser">
+              <img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive">
+            </div>
+          </div>
+	      
 	    </div>
 
 	    <!--PARTE IZQUIERDA DE LA BARRA DE NAVEGACION INCLUIDA EL FORMULARIO DE BUSQUEDA-->

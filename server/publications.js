@@ -6,6 +6,16 @@ Meteor.publish('twitts', function() {
     return Twitts.find({user: { $in: currentFollowings }});
   }
 });
+
+Meteor.publish('twittsProfile', function(username) {  
+  if (Meteor.userId) {
+    var username = Meteor.users.findOne({_id: this.userId}).username;
+    //var currentFollowings = UserUtils.findFollowings(username);
+
+    //return Twitts.find({user: { $in: currentFollowings }});
+    return Twitts.find({user: username});
+  }
+});
 /*
 Meteor.publishComposite('twitts', function(username) {  
   return {

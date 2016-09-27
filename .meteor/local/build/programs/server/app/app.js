@@ -20,6 +20,7 @@ Relationships = new Meteor.Collection('relationships');                         
                                                                                                    //
 Router.route('/', { name: 'userManagement' });                                                     // 1
 Router.route('/whoToFollow', { name: 'followUsers' });                                             // 2
+Router.route('/myProfile', { name: 'userProfile' });                                               // 3
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -134,6 +135,16 @@ Meteor.publish('twitts', function () {                                          
     return Twitts.find({ user: { $in: currentFollowings } });                                      // 6
   }                                                                                                // 7
 });                                                                                                // 8
+                                                                                                   //
+Meteor.publish('twittsProfile', function (username) {                                              // 10
+  if (Meteor.userId) {                                                                             // 11
+    var username = Meteor.users.findOne({ _id: this.userId }).username;                            // 12
+    //var currentFollowings = UserUtils.findFollowings(username);                                  //
+                                                                                                   //
+    //return Twitts.find({user: { $in: currentFollowings }});                                      //
+    return Twitts.find({ user: username });                                                        // 16
+  }                                                                                                // 17
+});                                                                                                // 18
 /*                                                                                                 //
 Meteor.publishComposite('twitts', function(username) {                                             //
   return {                                                                                         //

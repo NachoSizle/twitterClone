@@ -53,7 +53,7 @@ Template["followUsers"] = new Template("Template.followUsers", (function() {    
 Template.__checkName("navBarTemplate");                                                                          // 2
 Template["navBarTemplate"] = new Template("Template.navBarTemplate", (function() {                               // 3
   var view = this;                                                                                               // 4
-  return HTML.Raw('<nav class="navbar navbar-default">\n\t  <div class="container-fluid">\n\t    <!-- Brand and toggle get grouped for better mobile display -->\n\t    <div class="navbar-header">\n\t      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">\n\t        <span class="sr-only">Toggle navigation</span>\n\t        <span class="icon-bar"></span>\n\t        <span class="icon-bar"></span>\n\t        <span class="icon-bar"></span>\n\t      </button>\n\t      <a class="navbar-brand" href="/">twiiterClone</a>\n\t    </div>\n\n\t    <!--PARTE IZQUIERDA DE LA BARRA DE NAVEGACION INCLUIDA EL FORMULARIO DE BUSQUEDA-->\n\t    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">\n\t      <ul class="nav navbar-nav">\n\t        <li><a href="/whoToFollow" id="recommendationsBtn">A quien seguir</a></li>\n\t      </ul>\n\t      <!-- INPUT DE BUSQUEDA\n\t      <form class="navbar-form navbar-left">\n\t        <div class="form-group">\n\t          <input type="text" class="form-control" placeholder="Search">\n\t        </div>\n\t        <button type="submit" class="btn btn-default">Submit</button>\n\t      </form>\n\t      -->\n\t      <!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->\n\t      <ul class="nav navbar-nav navbar-right">\n\t        <li class="dropdown">\n\t          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>\n\t          <ul class="dropdown-menu">\n\t            <li><a href="#">Action</a></li>\n\t            <li><a href="#">Another action</a></li>\n\t            <li><a href="#">Something else here</a></li>\n\t            <li role="separator" class="divider"></li>\n\t            <li><a href="#">Separated link</a></li>\n\t          </ul>\n\t        </li>\n\t      </ul>\n\t    </div>\n\t  </div>\n\t</nav>');
+  return HTML.Raw('<nav class="navbar navbar-default">\n\t  <div class="container-fluid">\n\t    <!-- Brand and toggle get grouped for better mobile display -->\n\t    <div class="navbar-header">\n\t      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">\n\t        <span class="sr-only">Toggle navigation</span>\n\t        <span class="icon-bar"></span>\n\t        <span class="icon-bar"></span>\n\t        <span class="icon-bar"></span>\n\t      </button>\n\t      <!--\n\t      EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL\n          <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">\n          A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO\n          <a class="navbar-brand" href="/">twiiterClone</a>\n          -->\n          <div class="row">\n            <!--CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO-->\n            <div id="leftDivCurrentUser">\n              <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL\n              <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">\n              A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->\n              <img id="imgProfile" src="/imgProfile/squirtle.png" class="img-responsive">\n            </div>\n            <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->\n            <div id="centerDivCurrentUser">\n              <img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive">\n            </div>\n          </div>\n\t      \n\t    </div>\n\n\t    <!--PARTE IZQUIERDA DE LA BARRA DE NAVEGACION INCLUIDA EL FORMULARIO DE BUSQUEDA-->\n\t    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">\n\t      <ul class="nav navbar-nav">\n\t        <li><a href="/whoToFollow" id="recommendationsBtn">A quien seguir</a></li>\n\t      </ul>\n\t      <!-- INPUT DE BUSQUEDA\n\t      <form class="navbar-form navbar-left">\n\t        <div class="form-group">\n\t          <input type="text" class="form-control" placeholder="Search">\n\t        </div>\n\t        <button type="submit" class="btn btn-default">Submit</button>\n\t      </form>\n\t      -->\n\t      <!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->\n\t      <ul class="nav navbar-nav navbar-right">\n\t        <li class="dropdown">\n\t          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>\n\t          <ul class="dropdown-menu">\n\t            <li><a href="#">Action</a></li>\n\t            <li><a href="#">Another action</a></li>\n\t            <li><a href="#">Something else here</a></li>\n\t            <li role="separator" class="divider"></li>\n\t            <li><a href="#">Separated link</a></li>\n\t          </ul>\n\t        </li>\n\t      </ul>\n\t    </div>\n\t  </div>\n\t</nav>');
 }));                                                                                                             // 6
                                                                                                                  // 7
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -153,6 +153,50 @@ Template["tweetFeed"] = new Template("Template.tweetFeed", (function() {        
                                                                                                                  // 34
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"template.tweetFeedProfile.js":function(){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                               //
+// client/partialTemplates/template.tweetFeedProfile.js                                                          //
+//                                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                 //
+                                                                                                                 // 1
+Template.__checkName("tweetFeedProfile");                                                                        // 2
+Template["tweetFeedProfile"] = new Template("Template.tweetFeedProfile", (function() {                           // 3
+  var view = this;                                                                                               // 4
+  return HTML.DIV({                                                                                              // 5
+    class: "tweetfeed-container"                                                                                 // 6
+  }, "\n    ", HTML.DIV({                                                                                        // 7
+    class: "panel panel-default tweetfeed"                                                                       // 8
+  }, "\n      ", HTML.DIV({                                                                                      // 9
+    class: "panel-body"                                                                                          // 10
+  }, "\n        ", HTML.Raw("<!-- Texto para el contenido del Twitt -->"), "\n        ", Blaze.Each(function() {
+    return Spacebars.call(view.lookup("tweetMessageProfile"));                                                   // 12
+  }, function() {                                                                                                // 13
+    return [ "\n          ", HTML.DIV({                                                                          // 14
+      class: "panel panel-info"                                                                                  // 15
+    }, "\n            ", HTML.DIV({                                                                              // 16
+      class: "panel-heading"                                                                                     // 17
+    }, "\n              ", HTML.H3({                                                                             // 18
+      class: "panel-title"                                                                                       // 19
+    }, "@", Blaze.View("lookup:..user", function() {                                                             // 20
+      return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                        // 21
+    }), " \n                ", HTML.SPAN({                                                                       // 22
+      class: "glyphicon glyphicon-triangle-right",                                                               // 23
+      "aria-hidden": "true"                                                                                      // 24
+    }), "\n                 ", Blaze.View("lookup:convertDateTime", function() {                                 // 25
+      return Spacebars.mustache(view.lookup("convertDateTime"));                                                 // 26
+    }), "\n               "), "\n            "), "\n            ", HTML.DIV({                                    // 27
+      class: "panel-body"                                                                                        // 28
+    }, "\n              ", Blaze.View("lookup:..message", function() {                                           // 29
+      return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                     // 30
+    }), "\n            "), "\n          "), "\n        " ];                                                      // 31
+  }), "\n      "), "\n    "), "\n  ");                                                                           // 32
+}));                                                                                                             // 33
+                                                                                                                 // 34
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"template.userManagement.js":function(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -165,7 +209,7 @@ Template["tweetFeed"] = new Template("Template.tweetFeed", (function() {        
 Template.__checkName("userManagement");                                                                          // 2
 Template["userManagement"] = new Template("Template.userManagement", (function() {                               // 3
   var view = this;                                                                                               // 4
-  return [ Blaze.If(function() {                                                                                 // 5
+  return Blaze.If(function() {                                                                                   // 5
     return Spacebars.call(view.lookup("recommendations"));                                                       // 6
   }, function() {                                                                                                // 7
     return [ "\n    ", HTML.DIV({                                                                                // 8
@@ -173,104 +217,130 @@ Template["userManagement"] = new Template("Template.userManagement", (function()
       class: "col-md-8 col-sm-8 col-lg-2"                                                                        // 10
     }, Spacebars.include(view.lookupTemplate("followUsers"))), "\n  " ];                                         // 11
   }, function() {                                                                                                // 12
-    return [ "\n    ", HTML.DIV({                                                                                // 13
-      class: "user-container"                                                                                    // 14
-    }, "\n    ", HTML.DIV({                                                                                      // 15
-      class: "panel panel-default userBox"                                                                       // 16
-    }, "\n      ", HTML.DIV({                                                                                    // 17
-      class: "panel-body"                                                                                        // 18
-    }, "\n        ", Blaze.If(function() {                                                                       // 19
-      return Spacebars.call(view.lookup("currentUser"));                                                         // 20
-    }, function() {                                                                                              // 21
-      return [ "\n\n        ", HTML.Comment("Mensaje para el usuario registrado"), "\n        ", HTML.DIV({      // 22
-        class: "row"                                                                                             // 23
-      }, "\n          ", HTML.Comment("CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO"), "\n          ", HTML.DIV({
-        id: "leftDivCurrentUser"                                                                                 // 25
-      }, "\n            ", HTML.Comment('EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL\n            <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">\n            A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO'), "\n            ", HTML.IMG({
-        id: "imgCurrentUser",                                                                                    // 27
-        src: "/squirtle.png",                                                                                    // 28
-        class: "img-responsive"                                                                                  // 29
-      }), "\n          "), "\n          ", HTML.Comment("CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO"), "\n          ", HTML.DIV({
-        id: "rightDivCurrentUser"                                                                                // 31
-      }, "\n            20. Una persona que me cambió la vida y siempre me enseñará cosas! Instagram: NachoSizles Vine: NachoSizle\n          "), "\n        "), "\n        ", HTML.H3(HTML.STRONG(Blaze.View("lookup:currentUser.username", function() {
-        return Spacebars.mustache(Spacebars.dot(view.lookup("currentUser"), "username"));                        // 33
-      }))), "\n        ", HTML.H5("@", Blaze.View("lookup:currentUser.username", function() {                    // 34
-        return Spacebars.mustache(Spacebars.dot(view.lookup("currentUser"), "username"));                        // 35
-      })), "\n        ", HTML.BUTTON({                                                                           // 36
-        type: "button",                                                                                          // 37
-        class: "btn btn-info fullbutton",                                                                        // 38
-        id: "logout"                                                                                             // 39
-      }, "Salir"), "\n        ", HTML.TABLE({                                                                    // 40
-        class: "table"                                                                                           // 41
-      }, "  \n          ", HTML.TR("\n            ", HTML.TD({                                                   // 42
-        class: "tableHeader"                                                                                     // 43
-      }, "Twitts"), "\n            ", HTML.TD({                                                                  // 44
-        class: "tableHeader"                                                                                     // 45
-      }, "Siguiendo"), "\n            ", HTML.TD({                                                               // 46
-        class: "tableHeader"                                                                                     // 47
-      }, "Seguidores"), "\n          "), "\n          ", HTML.TR("\n            ", HTML.TD({                     // 48
-        class: "tableContent"                                                                                    // 49
-      }, Blaze.View("lookup:tweets", function() {                                                                // 50
-        return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));
-      })), "\n            ", HTML.TD({                                                                           // 52
-        class: "tableContent"                                                                                    // 53
-      }, Blaze.View("lookup:following", function() {                                                             // 54
-        return Spacebars.mustache(view.lookup("following"));                                                     // 55
-      })), "\n            ", HTML.TD({                                                                           // 56
-        class: "tableContent"                                                                                    // 57
-      }, Blaze.View("lookup:followers", function() {                                                             // 58
-        return Spacebars.mustache(view.lookup("followers"));                                                     // 59
-      })), "\n          "), "\n        "), "\n        " ];                                                       // 60
-    }, function() {                                                                                              // 61
-      return [ "\n        ", HTML.Comment("módulo de acceso "), "\n        ", HTML.H4("¿Ya tienes una cuenta?"), "\n        ", HTML.DIV({
-        class: "form-group"                                                                                      // 63
-      }, "\n          ", HTML.INPUT({                                                                            // 64
-        class: "form-control input-sm",                                                                          // 65
-        id: "login-username",                                                                                    // 66
-        placeholder: "Nombre de Usuario"                                                                         // 67
-      }), "\n          ", HTML.INPUT({                                                                           // 68
-        class: "form-control input-sm",                                                                          // 69
-        id: "login-password",                                                                                    // 70
-        placeholder: "Contraseña",                                                                               // 71
-        type: "password"                                                                                         // 72
-      }), "\n        "), "\n\n        ", HTML.BUTTON({                                                           // 73
-        type: "button",                                                                                          // 74
-        class: "btn btn-info fullbutton login",                                                                  // 75
-        id: "login"                                                                                              // 76
-      }, "Acceder"), "\n\n        ", HTML.Comment("módulo de registro"), "\n        ", HTML.H4("¿Nuevo por aquí?"), "\n        ", HTML.DIV({
-        class: "form-group"                                                                                      // 78
-      }, "\n          ", HTML.INPUT({                                                                            // 79
-        class: "form-control input-sm",                                                                          // 80
-        id: "signup-username",                                                                                   // 81
-        placeholder: "Nombre de Usuario"                                                                         // 82
-      }), "\n          ", HTML.INPUT({                                                                           // 83
-        class: "form-control input-sm",                                                                          // 84
-        id: "signup-fullname",                                                                                   // 85
-        placeholder: "Apellido (Opcional)"                                                                       // 86
-      }), "\n          ", HTML.INPUT({                                                                           // 87
-        class: "form-control input-sm",                                                                          // 88
-        id: "signup-password",                                                                                   // 89
-        placeholder: "Contraseña",                                                                               // 90
-        type: "password"                                                                                         // 91
-      }), "\n        "), "\n\n        ", HTML.BUTTON({                                                           // 92
-        type: "button",                                                                                          // 93
-        class: "btn btn-info fullbutton",                                                                        // 94
-        id: "signup"                                                                                             // 95
-      }, "Regístrate"), "\n        " ];                                                                          // 96
-    }), "  \n      "), "\n    "), "\n  "), "\n  " ];                                                             // 97
-  }), "\n  ", Blaze.If(function() {                                                                              // 98
-    return Spacebars.call(view.lookup("currentUser"));                                                           // 99
-  }, function() {                                                                                                // 100
-    return [ "\n    ", HTML.DIV({                                                                                // 101
-      id: "divTweetBox",                                                                                         // 102
-      class: "col-md-8 col-sm-8"                                                                                 // 103
-    }, Spacebars.include(view.lookupTemplate("tweetBox"))), "\n    ", HTML.DIV({                                 // 104
-      id: "divTweetFeed",                                                                                        // 105
-      class: "col-md-8 col-sm-8"                                                                                 // 106
-    }, Spacebars.include(view.lookupTemplate("tweetFeed"))), "\n  " ];                                           // 107
-  }) ];                                                                                                          // 108
-}));                                                                                                             // 109
-                                                                                                                 // 110
+    return [ "\n  ", Blaze.If(function() {                                                                       // 13
+      return Spacebars.call(view.lookup("currentUser"));                                                         // 14
+    }, function() {                                                                                              // 15
+      return [ "\n    ", HTML.DIV({                                                                              // 16
+        id: "divTweetBox",                                                                                       // 17
+        class: "col-md-8 col-sm-8"                                                                               // 18
+      }, Spacebars.include(view.lookupTemplate("tweetBox"))), "\n    ", HTML.DIV({                               // 19
+        id: "divTweetFeed",                                                                                      // 20
+        class: "col-md-8 col-sm-8"                                                                               // 21
+      }, Spacebars.include(view.lookupTemplate("tweetFeed"))), "\n  " ];                                         // 22
+    }, function() {                                                                                              // 23
+      return [ "\n    ", HTML.DIV({                                                                              // 24
+        class: "user-container"                                                                                  // 25
+      }, "\n      ", HTML.DIV({                                                                                  // 26
+        class: "panel panel-default userBox"                                                                     // 27
+      }, "\n        ", HTML.DIV({                                                                                // 28
+        class: "panel-body"                                                                                      // 29
+      }, "\n          ", HTML.Comment("módulo de acceso "), "\n          ", HTML.H4("¿Ya tienes una cuenta?"), "\n          ", HTML.DIV({
+        class: "form-group"                                                                                      // 31
+      }, "\n            ", HTML.INPUT({                                                                          // 32
+        class: "form-control input-sm",                                                                          // 33
+        id: "login-username",                                                                                    // 34
+        placeholder: "Nombre de Usuario"                                                                         // 35
+      }), "\n            ", HTML.INPUT({                                                                         // 36
+        class: "form-control input-sm",                                                                          // 37
+        id: "login-password",                                                                                    // 38
+        placeholder: "Contraseña",                                                                               // 39
+        type: "password"                                                                                         // 40
+      }), "\n          "), "\n\n          ", HTML.BUTTON({                                                       // 41
+        type: "button",                                                                                          // 42
+        class: "btn btn-info fullbutton login",                                                                  // 43
+        id: "login"                                                                                              // 44
+      }, "Acceder"), "\n\n          ", HTML.Comment("módulo de registro"), "\n          ", HTML.H4("¿Nuevo por aquí?"), "\n          ", HTML.DIV({
+        class: "form-group"                                                                                      // 46
+      }, "\n            ", HTML.INPUT({                                                                          // 47
+        class: "form-control input-sm",                                                                          // 48
+        id: "signup-username",                                                                                   // 49
+        placeholder: "Nombre de Usuario"                                                                         // 50
+      }), "\n            ", HTML.INPUT({                                                                         // 51
+        class: "form-control input-sm",                                                                          // 52
+        id: "signup-fullname",                                                                                   // 53
+        placeholder: "Apellido (Opcional)"                                                                       // 54
+      }), "\n            ", HTML.INPUT({                                                                         // 55
+        class: "form-control input-sm",                                                                          // 56
+        id: "signup-password",                                                                                   // 57
+        placeholder: "Contraseña",                                                                               // 58
+        type: "password"                                                                                         // 59
+      }), "\n          "), "\n          ", HTML.BUTTON({                                                         // 60
+        type: "button",                                                                                          // 61
+        class: "btn btn-info fullbutton",                                                                        // 62
+        id: "signup"                                                                                             // 63
+      }, "Regístrate"), " \n        "), "\n      "), "\n    "), "\n  " ];                                        // 64
+    }), " \n  " ];                                                                                               // 65
+  });                                                                                                            // 66
+}));                                                                                                             // 67
+                                                                                                                 // 68
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.userProfile.js":function(){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                               //
+// client/partialTemplates/template.userProfile.js                                                               //
+//                                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                 //
+                                                                                                                 // 1
+Template.__checkName("userProfile");                                                                             // 2
+Template["userProfile"] = new Template("Template.userProfile", (function() {                                     // 3
+  var view = this;                                                                                               // 4
+  return Blaze.If(function() {                                                                                   // 5
+    return Spacebars.call(view.lookup("currentUser"));                                                           // 6
+  }, function() {                                                                                                // 7
+    return [ "\n    ", HTML.DIV({                                                                                // 8
+      class: "user-container"                                                                                    // 9
+    }, "\n      ", HTML.DIV({                                                                                    // 10
+      class: "panel panel-default userBox"                                                                       // 11
+    }, "\n        ", HTML.DIV({                                                                                  // 12
+      class: "panel-body"                                                                                        // 13
+    }, "\n          ", HTML.Comment("Mensaje para el usuario registrado"), "\n          ", HTML.DIV({            // 14
+      class: "row"                                                                                               // 15
+    }, "\n            ", HTML.Comment("CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO"), "\n            ", HTML.DIV({
+      id: "leftDivCurrentUser"                                                                                   // 17
+    }, "\n              ", HTML.Comment('EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL\n              <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">\n              A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO'), "\n              ", HTML.IMG({
+      id: "imgCurrentUser",                                                                                      // 19
+      src: "/squirtle.png",                                                                                      // 20
+      class: "img-responsive"                                                                                    // 21
+    }), "\n            "), "\n            ", HTML.Comment("CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO"), "\n            ", HTML.DIV({
+      id: "rightDivCurrentUser"                                                                                  // 23
+    }, "\n              20. Una persona que me cambió la vida y siempre me enseñará cosas! Instagram: NachoSizles Vine: NachoSizle\n            "), "\n          "), "\n          ", HTML.H3(HTML.STRONG(Blaze.View("lookup:currentUser.username", function() {
+      return Spacebars.mustache(Spacebars.dot(view.lookup("currentUser"), "username"));                          // 25
+    }))), "\n          ", HTML.H5("@", Blaze.View("lookup:currentUser.username", function() {                    // 26
+      return Spacebars.mustache(Spacebars.dot(view.lookup("currentUser"), "username"));                          // 27
+    })), "\n          ", HTML.BUTTON({                                                                           // 28
+      type: "button",                                                                                            // 29
+      class: "btn btn-info fullbutton",                                                                          // 30
+      id: "logout"                                                                                               // 31
+    }, "Salir"), "\n          ", HTML.TABLE({                                                                    // 32
+      class: "table"                                                                                             // 33
+    }, "  \n            ", HTML.TR("\n              ", HTML.TD({                                                 // 34
+      class: "tableHeader"                                                                                       // 35
+    }, "Twitts"), "\n              ", HTML.TD({                                                                  // 36
+      class: "tableHeader"                                                                                       // 37
+    }, "Siguiendo"), "\n              ", HTML.TD({                                                               // 38
+      class: "tableHeader"                                                                                       // 39
+    }, "Seguidores"), "\n            "), "\n            ", HTML.TR("\n              ", HTML.TD({                 // 40
+      class: "tableContent"                                                                                      // 41
+    }, Blaze.View("lookup:tweets", function() {                                                                  // 42
+      return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));   // 43
+    })), "\n              ", HTML.TD({                                                                           // 44
+      class: "tableContent"                                                                                      // 45
+    }, Blaze.View("lookup:following", function() {                                                               // 46
+      return Spacebars.mustache(view.lookup("following"));                                                       // 47
+    })), "\n              ", HTML.TD({                                                                           // 48
+      class: "tableContent"                                                                                      // 49
+    }, Blaze.View("lookup:followers", function() {                                                               // 50
+      return Spacebars.mustache(view.lookup("followers"));                                                       // 51
+    })), "\n            "), "\n          "), "\n        "), "\n      "), "\n    "), "\n    ", HTML.DIV({         // 52
+      id: "divTweetFeed",                                                                                        // 53
+      class: "col-md-8 col-sm-8"                                                                                 // 54
+    }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n  " ];                                    // 55
+  });                                                                                                            // 56
+}));                                                                                                             // 57
+                                                                                                                 // 58
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"followUsers.js":function(){
@@ -352,7 +422,21 @@ Template.navBarTemplate.events({                                                
 		}                                                                                                              // 4
                                                                                                                  //
 		return clickRecommendationsBtn;                                                                                // 2
-	}()                                                                                                             // 2
+	}(),                                                                                                            // 2
+	'click #imgProfile': function () {                                                                              // 5
+		function clickImgProfile() {                                                                                   // 5
+			window.location = "/myProfile";                                                                               // 6
+		}                                                                                                              // 7
+                                                                                                                 //
+		return clickImgProfile;                                                                                        // 5
+	}(),                                                                                                            // 5
+	'click #imgLogTwiiterClone': function () {                                                                      // 8
+		function clickImgLogTwiiterClone() {                                                                           // 8
+			window.location = "/";                                                                                        // 9
+		}                                                                                                              // 10
+                                                                                                                 //
+		return clickImgLogTwiiterClone;                                                                                // 8
+	}()                                                                                                             // 8
 });                                                                                                              // 1
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -470,6 +554,45 @@ Template.tweetFeed.helpers({                                                    
 });                                                                                                              // 15
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"tweetFeedProfile.js":function(){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                               //
+// client/partialTemplates/tweetFeedProfile.js                                                                   //
+//                                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                 //
+Template.tweetFeedProfile.onCreated(function () {                                                                // 1
+  this.subscribe('twittsProfile');                                                                               // 2
+});                                                                                                              // 3
+                                                                                                                 //
+Template.tweetFeedProfile.helpers({                                                                              // 5
+  'tweetMessageProfile': function () {                                                                           // 6
+    function tweetMessageProfile() {                                                                             // 6
+      var tweet = Twitts.find({}, {                                                                              // 7
+        sort: { timestamp: -1 },                                                                                 // 8
+        limit: 10                                                                                                // 9
+      });                                                                                                        // 7
+      return tweet;                                                                                              // 11
+    }                                                                                                            // 12
+                                                                                                                 //
+    return tweetMessageProfile;                                                                                  // 6
+  }()                                                                                                            // 6
+});                                                                                                              // 5
+                                                                                                                 //
+Template.tweetFeedProfile.helpers({                                                                              // 15
+  'convertDateTime': function () {                                                                               // 16
+    function convertDateTime() {                                                                                 // 16
+      var dateNew = new Date(this.timestamp);                                                                    // 17
+      var dateCon = dateNew.toLocaleString();                                                                    // 18
+      return dateCon;                                                                                            // 19
+    }                                                                                                            // 20
+                                                                                                                 //
+    return convertDateTime;                                                                                      // 16
+  }()                                                                                                            // 16
+});                                                                                                              // 15
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"userManagement.js":function(){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -511,55 +634,67 @@ Template.userManagement.events({                                                
     return clickLogin;                                                                                           // 16
   }(),                                                                                                           // 16
                                                                                                                  //
-  'click #logout': function () {                                                                                 // 26
-    function clickLogout() {                                                                                     // 26
-      Meteor.logout();                                                                                           // 27
+  'click #recommendationsBtn': function () {                                                                     // 26
+    function clickRecommendationsBtn() {                                                                         // 26
+      Session.set('recommendations', true);                                                                      // 27
     }                                                                                                            // 28
                                                                                                                  //
-    return clickLogout;                                                                                          // 26
-  }(),                                                                                                           // 26
+    return clickRecommendationsBtn;                                                                              // 26
+  }()                                                                                                            // 26
+});                                                                                                              // 1
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"userProfile.js":function(){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                               //
+// client/partialTemplates/userProfile.js                                                                        //
+//                                                                                                               //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                  //
-  'click #recommendationsBtn': function () {                                                                     // 30
-    function clickRecommendationsBtn() {                                                                         // 30
-      Session.set('recommendations', true);                                                                      // 31
-    }                                                                                                            // 32
+Template.userProfile.events({                                                                                    // 1
+  'click #logout': function () {                                                                                 // 2
+    function clickLogout() {                                                                                     // 2
+      Meteor.logout();                                                                                           // 3
+      window.location = "/";                                                                                     // 4
+    }                                                                                                            // 5
                                                                                                                  //
-    return clickRecommendationsBtn;                                                                              // 30
-  }()                                                                                                            // 30
+    return clickLogout;                                                                                          // 2
+  }()                                                                                                            // 2
 });                                                                                                              // 1
                                                                                                                  //
-Template.userManagement.helpers({                                                                                // 35
-  'tweets': function () {                                                                                        // 36
-    function tweets(username) {                                                                                  // 36
-      Meteor.call('tweetsPublish', username, function (err, res) {                                               // 37
-        Session.set('numTweets', res);                                                                           // 38
-      });                                                                                                        // 39
-      return Session.get('numTweets');                                                                           // 40
-    }                                                                                                            // 41
+Template.userProfile.helpers({                                                                                   // 8
+  'tweets': function () {                                                                                        // 9
+    function tweets(username) {                                                                                  // 9
+      Meteor.call('tweetsPublish', username, function (err, res) {                                               // 10
+        Session.set('numTweets', res);                                                                           // 11
+      });                                                                                                        // 12
+      return Session.get('numTweets');                                                                           // 13
+    }                                                                                                            // 14
                                                                                                                  //
-    return tweets;                                                                                               // 36
-  }(),                                                                                                           // 36
-  'following': function () {                                                                                     // 42
-    function following() {                                                                                       // 42
-      Meteor.call('usersFollowings', function (err, res) {                                                       // 43
-        Session.set('numFollowings', res);                                                                       // 44
-      });                                                                                                        // 45
-      return Session.get('numFollowings');                                                                       // 46
-    }                                                                                                            // 47
+    return tweets;                                                                                               // 9
+  }(),                                                                                                           // 9
+  'following': function () {                                                                                     // 15
+    function following() {                                                                                       // 15
+      Meteor.call('usersFollowings', function (err, res) {                                                       // 16
+        Session.set('numFollowings', res);                                                                       // 17
+      });                                                                                                        // 18
+      return Session.get('numFollowings');                                                                       // 19
+    }                                                                                                            // 20
                                                                                                                  //
-    return following;                                                                                            // 42
-  }(),                                                                                                           // 42
-  'followers': function () {                                                                                     // 48
-    function followers() {                                                                                       // 48
-      Meteor.call('usersFollowers', function (err, res) {                                                        // 49
-        Session.set('numFollowers', res);                                                                        // 50
-      });                                                                                                        // 51
-      return Session.get('numFollowers');                                                                        // 52
-    }                                                                                                            // 53
+    return following;                                                                                            // 15
+  }(),                                                                                                           // 15
+  'followers': function () {                                                                                     // 21
+    function followers() {                                                                                       // 21
+      Meteor.call('usersFollowers', function (err, res) {                                                        // 22
+        Session.set('numFollowers', res);                                                                        // 23
+      });                                                                                                        // 24
+      return Session.get('numFollowers');                                                                        // 25
+    }                                                                                                            // 26
                                                                                                                  //
-    return followers;                                                                                            // 48
-  }()                                                                                                            // 48
-});                                                                                                              // 35
+    return followers;                                                                                            // 21
+  }()                                                                                                            // 21
+});                                                                                                              // 8
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"main.html":["./template.main.js",function(require,exports,module){
@@ -594,7 +729,13 @@ Template.body.addContent((function() {                                          
   }), "\n\t");                                                                                                   // 10
 }));                                                                                                             // 11
 Meteor.startup(Template.body.renderToDocument);                                                                  // 12
-                                                                                                                 // 13
+Meteor.startup(function() {                                                                                      // 13
+  var attrs = {"id":"bodyPpal"};                                                                                 // 14
+  for (var prop in attrs) {                                                                                      // 15
+    document.body.setAttribute(prop, attrs[prop]);                                                               // 16
+  }                                                                                                              // 17
+});                                                                                                              // 18
+                                                                                                                 // 19
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"main.js":["meteor/templating","meteor/reactive-var","./main.html",function(require,exports,module){
@@ -633,6 +774,7 @@ Relationships = new Meteor.Collection('relationships');                         
                                                                                                                  //
 Router.route('/', { name: 'userManagement' });                                                                   // 1
 Router.route('/whoToFollow', { name: 'followUsers' });                                                           // 2
+Router.route('/myProfile', { name: 'userProfile' });                                                             // 3
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -702,7 +844,9 @@ require("./client/partialTemplates/template.followUsers.js");
 require("./client/partialTemplates/template.navBarTemplate.js");
 require("./client/partialTemplates/template.tweetBox.js");
 require("./client/partialTemplates/template.tweetFeed.js");
+require("./client/partialTemplates/template.tweetFeedProfile.js");
 require("./client/partialTemplates/template.userManagement.js");
+require("./client/partialTemplates/template.userProfile.js");
 require("./client/template.main.js");
 require("./lib/collections/tweets.js");
 require("./lib/router.js");
@@ -711,5 +855,7 @@ require("./client/partialTemplates/followUsers.js");
 require("./client/partialTemplates/navBarTemplate.js");
 require("./client/partialTemplates/tweetBox.js");
 require("./client/partialTemplates/tweetFeed.js");
+require("./client/partialTemplates/tweetFeedProfile.js");
 require("./client/partialTemplates/userManagement.js");
+require("./client/partialTemplates/userProfile.js");
 require("./client/main.js");
