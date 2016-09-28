@@ -24,6 +24,6 @@ Template.userManagement.events({
   },
 
   'click #recommendationsBtn': function() {  
-    Session.set('recommendations',true);
+    Session.set('recommendations', true);
   }
 });

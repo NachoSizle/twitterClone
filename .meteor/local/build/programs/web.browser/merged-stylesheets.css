@@ -8856,3 +8856,14 @@ textarea {
 #bodyPpal {
   background-color: #e6f7ff;
 }
+
+.not-found {
+  text-align: center;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+#spinner {
+  height: 300px;
+}

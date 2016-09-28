@@ -31,7 +31,15 @@
 	      
 	    </div>
 
-	    <!--PARTE IZQUIERDA DE LA BARRA DE NAVEGACION INCLUIDA EL FORMULARIO DE BUSQUEDA-->
+		<!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->
+		<div class="nav navbar-nav navbar-right">
+			<ul>
+				<li class="dropdown">
+		            {{> notifications}}
+	          	</li>
+          	</ul>
+		</div>
+
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li><a href="/whoToFollow" id="recommendationsBtn">A quien seguir</a></li>
@@ -44,7 +52,6 @@
 	        <button type="submit" class="btn btn-default">Submit</button>
 	      </form>
 	      -->
-	      <!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->
 	      <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>

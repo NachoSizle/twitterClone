@@ -16,6 +16,13 @@ Meteor.publish('twittsProfile', function(username) {
     return Twitts.find({user: username});
   }
 });
+
+Meteor.publish('notifications', function(username) {
+  console.log(username);
+  var currentFollowings = UserUtils.findFollowings(username);
+  console.log(Notifications.find({twiitNotifUserName: { $in: currentFollowings }, read: false}).count());
+  return Notifications.find({twiitNotifUserName: { $in: currentFollowings }, read: false});
+});
 /*
 Meteor.publishComposite('twitts', function(username) {  
   return {
