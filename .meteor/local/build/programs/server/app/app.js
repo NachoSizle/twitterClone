@@ -97,6 +97,11 @@ UserUtils.observerProperties = function () {                                    
     }                                                                                                       // 42
   });                                                                                                       // 35
 };                                                                                                          // 44
+                                                                                                            //
+UserUtils.findNumberNotif = function (username) {                                                           // 46
+  var followings = UserUtils.findFollowings();                                                              // 47
+  return Notifications.find({ twiitNotifUserName: { $nin: followings }, read: false }).count();             // 48
+};                                                                                                          // 49
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"server":{"followUsers.js":function(){

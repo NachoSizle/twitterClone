@@ -1,0 +1,22 @@
+<template name="navBarNew">
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div id="headerNavBar" class="navbar-header" style="padding:15px;float:left;width: 33%;">
+	     	<img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive navbar-brand">
+	    </div>
+	    <div class="container navbar-nav navbar-left " style="padding:15px;margin-right: 20px;float:left;width: 33%;">
+	    	<div class="container" style="padding:15px;float:left;width: 50%;">
+            {{> notifications}}
+            </div>
+            <div class="container" style="padding:15px;float:left;width: 50%;">
+        	<a href="/whoToFollow" id="recommendationsBtn">
+        		<span class="glyphicon glyphicon-search"></span>
+        	</a>
+        	</div>
+	    </div>
+	    <div class="container navbar-nav navbar-right" style="padding:15px;float:left;width: 33%;">
+	      <img id="imgProfile" src="/imgProfile/squirtle.png" class="img-responsive">
+	    </div>
+	  </div>
+	</nav>
+</template>

@@ -8,7 +8,9 @@
         <div class="pull-right btnGroup">
           <strong class="{{charClass}}">{{charCount}}</strong>
           {{#if currentUser}}
-            <button class="btn btn-info pull-right" type="button" {{disableButton}}>Twittear</button>
+            <button class="btn btn-info pull-right" type="button" {{disableButton}}>Twittear
+              <span class="glyphicon glyphicon-send"></span>
+            </button>
           {{else}}
             <button class="btn btn-info pull-right" type="button" disabled>Por favor inicia sesión</button>
           {{/if}}

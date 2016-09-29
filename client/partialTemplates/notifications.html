@@ -1,12 +1,15 @@
 <template name="notifications">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    Notifications
-    {{#if notificationCount}}
-      <span class="badge badge-inverse">{{notificationCount}}</span>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <!--Notificaciones-->
+    <span class="glyphicon glyphicon-list"></span>
+    {{#if modeDisplay}}
+      {{#if notificationCount}}
+        <span class="badge badge-inverse">{{notificationCount}}</span>
+      {{/if}}
     {{/if}}
     <b class="caret"></b>
   </a>
-  <ul class="notification dropdown-menu">
+  <ul class="notification dropdown-menu dropdown-menu-center">
     {{#if notificationCount}}
       {{#each notifications}}
         {{> notificationItem}}

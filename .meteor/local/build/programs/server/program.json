@@ -316,6 +316,9 @@
       "path": "packages/iron_router.js"
     },
     {
+      "path": "packages/fourseven_scss.js"
+    },
+    {
       "path": "packages/livedata.js"
     },
     {

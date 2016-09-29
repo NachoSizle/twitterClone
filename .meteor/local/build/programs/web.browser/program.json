@@ -57,11 +57,11 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/modules.js?hash=ca6cb74889aa3ece64dc5c3b4b73c246e9a4c7f1",
+      "url": "/packages/modules.js?hash=65ca396659c86711bb85c228808c59d596b01d3d",
       "sourceMap": "packages/modules.js.map",
-      "sourceMapUrl": "/packages/ca6cb74889aa3ece64dc5c3b4b73c246e9a4c7f1.map",
-      "size": 54472,
-      "hash": "ca6cb74889aa3ece64dc5c3b4b73c246e9a4c7f1"
+      "sourceMapUrl": "/packages/65ca396659c86711bb85c228808c59d596b01d3d.map",
+      "size": 1245274,
+      "hash": "65ca396659c86711bb85c228808c59d596b01d3d"
     },
     {
       "path": "packages/es5-shim.js",
@@ -727,6 +727,15 @@
       "hash": "238ea121befdc6bfd25be4e1337fb571b665c344"
     },
     {
+      "path": "packages/fourseven_scss.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/fourseven_scss.js?hash=19f349b5dfb1f9c2ce6e4fbad27c915f91e2b965",
+      "size": 852,
+      "hash": "19f349b5dfb1f9c2ce6e4fbad27c915f91e2b965"
+    },
+    {
       "path": "packages/webapp.js",
       "where": "client",
       "type": "js",
@@ -791,22 +800,22 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=89154a138f16a5a1a0c21579bf6bc821e2b99047",
+      "url": "/app/app.js?hash=f5b7053396ab0b93a93db67abc33a6a22929c690",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/89154a138f16a5a1a0c21579bf6bc821e2b99047.map",
-      "size": 129269,
-      "hash": "89154a138f16a5a1a0c21579bf6bc821e2b99047"
+      "sourceMapUrl": "/app/f5b7053396ab0b93a93db67abc33a6a22929c690.map",
+      "size": 146539,
+      "hash": "f5b7053396ab0b93a93db67abc33a6a22929c690"
     },
     {
       "path": "merged-stylesheets.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/merged-stylesheets.css?hash=d892406bc4c84321b5fba072e695be6821e3caab",
+      "url": "/merged-stylesheets.css?hash=fb5e446816c8bae0bfc5802fe4e64e02bb8966fe",
       "sourceMap": "merged-stylesheets.css.map",
-      "sourceMapUrl": "/d892406bc4c84321b5fba072e695be6821e3caab.map",
-      "size": 157882,
-      "hash": "d892406bc4c84321b5fba072e695be6821e3caab"
+      "sourceMapUrl": "/fb5e446816c8bae0bfc5802fe4e64e02bb8966fe.map",
+      "size": 158295,
+      "hash": "fb5e446816c8bae0bfc5802fe4e64e02bb8966fe"
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",

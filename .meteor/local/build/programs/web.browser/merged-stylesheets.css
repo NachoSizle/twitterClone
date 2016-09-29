@@ -8820,9 +8820,12 @@ textarea {
   margin-right: 15px;
 }
 
-#imgProfile {
+/*
+#imgProfile{
   margin-left: 60%;
+  float:left;
 }
+*/
 
 #leftDivCurrentUser {
   float: left;
@@ -8845,9 +8848,11 @@ textarea {
   padding-right: 0px;
 }
 
-#imgLogTwiiterClone {
+/*
+#imgLogTwiiterClone{
   padding-top: 10px;
 }
+*/
 
 .navbar {
   background-color: #fff;
@@ -8866,4 +8871,35 @@ textarea {
 
 #spinner {
   height: 300px;
+}
+
+#notificationsCont {
+  margin-left: 40px;
+  background-color: #1e88e5;
+  width: 50px;
+  height: 100%;
+}
+
+/*NOTIFICACIONES*/
+
+.badge-notify {
+  background: #1e88e5;
+  position: relative;
+  top: -20px;
+  left: -35px;
+}
+
+#btnMenuNavBar {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 42px;
+  height: 40px;
+}
+
+#dropDownMenu li {
+  margin-left: 15px;
+}
+
+#headerNavBar {
+  float: left;
 }
