@@ -15,7 +15,9 @@
       		<span class="sr-only">Toggle navigation</span>
       		<span class="glyphicon glyphicon-tasks"></span>
       		{{#if notificationCount}}
-		      <span class="badge badge-notify">{{notificationCount}}</span>
+      			{{#unless infoStateCollapseNavBar}}
+		      		<span class="badge badge-notify">{{notificationCount}}</span>
+      			{{/unless}}
 		    {{/if}}
     	  </button>
     	  <img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive navbar-brand">
@@ -31,9 +33,15 @@
 		<!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul id="dropDownMenu" class="nav navbar-nav navbar-right">
+	      	
 	      	<li class="dropdown">
 	            {{> notifications}}
-          	</li>
+	      	</li>
+	      	
+	      	<li>
+	            {{> notificationsNew}}
+	      	</li>
+	      	
 	        <li>
 	        	<a href="/whoToFollow" id="recommendationsBtn">
 	        		<span class="glyphicon glyphicon-search"></span>

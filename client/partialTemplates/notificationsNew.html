@@ -1,0 +1,21 @@
+<template name="notificationsNew">
+ <a id="linkToNotif" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <!--Notificaciones-->
+    <span class="glyphicon glyphicon-inbox"></span>
+
+      {{#if notificationCount}}
+        {{#if modeDisplay}}
+          <span class="badge badge-inverse">{{notificationCount}}</span>
+        {{else}}
+          {{#if infoStateCollapseNavBar}}
+            <span class="badge badge-inverse">{{notificationCount}}</span>
+          {{/if}}
+        {{/if}}
+      {{/if}}
+  </a>
+  {{#unless notificationCount}}
+  <ul class="notification dropdown-menu dropdown-menu-center">
+    <li><span>No Notifications</span></li>
+  </ul>
+  {{/unless}}
+</template>

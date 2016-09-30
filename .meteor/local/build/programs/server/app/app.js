@@ -35,14 +35,17 @@ Router.configure({                                                              
 });                                                                                                         // 1
                                                                                                             //
 Router.route('/', { name: 'userManagement' });                                                              // 6
-Router.route('/whoToFollow', { name: 'followUsers' });                                                      // 7
-Router.route('/myProfile', { name: 'userProfile' });                                                        // 8
-Router.route('/twiits/:_id', {                                                                              // 9
-  name: 'twiitPage',                                                                                        // 10
-  data: function data() {                                                                                   // 11
-    return this.params;                                                                                     // 12
-  }                                                                                                         // 13
-});                                                                                                         // 9
+/*SE ACCEDE POR WINDOW.LOCATION*/                                                                           //
+Router.route('/whoToFollow', { name: 'followUsers' });                                                      // 8
+Router.route('/myProfile', { name: 'userProfile' });                                                        // 9
+Router.route('/Notifications', { name: 'twiitPageNew' });                                                   // 10
+/*SE ACCEDE POR PATHFOR*/                                                                                   //
+Router.route('/twiits/:_id', {                                                                              // 12
+  name: 'twiitPage',                                                                                        // 13
+  data: function data() {                                                                                   // 14
+    return this.params;                                                                                     // 15
+  }                                                                                                         // 16
+});                                                                                                         // 12
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){

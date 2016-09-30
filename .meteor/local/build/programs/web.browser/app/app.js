@@ -130,22 +130,26 @@ Template["navBarTemplate"] = new Template("Template.navBarTemplate", (function()
   }, "\n      \t\t", HTML.Raw('<span class="sr-only">Toggle navigation</span>'), "\n      \t\t", HTML.Raw('<span class="glyphicon glyphicon-tasks"></span>'), "\n      \t\t", Blaze.If(function() {
     return Spacebars.call(view.lookup("notificationCount"));                                                         // 19
   }, function() {                                                                                                    // 20
-    return [ "\n\t\t      ", HTML.SPAN({                                                                             // 21
-      class: "badge badge-notify"                                                                                    // 22
-    }, Blaze.View("lookup:notificationCount", function() {                                                           // 23
-      return Spacebars.mustache(view.lookup("notificationCount"));                                                   // 24
-    })), "\n\t\t    " ];                                                                                             // 25
+    return [ "\n      \t\t\t", Blaze.Unless(function() {                                                             // 21
+      return Spacebars.call(view.lookup("infoStateCollapseNavBar"));                                                 // 22
+    }, function() {                                                                                                  // 23
+      return [ "\n\t\t      \t\t", HTML.SPAN({                                                                       // 24
+        class: "badge badge-notify"                                                                                  // 25
+      }, Blaze.View("lookup:notificationCount", function() {                                                         // 26
+        return Spacebars.mustache(view.lookup("notificationCount"));                                                 // 27
+      })), "\n      \t\t\t" ];                                                                                       // 28
+    }), "\n\t\t    " ];                                                                                              // 29
   }), "\n    \t  "), "\n    \t  ", HTML.Raw('<img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive navbar-brand">'), "\n    \t  \n\t      ", HTML.Raw('<!--\n\t      EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL\n          <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">\n          A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO\n          <a class="navbar-brand" href="/">twiiterClone</a>\n          -->'), "\n\t    "), "\n\n\t\t", HTML.Raw("<!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->"), "\n\t    ", HTML.DIV({
-    class: "collapse navbar-collapse",                                                                               // 27
-    id: "bs-example-navbar-collapse-1"                                                                               // 28
-  }, "\n\t      ", HTML.UL({                                                                                         // 29
-    id: "dropDownMenu",                                                                                              // 30
-    class: "nav navbar-nav navbar-right"                                                                             // 31
-  }, "\n\t      \t", HTML.LI({                                                                                       // 32
-    class: "dropdown"                                                                                                // 33
-  }, "\n\t            ", Spacebars.include(view.lookupTemplate("notifications")), "\n          \t"), "\n\t        ", HTML.Raw('<li>\n\t        \t<a href="/whoToFollow" id="recommendationsBtn">\n\t        \t\t<span class="glyphicon glyphicon-search"></span>\n\t        \t</a>\n\t        </li>'), "\n\t        ", HTML.Raw('<li>\n\t          <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL\n              <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">\n              A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->\n              <img id="imgProfile" src="/imgProfile/squirtle.png" class="img-responsive">\n\t        </li>'), "\n\t      "), "\n\t      ", HTML.Raw('<!-- INPUT DE BUSQUEDA\n\t      <form class="navbar-form navbar-left">\n\t        <div class="form-group">\n\t          <input type="text" class="form-control" placeholder="Search">\n\t        </div>\n\t        <button type="submit" class="btn btn-default">Submit</button>\n\t      </form>\n\t      -->'), "\n\t    "), "\n\t  "), "\n\t");
-}));                                                                                                                 // 35
-                                                                                                                     // 36
+    class: "collapse navbar-collapse",                                                                               // 31
+    id: "bs-example-navbar-collapse-1"                                                                               // 32
+  }, "\n\t      ", HTML.UL({                                                                                         // 33
+    id: "dropDownMenu",                                                                                              // 34
+    class: "nav navbar-nav navbar-right"                                                                             // 35
+  }, "\n\t      \t\n\t      \t", HTML.LI({                                                                           // 36
+    class: "dropdown"                                                                                                // 37
+  }, "\n\t            ", Spacebars.include(view.lookupTemplate("notifications")), "\n\t      \t"), "\n\t      \t\n\t      \t", HTML.LI("\n\t            ", Spacebars.include(view.lookupTemplate("notificationsNew")), "\n\t      \t"), "\n\t      \t\n\t        ", HTML.Raw('<li>\n\t        \t<a href="/whoToFollow" id="recommendationsBtn">\n\t        \t\t<span class="glyphicon glyphicon-search"></span>\n\t        \t</a>\n\t        </li>'), "\n\t        ", HTML.Raw('<li>\n\t          <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL\n              <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">\n              A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->\n              <img id="imgProfile" src="/imgProfile/squirtle.png" class="img-responsive">\n\t        </li>'), "\n\t      "), "\n\t      ", HTML.Raw('<!-- INPUT DE BUSQUEDA\n\t      <form class="navbar-form navbar-left">\n\t        <div class="form-group">\n\t          <input type="text" class="form-control" placeholder="Search">\n\t        </div>\n\t        <button type="submit" class="btn btn-default">Submit</button>\n\t      </form>\n\t      -->'), "\n\t    "), "\n\t  "), "\n\t");
+}));                                                                                                                 // 39
+                                                                                                                     // 40
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.not_found.js":function(){
@@ -184,45 +188,107 @@ Template["notifications"] = new Template("Template.notifications", (function() {
     role: "button",                                                                                                  // 9
     "aria-haspopup": "true",                                                                                         // 10
     "aria-expanded": "false"                                                                                         // 11
-  }, "\n    ", HTML.Raw("<!--Notificaciones-->"), "\n    ", HTML.Raw('<span class="glyphicon glyphicon-list"></span>'), "\n    ", Blaze.If(function() {
-    return Spacebars.call(view.lookup("modeDisplay"));                                                               // 13
+  }, "\n    ", HTML.Raw("<!--Notificaciones-->"), "\n    ", HTML.Raw('<span class="glyphicon glyphicon-inbox"></span>'), "\n\n      ", Blaze.If(function() {
+    return Spacebars.call(view.lookup("notificationCount"));                                                         // 13
   }, function() {                                                                                                    // 14
-    return [ "\n      ", Blaze.If(function() {                                                                       // 15
-      return Spacebars.call(view.lookup("notificationCount"));                                                       // 16
+    return [ "\n        ", Blaze.If(function() {                                                                     // 15
+      return Spacebars.call(view.lookup("modeDisplay"));                                                             // 16
     }, function() {                                                                                                  // 17
-      return [ "\n        ", HTML.SPAN({                                                                             // 18
+      return [ "\n          ", HTML.SPAN({                                                                           // 18
         class: "badge badge-inverse"                                                                                 // 19
       }, Blaze.View("lookup:notificationCount", function() {                                                         // 20
         return Spacebars.mustache(view.lookup("notificationCount"));                                                 // 21
-      })), "\n      " ];                                                                                             // 22
-    }), "\n    " ];                                                                                                  // 23
-  }), "\n    ", HTML.Raw('<b class="caret"></b>'), "\n  "), "\n  ", HTML.UL({                                        // 24
-    class: "notification dropdown-menu dropdown-menu-center"                                                         // 25
-  }, "\n    ", Blaze.If(function() {                                                                                 // 26
-    return Spacebars.call(view.lookup("notificationCount"));                                                         // 27
-  }, function() {                                                                                                    // 28
-    return [ "\n      ", Blaze.Each(function() {                                                                     // 29
-      return Spacebars.call(view.lookup("notifications"));                                                           // 30
-    }, function() {                                                                                                  // 31
-      return [ "\n        ", Spacebars.include(view.lookupTemplate("notificationItem")), "\n      " ];               // 32
-    }), "\n    " ];                                                                                                  // 33
-  }, function() {                                                                                                    // 34
-    return [ "\n      ", HTML.LI(HTML.SPAN("No Notifications")), "\n    " ];                                         // 35
-  }), "\n  ") ];                                                                                                     // 36
-}));                                                                                                                 // 37
-                                                                                                                     // 38
-Template.__checkName("notificationItem");                                                                            // 39
-Template["notificationItem"] = new Template("Template.notificationItem", (function() {                               // 40
-  var view = this;                                                                                                   // 41
-  return HTML.LI("\n    ", HTML.A({                                                                                  // 42
-    href: function() {                                                                                               // 43
-      return Spacebars.mustache(view.lookup("pathFor"), "twiitPage");                                                // 44
-    }                                                                                                                // 45
-  }, "\n      ", HTML.STRONG(Blaze.View("lookup:twiitNotifUserName", function() {                                    // 46
-    return Spacebars.mustache(view.lookup("twiitNotifUserName"));                                                    // 47
-  })), " ha twiiteado\n    "), "\n  ");                                                                              // 48
-}));                                                                                                                 // 49
-                                                                                                                     // 50
+      })), "\n        " ];                                                                                           // 22
+    }, function() {                                                                                                  // 23
+      return [ "\n          ", Blaze.If(function() {                                                                 // 24
+        return Spacebars.call(view.lookup("infoStateCollapseNavBar"));                                               // 25
+      }, function() {                                                                                                // 26
+        return [ "\n            ", HTML.SPAN({                                                                       // 27
+          class: "badge badge-inverse"                                                                               // 28
+        }, Blaze.View("lookup:notificationCount", function() {                                                       // 29
+          return Spacebars.mustache(view.lookup("notificationCount"));                                               // 30
+        })), "\n          " ];                                                                                       // 31
+      }), "\n        " ];                                                                                            // 32
+    }), "\n      " ];                                                                                                // 33
+  }), "\n  "), "\n  ", HTML.UL({                                                                                     // 34
+    class: "notification dropdown-menu dropdown-menu-center"                                                         // 35
+  }, "\n    ", Blaze.If(function() {                                                                                 // 36
+    return Spacebars.call(view.lookup("notificationCount"));                                                         // 37
+  }, function() {                                                                                                    // 38
+    return [ "\n      ", Blaze.Each(function() {                                                                     // 39
+      return Spacebars.call(view.lookup("notifications"));                                                           // 40
+    }, function() {                                                                                                  // 41
+      return [ "\n        ", Spacebars.include(view.lookupTemplate("notificationItem")), "\n      " ];               // 42
+    }), "\n    " ];                                                                                                  // 43
+  }, function() {                                                                                                    // 44
+    return [ "\n      ", HTML.LI(HTML.SPAN("No Notifications")), "\n    " ];                                         // 45
+  }), "\n  ") ];                                                                                                     // 46
+}));                                                                                                                 // 47
+                                                                                                                     // 48
+Template.__checkName("notificationItem");                                                                            // 49
+Template["notificationItem"] = new Template("Template.notificationItem", (function() {                               // 50
+  var view = this;                                                                                                   // 51
+  return HTML.LI("\n    ", HTML.A({                                                                                  // 52
+    href: function() {                                                                                               // 53
+      return Spacebars.mustache(view.lookup("pathFor"), "twiitPage");                                                // 54
+    }                                                                                                                // 55
+  }, "\n      ", HTML.STRONG(Blaze.View("lookup:twiitNotifUserName", function() {                                    // 56
+    return Spacebars.mustache(view.lookup("twiitNotifUserName"));                                                    // 57
+  })), " ha twiiteado\n    "), "\n  ");                                                                              // 58
+}));                                                                                                                 // 59
+                                                                                                                     // 60
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.notificationsNew.js":function(){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                   //
+// client/partialTemplates/template.notificationsNew.js                                                              //
+//                                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                     //
+                                                                                                                     // 1
+Template.__checkName("notificationsNew");                                                                            // 2
+Template["notificationsNew"] = new Template("Template.notificationsNew", (function() {                               // 3
+  var view = this;                                                                                                   // 4
+  return [ HTML.A({                                                                                                  // 5
+    id: "linkToNotif",                                                                                               // 6
+    class: "dropdown-toggle",                                                                                        // 7
+    "data-toggle": "dropdown",                                                                                       // 8
+    role: "button",                                                                                                  // 9
+    "aria-haspopup": "true",                                                                                         // 10
+    "aria-expanded": "false"                                                                                         // 11
+  }, "\n    ", HTML.Raw("<!--Notificaciones-->"), "\n    ", HTML.Raw('<span class="glyphicon glyphicon-inbox"></span>'), "\n\n      ", Blaze.If(function() {
+    return Spacebars.call(view.lookup("notificationCount"));                                                         // 13
+  }, function() {                                                                                                    // 14
+    return [ "\n        ", Blaze.If(function() {                                                                     // 15
+      return Spacebars.call(view.lookup("modeDisplay"));                                                             // 16
+    }, function() {                                                                                                  // 17
+      return [ "\n          ", HTML.SPAN({                                                                           // 18
+        class: "badge badge-inverse"                                                                                 // 19
+      }, Blaze.View("lookup:notificationCount", function() {                                                         // 20
+        return Spacebars.mustache(view.lookup("notificationCount"));                                                 // 21
+      })), "\n        " ];                                                                                           // 22
+    }, function() {                                                                                                  // 23
+      return [ "\n          ", Blaze.If(function() {                                                                 // 24
+        return Spacebars.call(view.lookup("infoStateCollapseNavBar"));                                               // 25
+      }, function() {                                                                                                // 26
+        return [ "\n            ", HTML.SPAN({                                                                       // 27
+          class: "badge badge-inverse"                                                                               // 28
+        }, Blaze.View("lookup:notificationCount", function() {                                                       // 29
+          return Spacebars.mustache(view.lookup("notificationCount"));                                               // 30
+        })), "\n          " ];                                                                                       // 31
+      }), "\n        " ];                                                                                            // 32
+    }), "\n      " ];                                                                                                // 33
+  }), "\n  "), "\n  ", Blaze.Unless(function() {                                                                     // 34
+    return Spacebars.call(view.lookup("notificationCount"));                                                         // 35
+  }, function() {                                                                                                    // 36
+    return [ "\n  ", HTML.UL({                                                                                       // 37
+      class: "notification dropdown-menu dropdown-menu-center"                                                       // 38
+    }, "\n    ", HTML.LI(HTML.SPAN("No Notifications")), "\n  "), "\n  " ];                                          // 39
+  }) ];                                                                                                              // 40
+}));                                                                                                                 // 41
+                                                                                                                     // 42
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.tweetBox.js":function(){
@@ -377,6 +443,61 @@ Template["tweetFeedProfile"] = new Template("Template.tweetFeedProfile", (functi
                                                                                                                      // 1
 Template.__checkName("twiitPage");                                                                                   // 2
 Template["twiitPage"] = new Template("Template.twiitPage", (function() {                                             // 3
+  var view = this;                                                                                                   // 4
+  return HTML.DIV({                                                                                                  // 5
+    class: "tweetfeed-container"                                                                                     // 6
+  }, "\n    ", HTML.DIV({                                                                                            // 7
+    class: "panel panel-default tweetfeed"                                                                           // 8
+  }, "\n      ", HTML.DIV({                                                                                          // 9
+    class: "panel-body"                                                                                              // 10
+  }, "\n        ", HTML.Raw("<!-- Texto para el contenido del Twitt -->"), "\n        ", Blaze.If(function() {       // 11
+    return Spacebars.call(view.lookup("countNotifTwiit"));                                                           // 12
+  }, function() {                                                                                                    // 13
+    return [ "\n          ", Blaze.Each(function() {                                                                 // 14
+      return Spacebars.call(view.lookup("tweetMessage"));                                                            // 15
+    }, function() {                                                                                                  // 16
+      return [ "\n            ", HTML.DIV({                                                                          // 17
+        class: "panel panel-info"                                                                                    // 18
+      }, "\n              ", HTML.DIV({                                                                              // 19
+        class: "panel-heading"                                                                                       // 20
+      }, "\n                ", HTML.H3({                                                                             // 21
+        class: "panel-title"                                                                                         // 22
+      }, "@", Blaze.View("lookup:..twiitNotifUserName", function() {                                                 // 23
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "twiitNotifUserName"));                            // 24
+      }), " \n                  ", HTML.SPAN({                                                                       // 25
+        class: "glyphicon glyphicon-triangle-right",                                                                 // 26
+        "aria-hidden": "true"                                                                                        // 27
+      }), "\n                   ", Blaze.View("lookup:convertDateTime", function() {                                 // 28
+        return Spacebars.mustache(view.lookup("convertDateTime"));                                                   // 29
+      }), "\n                 "), "\n              "), "\n              ", HTML.DIV({                                // 30
+        class: "panel-body"                                                                                          // 31
+      }, "\n                ", Blaze.View("lookup:..twiitMessage", function() {                                      // 32
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "twiitMessage"));                                  // 33
+      }), "\n              "), "\n            "), "\n          " ];                                                  // 34
+    }), "\n           ", HTML.BUTTON({                                                                               // 35
+      class: "btn btn-info pull-right",                                                                              // 36
+      type: "button"                                                                                                 // 37
+    }, "OK"), "\n        " ];                                                                                        // 38
+  }, function() {                                                                                                    // 39
+    return [ "\n          ", HTML.DIV({                                                                              // 40
+      class: "panel-info"                                                                                            // 41
+    }, "\n            ", HTML.P("Oooooooops"), "    \n          "), "\n        " ];                                  // 42
+  }), "\n      "), "\n    "), "\n  ");                                                                               // 43
+}));                                                                                                                 // 44
+                                                                                                                     // 45
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.twiitPageNew.js":function(){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                   //
+// client/partialTemplates/template.twiitPageNew.js                                                                  //
+//                                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                     //
+                                                                                                                     // 1
+Template.__checkName("twiitPageNew");                                                                                // 2
+Template["twiitPageNew"] = new Template("Template.twiitPageNew", (function() {                                       // 3
   var view = this;                                                                                                   // 4
   return HTML.DIV({                                                                                                  // 5
     class: "tweetfeed-container"                                                                                     // 6
@@ -641,46 +762,68 @@ Template.followUsers.onRendered(function () {                                   
                                                                                                                      //
 Template.navBarTemplate.onCreated(function () {                                                                      // 1
 	Session.set('sizeDisplay', $(window).width());                                                                      // 2
-});                                                                                                                  // 3
+	Session.set('navBarCollapse', false);                                                                               // 3
+});                                                                                                                  // 4
                                                                                                                      //
-Template.navBarTemplate.events({                                                                                     // 5
-	'click #recommendationsBtn': function () {                                                                          // 6
-		function clickRecommendationsBtn() {                                                                               // 6
+Template.navBarTemplate.events({                                                                                     // 6
+	'click #recommendationsBtn': function () {                                                                          // 7
+		function clickRecommendationsBtn() {                                                                               // 7
 			//console.log("A quien seguir");                                                                                  //
-		}                                                                                                                  // 8
+		}                                                                                                                  // 9
                                                                                                                      //
-		return clickRecommendationsBtn;                                                                                    // 6
-	}(),                                                                                                                // 6
-	'click #imgProfile': function () {                                                                                  // 9
-		function clickImgProfile() {                                                                                       // 9
-			window.location = "/myProfile";                                                                                   // 10
-		}                                                                                                                  // 11
+		return clickRecommendationsBtn;                                                                                    // 7
+	}(),                                                                                                                // 7
+	'click #imgProfile': function () {                                                                                  // 10
+		function clickImgProfile() {                                                                                       // 10
+			window.location = "/myProfile";                                                                                   // 11
+		}                                                                                                                  // 12
                                                                                                                      //
-		return clickImgProfile;                                                                                            // 9
-	}(),                                                                                                                // 9
-	'click #imgLogTwiiterClone': function () {                                                                          // 12
-		function clickImgLogTwiiterClone() {                                                                               // 12
-			window.location = "/";                                                                                            // 13
-		}                                                                                                                  // 14
+		return clickImgProfile;                                                                                            // 10
+	}(),                                                                                                                // 10
+	'click #imgLogTwiiterClone': function () {                                                                          // 13
+		function clickImgLogTwiiterClone() {                                                                               // 13
+			window.location = "/";                                                                                            // 14
+		}                                                                                                                  // 15
                                                                                                                      //
-		return clickImgLogTwiiterClone;                                                                                    // 12
-	}()                                                                                                                 // 12
-});                                                                                                                  // 5
+		return clickImgLogTwiiterClone;                                                                                    // 13
+	}(),                                                                                                                // 13
+	'show.bs.collapse': function () {                                                                                   // 16
+		function showBsCollapse() {                                                                                        // 16
+			Session.set('navBarCollapse', true);                                                                              // 17
+		}                                                                                                                  // 18
                                                                                                                      //
-Template.navBarTemplate.helpers({                                                                                    // 17
-	'notificationCount': function () {                                                                                  // 18
-		function notificationCount() {                                                                                     // 18
-			return UserUtils.findNumberNotif(Meteor.user().username);                                                         // 19
-		}                                                                                                                  // 20
+		return showBsCollapse;                                                                                             // 16
+	}(),                                                                                                                // 16
+	'hide.bs.collapse': function () {                                                                                   // 19
+		function hideBsCollapse() {                                                                                        // 19
+			Session.set('navBarCollapse', false);                                                                             // 20
+		}                                                                                                                  // 21
                                                                                                                      //
-		return notificationCount;                                                                                          // 18
-	}()                                                                                                                 // 18
-});                                                                                                                  // 17
+		return hideBsCollapse;                                                                                             // 19
+	}()                                                                                                                 // 19
+});                                                                                                                  // 6
+                                                                                                                     //
+Template.navBarTemplate.helpers({                                                                                    // 24
+	'notificationCount': function () {                                                                                  // 25
+		function notificationCount() {                                                                                     // 25
+			return UserUtils.findNumberNotif(Meteor.user().username);                                                         // 26
+		}                                                                                                                  // 27
+                                                                                                                     //
+		return notificationCount;                                                                                          // 25
+	}(),                                                                                                                // 25
+	'infoStateCollapseNavBar': function () {                                                                            // 28
+		function infoStateCollapseNavBar() {                                                                               // 28
+			return Session.get('navBarCollapse');                                                                             // 29
+		}                                                                                                                  // 30
+                                                                                                                     //
+		return infoStateCollapseNavBar;                                                                                    // 28
+	}()                                                                                                                 // 28
+});                                                                                                                  // 24
 //PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                  //
-$(window).resize(function () {                                                                                       // 23
-	console.log("Change");                                                                                              // 24
-	Session.set('sizeDisplay', $(window).width());                                                                      // 25
-});                                                                                                                  // 26
+$(window).resize(function () {                                                                                       // 33
+	console.log("Change");                                                                                              // 34
+	Session.set('sizeDisplay', $(window).width());                                                                      // 35
+});                                                                                                                  // 36
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"notifications.js":function(){
@@ -728,7 +871,14 @@ Template.notifications.helpers({                                                
     }                                                                                                                // 26
                                                                                                                      //
     return notificationCount;                                                                                        // 20
-  }()                                                                                                                // 20
+  }(),                                                                                                               // 20
+  'infoStateCollapseNavBar': function () {                                                                           // 27
+    function infoStateCollapseNavBar() {                                                                             // 27
+      return Session.get('navBarCollapse');                                                                          // 28
+    }                                                                                                                // 29
+                                                                                                                     //
+    return infoStateCollapseNavBar;                                                                                  // 27
+  }()                                                                                                                // 27
 });                                                                                                                  // 7
                                                                                                                      //
 /*                                                                                                                   //
@@ -747,6 +897,72 @@ Template.notificationItem.events({                                              
   }                                                                                                                  //
 });                                                                                                                  //
 */                                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"notificationsNew.js":function(){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                   //
+// client/partialTemplates/notificationsNew.js                                                                       //
+//                                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                     //
+Template.notificationsNew.onCreated(function () {                                                                    // 1
+  //console.log("Usuario: ");                                                                                        //
+  //console.log(Meteor.user().username);                                                                             //
+  Meteor.subscribe('notifications', Meteor.user().username);                                                         // 4
+});                                                                                                                  // 5
+                                                                                                                     //
+Template.notificationsNew.helpers({                                                                                  // 7
+  modeDisplay: function () {                                                                                         // 8
+    function modeDisplay() {                                                                                         // 8
+      var size = Session.get('sizeDisplay');                                                                         // 9
+      if (size > 768) {                                                                                              // 10
+        return true;                                                                                                 // 11
+      } else {                                                                                                       // 12
+        return false;                                                                                                // 13
+      }                                                                                                              // 14
+    }                                                                                                                // 15
+                                                                                                                     //
+    return modeDisplay;                                                                                              // 8
+  }(),                                                                                                               // 8
+  notifications: function () {                                                                                       // 16
+    function notifications() {                                                                                       // 16
+      followings = UserUtils.findFollowings(Meteor.user().username);                                                 // 17
+      return Notifications.find({ twiitNotifUserName: { $nin: followings }, read: false });                          // 18
+    }                                                                                                                // 19
+                                                                                                                     //
+    return notifications;                                                                                            // 16
+  }(),                                                                                                               // 16
+  notificationCount: function () {                                                                                   // 20
+    function notificationCount() {                                                                                   // 20
+      /*                                                                                                             //
+      var followings = UserUtils.findFollowings(Meteor.user().username);                                             //
+      return Notifications.find({twiitNotifUserName: { $nin: followings }, read: false}).count();                    //
+      */                                                                                                             //
+      return UserUtils.findNumberNotif(Meteor.user().username);                                                      // 25
+    }                                                                                                                // 26
+                                                                                                                     //
+    return notificationCount;                                                                                        // 20
+  }(),                                                                                                               // 20
+  'infoStateCollapseNavBar': function () {                                                                           // 27
+    function infoStateCollapseNavBar() {                                                                             // 27
+      return Session.get('navBarCollapse');                                                                          // 28
+    }                                                                                                                // 29
+                                                                                                                     //
+    return infoStateCollapseNavBar;                                                                                  // 27
+  }()                                                                                                                // 27
+});                                                                                                                  // 7
+                                                                                                                     //
+Template.notificationsNew.events({                                                                                   // 32
+  'click #linkToNotif': function () {                                                                                // 33
+    function clickLinkToNotif() {                                                                                    // 33
+      window.location = "/Notifications";                                                                            // 34
+    }                                                                                                                // 35
+                                                                                                                     //
+    return clickLinkToNotif;                                                                                         // 33
+  }()                                                                                                                // 33
+});                                                                                                                  // 32
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"tweetBox.js":function(){
@@ -907,6 +1123,63 @@ Template.tweetFeedProfile.helpers({                                             
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //
 // client/partialTemplates/twiitPage.js                                                                              //
+//                                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                     //
+Template.twiitPage.helpers({                                                                                         // 1
+  'convertDateTime': function () {                                                                                   // 2
+    function convertDateTime() {                                                                                     // 2
+      var dateNew = new Date(this.twiitTimeStamp);                                                                   // 3
+      var dateCon = dateNew.toLocaleString();                                                                        // 4
+      return dateCon;                                                                                                // 5
+    }                                                                                                                // 6
+                                                                                                                     //
+    return convertDateTime;                                                                                          // 2
+  }(),                                                                                                               // 2
+                                                                                                                     //
+  'tweetMessage': function () {                                                                                      // 8
+    function tweetMessage() {                                                                                        // 8
+      console.log(this._id);                                                                                         // 9
+      var notify = Notifications.find({ _id: this._id });                                                            // 10
+      return notify;                                                                                                 // 11
+    }                                                                                                                // 12
+                                                                                                                     //
+    return tweetMessage;                                                                                             // 8
+  }(),                                                                                                               // 8
+                                                                                                                     //
+  'countNotifTwiit': function () {                                                                                   // 14
+    function countNotifTwiit() {                                                                                     // 14
+      var num = Notifications.find({ _id: this._id }).count();                                                       // 15
+      if (num === 0) {                                                                                               // 16
+        return false;                                                                                                // 17
+      } else {                                                                                                       // 18
+        return true;                                                                                                 // 19
+      }                                                                                                              // 20
+    }                                                                                                                // 21
+                                                                                                                     //
+    return countNotifTwiit;                                                                                          // 14
+  }()                                                                                                                // 14
+});                                                                                                                  // 1
+                                                                                                                     //
+Template.twiitPage.events({                                                                                          // 24
+  'click button': function () {                                                                                      // 25
+    function clickButton() {                                                                                         // 25
+      console.log(this._id);                                                                                         // 26
+      Notifications.update(this._id, { $set: { read: true } });                                                      // 27
+      console.log("Clean!");                                                                                         // 28
+      window.location = "/";                                                                                         // 29
+    }                                                                                                                // 30
+                                                                                                                     //
+    return clickButton;                                                                                              // 25
+  }()                                                                                                                // 25
+});                                                                                                                  // 24
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"twiitPageNew.js":function(){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                   //
+// client/partialTemplates/twiitPageNew.js                                                                           //
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                      //
@@ -1155,18 +1428,21 @@ Router.configure({                                                              
 });                                                                                                                  // 1
                                                                                                                      //
 Router.route('/', { name: 'userManagement' });                                                                       // 6
-Router.route('/whoToFollow', { name: 'followUsers' });                                                               // 7
-Router.route('/myProfile', { name: 'userProfile' });                                                                 // 8
-Router.route('/twiits/:_id', {                                                                                       // 9
-  name: 'twiitPage',                                                                                                 // 10
-  data: function () {                                                                                                // 11
-    function data() {                                                                                                // 11
-      return this.params;                                                                                            // 12
-    }                                                                                                                // 13
+/*SE ACCEDE POR WINDOW.LOCATION*/                                                                                    //
+Router.route('/whoToFollow', { name: 'followUsers' });                                                               // 8
+Router.route('/myProfile', { name: 'userProfile' });                                                                 // 9
+Router.route('/Notifications', { name: 'twiitPageNew' });                                                            // 10
+/*SE ACCEDE POR PATHFOR*/                                                                                            //
+Router.route('/twiits/:_id', {                                                                                       // 12
+  name: 'twiitPage',                                                                                                 // 13
+  data: function () {                                                                                                // 14
+    function data() {                                                                                                // 14
+      return this.params;                                                                                            // 15
+    }                                                                                                                // 16
                                                                                                                      //
-    return data;                                                                                                     // 11
-  }()                                                                                                                // 11
-});                                                                                                                  // 9
+    return data;                                                                                                     // 14
+  }()                                                                                                                // 14
+});                                                                                                                  // 12
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -1244,10 +1520,12 @@ require("./client/partialTemplates/template.navBarNew.js");
 require("./client/partialTemplates/template.navBarTemplate.js");
 require("./client/partialTemplates/template.not_found.js");
 require("./client/partialTemplates/template.notifications.js");
+require("./client/partialTemplates/template.notificationsNew.js");
 require("./client/partialTemplates/template.tweetBox.js");
 require("./client/partialTemplates/template.tweetFeed.js");
 require("./client/partialTemplates/template.tweetFeedProfile.js");
 require("./client/partialTemplates/template.twiitPage.js");
+require("./client/partialTemplates/template.twiitPageNew.js");
 require("./client/partialTemplates/template.userManagement.js");
 require("./client/partialTemplates/template.userProfile.js");
 require("./client/template.main.js");
@@ -1258,10 +1536,12 @@ require("./lib/userUtils.js");
 require("./client/partialTemplates/followUsers.js");
 require("./client/partialTemplates/navBarTemplate.js");
 require("./client/partialTemplates/notifications.js");
+require("./client/partialTemplates/notificationsNew.js");
 require("./client/partialTemplates/tweetBox.js");
 require("./client/partialTemplates/tweetFeed.js");
 require("./client/partialTemplates/tweetFeedProfile.js");
 require("./client/partialTemplates/twiitPage.js");
+require("./client/partialTemplates/twiitPageNew.js");
 require("./client/partialTemplates/userManagement.js");
 require("./client/partialTemplates/userProfile.js");
 require("./client/main.js");
