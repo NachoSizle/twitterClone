@@ -22,7 +22,8 @@ Template.notificationsNew.helpers({
     var followings = UserUtils.findFollowings(Meteor.user().username);
     return Notifications.find({twiitNotifUserName: { $nin: followings }, read: false}).count();
     */
-    return UserUtils.findNumberNotif(Meteor.user().username);
+    numNotif = UserUtils.findNumberNotif(Meteor.user().username);
+    return numNotif;
   },
   'infoStateCollapseNavBar': function() {
     return Session.get('navBarCollapse');
@@ -31,6 +32,8 @@ Template.notificationsNew.helpers({
 
 Template.notificationsNew.events({
   'click #linkToNotif' : function(){
-    window.location = "/Notifications";
+    if(numNotif > 0){
+      window.location = "/Notifications";
+    }
   }
 });

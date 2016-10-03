@@ -3,14 +3,10 @@
 	  <div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
 	    <div class="navbar-header">
-	    <!--
-	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
+	      <button type="button" id="btnNewTweet" class="navbar-toggle collapsed" data-toggle="modal" data-target="#dialog-NewTwiit">
+	        <span class="glyphicon glyphicon-pencil"></span>
 	      </button>
-		-->
+
 	      <button type="button" id="btnMenuNavBar" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
       		<span class="sr-only">Toggle navigation</span>
       		<span class="glyphicon glyphicon-tasks"></span>
@@ -28,6 +24,10 @@
           A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO
           <a class="navbar-brand" href="/">twiiterClone</a>
           -->
+	    </div>
+
+	    <div class="modal fade" id="dialog-NewTwiit">
+	    	{{> tweetBox}}
 	    </div>
 
 		<!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->

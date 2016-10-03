@@ -1,4 +1,10 @@
-Template.twiitPage.helpers({  
+Template.twiitPageNew.onCreated(function() {  
+  username = Session.get('currentUser');
+  currentFollowings = UserUtils.findFollowings(username);
+  arrWithId = [];
+});
+
+Template.twiitPageNew.helpers({  
   'convertDateTime': function() {
   	var dateNew = new Date(this.twiitTimeStamp);
   	var dateCon = dateNew.toLocaleString();
@@ -6,26 +12,31 @@ Template.twiitPage.helpers({
   },
 
   'tweetMessage': function() {
-    console.log(this._id);
-    var notify =  Notifications.find({_id: this._id});
+    var notify =  Notifications.find({twiitNotifUserName: { $nin: currentFollowings}, read: false}, {sort: {twiitTimeStamp: -1}});
     return notify;
   },
 
   'countNotifTwiit' : function(){
-    var num =  Notifications.find({_id: this._id}).count();
-    if(num === 0){
+    var numNotif =  UserUtils.findNumberNotif(username);
+    if(numNotif === 0){
       return false;
     } else {
       return true;
     }
+  },
+  'saveIdInArr' : function(){
+    arrWithId.push(this._id);
+    console.log(arrWithId);
   }
 });
 
-Template.twiitPage.events({
+Template.twiitPageNew.events({
   'click button': function() {
-    console.log(this._id);
-    Notifications.update(this._id, {$set: {read: true}});
-    console.log("Clean!");
+    console.log(arrWithId);
+    for (var aux in arrWithId){
+      var id = arrWithId[aux];
+      Notifications.update(id, {$set: {read: true}});
+    }
     window.location = "/";
   },
 });

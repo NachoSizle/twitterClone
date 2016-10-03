@@ -1,6 +1,7 @@
 Template.navBarTemplate.onCreated( function() {
 	Session.set('sizeDisplay', $(window).width());
 	Session.set('navBarCollapse', false);
+	Session.set('currentUser',Meteor.user().username);
 });
 
 Template.navBarTemplate.events({
@@ -18,7 +19,7 @@ Template.navBarTemplate.events({
 	},
 	'hide.bs.collapse' : function(){
 		Session.set('navBarCollapse', false);
-	} 
+	}
 });
 
 Template.navBarTemplate.helpers({

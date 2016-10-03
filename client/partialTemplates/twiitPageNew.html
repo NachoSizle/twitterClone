@@ -3,8 +3,9 @@
     <div class="panel panel-default tweetfeed">
       <div class="panel-body">
         <!-- Texto para el contenido del Twitt -->
-        {{# if countNotifTwiit}}
+        {{#if countNotifTwiit}}
           {{#each tweetMessage}}
+            {{saveIdInArr}}
             <div class="panel panel-info">
               <div class="panel-heading">
                 <h3 class="panel-title">@{{this.twiitNotifUserName}} 
@@ -20,7 +21,7 @@
            <button class="btn btn-info pull-right" type="button">OK</button>
         {{else}}
           <div class="panel-info">
-            <p>Oooooooops</p>    
+            <p>Oooooooops Twiit Page New</p>    
           </div>
         {{/if}}
       </div>

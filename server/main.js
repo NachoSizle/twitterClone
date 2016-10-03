@@ -6,7 +6,24 @@ Meteor.startup(() => {
   
   Twitts.allow({
 	insert: function(userId, disconnect) {
-	   return true;
+	   	return true;
+	},
+	update: function(id, doc){
+		return true;
 	}
   });
+
+  Favs.allow({
+  	update: function(userId, doc) {
+	    return true;
+  	}
+  });
+
+  Notifications.allow({
+  	update: function(userId, doc) {
+	    return true;
+  	}
+  });
+
+
 });

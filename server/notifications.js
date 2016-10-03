@@ -1,13 +1,3 @@
-Notifications.allow({
-  update: function(userId, doc) {
-    //console.log(userId);
-    console.log("Update");
-    //console.log(fieldNames);
-    //Notifications.update({ _id: doc.twiitId }, { $set: {read: true }});
-    return true;
-  }
-});
-
 Meteor.methods({ 
   'createTwiitNotification' : function(twiitNotifId) {
     var twiit = Twitts.findOne(twiitNotifId);
