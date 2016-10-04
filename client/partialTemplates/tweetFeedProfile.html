@@ -4,17 +4,33 @@
       <div class="panel-body">
         <!-- Texto para el contenido del Twitt -->
         {{#each tweetMessageProfile}}
-          <div class="panel panel-info">
-            <div class="panel-heading">
+          <div class="panel panel-info"><!--Contenido de la cabecera + el mensaje del twiit-->
+            <div class="panel-heading"><!--Cabecera del twiit-->
               <h3 class="panel-title">@{{this.user}} 
                 <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                 {{convertDateTime}}
-               </h3>
-            </div>
-            <div class="panel-body">
+                {{convertDateTime}}
+              </h3>
+            </div><!--Cabecera del twiit-->
+            <div class="panel-body"><!--Contenido del twiit-->
               {{this.message}}
+            </div><!--Contenido del twiit-->
+
+            <div class="btn-group" role="group" id="btnGroupInteractions">
+              <button type="button" class="btn btn-secondary">
+                <span class="glyphicon glyphicon-bullhorn"></span>
+              </button>
+
+              <button type="button" id="btnComm" class="btn btn-secondary" data-toggle="modal" data-target="#dialog-NewTwiit">
+                <span class="glyphicon glyphicon-comment"></span>
+                <span class="badge-numFav badge">{{this.numComment}}</span>
+              </button>
+              
+              <button type="button" id="btnFav" class="btn btn-secondary">
+                <span class="glyphicon glyphicon-heart"></span>
+                <span class="badge-numFav badge">{{this.numFav}}</span>
+              </button>
             </div>
-          </div>
+          </div><!--Contenido de la cabecera + el mensaje del twiit-->
         {{/each}}
       </div>
     </div>

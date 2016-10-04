@@ -10,16 +10,26 @@ if(Meteor.isClient){
 	    	Session.set('numChars', $('#tweetText').val().length);
 	  	},
 	  	'click button': function() {  
-			var tweet = $('#tweetText').val();
+			var message = $('#tweetText').val();
+			var type = Session.get('commentMode');
+
+			if(type){
+				var twiitId = Session.get('twiitIdToComment');
+				var numComment = UserUtils.findNumComment(twiitId);
+				numComment++;
+			}
+
 			$('#tweetText').val("");
 			Session.set('numChars', 0);
+
+			var tweet = new Object();
+			tweet.message = message;
+			tweet.type = type;
+			if(twiitId != null){
+				tweet.twiitId = twiitId;
+				tweet.numComment = numComment;
+			}
 			Meteor.call('insertTweet', tweet);
-			//Twitts.insert({message: twitt, user: Meteor.user().username});
-	    	//UNA VEZ QUE INSERTAMOS EL TWEET HACE FALTA AVISAR A METEOR DE QUE HEMOS METIDO UN NUEVO TWEET
-			//PARA ELLO BASTA CON FORZAR LA REACTIVIDAD
-			if(UserUtils.observerProperties()){
-				console.log("Se han detectado cambios");
-			};
 	    }
 	});
 

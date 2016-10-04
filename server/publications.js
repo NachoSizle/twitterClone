@@ -17,6 +17,12 @@ Meteor.publish('twittsProfile', function(username) {
   }
 });
 
+Meteor.publish('twittsWithComment', function(idTweet) {  
+  if (Meteor.userId) {
+    return Twitts.find({_id: idTweet});
+  }
+});
+
 Meteor.publish('notifications', function(username) {
   console.log(username);
   var currentFollowings = UserUtils.findFollowings(username);

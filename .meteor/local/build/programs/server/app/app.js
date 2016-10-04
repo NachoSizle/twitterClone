@@ -1,4 +1,15 @@
-var require = meteorInstall({"lib":{"collections":{"notifications.js":function(){
+var require = meteorInstall({"lib":{"collections":{"favs.js":function(){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                          //
+// lib/collections/favs.js                                                                                  //
+//                                                                                                          //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                            //
+Favs = new Meteor.Collection('favs');                                                                       // 1
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"notifications.js":function(){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                          //
@@ -18,8 +29,7 @@ Notifications = new Mongo.Collection('notifications');                          
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                             //
 Twitts = new Meteor.Collection('twitts');                                                                   // 1
-Favs = new Meteor.Collection('favs');                                                                       // 2
-Relationships = new Meteor.Collection('relationships');                                                     // 3
+Relationships = new Meteor.Collection('relationships');                                                     // 2
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"router.js":function(){
@@ -40,13 +50,14 @@ Router.route('/', { name: 'userManagement' });                                  
 Router.route('/whoToFollow', { name: 'followUsers' });                                                      // 8
 Router.route('/myProfile', { name: 'userProfile' });                                                        // 9
 Router.route('/Notifications', { name: 'twiitPageNew' });                                                   // 10
+Router.route('/Comments', { name: 'twiitCommentPage' });                                                    // 11
 /*SE ACCEDE POR PATHFOR*/                                                                                   //
-Router.route('/twiits/:_id', {                                                                              // 12
-  name: 'twiitPage',                                                                                        // 13
-  data: function data() {                                                                                   // 14
-    return this.params;                                                                                     // 15
-  }                                                                                                         // 16
-});                                                                                                         // 12
+Router.route('/twiits/:_id', {                                                                              // 13
+  name: 'twiitPage',                                                                                        // 14
+  data: function data() {                                                                                   // 15
+    return this.params;                                                                                     // 16
+  }                                                                                                         // 17
+});                                                                                                         // 13
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -113,17 +124,63 @@ UserUtils.findNumberFavPerTwiit = function (idTwiit) {                          
   return twiitNumFav;                                                                                       // 54
 };                                                                                                          // 55
                                                                                                             //
-UserUtils.addFavToTwiit = function (id, idUser) {                                                           // 57
+UserUtils.findFavsForTwiit = function (id) {                                                                // 57
+  return Favs.findOne({ idTwiit: id });                                                                     // 58
+};                                                                                                          // 59
+                                                                                                            //
+UserUtils.addFavToTwiit = function (id, idUser) {                                                           // 61
+  var resultToUpdate = false;                                                                               // 62
   //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT      //
-  var arrAux = Favs.findOne({ idTwiit: id }).idUserTapFav;                                                  // 59
-  arrAux.push(idUser);                                                                                      // 60
-  var num = UserUtils.findNumberFavPerTwiit(id);                                                            // 61
-  num++;                                                                                                    // 62
+  var favObject = UserUtils.findFavsForTwiit(id);                                                           // 64
+  var arrAux = favObject.idUserTapFav;                                                                      // 65
+  var idFav = favObject._id;                                                                                // 66
+                                                                                                            //
+  arrAux.push(idUser);                                                                                      // 68
+  var num = UserUtils.findNumberFavPerTwiit(id);                                                            // 69
+  num++;                                                                                                    // 70
                                                                                                             //
   //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                                 //
-  Favs.update(id, { $set: { idUserTapFav: arrAux } });                                                      // 65
-  Twitts.update(id, { $set: { numFav: num } });                                                             // 66
-};                                                                                                          // 67
+  res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                             // 73
+  resT = Twitts.update(id, { $set: { numFav: num } });                                                      // 74
+                                                                                                            //
+  //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                      //
+  if (res && resT) {                                                                                        // 77
+    resultToUpdate = true;                                                                                  // 78
+  }                                                                                                         // 79
+                                                                                                            //
+  return resultToUpdate;                                                                                    // 81
+};                                                                                                          // 82
+                                                                                                            //
+UserUtils.removeFavToTwiit = function (id, idUser) {                                                        // 84
+  var resultToUpdate = false;                                                                               // 85
+  //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT      //
+  var favObject = UserUtils.findFavsForTwiit(id);                                                           // 87
+  var arrAux = favObject.idUserTapFav;                                                                      // 88
+  var idFav = favObject._id;                                                                                // 89
+                                                                                                            //
+  //HAY QUE AVERIGUAR LA POSICION DEL idUser DENTRO DEL ARRAY DE LA BBDD                                    //
+  var posIdUser = arrAux.indexOf(idUser);                                                                   // 92
+  //AHORA ELIMINAMOS EL ELEMENTO ASOCIADO A ESA POSICION                                                    //
+  delete arrAux[posIdUser];                                                                                 // 94
+                                                                                                            //
+  var num = UserUtils.findNumberFavPerTwiit(id);                                                            // 96
+  num--;                                                                                                    // 97
+                                                                                                            //
+  //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                                 //
+  res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                             // 100
+  resT = Twitts.update(id, { $set: { numFav: num } });                                                      // 101
+                                                                                                            //
+  //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                      //
+  if (res && resT) {                                                                                        // 104
+    resultToUpdate = true;                                                                                  // 105
+  }                                                                                                         // 106
+                                                                                                            //
+  return resultToUpdate;                                                                                    // 108
+};                                                                                                          // 109
+                                                                                                            //
+UserUtils.findNumComment = function (idTweet) {                                                             // 111
+  return Twitts.findOne({ _id: idTweet }).numComment;                                                       // 112
+};                                                                                                          // 113
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"server":{"followUsers.js":function(){
@@ -218,16 +275,22 @@ Meteor.publish('twittsProfile', function (username) {                           
   }                                                                                                         // 17
 });                                                                                                         // 18
                                                                                                             //
-Meteor.publish('notifications', function (username) {                                                       // 20
-  console.log(username);                                                                                    // 21
-  var currentFollowings = UserUtils.findFollowings(username);                                               // 22
-  console.log(Notifications.find({ twiitNotifUserName: { $in: currentFollowings }, read: false }).count());
-  return Notifications.find({ twiitNotifUserName: { $in: currentFollowings }, read: false });               // 24
-});                                                                                                         // 25
+Meteor.publish('twittsWithComment', function (idTweet) {                                                    // 20
+  if (Meteor.userId) {                                                                                      // 21
+    return Twitts.find({ _id: idTweet });                                                                   // 22
+  }                                                                                                         // 23
+});                                                                                                         // 24
                                                                                                             //
-Meteor.publish('favs', function () {                                                                        // 27
-  return Favs.find();                                                                                       // 28
-});                                                                                                         // 29
+Meteor.publish('notifications', function (username) {                                                       // 26
+  console.log(username);                                                                                    // 27
+  var currentFollowings = UserUtils.findFollowings(username);                                               // 28
+  console.log(Notifications.find({ twiitNotifUserName: { $in: currentFollowings }, read: false }).count());
+  return Notifications.find({ twiitNotifUserName: { $in: currentFollowings }, read: false });               // 30
+});                                                                                                         // 31
+                                                                                                            //
+Meteor.publish('favs', function () {                                                                        // 33
+  return Favs.find();                                                                                       // 34
+});                                                                                                         // 35
 /*                                                                                                          //
 Meteor.publishComposite('twitts', function(username) {                                                      //
   return {                                                                                                  //
@@ -256,38 +319,60 @@ Meteor.publishComposite('twitts', function(username) {                          
                                                                                                             //
 Meteor.methods({                                                                                            // 1
   'insertTweet': function insertTweet(tweet) {                                                              // 2
-    /*                                                                                                      //
-    twiit = _.extend(tweet, {                                                                               //
-       user: Meteor.user().username,                                                                        //
-       message: tweet,                                                                                      //
-       timestamp: new Date()                                                                                //
-     });                                                                                                    //
-     */                                                                                                     //
-    twiit = new Object();                                                                                   // 10
-    twiit.message = tweet;                                                                                  // 11
-    twiit.user = Meteor.user().username;                                                                    // 12
-    twiit.timestamp = new Date();                                                                           // 13
-    twiit.numFav = 0;                                                                                       // 14
+    var insertComment = false;                                                                              // 3
                                                                                                             //
-    fav = new Object();                                                                                     // 16
-    fav.idTwiit = "";                                                                                       // 17
-    fav.idUserTapFav = [];                                                                                  // 18
+    twiit = new Object();                                                                                   // 5
+    twiit.message = tweet.message;                                                                          // 6
+    twiit.user = Meteor.user().username;                                                                    // 7
+    twiit.timestamp = new Date();                                                                           // 8
+    twiit.numFav = 0;                                                                                       // 9
+    twiit.numComment = 0;                                                                                   // 10
                                                                                                             //
-    if (Meteor.user()) {                                                                                    // 20
-      twiit._id = Twitts.insert({                                                                           // 21
-        message: twiit.message,                                                                             // 22
-        user: twiit.user,                                                                                   // 23
-        timestamp: twiit.timestamp,                                                                         // 24
-        numFav: twiit.numFav                                                                                // 25
-      });                                                                                                   // 21
+    //SE EJECUTA CUANDO SE QUIERE INSERTAR UN TWIIT DESDE UN COMENTARIO                                     //
+    if (tweet.type) {                                                                                       // 13
+      twiit.commentType = true;                                                                             // 14
+      twiit.twiitIdComment = tweet.twiitId;                                                                 // 15
+    }                                                                                                       // 16
                                                                                                             //
-      fav._id = Favs.insert({                                                                               // 28
-        idTwiit: twiit._id,                                                                                 // 29
-        idUserTapFav: fav.idUserTapFav                                                                      // 30
-      });                                                                                                   // 28
-    }                                                                                                       // 32
-    Meteor.call('createTwiitNotification', twiit._id);                                                      // 33
-  }                                                                                                         // 34
+    fav = new Object();                                                                                     // 18
+    fav.idTwiit = "";                                                                                       // 19
+    fav.idUserTapFav = [];                                                                                  // 20
+                                                                                                            //
+    if (tweet.type) {                                                                                       // 22
+      if (Meteor.user()) {                                                                                  // 23
+        twiit._id = Twitts.insert({                                                                         // 24
+          message: twiit.message,                                                                           // 25
+          user: twiit.user,                                                                                 // 26
+          timestamp: twiit.timestamp,                                                                       // 27
+          numFav: twiit.numFav,                                                                             // 28
+          numComment: twiit.numComment,                                                                     // 29
+          commentType: twiit.commentType,                                                                   // 30
+          twiitIdComment: twiit.twiitIdComment                                                              // 31
+        });                                                                                                 // 24
+      }                                                                                                     // 33
+    } else {                                                                                                // 34
+      if (Meteor.user()) {                                                                                  // 35
+        twiit._id = Twitts.insert({                                                                         // 36
+          message: twiit.message,                                                                           // 37
+          user: twiit.user,                                                                                 // 38
+          timestamp: twiit.timestamp,                                                                       // 39
+          numFav: twiit.numFav,                                                                             // 40
+          numComment: twiit.numComment                                                                      // 41
+        });                                                                                                 // 36
+      }                                                                                                     // 43
+    }                                                                                                       // 44
+                                                                                                            //
+    fav._id = Favs.insert({                                                                                 // 46
+      idTwiit: twiit._id,                                                                                   // 47
+      idUserTapFav: fav.idUserTapFav                                                                        // 48
+    });                                                                                                     // 46
+                                                                                                            //
+    Meteor.call('createTwiitNotification', twiit._id);                                                      // 51
+                                                                                                            //
+    if (tweet.type) {                                                                                       // 53
+      Twitts.update({ _id: twiit.twiitIdComment }, { $set: { numComment: tweet.numComment } });             // 54
+    }                                                                                                       // 55
+  }                                                                                                         // 56
 });                                                                                                         // 1
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -344,20 +429,25 @@ Meteor.startup(function () {                                                    
   });                                                                                                       // 7
                                                                                                             //
   Favs.allow({                                                                                              // 16
-    update: function update(userId, doc) {                                                                  // 17
+    insert: function insert(userId, disconnect) {                                                           // 17
       return true;                                                                                          // 18
-    }                                                                                                       // 19
+    },                                                                                                      // 19
+    update: function update(userId, doc) {                                                                  // 20
+      console.log("Update Oper");                                                                           // 21
+      return true;                                                                                          // 22
+    }                                                                                                       // 23
   });                                                                                                       // 16
                                                                                                             //
-  Notifications.allow({                                                                                     // 22
-    update: function update(userId, doc) {                                                                  // 23
-      return true;                                                                                          // 24
-    }                                                                                                       // 25
-  });                                                                                                       // 22
-});                                                                                                         // 29
+  Notifications.allow({                                                                                     // 26
+    update: function update(userId, doc) {                                                                  // 27
+      return true;                                                                                          // 28
+    }                                                                                                       // 29
+  });                                                                                                       // 26
+});                                                                                                         // 33
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }]}},{"extensions":[".js",".json"]});
+require("./lib/collections/favs.js");
 require("./lib/collections/notifications.js");
 require("./lib/collections/tweets.js");
 require("./lib/router.js");

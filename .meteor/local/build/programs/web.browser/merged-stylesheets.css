@@ -8923,3 +8923,11 @@ textarea {
   border-top-right-radius: 4px;
   height: 40px;
 }
+
+#btnNewTwiit {
+  margin: 0px;
+}
+
+.panel .panel-info {
+  margin-bottom: 10px;
+}

@@ -2,6 +2,7 @@ Template.navBarTemplate.onCreated( function() {
 	Session.set('sizeDisplay', $(window).width());
 	Session.set('navBarCollapse', false);
 	Session.set('currentUser',Meteor.user().username);
+	Session.set('notInRouteComment', true);
 });
 
 Template.navBarTemplate.events({
@@ -19,7 +20,13 @@ Template.navBarTemplate.events({
 	},
 	'hide.bs.collapse' : function(){
 		Session.set('navBarCollapse', false);
-	}
+	},
+	'click #btnNewTweet' : function(){
+	    Session.set('commentMode', false);
+  	},
+  	'click #btnNewTwiit' : function(){
+	    Session.set('commentMode', false);
+  	}
 });
 
 Template.navBarTemplate.helpers({

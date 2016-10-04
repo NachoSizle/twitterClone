@@ -14,7 +14,11 @@ Meteor.startup(() => {
   });
 
   Favs.allow({
+  	insert: function(userId, disconnect) {
+	   	return true;
+	},
   	update: function(userId, doc) {
+  		console.log("Update Oper");
 	    return true;
   	}
   });

@@ -1,35 +1,57 @@
 Meteor.methods({ 
   'insertTweet': function(tweet) {
-  	/*
-  	twiit = _.extend(tweet, {
-      user: Meteor.user().username,
-      message: tweet,
-      timestamp: new Date()
-    });
-    */
+    var insertComment = false;
+
     twiit = new Object();
-    twiit.message = tweet;
+    twiit.message = tweet.message;
     twiit.user = Meteor.user().username;
     twiit.timestamp = new Date();
     twiit.numFav = 0;
+    twiit.numComment = 0;
+
+    //SE EJECUTA CUANDO SE QUIERE INSERTAR UN TWIIT DESDE UN COMENTARIO
+    if(tweet.type){
+      twiit.commentType = true;
+      twiit.twiitIdComment = tweet.twiitId;
+    }
 
     fav = new Object();
     fav.idTwiit = "";
     fav.idUserTapFav = [];
 
-    if (Meteor.user()) {
-      twiit._id = Twitts.insert({
-        message : twiit.message,
-        user : twiit.user,
-        timestamp : twiit.timestamp,
-        numFav : twiit.numFav 
-      });
-
-      fav._id = Favs.insert({
-      	idTwiit : twiit._id,
-      	idUserTapFav : fav.idUserTapFav
-      });
+    if(tweet.type){
+      if (Meteor.user()) {
+        twiit._id = Twitts.insert({
+          message : twiit.message,
+          user : twiit.user,
+          timestamp : twiit.timestamp,
+          numFav : twiit.numFav,
+          numComment : twiit.numComment,
+          commentType : twiit.commentType,
+          twiitIdComment : twiit.twiitIdComment
+        });
+      }
+    } else {
+      if (Meteor.user()) {
+        twiit._id = Twitts.insert({
+          message : twiit.message,
+          user : twiit.user,
+          timestamp : twiit.timestamp,
+          numFav : twiit.numFav,
+          numComment : twiit.numComment
+        });
+      }
     }
-	Meteor.call('createTwiitNotification', twiit._id);
+
+    fav._id = Favs.insert({
+      idTwiit : twiit._id,
+      idUserTapFav : fav.idUserTapFav
+    });
+    
+  	Meteor.call('createTwiitNotification', twiit._id);
+
+    if(tweet.type){
+      Twitts.update({_id: twiit.twiitIdComment}, {$set: {numComment : tweet.numComment}});
+    }
   }
 });
