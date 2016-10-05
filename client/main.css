@@ -195,11 +195,15 @@ textarea {
    left: -35px;
 }
 
+.btn .badge{
+  top: -20px;
+}
+
 .badge-numFav{
   background: #1e88e5;
-  position:relative;
-  top: -4px;
-  left: 5px;
+  position: relative;
+  top: -20px;
+  left: -21px;
 }
 
 #btnMenuNavBar{
@@ -220,7 +224,7 @@ textarea {
 .navbar{
   margin-bottom: 0px;
 }
-
+/*
 #btnGroupInteractions button{
   background-color: #d9edf7;
   border-top-color: #bce8f1;
@@ -229,11 +233,18 @@ textarea {
   border-top-right-radius: 4px;
   height: 40px;
 }
-
+*/
 #btnNewTwiit{
   margin: 0px;
 }
 
 .panel .panel-info{
   margin-bottom: 10px;
+}
+
+.heartFav{
+  color: #ff1744;
+}
+.heartNoFav{
+  color: #23527c;
 }

@@ -19,7 +19,7 @@ Meteor.publish('twittsProfile', function(username) {
 
 Meteor.publish('twittsWithComment', function(idTweet) {  
   if (Meteor.userId) {
-    return Twitts.find({_id: idTweet});
+    return Twitts.find();
   }
 });
 
@@ -28,6 +28,10 @@ Meteor.publish('notifications', function(username) {
   var currentFollowings = UserUtils.findFollowings(username);
   console.log(Notifications.find({twiitNotifUserName: { $in: currentFollowings }, read: false}).count());
   return Notifications.find({twiitNotifUserName: { $in: currentFollowings }, read: false});
+});
+
+Meteor.publish('allNotifications', function(notifId) {
+  return Notifications.find({_id : notifId}, {read: false});
 });
 
 Meteor.publish('favs', function() {

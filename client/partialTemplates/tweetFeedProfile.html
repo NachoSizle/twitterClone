@@ -16,19 +16,25 @@
             </div><!--Contenido del twiit-->
 
             <div class="btn-group" role="group" id="btnGroupInteractions">
-              <button type="button" class="btn btn-secondary">
+              <a class="btn btn-secondary">
                 <span class="glyphicon glyphicon-bullhorn"></span>
-              </button>
-
-              <button type="button" id="btnComm" class="btn btn-secondary" data-toggle="modal" data-target="#dialog-NewTwiit">
-                <span class="glyphicon glyphicon-comment"></span>
-                <span class="badge-numFav badge">{{this.numComment}}</span>
-              </button>
-              
-              <button type="button" id="btnFav" class="btn btn-secondary">
-                <span class="glyphicon glyphicon-heart"></span>
-                <span class="badge-numFav badge">{{this.numFav}}</span>
-              </button>
+              </a>
+              {{#if numComment}}
+                <a href="{{pathFor 'twiitCommentPage' _id=this._id}}" class="btn btn-secondary">
+                  <span class="glyphicon glyphicon-comment"></span>
+                  <span class="badge-numFav badge">{{this.numComment}}</span>
+                </a>
+              {{/if}}
+              {{#if numFav}}
+                <a id="btnFav" class="btn btn-secondary">
+                  <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                  <span class="badge badge-numFav">{{this.numFav}}</span>
+                </a>
+              {{else}}
+                <a id="btnFav" class="btn btn-secondary">
+                  <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                </a>
+              {{/if}}
             </div>
           </div><!--Contenido de la cabecera + el mensaje del twiit-->
         {{/each}}

@@ -16,20 +16,30 @@
               <div class="panel-body">
                 {{this.twiitMessage}}
               </div>
-               <div class="btn-group" role="group" id="btnGroupInteractions">
-                <button type="button" class="btn btn-secondary">
+              <div class="btn-group" role="group" id="btnGroupInteractions">
+                <a class="btn btn-secondary">
                   <span class="glyphicon glyphicon-bullhorn"></span>
-                </button>
-
-                <button type="button" id="btnComm" class="btn btn-secondary" data-toggle="modal" data-target="#dialog-NewTwiit">
+                </a>
+                {{#if findNumComment}}
+                  <a href="{{pathFor 'twiitCommentPage' _id=this._id}}" class="btn btn-secondary">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    <span class="badge-numFav badge">{{numComment}}</span>
+                  </a>
+                {{else}}
+                  <a id="btnComm" class="btn btn-secondary">
                   <span class="glyphicon glyphicon-comment"></span>
-                  <span class="badge-numFav badge">{{this.numComment}}</span>
-                </button>
-                
-                <button type="button" id="btnFav" class="btn btn-secondary">
-                  <span class="glyphicon glyphicon-heart"></span>
-                  <span class="badge-numFav badge">{{this.numFav}}</span>
-                </button>
+                </a>
+                {{/if}}
+                {{#if numFavorite}}
+                  <a id="btnFav" class="btn btn-secondary">
+                    <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                    <span class="badge badge-numFav">{{numFav}}</span>
+                  </a>
+                {{else}}
+                  <a id="btnFav" class="btn btn-secondary">
+                    <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                  </a>
+                {{/if}}
               </div>
             </div>
           {{/each}}

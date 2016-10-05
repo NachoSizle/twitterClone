@@ -14,7 +14,8 @@ if(Meteor.isClient){
 			var type = Session.get('commentMode');
 
 			if(type){
-				var twiitId = Session.get('twiitIdToComment');
+				var twiitId = Session.get('idCurrentTwiit');
+				console.log(twiitId);
 				var numComment = UserUtils.findNumComment(twiitId);
 				numComment++;
 			}

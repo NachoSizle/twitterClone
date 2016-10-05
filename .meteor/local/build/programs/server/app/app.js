@@ -41,8 +41,8 @@ Relationships = new Meteor.Collection('relationships');                         
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                             //
 Router.configure({                                                                                          // 1
-  loadingTemplate: 'loading',                                                                               // 2
-  notFoundTemplate: 'notFound'                                                                              // 3
+		loadingTemplate: 'loading',                                                                               // 2
+		notFoundTemplate: 'notFound'                                                                              // 3
 });                                                                                                         // 1
                                                                                                             //
 Router.route('/', { name: 'userManagement' });                                                              // 6
@@ -50,14 +50,28 @@ Router.route('/', { name: 'userManagement' });                                  
 Router.route('/whoToFollow', { name: 'followUsers' });                                                      // 8
 Router.route('/myProfile', { name: 'userProfile' });                                                        // 9
 Router.route('/Notifications', { name: 'twiitPageNew' });                                                   // 10
-Router.route('/Comments', { name: 'twiitCommentPage' });                                                    // 11
+//Router.route('/Comments', {name: 'twiitCommentPage'});                                                    //
 /*SE ACCEDE POR PATHFOR*/                                                                                   //
-Router.route('/twiits/:_id', {                                                                              // 13
-  name: 'twiitPage',                                                                                        // 14
-  data: function data() {                                                                                   // 15
-    return this.params;                                                                                     // 16
-  }                                                                                                         // 17
+Router.route('/Comments/:_id', {                                                                            // 13
+		name: 'twiitCommentPage',                                                                                 // 14
+		data: function data() {                                                                                   // 15
+				var mode = Session.get('notificationsModeOn');                                                          // 16
+				var idTwiit = new Object();                                                                             // 17
+				idTwiit._id = this.params._id;                                                                          // 18
+                                                                                                            //
+				if (mode) {                                                                                             // 20
+						idTwiit.mode = mode;                                                                                  // 21
+				}                                                                                                       // 22
+                                                                                                            //
+				return idTwiit;                                                                                         // 24
+		}                                                                                                         // 25
 });                                                                                                         // 13
+Router.route('/twiits/:_id', {                                                                              // 27
+		name: 'twiitPage',                                                                                        // 28
+		data: function data() {                                                                                   // 29
+				return this.params;                                                                                     // 30
+		}                                                                                                         // 31
+});                                                                                                         // 27
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -178,9 +192,14 @@ UserUtils.removeFavToTwiit = function (id, idUser) {                            
   return resultToUpdate;                                                                                    // 108
 };                                                                                                          // 109
                                                                                                             //
-UserUtils.findNumComment = function (idTweet) {                                                             // 111
-  return Twitts.findOne({ _id: idTweet }).numComment;                                                       // 112
-};                                                                                                          // 113
+UserUtils.findTwiitFromNotif = function (id) {                                                              // 111
+  var twiitId = Notifications.findOne(id).twiitId;                                                          // 112
+  return twiitId;                                                                                           // 113
+};                                                                                                          // 114
+                                                                                                            //
+UserUtils.findNumComment = function (idTweet) {                                                             // 116
+  return Twitts.findOne({ _id: idTweet }).numComment;                                                       // 117
+};                                                                                                          // 118
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"server":{"followUsers.js":function(){
@@ -277,7 +296,7 @@ Meteor.publish('twittsProfile', function (username) {                           
                                                                                                             //
 Meteor.publish('twittsWithComment', function (idTweet) {                                                    // 20
   if (Meteor.userId) {                                                                                      // 21
-    return Twitts.find({ _id: idTweet });                                                                   // 22
+    return Twitts.find();                                                                                   // 22
   }                                                                                                         // 23
 });                                                                                                         // 24
                                                                                                             //
@@ -288,9 +307,13 @@ Meteor.publish('notifications', function (username) {                           
   return Notifications.find({ twiitNotifUserName: { $in: currentFollowings }, read: false });               // 30
 });                                                                                                         // 31
                                                                                                             //
-Meteor.publish('favs', function () {                                                                        // 33
-  return Favs.find();                                                                                       // 34
+Meteor.publish('allNotifications', function (notifId) {                                                     // 33
+  return Notifications.find({ _id: notifId }, { read: false });                                             // 34
 });                                                                                                         // 35
+                                                                                                            //
+Meteor.publish('favs', function () {                                                                        // 37
+  return Favs.find();                                                                                       // 38
+});                                                                                                         // 39
 /*                                                                                                          //
 Meteor.publishComposite('twitts', function(username) {                                                      //
   return {                                                                                                  //

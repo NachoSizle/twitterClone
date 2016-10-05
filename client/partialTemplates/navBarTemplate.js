@@ -2,7 +2,6 @@ Template.navBarTemplate.onCreated( function() {
 	Session.set('sizeDisplay', $(window).width());
 	Session.set('navBarCollapse', false);
 	Session.set('currentUser',Meteor.user().username);
-	Session.set('notInRouteComment', true);
 });
 
 Template.navBarTemplate.events({
