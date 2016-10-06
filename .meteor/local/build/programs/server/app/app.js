@@ -253,17 +253,19 @@ Meteor.methods({                                                                
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                             //
 Meteor.methods({                                                                                            // 1
-  'createTwiitNotification': function createTwiitNotification(twiitNotifId) {                               // 2
-    var twiit = Twitts.findOne(twiitNotifId);                                                               // 3
+  'createTwiitNotification': function createTwiitNotification(notif) {                                      // 2
+    var twiit = Twitts.findOne(notif._id);                                                                  // 3
+    var typeNotif = notif.typeOfNotif;                                                                      // 4
                                                                                                             //
-    Notifications.insert({                                                                                  // 5
-      twiitMessage: twiit.message,                                                                          // 6
-      twiitId: twiit._id,                                                                                   // 7
-      twiitNotifUserName: twiit.user,                                                                       // 8
-      twiitTimeStamp: twiit.timestamp,                                                                      // 9
-      read: false                                                                                           // 10
-    });                                                                                                     // 5
-  }                                                                                                         // 12
+    Notifications.insert({                                                                                  // 6
+      twiitMessage: twiit.message,                                                                          // 7
+      twiitId: twiit._id,                                                                                   // 8
+      twiitNotifUserName: twiit.user,                                                                       // 9
+      twiitTimeStamp: twiit.timestamp,                                                                      // 10
+      typeOfNotif: typeNotif,                                                                               // 11
+      read: false                                                                                           // 12
+    });                                                                                                     // 6
+  }                                                                                                         // 14
 });                                                                                                         // 1
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -390,12 +392,16 @@ Meteor.methods({                                                                
       idUserTapFav: fav.idUserTapFav                                                                        // 48
     });                                                                                                     // 46
                                                                                                             //
-    Meteor.call('createTwiitNotification', twiit._id);                                                      // 51
+    var notif = new Object();                                                                               // 51
+    notif._id = twiit._id;                                                                                  // 52
+    notif.typeOfNotif = tweet.typeOfNotif;                                                                  // 53
                                                                                                             //
-    if (tweet.type) {                                                                                       // 53
-      Twitts.update({ _id: twiit.twiitIdComment }, { $set: { numComment: tweet.numComment } });             // 54
-    }                                                                                                       // 55
-  }                                                                                                         // 56
+    Meteor.call('createTwiitNotification', notif);                                                          // 55
+                                                                                                            //
+    if (tweet.type) {                                                                                       // 57
+      Twitts.update({ _id: twiit.twiitIdComment }, { $set: { numComment: tweet.numComment } });             // 58
+    }                                                                                                       // 59
+  }                                                                                                         // 60
 });                                                                                                         // 1
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

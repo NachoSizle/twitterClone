@@ -41,6 +41,13 @@ Template.tweetFeed.events({
     //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS
     if(arrAux.indexOf(idUser) === -1){
       UserUtils.addFavToTwiit(this._id, idUser);
+
+      var notif = new Object();
+      notif._id = this._id;
+      notif.typeOfNotif = "fav";
+
+      Meteor.call('createTwiitNotification', notif);
+      
       $("#"+ this._id).addClass("heartFav");
       $("#"+ this._id).removeClass("heartNoFav");
     } else {

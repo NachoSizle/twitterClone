@@ -13,7 +13,7 @@ Meteor.methods({
     if(tweet.type){
       twiit.commentType = true;
       twiit.twiitIdComment = tweet.twiitId;
-    }
+    } 
 
     fav = new Object();
     fav.idTwiit = "";
@@ -47,8 +47,12 @@ Meteor.methods({
       idTwiit : twiit._id,
       idUserTapFav : fav.idUserTapFav
     });
+
+    var notif = new Object();
+    notif._id = twiit._id;
+    notif.typeOfNotif = tweet.typeOfNotif;
     
-  	Meteor.call('createTwiitNotification', twiit._id);
+  	Meteor.call('createTwiitNotification', notif);
 
     if(tweet.type){
       Twitts.update({_id: twiit.twiitIdComment}, {$set: {numComment : tweet.numComment}});

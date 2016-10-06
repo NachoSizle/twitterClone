@@ -1326,49 +1326,54 @@ if (Meteor.isClient) {                                                          
 				var tweet = new Object();                                                                                        // 26
 				tweet.message = message;                                                                                         // 27
 				tweet.type = type;                                                                                               // 28
-				if (twiitId != null) {                                                                                           // 29
-					tweet.twiitId = twiitId;                                                                                        // 30
-					tweet.numComment = numComment;                                                                                  // 31
-				}                                                                                                                // 32
-				Meteor.call('insertTweet', tweet);                                                                               // 33
-			}                                                                                                                 // 34
+                                                                                                                     //
+				if (twiitId != null) {                                                                                           // 30
+					tweet.twiitId = twiitId;                                                                                        // 31
+					tweet.numComment = numComment;                                                                                  // 32
+					tweet.typeOfNotif = "comment";                                                                                  // 33
+				} else {                                                                                                         // 34
+					tweet.typeOfNotif = "twiit";                                                                                    // 35
+				}                                                                                                                // 36
+                                                                                                                     //
+				Meteor.call('insertTweet', tweet);                                                                               // 38
+			}                                                                                                                 // 39
                                                                                                                      //
 			return clickButton;                                                                                               // 12
 		}()                                                                                                                // 12
 	});                                                                                                                 // 8
                                                                                                                      //
-	Template.tweetBox.helpers({                                                                                         // 38
-		charCount: function () {                                                                                           // 39
-			function charCount() {                                                                                            // 39
-				return 140 - Session.get('numChars');                                                                            // 40
-			}                                                                                                                 // 41
+	Template.tweetBox.helpers({                                                                                         // 43
+		charCount: function () {                                                                                           // 44
+			function charCount() {                                                                                            // 44
+				return 140 - Session.get('numChars');                                                                            // 45
+			}                                                                                                                 // 46
                                                                                                                      //
-			return charCount;                                                                                                 // 39
-		}(),                                                                                                               // 39
+			return charCount;                                                                                                 // 44
+		}(),                                                                                                               // 44
                                                                                                                      //
-		charClass: function () {                                                                                           // 43
-			function charClass() {                                                                                            // 43
-				if (Session.get('numChars') > 140) {                                                                             // 44
-					return 'errCharCount'; // o el nombre que le disteis en el fichero css                                          // 45
-				} else {                                                                                                         // 46
-						return 'charCount'; //o el nombre que le disteis en el fichero css                                             // 47
-					}                                                                                                               // 48
-			}                                                                                                                 // 49
+		charClass: function () {                                                                                           // 48
+			function charClass() {                                                                                            // 48
+				if (Session.get('numChars') > 140) {                                                                             // 49
+					return 'errCharCount'; // o el nombre que le disteis en el fichero css                                          // 50
+				} else {                                                                                                         // 51
+						return 'charCount'; //o el nombre que le disteis en el fichero css                                             // 52
+					}                                                                                                               // 53
+			}                                                                                                                 // 54
                                                                                                                      //
-			return charClass;                                                                                                 // 43
-		}(),                                                                                                               // 43
+			return charClass;                                                                                                 // 48
+		}(),                                                                                                               // 48
                                                                                                                      //
-		disableButton: function () {                                                                                       // 51
-			function disableButton() {                                                                                        // 51
-				if (Session.get('numChars') <= 0 || Session.get('numChars') > 140 || !Meteor.user()) {                           // 52
-					return 'disabled';                                                                                              // 55
-				}                                                                                                                // 56
-			}                                                                                                                 // 57
+		disableButton: function () {                                                                                       // 56
+			function disableButton() {                                                                                        // 56
+				if (Session.get('numChars') <= 0 || Session.get('numChars') > 140 || !Meteor.user()) {                           // 57
+					return 'disabled';                                                                                              // 60
+				}                                                                                                                // 61
+			}                                                                                                                 // 62
                                                                                                                      //
-			return disableButton;                                                                                             // 51
-		}()                                                                                                                // 51
-	});                                                                                                                 // 38
-}                                                                                                                    // 59
+			return disableButton;                                                                                             // 56
+		}()                                                                                                                // 56
+	});                                                                                                                 // 43
+}                                                                                                                    // 64
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"tweetFeed.js":function(){
@@ -1443,34 +1448,41 @@ Template.tweetFeed.events({                                                     
       //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                     //
       if (arrAux.indexOf(idUser) === -1) {                                                                           // 42
         UserUtils.addFavToTwiit(this._id, idUser);                                                                   // 43
-        $("#" + this._id).addClass("heartFav");                                                                      // 44
-        $("#" + this._id).removeClass("heartNoFav");                                                                 // 45
-      } else {                                                                                                       // 46
+                                                                                                                     //
+        var notif = new Object();                                                                                    // 45
+        notif._id = this._id;                                                                                        // 46
+        notif.typeOfNotif = "fav";                                                                                   // 47
+                                                                                                                     //
+        Meteor.call('createTwiitNotification', notif);                                                               // 49
+                                                                                                                     //
+        $("#" + this._id).addClass("heartFav");                                                                      // 51
+        $("#" + this._id).removeClass("heartNoFav");                                                                 // 52
+      } else {                                                                                                       // 53
         //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                              //
         //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                           //
         //LA OPERACION INVERSA                                                                                       //
-        UserUtils.removeFavToTwiit(this._id, idUser);                                                                // 50
-        $("#" + this._id).addClass("heartNoFav");                                                                    // 51
-        $("#" + this._id).removeClass("heartFav");                                                                   // 52
-      }                                                                                                              // 53
-    }                                                                                                                // 54
+        UserUtils.removeFavToTwiit(this._id, idUser);                                                                // 57
+        $("#" + this._id).addClass("heartNoFav");                                                                    // 58
+        $("#" + this._id).removeClass("heartFav");                                                                   // 59
+      }                                                                                                              // 60
+    }                                                                                                                // 61
                                                                                                                      //
     return clickBtnFav;                                                                                              // 34
   }(),                                                                                                               // 34
-  'click #btnComm': function () {                                                                                    // 55
-    function clickBtnComm() {                                                                                        // 55
-      var numComment = UserUtils.findNumComment(this._id);                                                           // 56
+  'click #btnComm': function () {                                                                                    // 62
+    function clickBtnComm() {                                                                                        // 62
+      var numComment = UserUtils.findNumComment(this._id);                                                           // 63
       //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A                               //
       //LA RUTA /Comments. SI NO, SE ABRE EL MODAL Y SE PUEDE HACER EL COMENTARIO                                    //
-      if (numComment === 0) {                                                                                        // 59
-        $("#dialog-NewTwiit").modal();                                                                               // 60
-        Session.set('commentMode', true);                                                                            // 61
-        Session.set('idCurrentTwiit', this._id);                                                                     // 62
-      }                                                                                                              // 63
-    }                                                                                                                // 64
+      if (numComment === 0) {                                                                                        // 66
+        $("#dialog-NewTwiit").modal();                                                                               // 67
+        Session.set('commentMode', true);                                                                            // 68
+        Session.set('idCurrentTwiit', this._id);                                                                     // 69
+      }                                                                                                              // 70
+    }                                                                                                                // 71
                                                                                                                      //
-    return clickBtnComm;                                                                                             // 55
-  }()                                                                                                                // 55
+    return clickBtnComm;                                                                                             // 62
+  }()                                                                                                                // 62
                                                                                                                      //
 });                                                                                                                  // 33
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
