@@ -26,7 +26,7 @@ if(Meteor.isClient){
 			var tweet = new Object();
 			tweet.message = message;
 			tweet.type = type;
-			
+
 			if(twiitId != null){
 				tweet.twiitId = twiitId;
 				tweet.numComment = numComment;

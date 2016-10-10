@@ -16,8 +16,7 @@ Template.twiitPageNew.helpers({
   },
 
   'tweetMessage': function() {
-    var notify =  Notifications.find({twiitNotifUserName: { $nin: currentFollowings}, read: false}, {sort: {twiitTimeStamp: -1}});
-    return notify;
+    return UserUtils.findNotifications(username, currentFollowings);
   },
 
   'countNotifTwiit' : function(){

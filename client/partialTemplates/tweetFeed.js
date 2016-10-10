@@ -27,6 +27,24 @@ Template.tweetFeed.helpers({
     if(num > 0){
       return "heartFav";
     } else return "heartNoFav";
+  },
+  'infoNotif': function(){
+    var username = Meteor.user().username;
+    var numNotif = UserUtils.findNumberNotif(username);
+    //PRIMERO TENEMOS QUE COMPROBAR SI HAY NOTIFICACIONES
+    if(numNotif === 1){
+      //BUSCAMOS LAS NOTIFICACIONES DISPONIBLES
+      var currentFollowings = UserUtils.findFollowings(username);
+      var notif = UserUtils.findOneNotification(username, currentFollowings);
+      console.log(notif);
+        UserUtils.createNotifToBrowser(notif.typeOfNotif, notif.twiitNotifUserName);
+    } else if(numNotif > 1){
+      //BUSCAMOS LAS NOTIFICACIONES DISPONIBLES
+      var currentFollowings = UserUtils.findFollowings(username);
+      var notifications = UserUtils.findNotifications(username, currentFollowings);
+
+        UserUtils.createNotifToBrowser("moreNotif", username);
+    }
   }
 });
 
@@ -47,7 +65,7 @@ Template.tweetFeed.events({
       notif.typeOfNotif = "fav";
 
       Meteor.call('createTwiitNotification', notif);
-      
+
       $("#"+ this._id).addClass("heartFav");
       $("#"+ this._id).removeClass("heartNoFav");
     } else {
