@@ -14,8 +14,7 @@ Template.notifications.helpers({
     }
   },
   notifications: function() {
-    followings = UserUtils.findFollowings(Meteor.user().username);
-    return Notifications.find({twiitNotifUserName: { $nin: followings }, read: false});
+    return Notifications.find({recepNotif: Meteor.user().username, read: false});
   },
   notificationCount: function(){
     /*

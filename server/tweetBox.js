@@ -51,7 +51,11 @@ Meteor.methods({
     var notif = new Object();
     notif._id = twiit._id;
     notif.typeOfNotif = tweet.typeOfNotif;
+    notif.actorNotif = tweet.actorUser;
+    notif.recepNotif = tweet.recepUser;
     
+    //console.log(notif);
+
   	Meteor.call('createTwiitNotification', notif);
 
     if(tweet.type){

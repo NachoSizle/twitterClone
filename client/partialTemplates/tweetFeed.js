@@ -30,20 +30,16 @@ Template.tweetFeed.helpers({
   },
   'infoNotif': function(){
     var username = Meteor.user().username;
+
     var numNotif = UserUtils.findNumberNotif(username);
     //PRIMERO TENEMOS QUE COMPROBAR SI HAY NOTIFICACIONES
     if(numNotif === 1){
       //BUSCAMOS LAS NOTIFICACIONES DISPONIBLES
-      var currentFollowings = UserUtils.findFollowings(username);
-      var notif = UserUtils.findOneNotification(username, currentFollowings);
-      console.log(notif);
-        UserUtils.createNotifToBrowser(notif.typeOfNotif, notif.twiitNotifUserName);
-    } else if(numNotif > 1){
-      //BUSCAMOS LAS NOTIFICACIONES DISPONIBLES
-      var currentFollowings = UserUtils.findFollowings(username);
-      var notifications = UserUtils.findNotifications(username, currentFollowings);
+      var notif = UserUtils.findOneNotification(username);
 
-        UserUtils.createNotifToBrowser("moreNotif", username);
+      UserUtils.createNotifToBrowser(notif.typeOfNotif, notif.actorNotif);
+    } else if(numNotif > 1){
+      UserUtils.createNotifToBrowser("moreNotif", username);
     }
   }
 });
@@ -63,6 +59,10 @@ Template.tweetFeed.events({
       var notif = new Object();
       notif._id = this._id;
       notif.typeOfNotif = "fav";
+      notif.actorNotif = currentUser;
+      notif.recepNotif = UserUtils.findUserFromTwiit(this._id);
+
+      console.log(notif);
 
       Meteor.call('createTwiitNotification', notif);
 

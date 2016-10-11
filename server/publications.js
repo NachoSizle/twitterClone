@@ -23,11 +23,8 @@ Meteor.publish('twittsWithComment', function(idTweet) {
   }
 });
 
-Meteor.publish('notifications', function(username) {
-  console.log(username);
-  var currentFollowings = UserUtils.findFollowings(username);
-  console.log(Notifications.find({twiitNotifUserName: { $in: currentFollowings }, read: false}).count());
-  return Notifications.find({twiitNotifUserName: { $in: currentFollowings }, read: false});
+Meteor.publish('notifications', function() {
+  return Notifications.find();
 });
 
 Meteor.publish('allNotifications', function(notifId) {

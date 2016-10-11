@@ -800,11 +800,11 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=c14c4435d794f0a98d110d7b4d979b165a510e2c",
+      "url": "/app/app.js?hash=28875ef061035a8948288d8bce84fd117a7f7bed",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/c14c4435d794f0a98d110d7b4d979b165a510e2c.map",
-      "size": 283055,
-      "hash": "c14c4435d794f0a98d110d7b4d979b165a510e2c"
+      "sourceMapUrl": "/app/28875ef061035a8948288d8bce84fd117a7f7bed.map",
+      "size": 290115,
+      "hash": "28875ef061035a8948288d8bce84fd117a7f7bed"
     },
     {
       "path": "merged-stylesheets.css",

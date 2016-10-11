@@ -15,7 +15,6 @@ if(Meteor.isClient){
 
 			if(type){
 				var twiitId = Session.get('idCurrentTwiit');
-				console.log(twiitId);
 				var numComment = UserUtils.findNumComment(twiitId);
 				numComment++;
 			}
@@ -31,9 +30,15 @@ if(Meteor.isClient){
 				tweet.twiitId = twiitId;
 				tweet.numComment = numComment;
 				tweet.typeOfNotif = "comment";
+				//recepNotif
+				tweet.recepUser = UserUtils.findUserFromTwiit(twiitId);
 			} else {
 				tweet.typeOfNotif = "twiit";
+				//recepNotif
+				tweet.recepUser = Meteor.user().username;
 			}
+
+			tweet.actorUser = Meteor.user().username;
 
 			Meteor.call('insertTweet', tweet);
 	    }

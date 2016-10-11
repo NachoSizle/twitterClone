@@ -2,8 +2,6 @@ Template.twiitPageNew.onCreated(function() {
   this.subscribe('twittsWithComment');
   this.subscribe('favs');
   this.subscribe('allNotifications');
-  username = Session.get('currentUser');
-  currentFollowings = UserUtils.findFollowings(username);
   arrWithId = [];
   Session.set('notificationsModeOn', true);
 });
@@ -16,11 +14,11 @@ Template.twiitPageNew.helpers({
   },
 
   'tweetMessage': function() {
-    return UserUtils.findNotifications(username, currentFollowings);
+    return UserUtils.findNotifications(this.name);
   },
 
   'countNotifTwiit' : function(){
-    var numNotif =  UserUtils.findNumberNotif(username);
+    var numNotif =  UserUtils.findNumberNotif(this.name);
     if(numNotif === 0){
       return false;
     } else {
@@ -85,14 +83,26 @@ Template.twiitPageNew.events({
   'click #btnFav': function(){
     var currentUser = Session.get('currentUser');
     var idUser = Meteor.users.findOne({ username: currentUser })._id;
+
     //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO
-    var userTapFav = UserUtils.findFavsForTwiit(UserUtils.findTwiitFromNotif(this._id));
+    var idAux = UserUtils.findTwiitFromNotif(this._id);
+    var userTapFav = UserUtils.findFavsForTwiit(idAux);
     var arrAux = userTapFav.idUserTapFav;
 
-    var idAux = UserUtils.findTwiitFromNotif(this._id);
     //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS
     if(arrAux.indexOf(idUser) === -1){
       UserUtils.addFavToTwiit(idAux, idUser);
+
+      var notif = new Object();
+      notif._id = idAux;
+      notif.typeOfNotif = "fav";
+      notif.actorNotif = currentUser;
+      notif.recepNotif = UserUtils.findUserFromTwiit(idAux);
+
+      console.log(notif);
+
+      Meteor.call('createTwiitNotification', notif);
+
       $("#"+ this._id).addClass("heartFav");
       $("#"+ this._id).removeClass("heartNoFav");
     } else {

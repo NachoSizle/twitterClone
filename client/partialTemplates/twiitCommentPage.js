@@ -47,10 +47,20 @@ Template.twiitCommentPage.events({
     //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO
     var userTapFav = UserUtils.findFavsForTwiit(this._id);
     var arrAux = userTapFav.idUserTapFav;
-
-    //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS
+//SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS
     if(arrAux.indexOf(idUser) === -1){
       UserUtils.addFavToTwiit(this._id, idUser);
+
+      var notif = new Object();
+      notif._id = this._id;
+      notif.typeOfNotif = "fav";
+      notif.actorNotif = currentUser;
+      notif.recepNotif = UserUtils.findUserFromTwiit(this._id);
+
+      console.log(notif);
+
+      Meteor.call('createTwiitNotification', notif);
+
       $("#"+ this._id).addClass("heartFav");
       $("#"+ this._id).removeClass("heartNoFav");
     } else {
@@ -64,7 +74,6 @@ Template.twiitCommentPage.events({
   },
   'click #btnComm' : function(){
 	$("#dialog-NewTwiit").modal();
-	console.log(this._id);
 	Session.set('idCurrentTwiit', this._id);
 	Session.set('commentMode', true);
   }

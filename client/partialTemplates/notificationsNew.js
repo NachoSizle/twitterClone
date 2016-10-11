@@ -14,8 +14,8 @@ Template.notificationsNew.helpers({
     }
   },
   notifications: function() {
-    followings = UserUtils.findFollowings(Meteor.user().username);
-    return Notifications.find({twiitNotifUserName: { $nin: followings }, read: false});
+    //followings = UserUtils.findFollowings(Meteor.user().username);
+    return Notifications.find({recepNotif: Meteor.user().username, read: false});
   },
   notificationCount: function(){
     /*
@@ -27,13 +27,18 @@ Template.notificationsNew.helpers({
   },
   'infoStateCollapseNavBar': function() {
     return Session.get('navBarCollapse');
+  },
+  'currentUser': function(){
+    return Meteor.user().username;
   }
 });
 
 Template.notificationsNew.events({
+  
   'click #linkToNotif' : function(){
     if(numNotif > 0){
-      window.location = "/Notifications";
+      window.location = "/Notifications/" + Meteor.user().username;
     }
   }
+  
 });

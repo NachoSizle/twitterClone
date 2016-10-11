@@ -3,13 +3,22 @@ Meteor.methods({
     var twiit = Twitts.findOne(notif._id);
     var typeNotif = notif.typeOfNotif;
 
+    if(notif.recepNotif === notif.actorNotif){
+      isOwn = true;
+    } else {
+      isOwn = false;
+    }
+    
     Notifications.insert({
       twiitMessage: twiit.message,
       twiitId: twiit._id,
-      twiitNotifUserName: twiit.user,
+      recepNotif: notif.recepNotif,
+      actorNotif: notif.actorNotif,
       twiitTimeStamp: twiit.timestamp,
       typeOfNotif: typeNotif, 
-      read: false
+      read: false,
+      isOwnTwiit: isOwn
     });
+    
   }
 });
