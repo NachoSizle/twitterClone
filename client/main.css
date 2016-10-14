@@ -248,3 +248,12 @@ textarea {
 .heartNoFav{
   color: #23527c;
 }
+
+#currentUserName{
+  float: left;
+}
+
+.optionsUserProfile{
+  margin-top: 20px;
+  float: right;
+}

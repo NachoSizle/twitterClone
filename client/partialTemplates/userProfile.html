@@ -17,9 +17,27 @@
               20. Una persona que me cambió la vida y siempre me enseñará cosas! Instagram: NachoSizles Vine: NachoSizle
             </div>
           </div>
-          <h3><strong>{{currentUser.username}}</strong></h3>
-          <h5>@{{currentUser.username}}</h5>
+
+          <div class="currentUserName">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <h3><strong>{{currentUser.username}}</strong></h3>
+              <h5>@{{currentUser.username}}</h5>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 dropdown">
+              <button class="btn btn-primary dropdown-toggle optionsUserProfile" type="button" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-option-vertical"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="{{pathFor 'editProfile' _id=this._id }}">Editar Perfil</a></li>
+                <li><a href="#" id="logout">Salir</a></li>
+              </ul>
+            </div>
+          </div>
+            
+          <!--
+          <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>
           <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>
+          -->
           <table class="table">  
             <tr>
               <td class="tableHeader">Twitts</td>

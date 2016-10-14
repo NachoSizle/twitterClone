@@ -1,7 +1,7 @@
 Template.navBarTemplate.onCreated( function() {
 	Session.set('sizeDisplay', $(window).width());
 	Session.set('navBarCollapse', false);
-	Session.set('currentUser',Meteor.user().username);
+	Session.set('currentUser', Meteor.user().username);
 
 	//PEDIMOS PERMISO AL USUARIO PARA MOSTRARLE NOTIFICACIONES
 	Notification.requestPermission();

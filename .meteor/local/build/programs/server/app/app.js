@@ -79,6 +79,19 @@ Router.route('/twiits/:_id', {                                                  
 		return this.params;                                                                                  // 37
 	}                                                                                                     // 38
 });                                                                                                    // 34
+                                                                                                       //
+Router.route('/Profile/:userName', {                                                                   // 41
+	name: 'editProfile',                                                                                  // 42
+	data: function data() {                                                                               // 43
+		console.log(this.params._id);                                                                        // 44
+                                                                                                       //
+		var user = new Object();                                                                             // 46
+		user._id = this.params._id;                                                                          // 47
+                                                                                                       //
+		console.log(user);                                                                                   // 49
+		return user;                                                                                         // 50
+	}                                                                                                     // 51
+});                                                                                                    // 41
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){

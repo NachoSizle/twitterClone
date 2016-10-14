@@ -1,3 +1,10 @@
+Template.userProfile.onCreated(function(){
+	this.userName = Session.get('currentUser');
+	this._id = Meteor.users.findOne({username: this.userName});
+	console.log(this.userName);
+	console.log(this._id);
+});
+
 Template.userProfile.events({  
 	'click #logout': function() {  
     	Meteor.logout();
