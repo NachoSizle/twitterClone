@@ -1,23 +1,25 @@
-Template.userProfile.onCreated(function(){
-	currentUserName = this.data.name;
+Template.editProfile.onCreated(function(){
+	userAux = Session.get('datauser');
+	console.log(userAux);
 });
 
-Template.userProfile.events({  
-	'click #logout': function() {  
-    	Meteor.logout();
-    	window.location = "/";
+Template.editProfile.events({  
+	'click #saveChanges': function(){
+		newData = new Object();
+		newData.description = document.getElementById("userDescription").value;
+		newData.userId = userAux._id;
+
+		Meteor.call('updUserData', newData);
+  		window.location = "/Profile/" + userAux.userNameProfile;
   	},
-  	'click #editProfile': function(){
-  		window.location = "/editProfile/" + currentUserName;
+  	'click #imgCurrentUser': function(){
+  		
   	}
 });
 
-Template.userProfile.helpers({
+Template.editProfile.helpers({
 	'dataUserFound': function(){
-		Meteor.call('findUserData', currentUserName, function(err, res) {
-	    	Session.set('dataUser',res);
-	  	});
-	  	return Session.get('dataUser');
+		return userAux;
 	},
 	'tweets': function(username){
 	  	Meteor.call('tweetsPublish', username, function(err, res) {

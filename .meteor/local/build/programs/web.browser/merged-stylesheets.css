@@ -8827,8 +8827,8 @@ textarea {
 }
 */
 
-#leftDivCurrentUser {
-  float: left;
+#rightDivCurrentUser {
+  padding-left: 15px;
 }
 
 #centerDivCurrentUser {

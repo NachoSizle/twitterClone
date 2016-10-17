@@ -800,22 +800,22 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=63af84bf8a566d0b7c9873dade0b1ab074502eec",
+      "url": "/app/app.js?hash=d98df266da486f386adac735cf9e6d34ccc94a77",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/63af84bf8a566d0b7c9873dade0b1ab074502eec.map",
-      "size": 295567,
-      "hash": "63af84bf8a566d0b7c9873dade0b1ab074502eec"
+      "sourceMapUrl": "/app/d98df266da486f386adac735cf9e6d34ccc94a77.map",
+      "size": 319595,
+      "hash": "d98df266da486f386adac735cf9e6d34ccc94a77"
     },
     {
       "path": "merged-stylesheets.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/merged-stylesheets.css?hash=7ba7afd71731a47497a6fd2c5b8d1cfd68a02088",
+      "url": "/merged-stylesheets.css?hash=4e392d286a63ed9118cd33e012d951c71bb10671",
       "sourceMap": "merged-stylesheets.css.map",
-      "sourceMapUrl": "/7ba7afd71731a47497a6fd2c5b8d1cfd68a02088.map",
-      "size": 158898,
-      "hash": "7ba7afd71731a47497a6fd2c5b8d1cfd68a02088"
+      "sourceMapUrl": "/4e392d286a63ed9118cd33e012d951c71bb10671.map",
+      "size": 158906,
+      "hash": "4e392d286a63ed9118cd33e012d951c71bb10671"
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
@@ -861,6 +861,15 @@
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
       "size": 18028,
       "hash": "ca35b697d99cae4d1b60f2d60fcd37771987eb07"
+    },
+    {
+      "path": "app/imgLogFaceBook.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/imgLogFaceBook.png",
+      "size": 3213,
+      "hash": "52c0b067e0595e06015141888dc91a41eb664e76"
     },
     {
       "path": "app/imgLogTwiiterClone.png",

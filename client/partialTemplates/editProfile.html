@@ -1,0 +1,38 @@
+<template name="editProfile">
+  {{# if dataUserFound}}
+    <div class="user-container">
+      <div class="panel panel-default userBox">
+        <div class="panel-body">
+          <!--Mensaje para el usuario registrado-->
+          <div class="row">
+            <!--CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO-->
+            <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
+              <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
+              <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
+              A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
+              <img id="imgCurrentUser" src="/squirtle.png" class="img-responsive">
+            </div>
+            <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
+            <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
+              <!--ESTA DESCRIPCION ES GENERICA. HAY QUE CAMBIARLA POR LA QUE APAREZCA EN userData.description-->
+              <textarea class="form-control" rows="8" id="userDescription" placeholder="{{dataUserFound.userDescription}}"></textarea>
+            </div>
+          </div>
+
+          <div class="currentUserName">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <h3><strong>{{dataUserFound.userName}}</strong></h3>
+              <h5>@{{dataUserFound.userNameProfile}}</h5>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <button id="saveChanges" class="btn btn-primary optionsUserProfile" type="button">
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</template>

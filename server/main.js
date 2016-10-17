@@ -5,12 +5,12 @@ Meteor.startup(() => {
   Relationships._ensureIndex({follower: 1, following: 1}, {unique: 1});
   
   Twitts.allow({
-	insert: function(userId, disconnect) {
-	   	return true;
-	},
-	update: function(id, doc){
-		return true;
-	}
+  	insert: function(userId, disconnect) {
+  	   	return true;
+  	},
+  	update: function(id, doc){
+  		return true;
+  	}
   });
 
   Favs.allow({
@@ -29,5 +29,9 @@ Meteor.startup(() => {
   	}
   });
 
-
+  DataUser.allow({
+    insert: function(userId, disconnect){
+      return true;
+    }
+  });
 });

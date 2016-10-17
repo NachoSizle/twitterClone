@@ -34,6 +34,11 @@ Meteor.publish('allNotifications', function(notifId) {
 Meteor.publish('favs', function() {
   return Favs.find();
 });
+
+Meteor.publish('dataUser', function() {
+  return DataUser.find();
+});
+
 /*
 Meteor.publishComposite('twitts', function(username) {  
   return {

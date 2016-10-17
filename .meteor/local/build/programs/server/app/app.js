@@ -1,35 +1,16 @@
-var require = meteorInstall({"lib":{"collections":{"favs.js":function(){
+var require = meteorInstall({"lib":{"collections":{"collections.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                     //
-// lib/collections/favs.js                                                                             //
-//                                                                                                     //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                       //
-Favs = new Meteor.Collection('favs');                                                                  // 1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"notifications.js":function(){
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                     //
-// lib/collections/notifications.js                                                                    //
-//                                                                                                     //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                                                                                       //
-Notifications = new Mongo.Collection('notifications');                                                 // 1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-},"tweets.js":function(){
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                     //
-// lib/collections/tweets.js                                                                           //
+// lib/collections/collections.js                                                                      //
 //                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                        //
 Twitts = new Meteor.Collection('twitts');                                                              // 1
 Relationships = new Meteor.Collection('relationships');                                                // 2
+DataUser = new Meteor.Collection('dataUser');                                                          // 3
+Favs = new Meteor.Collection('favs');                                                                  // 4
+Notifications = new Mongo.Collection('notifications');                                                 // 5
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"router.js":function(){
@@ -48,50 +29,53 @@ Router.configure({                                                              
 Router.route('/', { name: 'userManagement' });                                                         // 6
 /*SE ACCEDE POR WINDOW.LOCATION*/                                                                      //
 Router.route('/whoToFollow', { name: 'followUsers' });                                                 // 8
-Router.route('/myProfile', { name: 'userProfile' });                                                   // 9
-Router.route('/Notifications/:userName', {                                                             // 10
-	name: 'twiitPageNew',                                                                                 // 11
-	data: function data() {                                                                               // 12
-		var user = new Object();                                                                             // 13
-		user.name = this.params.userName;                                                                    // 14
-		return user;                                                                                         // 15
-	}                                                                                                     // 16
-});                                                                                                    // 10
+Router.route('/Profile/:username', {                                                                   // 9
+	name: 'userProfile',                                                                                  // 10
+	data: function data() {                                                                               // 11
+		var user = new Object();                                                                             // 12
+		user.name = this.params.username;                                                                    // 13
+		return user;                                                                                         // 14
+	}                                                                                                     // 15
+});                                                                                                    // 9
+Router.route('/Notifications/:userName', {                                                             // 17
+	name: 'twiitPageNew',                                                                                 // 18
+	data: function data() {                                                                               // 19
+		var user = new Object();                                                                             // 20
+		user.name = this.params.userName;                                                                    // 21
+		return user;                                                                                         // 22
+	}                                                                                                     // 23
+});                                                                                                    // 17
 //Router.route('/Comments', {name: 'twiitCommentPage'});                                               //
 /*SE ACCEDE POR PATHFOR*/                                                                              //
-Router.route('/Comments/:_id', {                                                                       // 20
-	name: 'twiitCommentPage',                                                                             // 21
-	data: function data() {                                                                               // 22
-		var mode = Session.get('notificationsModeOn');                                                       // 23
-		var idTwiit = new Object();                                                                          // 24
-		idTwiit._id = this.params._id;                                                                       // 25
+Router.route('/Comments/:_id', {                                                                       // 27
+	name: 'twiitCommentPage',                                                                             // 28
+	data: function data() {                                                                               // 29
+		var mode = Session.get('notificationsModeOn');                                                       // 30
+		var idTwiit = new Object();                                                                          // 31
+		idTwiit._id = this.params._id;                                                                       // 32
                                                                                                        //
-		if (mode) {                                                                                          // 27
-			idTwiit.mode = mode;                                                                                // 28
-		}                                                                                                    // 29
+		if (mode) {                                                                                          // 34
+			idTwiit.mode = mode;                                                                                // 35
+		}                                                                                                    // 36
                                                                                                        //
-		return idTwiit;                                                                                      // 31
-	}                                                                                                     // 32
-});                                                                                                    // 20
-Router.route('/twiits/:_id', {                                                                         // 34
-	name: 'twiitPage',                                                                                    // 35
-	data: function data() {                                                                               // 36
-		return this.params;                                                                                  // 37
-	}                                                                                                     // 38
-});                                                                                                    // 34
-                                                                                                       //
-Router.route('/Profile/:userName', {                                                                   // 41
-	name: 'editProfile',                                                                                  // 42
+		return idTwiit;                                                                                      // 38
+	}                                                                                                     // 39
+});                                                                                                    // 27
+Router.route('/twiits/:_id', {                                                                         // 41
+	name: 'twiitPage',                                                                                    // 42
 	data: function data() {                                                                               // 43
-		console.log(this.params._id);                                                                        // 44
-                                                                                                       //
-		var user = new Object();                                                                             // 46
-		user._id = this.params._id;                                                                          // 47
-                                                                                                       //
-		console.log(user);                                                                                   // 49
-		return user;                                                                                         // 50
-	}                                                                                                     // 51
+		return this.params;                                                                                  // 44
+	}                                                                                                     // 45
 });                                                                                                    // 41
+                                                                                                       //
+Router.route('/editProfile/:userName', {                                                               // 48
+	name: 'editProfile',                                                                                  // 49
+	data: function data() {                                                                               // 50
+		Meteor.call('findUserData', this.params.userName, function (err, res) {                              // 51
+			Session.set('datauser', res);                                                                       // 52
+		});                                                                                                  // 53
+	}                                                                                                     // 54
+});                                                                                                    // 48
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -376,6 +360,11 @@ Meteor.publish('allNotifications', function (notifId) {                         
 Meteor.publish('favs', function () {                                                                   // 34
   return Favs.find();                                                                                  // 35
 });                                                                                                    // 36
+                                                                                                       //
+Meteor.publish('dataUser', function () {                                                               // 38
+  return DataUser.find();                                                                              // 39
+});                                                                                                    // 40
+                                                                                                       //
 /*                                                                                                     //
 Meteor.publishComposite('twitts', function(username) {                                                 //
   return {                                                                                             //
@@ -469,6 +458,48 @@ Meteor.methods({                                                                
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"userData.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                     //
+// server/userData.js                                                                                  //
+//                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                       //
+Meteor.methods({                                                                                       // 1
+  'findUserFromDB': function findUserFromDB(username) {                                                // 2
+    //Meteor._sleepForMs(1000);                                                                        //
+    return Meteor.users.findOne({ "username": username });                                             // 4
+  },                                                                                                   // 5
+                                                                                                       //
+  'insertDataUser': function insertDataUser(userData) {                                                // 7
+                                                                                                       //
+    //BUSCAMOS AL USUARIO QUE SE HA CREADO ANTES PARA RECUPERAR SU _ID                                 //
+    Meteor.call('findUserFromDB', userData.userNameProfile, function (err, res) {                      // 10
+      userData.userId = res._id;                                                                       // 11
+    });                                                                                                // 12
+                                                                                                       //
+    if (Meteor.user()) {                                                                               // 14
+      DataUser.insert({                                                                                // 15
+        userId: userData.userId,                                                                       // 16
+        userNameProfile: userData.userNameProfile,                                                     // 17
+        userName: userData.userName,                                                                   // 18
+        userImg: userData.userImg,                                                                     // 19
+        userDescription: userData.userDescription                                                      // 20
+      });                                                                                              // 15
+    }                                                                                                  // 22
+  },                                                                                                   // 23
+                                                                                                       //
+  'findUserData': function findUserData(userName) {                                                    // 25
+    return DataUser.findOne({ userNameProfile: userName });                                            // 26
+  },                                                                                                   // 27
+                                                                                                       //
+  'updUserData': function updUserData(newData) {                                                       // 29
+    DataUser.update({ _id: newData.userId }, { $set: { userDescription: newData.description } });      // 30
+  }                                                                                                    // 31
+});                                                                                                    // 1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"userManagement.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -536,19 +567,24 @@ Meteor.startup(function () {                                                    
       return true;                                                                                     // 28
     }                                                                                                  // 29
   });                                                                                                  // 26
-});                                                                                                    // 33
+                                                                                                       //
+  DataUser.allow({                                                                                     // 32
+    insert: function insert(userId, disconnect) {                                                      // 33
+      return true;                                                                                     // 34
+    }                                                                                                  // 35
+  });                                                                                                  // 32
+});                                                                                                    // 37
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }]}},{"extensions":[".js",".json"]});
-require("./lib/collections/favs.js");
-require("./lib/collections/notifications.js");
-require("./lib/collections/tweets.js");
+require("./lib/collections/collections.js");
 require("./lib/router.js");
 require("./lib/userUtils.js");
 require("./server/followUsers.js");
 require("./server/notifications.js");
 require("./server/publications.js");
 require("./server/tweetBox.js");
+require("./server/userData.js");
 require("./server/userManagement.js");
 require("./server/main.js");
 //# sourceMappingURL=app.js.map

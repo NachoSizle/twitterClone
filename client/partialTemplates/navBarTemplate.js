@@ -12,7 +12,7 @@ Template.navBarTemplate.events({
 		//console.log("A quien seguir");
 	},
 	'click #imgProfile' : function(){
-		window.location = "/myProfile";
+		window.location = "/Profile/" + Session.get('currentUser');
 	},
 	'click #imgLogTwiiterClone' : function(){
 		window.location = "/";
