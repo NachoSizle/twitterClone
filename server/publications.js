@@ -39,6 +39,9 @@ Meteor.publish('dataUser', function() {
   return DataUser.find();
 });
 
+Meteor.publish('images', function() {
+  return Images.find();
+});
 /*
 Meteor.publishComposite('twitts', function(username) {  
   return {

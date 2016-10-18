@@ -127,16 +127,16 @@ textarea {
 }
 
 #imgCurrentUser{
-  width: 200px;
   border-right: 1px solid #d8d7d7;
   margin-right: 15px;
 }
-/*
+
 #imgProfile{
-  margin-left: 60%;
-  float:left;
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
 }
-*/
+
 #rightDivCurrentUser{
   padding-left: 15px;
 }
@@ -256,4 +256,30 @@ textarea {
 .optionsUserProfile{
   margin-top: 20px;
   float: right;
+}
+
+.iconToEditImg{
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  border: none;
+
+  color: #1666ce;
+
+  background-color: transparent;
+  background: transparent;
+  border-color: transparent;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+
+  margin-top: 22px;
+  margin-right: 5px;
 }

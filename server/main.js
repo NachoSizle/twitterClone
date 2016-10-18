@@ -34,4 +34,10 @@ Meteor.startup(() => {
       return true;
     }
   });
+
+  Images.allow({
+    insert: function(userId, disconnect){
+      return true;
+    }
+  });
 });

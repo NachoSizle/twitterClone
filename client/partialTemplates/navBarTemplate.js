@@ -37,6 +37,13 @@ Template.navBarTemplate.helpers({
 	},
 	'infoStateCollapseNavBar': function() {
 	  return Session.get('navBarCollapse');
+	},
+	'userImgFound': function(){
+		Meteor.call('findUserData', Meteor.user().username, function(err, res) {
+			Meteor.call('findUserImg', res.userImg, function(err, res) {
+				$('#imgProfile').attr("src", res);
+		  	});
+	  	});
 	}
 });
 //PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA

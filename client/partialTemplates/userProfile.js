@@ -17,7 +17,14 @@ Template.userProfile.helpers({
 		Meteor.call('findUserData', currentUserName, function(err, res) {
 	    	Session.set('dataUser',res);
 	  	});
-	  	return Session.get('dataUser');
+
+	  	dataUser = Session.get('dataUser');
+	  	return dataUser;
+	},
+	'userImgFound': function(){
+		Meteor.call('findUserImg', dataUser.userImg, function(err, res) {
+			$('#imgCurrentUser').attr("src", res);
+	  	});
 	},
 	'tweets': function(username){
 	  	Meteor.call('tweetsPublish', username, function(err, res) {

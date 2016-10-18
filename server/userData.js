@@ -26,7 +26,18 @@ Meteor.methods({
     return DataUser.findOne({userNameProfile : userName});
   },
 
+  'findUserImg': function(userImg){
+    return Images.findOne({_id : userImg}).imgCode;
+  },
+
   'updUserData': function(newData){
-    DataUser.update({_id: newData.userId}, {$set: {userDescription : newData.description}});
+    console.log(newData);
+    DataUser.update({_id: newData.userId}, {$set: {userDescription : newData.description, userImg : newData.imgId}});
+  },
+
+  'insertNewImage': function(code){
+    return Images.insert({
+      imgCode : code
+    });
   }
 });

@@ -10,7 +10,13 @@
               <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
               <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
               A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
-              <img id="imgCurrentUser" src="/squirtle.png" class="img-responsive">
+              <img id="imgCurrentUser" src="{{userImgFound}}" class="img-responsive">
+
+              <label id="btnCurrentUser" class="btn btn-default btn-lg btn-file iconToEditImg">
+                  <span class="glyphicon glyphicon-camera"></span> 
+                  <input id="inputFile" type="file" style="display: none;">
+              </label>
+
             </div>
             <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
             <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">

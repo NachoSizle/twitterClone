@@ -11,6 +11,7 @@ Relationships = new Meteor.Collection('relationships');                         
 DataUser = new Meteor.Collection('dataUser');                                                          // 3
 Favs = new Meteor.Collection('favs');                                                                  // 4
 Notifications = new Mongo.Collection('notifications');                                                 // 5
+Images = new Mongo.Collection('images');                                                               // 6
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"router.js":function(){
@@ -71,10 +72,8 @@ Router.route('/twiits/:_id', {                                                  
 Router.route('/editProfile/:userName', {                                                               // 48
 	name: 'editProfile',                                                                                  // 49
 	data: function data() {                                                                               // 50
-		Meteor.call('findUserData', this.params.userName, function (err, res) {                              // 51
-			Session.set('datauser', res);                                                                       // 52
-		});                                                                                                  // 53
-	}                                                                                                     // 54
+		return this.params.userName;                                                                         // 51
+	}                                                                                                     // 52
 });                                                                                                    // 48
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -365,6 +364,9 @@ Meteor.publish('dataUser', function () {                                        
   return DataUser.find();                                                                              // 39
 });                                                                                                    // 40
                                                                                                        //
+Meteor.publish('images', function () {                                                                 // 42
+  return Images.find();                                                                                // 43
+});                                                                                                    // 44
 /*                                                                                                     //
 Meteor.publishComposite('twitts', function(username) {                                                 //
   return {                                                                                             //
@@ -494,9 +496,20 @@ Meteor.methods({                                                                
     return DataUser.findOne({ userNameProfile: userName });                                            // 26
   },                                                                                                   // 27
                                                                                                        //
-  'updUserData': function updUserData(newData) {                                                       // 29
-    DataUser.update({ _id: newData.userId }, { $set: { userDescription: newData.description } });      // 30
-  }                                                                                                    // 31
+  'findUserImg': function findUserImg(userImg) {                                                       // 29
+    return Images.findOne({ _id: userImg }).imgCode;                                                   // 30
+  },                                                                                                   // 31
+                                                                                                       //
+  'updUserData': function updUserData(newData) {                                                       // 33
+    console.log(newData);                                                                              // 34
+    DataUser.update({ _id: newData.userId }, { $set: { userDescription: newData.description, userImg: newData.imgId } });
+  },                                                                                                   // 36
+                                                                                                       //
+  'insertNewImage': function insertNewImage(code) {                                                    // 38
+    return Images.insert({                                                                             // 39
+      imgCode: code                                                                                    // 40
+    });                                                                                                // 39
+  }                                                                                                    // 42
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -573,7 +586,13 @@ Meteor.startup(function () {                                                    
       return true;                                                                                     // 34
     }                                                                                                  // 35
   });                                                                                                  // 32
-});                                                                                                    // 37
+                                                                                                       //
+  Images.allow({                                                                                       // 38
+    insert: function insert(userId, disconnect) {                                                      // 39
+      return true;                                                                                     // 40
+    }                                                                                                  // 41
+  });                                                                                                  // 38
+});                                                                                                    // 43
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }]}},{"extensions":[".js",".json"]});
