@@ -1046,70 +1046,77 @@ Template["userProfile"] = new Template("Template.userProfile", (function() {    
       }), "\n              "), "\n            "), "\n\n            ", HTML.DIV({                                       // 33
         class: "currentUserName"                                                                                       // 34
       }, "\n              ", HTML.DIV({                                                                                // 35
-        class: "col-md-6 col-sm-6 col-xs-6"                                                                            // 36
+        class: "col-md-5 col-sm-5 col-xs-5 nameUserAndProfile"                                                         // 36
       }, "\n                ", HTML.H3(HTML.STRONG(Blaze.View("lookup:dataUserFound.userName", function() {            // 37
         return Spacebars.mustache(Spacebars.dot(view.lookup("dataUserFound"), "userName"));                            // 38
       }))), "\n                ", HTML.H5("@", Blaze.View("lookup:dataUserFound.userNameProfile", function() {         // 39
         return Spacebars.mustache(Spacebars.dot(view.lookup("dataUserFound"), "userNameProfile"));                     // 40
       })), "\n              "), "\n              ", HTML.DIV({                                                         // 41
-        class: "col-md-6 col-sm-6 col-xs-6 dropdown"                                                                   // 42
+        class: "col-md-7 col-sm-7 col-xs-7 dropdown btnOptionsProfile"                                                 // 42
       }, "\n                ", HTML.BUTTON({                                                                           // 43
-        class: "btn btn-primary dropdown-toggle optionsUserProfile",                                                   // 44
-        type: "button",                                                                                                // 45
-        "data-toggle": "dropdown"                                                                                      // 46
-      }, "\n                  ", HTML.SPAN({                                                                           // 47
-        class: "glyphicon glyphicon-option-vertical"                                                                   // 48
-      }), "\n                "), "\n                ", HTML.UL({                                                       // 49
-        class: "dropdown-menu"                                                                                         // 50
-      }, "\n                  ", HTML.LI(HTML.A({                                                                      // 51
-        href: "#",                                                                                                     // 52
-        id: "editProfile"                                                                                              // 53
-      }, "Editar Perfil")), "\n                  ", HTML.LI(HTML.A({                                                   // 54
-        href: "#",                                                                                                     // 55
-        id: "logout"                                                                                                   // 56
-      }, "Salir")), "\n                "), "\n\n                ", HTML.BUTTON({                                       // 57
-        type: "button",                                                                                                // 58
-        class: "btn btn-default btn-circle optionsUserProfile"                                                         // 59
-      }, "\n                  ", HTML.I({                                                                              // 60
-        class: "glyphicon glyphicon-ok"                                                                                // 61
-      }), "\n                "), "\n                ", HTML.BUTTON({                                                   // 62
-        type: "button",                                                                                                // 63
-        class: "btn btn-primary btn-circle optionsUserProfile"                                                         // 64
-      }, "\n                  ", HTML.I({                                                                              // 65
-        class: "glyphicon glyphicon-list"                                                                              // 66
+        id: "dropdownOptionsUser",                                                                                     // 44
+        class: "btn btn-primary dropdown-toggle optionsUserProfile",                                                   // 45
+        type: "button",                                                                                                // 46
+        "data-toggle": "dropdown",                                                                                     // 47
+        "aria-haspopup": "true",                                                                                       // 48
+        "aria-expanded": "true"                                                                                        // 49
+      }, "\n                  ", HTML.SPAN({                                                                           // 50
+        class: "glyphicon glyphicon-option-vertical"                                                                   // 51
+      }), "\n                "), "\n                ", HTML.UL({                                                       // 52
+        class: "dropdown-menu",                                                                                        // 53
+        "aria-labelledby": "dropdownOptionsUser"                                                                       // 54
+      }, "\n                  ", HTML.LI(HTML.A({                                                                      // 55
+        href: "#",                                                                                                     // 56
+        id: "editProfile"                                                                                              // 57
+      }, "Editar Perfil")), "\n                  ", HTML.LI(HTML.A({                                                   // 58
+        href: "#",                                                                                                     // 59
+        id: "logout"                                                                                                   // 60
+      }, "Salir")), "\n                "), "\n\n                ", HTML.BUTTON({                                       // 61
+        type: "button",                                                                                                // 62
+        class: "btn btn-warning btn-circle optionsUserProfile"                                                         // 63
+      }, "\n                  ", HTML.I({                                                                              // 64
+        class: "fa fa-instagram",                                                                                      // 65
+        style: "font-size: 24px;"                                                                                      // 66
       }), "\n                "), "\n                ", HTML.BUTTON({                                                   // 67
         type: "button",                                                                                                // 68
-        class: "btn btn-success btn-circle optionsUserProfile"                                                         // 69
+        class: "btn btn-primary btn-circle optionsUserProfile"                                                         // 69
       }, "\n                  ", HTML.I({                                                                              // 70
-        class: "glyphicon glyphicon-link"                                                                              // 71
+        class: "fa fa-facebook",                                                                                       // 71
+        style: "font-size: 22px;"                                                                                      // 72
+      }), "\n                "), "\n                ", HTML.BUTTON({                                                   // 73
+        type: "button",                                                                                                // 74
+        class: "btn btn-success btn-circle optionsUserProfile"                                                         // 75
+      }, "\n                  ", HTML.I({                                                                              // 76
+        class: "fa fa-whatsapp",                                                                                       // 77
+        style: "font-size: 24px;"                                                                                      // 78
       }), "\n                "), "\n              "), "\n            "), "\n              \n            ", HTML.Comment('\n            <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>\n            <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>\n            '), "\n            ", HTML.TABLE({
-        class: "table"                                                                                                 // 73
-      }, "  \n              ", HTML.TR("\n                ", HTML.TD({                                                 // 74
-        class: "tableHeader"                                                                                           // 75
-      }, "Twitts"), "\n                ", HTML.TD({                                                                    // 76
-        class: "tableHeader"                                                                                           // 77
-      }, "Siguiendo"), "\n                ", HTML.TD({                                                                 // 78
-        class: "tableHeader"                                                                                           // 79
-      }, "Seguidores"), "\n              "), "\n              ", HTML.TR("\n                ", HTML.TD({               // 80
-        class: "tableContent"                                                                                          // 81
-      }, Blaze.View("lookup:tweets", function() {                                                                      // 82
-        return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));       // 83
-      })), "\n                ", HTML.TD({                                                                             // 84
-        class: "tableContent"                                                                                          // 85
-      }, Blaze.View("lookup:following", function() {                                                                   // 86
-        return Spacebars.mustache(view.lookup("following"));                                                           // 87
-      })), "\n                ", HTML.TD({                                                                             // 88
-        class: "tableContent"                                                                                          // 89
-      }, Blaze.View("lookup:followers", function() {                                                                   // 90
-        return Spacebars.mustache(view.lookup("followers"));                                                           // 91
+        class: "table"                                                                                                 // 80
+      }, "  \n              ", HTML.TR("\n                ", HTML.TD({                                                 // 81
+        class: "tableHeader"                                                                                           // 82
+      }, "Twitts"), "\n                ", HTML.TD({                                                                    // 83
+        class: "tableHeader"                                                                                           // 84
+      }, "Siguiendo"), "\n                ", HTML.TD({                                                                 // 85
+        class: "tableHeader"                                                                                           // 86
+      }, "Seguidores"), "\n              "), "\n              ", HTML.TR("\n                ", HTML.TD({               // 87
+        class: "tableContent"                                                                                          // 88
+      }, Blaze.View("lookup:tweets", function() {                                                                      // 89
+        return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));       // 90
+      })), "\n                ", HTML.TD({                                                                             // 91
+        class: "tableContent"                                                                                          // 92
+      }, Blaze.View("lookup:following", function() {                                                                   // 93
+        return Spacebars.mustache(view.lookup("following"));                                                           // 94
+      })), "\n                ", HTML.TD({                                                                             // 95
+        class: "tableContent"                                                                                          // 96
+      }, Blaze.View("lookup:followers", function() {                                                                   // 97
+        return Spacebars.mustache(view.lookup("followers"));                                                           // 98
       })), "\n              "), "\n            "), "\n          "), "\n        "), "\n      "), "\n      ", HTML.DIV({
-        id: "divTweetFeed",                                                                                            // 93
-        class: "col-md-8 col-sm-8"                                                                                     // 94
-      }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n    " ];                                      // 95
-    }), "\n  " ];                                                                                                      // 96
-  });                                                                                                                  // 97
-}));                                                                                                                   // 98
-                                                                                                                       // 99
+        id: "divTweetFeed",                                                                                            // 100
+        class: "col-md-8 col-sm-8"                                                                                     // 101
+      }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n    " ];                                      // 102
+    }), "\n  " ];                                                                                                      // 103
+  });                                                                                                                  // 104
+}));                                                                                                                   // 105
+                                                                                                                       // 106
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editProfile.js":function(){

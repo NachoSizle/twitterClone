@@ -21,27 +21,27 @@
             </div>
 
             <div class="currentUserName">
-              <div class="col-md-6 col-sm-6 col-xs-6">
+              <div class="col-md-5 col-sm-5 col-xs-5 nameUserAndProfile">
                 <h3><strong>{{dataUserFound.userName}}</strong></h3>
                 <h5>@{{dataUserFound.userNameProfile}}</h5>
               </div>
-              <div class="col-md-6 col-sm-6 col-xs-6 dropdown">
-                <button class="btn btn-primary dropdown-toggle optionsUserProfile" type="button" data-toggle="dropdown">
+              <div class="col-md-7 col-sm-7 col-xs-7 dropdown btnOptionsProfile">
+                <button id="dropdownOptionsUser" class="btn btn-primary dropdown-toggle optionsUserProfile" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   <span class="glyphicon glyphicon-option-vertical"></span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" aria-labelledby="dropdownOptionsUser">
                   <li><a href="#" id="editProfile">Editar Perfil</a></li>
                   <li><a href="#" id="logout">Salir</a></li>
                 </ul>
 
-                <button type="button" class="btn btn-default btn-circle optionsUserProfile">
-                  <i class="glyphicon glyphicon-ok"></i>
+                <button type="button" class="btn btn-warning btn-circle optionsUserProfile">
+                  <i class="fa fa-instagram" style="font-size: 24px;"></i>
                 </button>
                 <button type="button" class="btn btn-primary btn-circle optionsUserProfile">
-                  <i class="glyphicon glyphicon-list"></i>
+                  <i class="fa fa-facebook" style="font-size: 22px;"></i>
                 </button>
                 <button type="button" class="btn btn-success btn-circle optionsUserProfile">
-                  <i class="glyphicon glyphicon-link"></i>
+                  <i class="fa fa-whatsapp" style="font-size: 24px;"></i>
                 </button>
               </div>
             </div>
