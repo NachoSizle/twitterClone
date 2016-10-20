@@ -35,6 +35,11 @@ Meteor.methods({
     DataUser.update({_id: newData.userId}, {$set: {userDescription : newData.description, userImg : newData.imgId}});
   },
 
+  'updUserDataSocialNetworks': function(newData){
+    console.log(newData);
+    DataUser.update({_id: newData.userId}, {$set: {userFb : newData.userFb, userWhats : newData.userWhats, userInsta : newData.userInsta}});
+  },
+
   'insertNewImage': function(code){
     return Images.insert({
       imgCode : code

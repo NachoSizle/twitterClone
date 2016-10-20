@@ -21,7 +21,7 @@
             <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
             <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
               <!--ESTA DESCRIPCION ES GENERICA. HAY QUE CAMBIARLA POR LA QUE APAREZCA EN userData.description-->
-              <textarea class="form-control" rows="8" id="userDescription" placeholder="{{dataUserFound.userDescription}}"></textarea>
+              <textarea class="form-control" rows="5" id="userDescription" placeholder="{{dataUserFound.userDescription}}"></textarea>
             </div>
           </div>
 
@@ -34,9 +34,16 @@
               <button id="saveChanges" class="btn btn-primary optionsUserProfile" type="button">
                 <span class="glyphicon glyphicon-ok"></span>
               </button>
+              <button class="btn btn-primary optionsUserProfile" type="button" style="margin-right:7px" data-toggle="modal" data-target="#dialog-NewSocialNetwork">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                <span class="glyphicon glyphicon-user"></span>
+              </button>
             </div>
           </div>
 
+          <div class="modal fade" id="dialog-NewSocialNetwork">
+            {{> socialNetworkBox}}
+          </div>
         </div>
       </div>
     </div>

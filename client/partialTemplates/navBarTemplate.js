@@ -47,6 +47,7 @@ Template.navBarTemplate.helpers({
 	},
 	'userImgFound': function(){
 		Meteor.call('findUserData', Meteor.user().username, function(err, res) {
+			console.log(res);
 			if(res.userImg){
 				Meteor.call('findUserImg', res.userImg, function(err, res) {
 					$('#imgProfile').attr("src", res);	

@@ -33,16 +33,12 @@
                   <li><a href="#" id="editProfile">Editar Perfil</a></li>
                   <li><a href="#" id="logout">Salir</a></li>
                 </ul>
-
-                <button type="button" class="btn btn-warning btn-circle optionsUserProfile">
-                  <i class="fa fa-instagram" style="font-size: 24px;"></i>
-                </button>
-                <button type="button" class="btn btn-primary btn-circle optionsUserProfile">
-                  <i class="fa fa-facebook" style="font-size: 22px;"></i>
-                </button>
-                <button type="button" class="btn btn-success btn-circle optionsUserProfile">
-                  <i class="fa fa-whatsapp" style="font-size: 24px;"></i>
-                </button>
+                {{# if existsSocialNetwork}}
+                  <!--
+                    <div id="optionsUserProfile">
+                    </div>
+                  -->
+                {{/if}}
               </div>
             </div>
               
