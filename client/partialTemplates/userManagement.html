@@ -1,37 +1,34 @@
 <template name="userManagement">
-  {{# if recommendations}}
-    <div id="divFollowUsers" class="col-md-8 col-sm-8 col-lg-2">{{> followUsers}}</div>
+  {{# if currentUser}}
+    <!-- LA CAJA DE PONER UN NUEVO TWIIT SE HA IMPLEMENTADO EN UN MODAL QUE SALTA 
+    CUANDO SE DA AL BOTON QUE SE ENCUENTRA EN LA BARRA DE NAVEGACIÓN
+    <div id="divTweetBox" class="col-md-8 col-sm-8">{{> tweetBox}}</div>
+    -->
+    
+    <div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
   {{else}}
-    {{# if currentUser}}
-      <!-- LA CAJA DE PONER UN NUEVO TWIIT SE HA IMPLEMENTADO EN UN MODAL QUE SALTA 
-      CUANDO SE DA AL BOTON QUE SE ENCUENTRA EN LA BARRA DE NAVEGACIÓN
-      <div id="divTweetBox" class="col-md-8 col-sm-8">{{> tweetBox}}</div>
-      -->
-      <div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
-    {{else}}
-      <div class="user-container">
-        <div class="panel panel-default userBox">
-          <div class="panel-body">
-            <!--módulo de acceso -->
-            <h4>¿Ya tienes una cuenta?</h4>
-            <div class="form-group">
-              <input class="form-control input-sm" id="login-nameProfile" placeholder="Nombre de Usuario">
-              <input class="form-control input-sm" id="login-password" placeholder="Contraseña" type="password">
-            </div>
-
-            <button type="button" class="btn btn-info fullbutton login" id="login">Acceder</button>
-
-            <!--módulo de registro-->
-            <h4>¿Nuevo por aquí?</h4>
-            <div class="form-group">
-              <input class="form-control input-sm" id="signup-username" placeholder="Nombre">
-              <input class="form-control input-sm" id="signup-nameProfile" placeholder="Nombre de Usuario">
-              <input class="form-control input-sm" id="signup-password" placeholder="Contraseña" type="password">
-            </div>
-            <button type="button" class="btn btn-info fullbutton" id="signup">Regístrate</button> 
+    <div class="user-container">
+      <div class="panel panel-default userBox">
+        <div class="panel-body">
+          <!--módulo de acceso -->
+          <h4>¿Ya tienes una cuenta?</h4>
+          <div class="form-group">
+            <input class="form-control input-sm" id="login-nameProfile" placeholder="Nombre de Usuario">
+            <input class="form-control input-sm" id="login-password" placeholder="Contraseña" type="password">
           </div>
+
+          <button type="button" class="btn btn-info fullbutton login" id="login">Acceder</button>
+
+          <!--módulo de registro-->
+          <h4>¿Nuevo por aquí?</h4>
+          <div class="form-group">
+            <input class="form-control input-sm" id="signup-username" placeholder="Nombre">
+            <input class="form-control input-sm" id="signup-nameProfile" placeholder="Nombre de Usuario">
+            <input class="form-control input-sm" id="signup-password" placeholder="Contraseña" type="password">
+          </div>
+          <button type="button" class="btn btn-info fullbutton" id="signup">Regístrate</button> 
         </div>
       </div>
-    {{/if}} 
-  {{/if}}
+    </div>
+  {{/if}} 
 </template>

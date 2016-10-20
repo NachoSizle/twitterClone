@@ -4,7 +4,14 @@ Template.navBarTemplate.onCreated( function() {
 	Session.set('currentUser', Meteor.user().username);
 
 	//PEDIMOS PERMISO AL USUARIO PARA MOSTRARLE NOTIFICACIONES
-	Notification.requestPermission();
+	console.log(navigator.platform);
+
+	/*
+	HAY QUE CONTROLAR ESTO PORQUE NO FUNCIONA EL NOTIFICATION EN IPHONE
+	if(navigator.platform != 'iPad' || navigator.platform != 'iPhone' || navigator.platform != 'iPod'){
+		Notification.requestPermission();
+	}
+	*/
 });
 
 Template.navBarTemplate.events({
@@ -40,9 +47,14 @@ Template.navBarTemplate.helpers({
 	},
 	'userImgFound': function(){
 		Meteor.call('findUserData', Meteor.user().username, function(err, res) {
-			Meteor.call('findUserImg', res.userImg, function(err, res) {
-				$('#imgProfile').attr("src", res);
-		  	});
+			if(res.userImg){
+				Meteor.call('findUserImg', res.userImg, function(err, res) {
+					$('#imgProfile').attr("src", res);	
+			  	});
+			} else {
+				$('#imgProfile').attr("src", "/profileImgTest.png");
+			}
+			
 	  	});
 	}
 });

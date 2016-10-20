@@ -48,10 +48,21 @@ Template.tweetFeed.events({
   'click #btnFav': function(){
     var currentUser = Session.get('currentUser');
     var idUser = Meteor.users.findOne({ username: currentUser })._id;
+
+    console.log(this._id);
     //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO
     var userTapFav = UserUtils.findFavsForTwiit(this._id);
-    var arrAux = userTapFav.idUserTapFav;
 
+    //HACEMOS UNA COMPROBACION DE QUE EL TWIIT NO TIENE NINGUN FAV O QUE SI LO TIENE
+    if(!userTapFav){
+      //console.log("No tiene FAVS");
+      UserUtils.addFavToTwiit(this._id, idUser);
+      $("#"+ this._id).addClass("heartFav");
+      $("#"+ this._id).removeClass("heartNoFav");
+    } else {
+      var arrAux = userTapFav.idUserTapFav;
+    }
+    
     //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS
     if(arrAux.indexOf(idUser) === -1){
       UserUtils.addFavToTwiit(this._id, idUser);
@@ -61,8 +72,6 @@ Template.tweetFeed.events({
       notif.typeOfNotif = "fav";
       notif.actorNotif = currentUser;
       notif.recepNotif = UserUtils.findUserFromTwiit(this._id);
-
-      console.log(notif);
 
       Meteor.call('createTwiitNotification', notif);
 

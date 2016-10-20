@@ -22,9 +22,15 @@ Template.userProfile.helpers({
 	  	return dataUser;
 	},
 	'userImgFound': function(){
-		Meteor.call('findUserImg', dataUser.userImg, function(err, res) {
-			$('#imgCurrentUser').attr("src", res);
-	  	});
+		console.log(dataUser);
+		if(dataUser.userImg){
+			Meteor.call('findUserImg', dataUser.userImg, function(err, res) {
+				$('#imgCurrentUser').attr("src", res);
+		  	});
+		} else {
+			console.log("Imagen test");
+			$('#imgCurrentUser').attr("src", "/profileImgTest.png");
+		}
 	},
 	'tweets': function(username){
 	  	Meteor.call('tweetsPublish', username, function(err, res) {
