@@ -1092,38 +1092,42 @@ Template["userProfile"] = new Template("Template.userProfile", (function() {    
       }, "Editar Perfil")), "\n                  ", HTML.LI(HTML.A({                                                   // 58
         href: "#",                                                                                                     // 59
         id: "logout"                                                                                                   // 60
-      }, "Salir")), "\n                "), "\n                ", Blaze.If(function() {                                 // 61
-        return Spacebars.call(view.lookup("existsSocialNetwork"));                                                     // 62
-      }, function() {                                                                                                  // 63
-        return [ "\n                  ", HTML.Comment('\n                    <div id="optionsUserProfile">\n                    </div>\n                  '), "\n                " ];
-      }), "\n              "), "\n            "), "\n              \n            ", HTML.Comment('\n            <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>\n            <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>\n            '), "\n            ", HTML.TABLE({
-        class: "table"                                                                                                 // 66
-      }, "  \n              ", HTML.TR("\n                ", HTML.TD({                                                 // 67
-        class: "tableHeader"                                                                                           // 68
-      }, "Twitts"), "\n                ", HTML.TD({                                                                    // 69
-        class: "tableHeader"                                                                                           // 70
-      }, "Siguiendo"), "\n                ", HTML.TD({                                                                 // 71
+      }, "Salir")), "\n                "), "\n                ", HTML.DIV({                                            // 61
+        id: "optionsUserProfile"                                                                                       // 62
+      }, "\n                  ", Blaze.If(function() {                                                                 // 63
+        return Spacebars.call(view.lookup("existsSocialNetwork"));                                                     // 64
+      }, function() {                                                                                                  // 65
+        return [ "  \n                    ", Blaze.View("lookup:.", function() {                                       // 66
+          return Spacebars.mustache(view.lookup("."));                                                                 // 67
+        }), "\n                  " ];                                                                                  // 68
+      }), "\n                "), "\n              "), "\n            "), "\n              \n            ", HTML.Comment('\n            <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>\n            <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>\n            '), "\n            ", HTML.TABLE({
+        class: "table"                                                                                                 // 70
+      }, "  \n              ", HTML.TR("\n                ", HTML.TD({                                                 // 71
         class: "tableHeader"                                                                                           // 72
-      }, "Seguidores"), "\n              "), "\n              ", HTML.TR("\n                ", HTML.TD({               // 73
-        class: "tableContent"                                                                                          // 74
-      }, Blaze.View("lookup:tweets", function() {                                                                      // 75
-        return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));       // 76
-      })), "\n                ", HTML.TD({                                                                             // 77
+      }, "Twitts"), "\n                ", HTML.TD({                                                                    // 73
+        class: "tableHeader"                                                                                           // 74
+      }, "Siguiendo"), "\n                ", HTML.TD({                                                                 // 75
+        class: "tableHeader"                                                                                           // 76
+      }, "Seguidores"), "\n              "), "\n              ", HTML.TR("\n                ", HTML.TD({               // 77
         class: "tableContent"                                                                                          // 78
-      }, Blaze.View("lookup:following", function() {                                                                   // 79
-        return Spacebars.mustache(view.lookup("following"));                                                           // 80
+      }, Blaze.View("lookup:tweets", function() {                                                                      // 79
+        return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));       // 80
       })), "\n                ", HTML.TD({                                                                             // 81
         class: "tableContent"                                                                                          // 82
-      }, Blaze.View("lookup:followers", function() {                                                                   // 83
-        return Spacebars.mustache(view.lookup("followers"));                                                           // 84
+      }, Blaze.View("lookup:following", function() {                                                                   // 83
+        return Spacebars.mustache(view.lookup("following"));                                                           // 84
+      })), "\n                ", HTML.TD({                                                                             // 85
+        class: "tableContent"                                                                                          // 86
+      }, Blaze.View("lookup:followers", function() {                                                                   // 87
+        return Spacebars.mustache(view.lookup("followers"));                                                           // 88
       })), "\n              "), "\n            "), "\n          "), "\n        "), "\n      "), "\n      ", HTML.DIV({
-        id: "divTweetFeed",                                                                                            // 86
-        class: "col-md-8 col-sm-8"                                                                                     // 87
-      }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n    " ];                                      // 88
-    }), "\n  " ];                                                                                                      // 89
-  });                                                                                                                  // 90
-}));                                                                                                                   // 91
-                                                                                                                       // 92
+        id: "divTweetFeed",                                                                                            // 90
+        class: "col-md-8 col-sm-8"                                                                                     // 91
+      }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n    " ];                                      // 92
+    }), "\n  " ];                                                                                                      // 93
+  });                                                                                                                  // 94
+}));                                                                                                                   // 95
+                                                                                                                       // 96
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editProfile.js":function(){
@@ -1611,7 +1615,7 @@ Template.socialNetworkBox.events({                                              
       if (numSocialNetworks < 3) {                                                                                     // 8
         Session.set('countSocialNetworks', numSocialNetworks + 1);                                                     // 9
                                                                                                                        //
-        $('#containerInputs').append("<div class='input-group' style='margin-bottom: 10px;'>" + "<div class='input-group-btn' id='containerInputs'>" + "<button id='" + numSocialNetworks + "' type='button' class='btn btn-default dropdown-toggle btnDropDown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Choose " + "<span class='caret'></span>" + "</button>" + "<ul id='dropdownMenu'" + numSocialNetworks + " class='dropdown-menu'>" + "<li><a href='#'>WhatsApp</a></li><li><a href='#'>Facebook</a></li><li><a href='#'>Instagram</a></li>" + "</ul>" + "</div>" + "<input type='text' class='form-control' aria-label='...' placeholder='Username...'>" + "</div>");
+        $('#containerInputs').append("<div class='input-group' style='margin-bottom: 10px;'>" + "<div class='input-group-btn' id='containerInputs'>" + "<button id='" + numSocialNetworks + "' type='button' class='btn btn-default dropdown-toggle btnDropDown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Choose" + "<span class='caret'> </span>" + "</button>" + "<ul id='dropdownMenu" + numSocialNetworks + "' class='dropdown-menu'>" + "<li><a href='#'>WhatsApp</a></li><li><a href='#'>Facebook</a></li><li><a href='#'>Instagram</a></li>" + "</ul>" + "</div>" + "<input type='text' class='form-control inputSN' aria-label='...' placeholder='Username...'>" + "</div>");
       };                                                                                                               // 22
     }                                                                                                                  // 23
                                                                                                                        //
@@ -1629,25 +1633,67 @@ Template.socialNetworkBox.events({                                              
                                                                                                                        //
       var btnTap = Session.get('btnTap');                                                                              // 29
       var selectOption = event.target.text;                                                                            // 30
+      //AÑADIR A UN ARRAY LAS SELECCIONES QUE HACEMOS PARA QUE NO SE PUEDAN REPETIR.                                   //
+      //ES DECIR, UN USUARIO SOLO VA A PODER ENLAZAR 1 CUENTA DE FACEBOOK, INSTAGRAM                                   //
+      //O WHATSAPP.                                                                                                    //
                                                                                                                        //
-      $('#' + btnTap).html(selectOption + " " + "<span class='caret'></span>");                                        // 32
-    }                                                                                                                  // 33
+      $('#' + btnTap).html(selectOption + " " + "<span class='caret'></span>");                                        // 35
+    }                                                                                                                  // 36
                                                                                                                        //
     return clickDropdownMenuLiA;                                                                                       // 27
   }(),                                                                                                                 // 27
-  'click #saveData': function () {                                                                                     // 34
-    function clickSaveData() {                                                                                         // 34
+  'click #saveData': function () {                                                                                     // 37
+    function clickSaveData() {                                                                                         // 37
       //DE ESTA MANERA OBTENEMOS TODOS LOS BLOQUES QUE HEMOS AÑADIDO DINÁMICAMENTE                                     //
-      console.log($('.input-group'));                                                                                  // 36
       //HAY QUE OBTENER TODOS LOS VALORES SELECCIONADOS EN CADA DROPDOWN Y EL CONTENIDO DE SUS RESPECTIVOS INPUT       //
       //TODO                                                                                                           //
-    }                                                                                                                  // 39
+      var valuesInput = [];                                                                                            // 41
+      var valuesButton = [];                                                                                           // 42
                                                                                                                        //
-    return clickSaveData;                                                                                              // 34
-  }()                                                                                                                  // 34
+      $('.inputSN').each(function () {                                                                                 // 44
+        valuesInput.push($(this).val());                                                                               // 45
+      });                                                                                                              // 46
+      $('.input-group button').each(function () {                                                                      // 47
+        valuesButton.push($(this).text());                                                                             // 48
+      });                                                                                                              // 49
+                                                                                                                       //
+      //AHORA OBTENEMOS EL _id DEL USUARIO Y LO AÑADIMOS AL OBJETO QUE LE VAMOS A PASAR                                //
+      //A LA LLAMADA A userData.js QUE SE ENCARGARÁ DE ACTUALIZAR EL REGISTRO.                                         //
+      var newData = new Object();                                                                                      // 53
+      newData.userId = Session.get('datauser')._id;                                                                    // 54
+                                                                                                                       //
+      if (valuesInput) {                                                                                               // 56
+        for (i = 0; i < valuesButton.length; i++) {                                                                    // 57
+          var valu = valuesButton[i];                                                                                  // 58
+          var num = valuesButton.indexOf(valu);                                                                        // 59
+          console.log(num);                                                                                            // 60
+          if (num >= 0) {                                                                                              // 61
+            if ("WhatsApp " === valu) {                                                                                // 62
+              newData.userWhats = valuesInput[num];                                                                    // 63
+            } else if ("Facebook " === valu) {                                                                         // 64
+              newData.userFb = valuesInput[num];                                                                       // 65
+            } else if ("Instagram " === valu) {                                                                        // 66
+              newData.userInsta = valuesInput[num];                                                                    // 67
+            }                                                                                                          // 68
+          }                                                                                                            // 69
+        }                                                                                                              // 70
+      }                                                                                                                // 71
+                                                                                                                       //
+      console.log(valuesButton);                                                                                       // 73
+      console.log(valuesInput);                                                                                        // 74
+      console.log(newData);                                                                                            // 75
+                                                                                                                       //
+      //POR ULTIMO, REALIZAMOS LA LLAMADA A userData.js                                                                //
+      Meteor.call('updUserDataSocialNetworks', newData);                                                               // 78
+                                                                                                                       //
+      //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                         //
+    }                                                                                                                  // 81
+                                                                                                                       //
+    return clickSaveData;                                                                                              // 37
+  }()                                                                                                                  // 37
 });                                                                                                                    // 5
                                                                                                                        //
-Template.socialNetworkBox.helpers({});                                                                                 // 42
+Template.socialNetworkBox.helpers({});                                                                                 // 84
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"tweetBox.js":function(){
@@ -2531,9 +2577,10 @@ Template.userProfile.helpers({                                                  
 			if (dataUser.userWhats) {                                                                                           // 63
 				btnSocial += "<button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='fa fa-whatsapp' style='font-size: 24px;'></i></button>";
 			}                                                                                                                   // 65
+			console.log(btnSocial);                                                                                             // 66
                                                                                                                        //
-			return btnSocial;                                                                                                   // 67
-		}                                                                                                                    // 68
+			return btnSocial;                                                                                                   // 68
+		}                                                                                                                    // 69
                                                                                                                        //
 		return existsSocialNetwork;                                                                                          // 53
 	}()                                                                                                                   // 53

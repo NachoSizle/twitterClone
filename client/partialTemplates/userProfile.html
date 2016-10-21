@@ -33,12 +33,11 @@
                   <li><a href="#" id="editProfile">Editar Perfil</a></li>
                   <li><a href="#" id="logout">Salir</a></li>
                 </ul>
-                {{# if existsSocialNetwork}}
-                  <!--
-                    <div id="optionsUserProfile">
-                    </div>
-                  -->
-                {{/if}}
+                <div id="optionsUserProfile">
+                  {{# if existsSocialNetwork}}  
+                    {{this}}
+                  {{/if}}
+                </div>
               </div>
             </div>
               

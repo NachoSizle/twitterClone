@@ -63,7 +63,8 @@ Template.userProfile.helpers({
   		if(dataUser.userWhats){
   			btnSocial += "<button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='fa fa-whatsapp' style='font-size: 24px;'></i></button>"
   		}
-
+  		console.log(btnSocial);
+  		
   		return btnSocial;
   	}
 });
