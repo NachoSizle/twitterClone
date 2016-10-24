@@ -507,20 +507,32 @@ Meteor.methods({                                                                
   },                                                                                                   // 31
                                                                                                        //
   'updUserData': function updUserData(newData) {                                                       // 33
-    console.log(newData);                                                                              // 34
     DataUser.update({ _id: newData.userId }, { $set: { userDescription: newData.description, userImg: newData.imgId } });
-  },                                                                                                   // 36
+  },                                                                                                   // 35
                                                                                                        //
-  'updUserDataSocialNetworks': function updUserDataSocialNetworks(newData) {                           // 38
-    console.log(newData);                                                                              // 39
-    DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb, userWhats: newData.userWhats, userInsta: newData.userInsta } });
-  },                                                                                                   // 41
+  'updUserDataSocialNetworks': function updUserDataSocialNetworks(newData) {                           // 37
+    if (newData.userFb != null && newData.userInsta != null && newData.userWhats != null) {            // 38
+      DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb, userWhats: newData.userWhats, userInsta: newData.userInsta } });
+    } else {                                                                                           // 40
+      if (newData.userFb != null) {                                                                    // 41
+        DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb } });                // 42
+      }                                                                                                // 43
                                                                                                        //
-  'insertNewImage': function insertNewImage(code) {                                                    // 43
-    return Images.insert({                                                                             // 44
-      imgCode: code                                                                                    // 45
-    });                                                                                                // 44
-  }                                                                                                    // 47
+      if (newData.userInsta != null) {                                                                 // 45
+        DataUser.update({ _id: newData.userId }, { $set: { userInsta: newData.userInsta } });          // 46
+      }                                                                                                // 47
+                                                                                                       //
+      if (newData.userWhats != null) {                                                                 // 49
+        DataUser.update({ _id: newData.userId }, { $set: { userWhats: newData.userWhats } });          // 50
+      }                                                                                                // 51
+    }                                                                                                  // 52
+  },                                                                                                   // 53
+                                                                                                       //
+  'insertNewImage': function insertNewImage(code) {                                                    // 55
+    return Images.insert({                                                                             // 56
+      imgCode: code                                                                                    // 57
+    });                                                                                                // 56
+  }                                                                                                    // 59
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

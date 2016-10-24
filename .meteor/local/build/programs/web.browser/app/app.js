@@ -65,23 +65,39 @@ Template["editProfile"] = new Template("Template.editProfile", (function() {    
       type: "button"                                                                                                   // 57
     }, "\n                ", HTML.SPAN({                                                                               // 58
       class: "glyphicon glyphicon-ok"                                                                                  // 59
-    }), "\n              "), "\n              ", HTML.BUTTON({                                                         // 60
-      class: "btn btn-primary optionsUserProfile",                                                                     // 61
-      type: "button",                                                                                                  // 62
-      style: "margin-right:7px",                                                                                       // 63
-      "data-toggle": "modal",                                                                                          // 64
-      "data-target": "#dialog-NewSocialNetwork"                                                                        // 65
-    }, "\n                ", HTML.SPAN({                                                                               // 66
-      class: "glyphicon glyphicon-plus-sign"                                                                           // 67
-    }), "\n                ", HTML.SPAN({                                                                              // 68
-      class: "glyphicon glyphicon-user"                                                                                // 69
-    }), "\n              "), "\n            "), "\n          "), "\n\n          ", HTML.DIV({                          // 70
-      class: "modal fade",                                                                                             // 71
-      id: "dialog-NewSocialNetwork"                                                                                    // 72
+    }), "\n              "), "\n              ", Blaze.If(function() {                                                 // 60
+      return Spacebars.dataMustache(view.lookup("userHaveSN"), view.lookup("dataUserFound"));                          // 61
+    }, function() {                                                                                                    // 62
+      return [ "\n                ", HTML.BUTTON({                                                                     // 63
+        class: "btn btn-primary optionsUserProfile",                                                                   // 64
+        type: "button",                                                                                                // 65
+        style: "margin-right:7px",                                                                                     // 66
+        "data-toggle": "modal",                                                                                        // 67
+        "data-target": "#dialog-NewSocialNetwork"                                                                      // 68
+      }, "\n                  ", HTML.SPAN({                                                                           // 69
+        class: "glyphicon glyphicon-plus-sign"                                                                         // 70
+      }), "\n                  ", HTML.SPAN({                                                                          // 71
+        class: "glyphicon glyphicon-user"                                                                              // 72
+      }), "\n                "), "\n              " ];                                                                 // 73
+    }, function() {                                                                                                    // 74
+      return [ "\n                ", HTML.BUTTON({                                                                     // 75
+        class: "btn btn-primary optionsUserProfile",                                                                   // 76
+        type: "button",                                                                                                // 77
+        style: "margin-right:7px",                                                                                     // 78
+        "data-toggle": "modal",                                                                                        // 79
+        "data-target": "#dialog-NewSocialNetwork"                                                                      // 80
+      }, "\n                  ", HTML.SPAN({                                                                           // 81
+        class: "glyphicon glyphicon-pencil"                                                                            // 82
+      }), "\n                  ", HTML.SPAN({                                                                          // 83
+        class: "glyphicon glyphicon-user"                                                                              // 84
+      }), "\n                "), "\n              " ];                                                                 // 85
+    }), "\n            "), "\n          "), "\n\n          ", HTML.DIV({                                               // 86
+      class: "modal fade",                                                                                             // 87
+      id: "dialog-NewSocialNetwork"                                                                                    // 88
     }, "\n            ", Spacebars.include(view.lookupTemplate("socialNetworkBox")), "\n          "), "\n        "), "\n      "), "\n    "), "\n  " ];
-  });                                                                                                                  // 74
-}));                                                                                                                   // 75
-                                                                                                                       // 76
+  });                                                                                                                  // 90
+}));                                                                                                                   // 91
+                                                                                                                       // 92
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.followUsers.js":function(){
@@ -367,9 +383,82 @@ Template["notificationsNew"] = new Template("Template.notificationsNew", (functi
 Template.__checkName("socialNetworkBox");                                                                              // 2
 Template["socialNetworkBox"] = new Template("Template.socialNetworkBox", (function() {                                 // 3
   var view = this;                                                                                                     // 4
-  return HTML.Raw('<div class="tweetbox-container">\n    <div class="panel panel-default tweetbox col-md-6">\n      <div class="panel-body">\n\t<!-- CONTAINER TO ADD NEW SOCIAL NETWORK -->\n\t\t<div class="row">\n\t\t  <h3>Añade tu red social a twiiterClone!</h3>\n\t\t  <div class="col-lg-6" id="containerInputs">\n\t\t  \t\n\t\t  </div><!-- /.col-lg-6 -->\n\t\t  <div>\n\t\t\t  <button id="btnNewSN" class="btn btn-primary" type="button">\n\t\t\t\t<span class="glyphicon glyphicon-plus-sign"></span>\n\t  \t\t  </button>\n\t  \t\t  <button id="saveData" class="btn btn-primary" type="button">\n\t\t\t\t<span class="glyphicon glyphicon-ok"></span>\n\t  \t\t  </button>\n  \t\t  </div>\n\t\t</div>\n      </div>\n    </div>\n  </div>');
-}));                                                                                                                   // 6
-                                                                                                                       // 7
+  return HTML.DIV({                                                                                                    // 5
+    class: "tweetbox-container"                                                                                        // 6
+  }, "\n    ", HTML.DIV({                                                                                              // 7
+    class: "panel panel-default tweetbox col-md-6"                                                                     // 8
+  }, "\n      ", HTML.DIV({                                                                                            // 9
+    class: "panel-body"                                                                                                // 10
+  }, "\n\t", HTML.Raw("<!-- CONTAINER TO ADD NEW SOCIAL NETWORK -->"), "\n\t\t", HTML.DIV({                            // 11
+    class: "row"                                                                                                       // 12
+  }, "\n\t\t", Blaze.If(function() {                                                                                   // 13
+    return Spacebars.call(view.lookup("modeAddNewSN"));                                                                // 14
+  }, function() {                                                                                                      // 15
+    return [ "\n\t\t\t", HTML.H3(Blaze.View("lookup:modeAddNewSN.messageMode", function() {                            // 16
+      return Spacebars.mustache(Spacebars.dot(view.lookup("modeAddNewSN"), "messageMode"));                            // 17
+    })), "\n\t\t\t", HTML.DIV({                                                                                        // 18
+      class: "col-lg-6",                                                                                               // 19
+      id: "containerInputs"                                                                                            // 20
+    }, "\n\t\t\t", Blaze.Each(function() {                                                                             // 21
+      return Spacebars.call(view.lookup("contentToAppend"));                                                           // 22
+    }, function() {                                                                                                    // 23
+      return [ "\n\t\t\t\t", HTML.DIV({                                                                                // 24
+        class: "input-group",                                                                                          // 25
+        id: function() {                                                                                               // 26
+          return [ "inputGroup", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                          // 27
+        },                                                                                                             // 28
+        style: "margin-bottom: 10px;"                                                                                  // 29
+      }, "\n\t          \t\t", HTML.DIV({                                                                              // 30
+        class: "input-group-btn",                                                                                      // 31
+        id: "containerInputs"                                                                                          // 32
+      }, "\n\t          \t\t\t", HTML.BUTTON({                                                                         // 33
+        id: function() {                                                                                               // 34
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                            // 35
+        },                                                                                                             // 36
+        type: "button",                                                                                                // 37
+        class: "btn btn-default",                                                                                      // 38
+        "aria-haspopup": "true",                                                                                       // 39
+        "aria-expanded": "false"                                                                                       // 40
+      }, Blaze.View("lookup:..valueBtn", function() {                                                                  // 41
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "valueBtn"));                                        // 42
+      }), "\n          \t\t\t\t"), "\n\t          \t\t"), "\n\t          \t\t", HTML.INPUT({                           // 43
+        id: function() {                                                                                               // 44
+          return [ "input", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                               // 45
+        },                                                                                                             // 46
+        type: "text",                                                                                                  // 47
+        class: "form-control inputSN",                                                                                 // 48
+        "aria-label": "...",                                                                                           // 49
+        placeholder: function() {                                                                                      // 50
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "placeholder"));                                   // 51
+        }                                                                                                              // 52
+      }), "\n\t          \t\t", HTML.BUTTON({                                                                          // 53
+        id: function() {                                                                                               // 54
+          return [ "clearDataUser", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                       // 55
+        },                                                                                                             // 56
+        type: "button",                                                                                                // 57
+        class: "btn btn-danger",                                                                                       // 58
+        "aria-haspopup": "true",                                                                                       // 59
+        "aria-expanded": "false"                                                                                       // 60
+      }, "\n\t          \t\t\t", HTML.SPAN({                                                                           // 61
+        id: function() {                                                                                               // 62
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                            // 63
+        },                                                                                                             // 64
+        class: "glyphicon glyphicon-remove"                                                                            // 65
+      }), "\n          \t\t\t"), "\n\t          \t"), "\n\t        " ];                                                // 66
+    }), "\n\t\t\t"), HTML.Comment(" /.col-lg-6 "), "\n\t\t" ];                                                         // 67
+  }), "\n\t\t\t", HTML.DIV("\n\t\t\t\t", Blaze.If(function() {                                                         // 68
+    return Spacebars.call(view.lookup("userHaveSN"));                                                                  // 69
+  }, function() {                                                                                                      // 70
+    return [ "\n\t\t\t\t  \t", HTML.BUTTON({                                                                           // 71
+      id: "btnNewSN",                                                                                                  // 72
+      class: "btn btn-primary",                                                                                        // 73
+      type: "button"                                                                                                   // 74
+    }, "\n\t\t\t\t\t\t", HTML.SPAN({                                                                                   // 75
+      class: "glyphicon glyphicon-plus-sign"                                                                           // 76
+    }), "\n\t\t  \t\t  \t"), "\n\t\t  \t\t" ];                                                                         // 77
+  }), "\n\t  \t\t  \t", HTML.Raw('<button id="saveData" class="btn btn-primary" type="button">\n\t\t\t\t\t<span class="glyphicon glyphicon-ok"></span>\n\t  \t\t  \t</button>'), "\n\t  \t\t"), "\n\t\t"), "\n      "), "\n    "), "\n  ");
+}));                                                                                                                   // 79
+                                                                                                                       // 80
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.tweetBox.js":function(){
@@ -1094,40 +1183,46 @@ Template["userProfile"] = new Template("Template.userProfile", (function() {    
         id: "logout"                                                                                                   // 60
       }, "Salir")), "\n                "), "\n                ", HTML.DIV({                                            // 61
         id: "optionsUserProfile"                                                                                       // 62
-      }, "\n                  ", Blaze.If(function() {                                                                 // 63
+      }, "\n                  ", Blaze.Each(function() {                                                               // 63
         return Spacebars.call(view.lookup("existsSocialNetwork"));                                                     // 64
       }, function() {                                                                                                  // 65
-        return [ "  \n                    ", Blaze.View("lookup:.", function() {                                       // 66
-          return Spacebars.mustache(view.lookup("."));                                                                 // 67
-        }), "\n                  " ];                                                                                  // 68
+        return [ "  \n                    ", HTML.BUTTON({                                                             // 66
+          type: "button",                                                                                              // 67
+          class: "btn btn-warning btn-circle optionsUserProfile"                                                       // 68
+        }, HTML.I({                                                                                                    // 69
+          class: function() {                                                                                          // 70
+            return Spacebars.mustache(view.lookup("."));                                                               // 71
+          },                                                                                                           // 72
+          style: "font-size: 24px;"                                                                                    // 73
+        })), "\n                  " ];                                                                                 // 74
       }), "\n                "), "\n              "), "\n            "), "\n              \n            ", HTML.Comment('\n            <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>\n            <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>\n            '), "\n            ", HTML.TABLE({
-        class: "table"                                                                                                 // 70
-      }, "  \n              ", HTML.TR("\n                ", HTML.TD({                                                 // 71
-        class: "tableHeader"                                                                                           // 72
-      }, "Twitts"), "\n                ", HTML.TD({                                                                    // 73
-        class: "tableHeader"                                                                                           // 74
-      }, "Siguiendo"), "\n                ", HTML.TD({                                                                 // 75
-        class: "tableHeader"                                                                                           // 76
-      }, "Seguidores"), "\n              "), "\n              ", HTML.TR("\n                ", HTML.TD({               // 77
-        class: "tableContent"                                                                                          // 78
-      }, Blaze.View("lookup:tweets", function() {                                                                      // 79
-        return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));       // 80
-      })), "\n                ", HTML.TD({                                                                             // 81
-        class: "tableContent"                                                                                          // 82
-      }, Blaze.View("lookup:following", function() {                                                                   // 83
-        return Spacebars.mustache(view.lookup("following"));                                                           // 84
-      })), "\n                ", HTML.TD({                                                                             // 85
-        class: "tableContent"                                                                                          // 86
-      }, Blaze.View("lookup:followers", function() {                                                                   // 87
-        return Spacebars.mustache(view.lookup("followers"));                                                           // 88
+        class: "table"                                                                                                 // 76
+      }, "  \n              ", HTML.TR("\n                ", HTML.TD({                                                 // 77
+        class: "tableHeader"                                                                                           // 78
+      }, "Twitts"), "\n                ", HTML.TD({                                                                    // 79
+        class: "tableHeader"                                                                                           // 80
+      }, "Siguiendo"), "\n                ", HTML.TD({                                                                 // 81
+        class: "tableHeader"                                                                                           // 82
+      }, "Seguidores"), "\n              "), "\n              ", HTML.TR("\n                ", HTML.TD({               // 83
+        class: "tableContent"                                                                                          // 84
+      }, Blaze.View("lookup:tweets", function() {                                                                      // 85
+        return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));       // 86
+      })), "\n                ", HTML.TD({                                                                             // 87
+        class: "tableContent"                                                                                          // 88
+      }, Blaze.View("lookup:following", function() {                                                                   // 89
+        return Spacebars.mustache(view.lookup("following"));                                                           // 90
+      })), "\n                ", HTML.TD({                                                                             // 91
+        class: "tableContent"                                                                                          // 92
+      }, Blaze.View("lookup:followers", function() {                                                                   // 93
+        return Spacebars.mustache(view.lookup("followers"));                                                           // 94
       })), "\n              "), "\n            "), "\n          "), "\n        "), "\n      "), "\n      ", HTML.DIV({
-        id: "divTweetFeed",                                                                                            // 90
-        class: "col-md-8 col-sm-8"                                                                                     // 91
-      }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n    " ];                                      // 92
-    }), "\n  " ];                                                                                                      // 93
-  });                                                                                                                  // 94
-}));                                                                                                                   // 95
-                                                                                                                       // 96
+        id: "divTweetFeed",                                                                                            // 96
+        class: "col-md-8 col-sm-8"                                                                                     // 97
+      }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n    " ];                                      // 98
+    }), "\n  " ];                                                                                                      // 99
+  });                                                                                                                  // 100
+}));                                                                                                                   // 101
+                                                                                                                       // 102
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editProfile.js":function(){
@@ -1143,29 +1238,30 @@ Template.editProfile.onCreated(function () {                                    
 		Meteor.call('findUserData', this.data, function (err, res) {                                                         // 3
 				Session.set('datauser', res);                                                                                      // 4
 		});                                                                                                                  // 5
-});                                                                                                                    // 6
+		currentDataUser = Session.get('datauser');                                                                           // 6
+});                                                                                                                    // 7
                                                                                                                        //
-Template.editProfile.events({                                                                                          // 8
-		'click #saveChanges': function () {                                                                                  // 9
-				function clickSaveChanges() {                                                                                      // 9
-						userAux = Session.get('datauser');                                                                               // 10
-						newData = new Object();                                                                                          // 11
-						newData.description = document.getElementById("userDescription").value;                                          // 12
-						if (newData.description === "") {                                                                                // 13
-								newData.description = $('#userDescription').attr("placeholder");                                               // 14
-						}                                                                                                                // 15
-						newData.userId = userAux._id;                                                                                    // 16
+Template.editProfile.events({                                                                                          // 9
+		'click #saveChanges': function () {                                                                                  // 10
+				function clickSaveChanges() {                                                                                      // 10
+						userAux = Session.get('datauser');                                                                               // 11
+						newData = new Object();                                                                                          // 12
+						newData.description = document.getElementById("userDescription").value;                                          // 13
+						if (newData.description === "") {                                                                                // 14
+								newData.description = $('#userDescription').attr("placeholder");                                               // 15
+						}                                                                                                                // 16
+						newData.userId = userAux._id;                                                                                    // 17
                                                                                                                        //
 						//AHORA NOS GUARDAMOS EL _id DEL DOCUEMNTO QUE VAMSO A INSERTAR EN LA COLECCION Images                           //
 						//QUE ALMACENARÁ LA NUEVA FOTO                                                                                   //
-						var codeImg = $('#imgCurrentUser').attr("src");                                                                  // 20
+						var codeImg = $('#imgCurrentUser').attr("src");                                                                  // 21
                                                                                                                        //
-						Meteor.call('insertNewImage', codeImg, function (err, res) {                                                     // 22
-								newData.imgId = res;                                                                                           // 23
-								console.log(newData.imgId);                                                                                    // 24
-								Meteor.call('updUserData', newData);                                                                           // 25
-								window.location = "/Profile/" + userAux.userNameProfile;                                                       // 26
-						});                                                                                                              // 27
+						Meteor.call('insertNewImage', codeImg, function (err, res) {                                                     // 23
+								newData.imgId = res;                                                                                           // 24
+								console.log(newData.imgId);                                                                                    // 25
+								Meteor.call('updUserData', newData);                                                                           // 26
+								window.location = "/Profile/" + userAux.userNameProfile;                                                       // 27
+						});                                                                                                              // 28
                                                                                                                        //
 						/*                                                                                                               //
       //REALIZAMOS LA PETICION AJAX PARA GUARDAR LA IMAGEN EN PUBLIC                                                   //
@@ -1187,84 +1283,95 @@ Template.editProfile.events({                                                   
                 }                                                                                                      //
             });                                                                                                        //
             */                                                                                                         //
-				}                                                                                                                  // 51
+				}                                                                                                                  // 52
                                                                                                                        //
-				return clickSaveChanges;                                                                                           // 9
-		}(),                                                                                                                 // 9
-		'change #inputFile': function () {                                                                                   // 52
-				function changeInputFile() {                                                                                       // 52
+				return clickSaveChanges;                                                                                           // 10
+		}(),                                                                                                                 // 10
+		'change #inputFile': function () {                                                                                   // 53
+				function changeInputFile() {                                                                                       // 53
                                                                                                                        //
 						//RECUPERAMOS LA IMAGEN QUE HEMOS SUBIDO                                                                         //
-						var file = $('#inputFile')[0].files[0];                                                                          // 55
+						var file = $('#inputFile')[0].files[0];                                                                          // 56
                                                                                                                        //
-						reader = new FileReader();                                                                                       // 57
-						reader.onload = function (file) {                                                                                // 58
-								return function (e) {                                                                                          // 59
-										$('#imgCurrentUser').attr("src", e.target.result);                                                           // 60
-								};                                                                                                             // 61
-						}(file);                                                                                                         // 62
+						reader = new FileReader();                                                                                       // 58
+						reader.onload = function (file) {                                                                                // 59
+								return function (e) {                                                                                          // 60
+										$('#imgCurrentUser').attr("src", e.target.result);                                                           // 61
+								};                                                                                                             // 62
+						}(file);                                                                                                         // 63
                                                                                                                        //
-						reader.readAsDataURL(file);                                                                                      // 64
-				}                                                                                                                  // 65
+						reader.readAsDataURL(file);                                                                                      // 65
+				}                                                                                                                  // 66
                                                                                                                        //
-				return changeInputFile;                                                                                            // 52
-		}()                                                                                                                  // 52
-});                                                                                                                    // 8
+				return changeInputFile;                                                                                            // 53
+		}()                                                                                                                  // 53
+});                                                                                                                    // 9
                                                                                                                        //
-Template.editProfile.helpers({                                                                                         // 68
-		'dataUserFound': function () {                                                                                       // 69
-				function dataUserFound() {                                                                                         // 69
-						dataUser = Session.get('datauser');                                                                              // 70
-						return dataUser;                                                                                                 // 71
-				}                                                                                                                  // 72
+Template.editProfile.helpers({                                                                                         // 69
+		'dataUserFound': function () {                                                                                       // 70
+				function dataUserFound() {                                                                                         // 70
+						dataUser = Session.get('datauser');                                                                              // 71
+						return dataUser;                                                                                                 // 72
+				}                                                                                                                  // 73
                                                                                                                        //
-				return dataUserFound;                                                                                              // 69
-		}(),                                                                                                                 // 69
-		'userImgFound': function () {                                                                                        // 73
-				function userImgFound() {                                                                                          // 73
-						if (dataUser.userImg) {                                                                                          // 74
-								Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 75
-										$('#imgCurrentUser').attr("src", res);                                                                       // 76
-								});                                                                                                            // 77
-						} else {                                                                                                         // 78
-								console.log("Imagen test");                                                                                    // 79
-								$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                       // 80
-						}                                                                                                                // 81
-				}                                                                                                                  // 82
+				return dataUserFound;                                                                                              // 70
+		}(),                                                                                                                 // 70
+		'userImgFound': function () {                                                                                        // 74
+				function userImgFound() {                                                                                          // 74
+						if (dataUser.userImg) {                                                                                          // 75
+								Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 76
+										$('#imgCurrentUser').attr("src", res);                                                                       // 77
+								});                                                                                                            // 78
+						} else {                                                                                                         // 79
+								console.log("Imagen test");                                                                                    // 80
+								$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                       // 81
+						}                                                                                                                // 82
+				}                                                                                                                  // 83
                                                                                                                        //
-				return userImgFound;                                                                                               // 73
-		}(),                                                                                                                 // 73
-		'tweets': function () {                                                                                              // 83
-				function tweets(username) {                                                                                        // 83
-						Meteor.call('tweetsPublish', username, function (err, res) {                                                     // 84
-								Session.set('numTweets', res);                                                                                 // 85
-						});                                                                                                              // 86
-						return Session.get('numTweets');                                                                                 // 87
-				}                                                                                                                  // 88
+				return userImgFound;                                                                                               // 74
+		}(),                                                                                                                 // 74
+		'tweets': function () {                                                                                              // 84
+				function tweets(username) {                                                                                        // 84
+						Meteor.call('tweetsPublish', username, function (err, res) {                                                     // 85
+								Session.set('numTweets', res);                                                                                 // 86
+						});                                                                                                              // 87
+						return Session.get('numTweets');                                                                                 // 88
+				}                                                                                                                  // 89
                                                                                                                        //
-				return tweets;                                                                                                     // 83
-		}(),                                                                                                                 // 83
-		'following': function () {                                                                                           // 89
-				function following() {                                                                                             // 89
-						Meteor.call('usersFollowings', function (err, res) {                                                             // 90
-								Session.set('numFollowings', res);                                                                             // 91
-						});                                                                                                              // 92
-						return Session.get('numFollowings');                                                                             // 93
-				}                                                                                                                  // 94
+				return tweets;                                                                                                     // 84
+		}(),                                                                                                                 // 84
+		'following': function () {                                                                                           // 90
+				function following() {                                                                                             // 90
+						Meteor.call('usersFollowings', function (err, res) {                                                             // 91
+								Session.set('numFollowings', res);                                                                             // 92
+						});                                                                                                              // 93
+						return Session.get('numFollowings');                                                                             // 94
+				}                                                                                                                  // 95
                                                                                                                        //
-				return following;                                                                                                  // 89
-		}(),                                                                                                                 // 89
-		'followers': function () {                                                                                           // 95
-				function followers() {                                                                                             // 95
-						Meteor.call('usersFollowers', function (err, res) {                                                              // 96
-								Session.set('numFollowers', res);                                                                              // 97
-						});                                                                                                              // 98
-						return Session.get('numFollowers');                                                                              // 99
-				}                                                                                                                  // 100
+				return following;                                                                                                  // 90
+		}(),                                                                                                                 // 90
+		'followers': function () {                                                                                           // 96
+				function followers() {                                                                                             // 96
+						Meteor.call('usersFollowers', function (err, res) {                                                              // 97
+								Session.set('numFollowers', res);                                                                              // 98
+						});                                                                                                              // 99
+						return Session.get('numFollowers');                                                                              // 100
+				}                                                                                                                  // 101
                                                                                                                        //
-				return followers;                                                                                                  // 95
-		}()                                                                                                                  // 95
-});                                                                                                                    // 68
+				return followers;                                                                                                  // 96
+		}(),                                                                                                                 // 96
+		'userHaveSN': function () {                                                                                          // 102
+				function userHaveSN(dataUserFound) {                                                                               // 102
+						if (dataUserFound.userWhats && dataUserFound.userFb && dataUserFound.userInsta) {                                // 103
+								return false;                                                                                                  // 104
+						} else {                                                                                                         // 105
+								return true;                                                                                                   // 106
+						}                                                                                                                // 107
+				}                                                                                                                  // 108
+                                                                                                                       //
+				return userHaveSN;                                                                                                 // 102
+		}()                                                                                                                  // 102
+});                                                                                                                    // 69
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"followUsers.js":function(){
@@ -1605,95 +1712,211 @@ Template.notificationsNew.events({                                              
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
 Template.socialNetworkBox.onRendered(function () {                                                                     // 1
-  Session.set('countSocialNetworks', 0);                                                                               // 2
-});                                                                                                                    // 3
+  selectOptions = Session.get('optionsAva');                                                                           // 2
+  currentDataUser = Session.get('datauser');                                                                           // 3
+});                                                                                                                    // 4
                                                                                                                        //
-Template.socialNetworkBox.events({                                                                                     // 5
-  'click #btnNewSN': function () {                                                                                     // 6
-    function clickBtnNewSN() {                                                                                         // 6
-      var numSocialNetworks = Session.get('countSocialNetworks');                                                      // 7
-      if (numSocialNetworks < 3) {                                                                                     // 8
-        Session.set('countSocialNetworks', numSocialNetworks + 1);                                                     // 9
+Template.socialNetworkBox.events({                                                                                     // 6
+  'click #btnNewSN': function () {                                                                                     // 7
+    function clickBtnNewSN() {                                                                                         // 7
+      var numSocialNetworks = Session.get('countSocialNetworks');                                                      // 8
+      if (numSocialNetworks < 3) {                                                                                     // 9
+        Session.set('countSocialNetworks', numSocialNetworks + 1);                                                     // 10
+        var avaSelecOptions = "";                                                                                      // 11
                                                                                                                        //
-        $('#containerInputs').append("<div class='input-group' style='margin-bottom: 10px;'>" + "<div class='input-group-btn' id='containerInputs'>" + "<button id='" + numSocialNetworks + "' type='button' class='btn btn-default dropdown-toggle btnDropDown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Choose" + "<span class='caret'> </span>" + "</button>" + "<ul id='dropdownMenu" + numSocialNetworks + "' class='dropdown-menu'>" + "<li><a href='#'>WhatsApp</a></li><li><a href='#'>Facebook</a></li><li><a href='#'>Instagram</a></li>" + "</ul>" + "</div>" + "<input type='text' class='form-control inputSN' aria-label='...' placeholder='Username...'>" + "</div>");
-      };                                                                                                               // 22
-    }                                                                                                                  // 23
+        for (var i = 0; i < selectOptions.length; i++) {                                                               // 13
+          avaSelecOptions += "<li><a href='#'>" + selectOptions[i] + "</a></li>";                                      // 14
+        }                                                                                                              // 15
                                                                                                                        //
-    return clickBtnNewSN;                                                                                              // 6
-  }(),                                                                                                                 // 6
-  'click .btnDropDown': function () {                                                                                  // 24
-    function clickBtnDropDown(event) {                                                                                 // 24
-      Session.set('btnTap', event.target.id);                                                                          // 25
-    }                                                                                                                  // 26
+        $('#containerInputs').append("<div class='input-group' style='margin-bottom: 10px;'>" + "<div class='input-group-btn' id='containerInputs'>" + "<button id='" + numSocialNetworks + "' type='button' class='btn btn-default dropdown-toggle btnDropDown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Choose" + "<span class='caret'> </span>" + "</button>" + "<ul id='dropdownMenu" + numSocialNetworks + "' class='dropdown-menu'>" + avaSelecOptions + "</ul>" + "</div>" + "<input id='input" + numSocialNetworks + "' type='text' class='form-control inputSN' aria-label='...' placeholder='Username...'>" + "</div>");
+      };                                                                                                               // 28
+    }                                                                                                                  // 29
                                                                                                                        //
-    return clickBtnDropDown;                                                                                           // 24
-  }(),                                                                                                                 // 24
-  'click .dropdown-menu li a': function () {                                                                           // 27
-    function clickDropdownMenuLiA(event) {                                                                             // 27
+    return clickBtnNewSN;                                                                                              // 7
+  }(),                                                                                                                 // 7
+  'click .btnDropDown': function () {                                                                                  // 30
+    function clickBtnDropDown(event) {                                                                                 // 30
+      Session.set('btnTap', event.target.id);                                                                          // 31
+    }                                                                                                                  // 32
                                                                                                                        //
-      var btnTap = Session.get('btnTap');                                                                              // 29
-      var selectOption = event.target.text;                                                                            // 30
+    return clickBtnDropDown;                                                                                           // 30
+  }(),                                                                                                                 // 30
+  'click .dropdown-menu li a': function () {                                                                           // 33
+    function clickDropdownMenuLiA(event) {                                                                             // 33
+      var btnTap = Session.get('btnTap');                                                                              // 34
+      var selectOption = event.target.text;                                                                            // 35
       //AÑADIR A UN ARRAY LAS SELECCIONES QUE HACEMOS PARA QUE NO SE PUEDAN REPETIR.                                   //
       //ES DECIR, UN USUARIO SOLO VA A PODER ENLAZAR 1 CUENTA DE FACEBOOK, INSTAGRAM                                   //
       //O WHATSAPP.                                                                                                    //
+      var numSele = selectOptions.indexOf(selectOption);                                                               // 39
+      if (numSele >= 0) {                                                                                              // 40
+        selectOptions.splice(numSele, 1);                                                                              // 41
+      }                                                                                                                // 42
                                                                                                                        //
-      $('#' + btnTap).html(selectOption + " " + "<span class='caret'></span>");                                        // 35
-    }                                                                                                                  // 36
+      //VAMOS A COMPROBAR QUE SI selectOption ES WHATSAPP LE VAMOS A PONER AL INPUT UN FORMATO PARA QUE                //
+      //EL USUARIO SOLO PUEDA INTRODUCIR NUMEROS                                                                       //
+      if (selectOption === "WhatsApp") {                                                                               // 46
+        $('#input' + btnTap).attr("type", "number");                                                                   // 47
+      }                                                                                                                // 48
                                                                                                                        //
-    return clickDropdownMenuLiA;                                                                                       // 27
-  }(),                                                                                                                 // 27
-  'click #saveData': function () {                                                                                     // 37
-    function clickSaveData() {                                                                                         // 37
+      //UNA VEZ SELECCIONADO LA OPCION DEL DROPDOWN, TRANSFORMAMOS EL DROPDOWN A UN BTN DESHABILITADO                  //
+      $('#' + btnTap).html(selectOption);                                                                              // 51
+                                                                                                                       //
+      $('#dropdownMenu' + btnTap).remove();                                                                            // 53
+    }                                                                                                                  // 54
+                                                                                                                       //
+    return clickDropdownMenuLiA;                                                                                       // 33
+  }(),                                                                                                                 // 33
+  'click .btn-danger': function () {                                                                                   // 55
+    function clickBtnDanger(event) {                                                                                   // 55
+      //GUARDAMOS EL ID (numero entre 0 y 2) PARA DESPUES IDENTIFICAR EL INPUT-GROUP Y ASI ELIMINAR LOS DATOS DE MONGODB
+      var selectOption = event.target.id;                                                                              // 57
+      console.log($('#clearDataUser' + selectOption));                                                                 // 58
+    }                                                                                                                  // 59
+                                                                                                                       //
+    return clickBtnDanger;                                                                                             // 55
+  }(),                                                                                                                 // 55
+  'click #saveData': function () {                                                                                     // 60
+    function clickSaveData() {                                                                                         // 60
       //DE ESTA MANERA OBTENEMOS TODOS LOS BLOQUES QUE HEMOS AÑADIDO DINÁMICAMENTE                                     //
       //HAY QUE OBTENER TODOS LOS VALORES SELECCIONADOS EN CADA DROPDOWN Y EL CONTENIDO DE SUS RESPECTIVOS INPUT       //
       //TODO                                                                                                           //
-      var valuesInput = [];                                                                                            // 41
-      var valuesButton = [];                                                                                           // 42
+      var valuesInput = [];                                                                                            // 64
+      var valuesButton = [];                                                                                           // 65
                                                                                                                        //
-      $('.inputSN').each(function () {                                                                                 // 44
-        valuesInput.push($(this).val());                                                                               // 45
-      });                                                                                                              // 46
-      $('.input-group button').each(function () {                                                                      // 47
-        valuesButton.push($(this).text());                                                                             // 48
-      });                                                                                                              // 49
-                                                                                                                       //
-      //AHORA OBTENEMOS EL _id DEL USUARIO Y LO AÑADIMOS AL OBJETO QUE LE VAMOS A PASAR                                //
-      //A LA LLAMADA A userData.js QUE SE ENCARGARÁ DE ACTUALIZAR EL REGISTRO.                                         //
-      var newData = new Object();                                                                                      // 53
-      newData.userId = Session.get('datauser')._id;                                                                    // 54
-                                                                                                                       //
-      if (valuesInput) {                                                                                               // 56
-        for (i = 0; i < valuesButton.length; i++) {                                                                    // 57
-          var valu = valuesButton[i];                                                                                  // 58
-          var num = valuesButton.indexOf(valu);                                                                        // 59
-          console.log(num);                                                                                            // 60
-          if (num >= 0) {                                                                                              // 61
-            if ("WhatsApp " === valu) {                                                                                // 62
-              newData.userWhats = valuesInput[num];                                                                    // 63
-            } else if ("Facebook " === valu) {                                                                         // 64
-              newData.userFb = valuesInput[num];                                                                       // 65
-            } else if ("Instagram " === valu) {                                                                        // 66
-              newData.userInsta = valuesInput[num];                                                                    // 67
-            }                                                                                                          // 68
-          }                                                                                                            // 69
+      $('.inputSN').each(function () {                                                                                 // 67
+        if ($(this).val() != "") {                                                                                     // 68
+          valuesInput.push($(this).val());                                                                             // 69
         }                                                                                                              // 70
-      }                                                                                                                // 71
+      });                                                                                                              // 71
                                                                                                                        //
-      console.log(valuesButton);                                                                                       // 73
-      console.log(valuesInput);                                                                                        // 74
-      console.log(newData);                                                                                            // 75
+      $('.input-group button').each(function () {                                                                      // 73
+        valuesButton.push($(this).text());                                                                             // 74
+      });                                                                                                              // 75
                                                                                                                        //
-      //POR ULTIMO, REALIZAMOS LA LLAMADA A userData.js                                                                //
-      Meteor.call('updUserDataSocialNetworks', newData);                                                               // 78
+      //COMPROBAMOS QUE SE HA INTRODUCIDO ALGUN VALOR O SELECCIONADO ALGUNA RED SOCIAL PARA AÑADIRLA                   //
+      if (valuesInput && valuesButton) {                                                                               // 78
+        //AHORA OBTENEMOS EL _id DEL USUARIO Y LO AÑADIMOS AL OBJETO QUE LE VAMOS A PASAR                              //
+        //A LA LLAMADA A userData.js QUE SE ENCARGARÁ DE ACTUALIZAR EL REGISTRO.                                       //
+        var newData = new Object();                                                                                    // 81
+        newData.userId = Session.get('datauser')._id;                                                                  // 82
+                                                                                                                       //
+        for (i = 0; i < valuesButton.length; i++) {                                                                    // 84
+          var valu = valuesButton[i];                                                                                  // 85
+          var num = valuesButton.indexOf(valu);                                                                        // 86
+                                                                                                                       //
+          if (num >= 0) {                                                                                              // 88
+            if ("WhatsApp" === valu) {                                                                                 // 89
+              newData.userWhats = valuesInput[num];                                                                    // 90
+            } else if ("Facebook" === valu) {                                                                          // 91
+              newData.userFb = valuesInput[num];                                                                       // 92
+            } else if ("Instagram" === valu) {                                                                         // 93
+              newData.userInsta = valuesInput[num];                                                                    // 94
+            }                                                                                                          // 95
+          }                                                                                                            // 96
+        }                                                                                                              // 97
+        console.log(newData);                                                                                          // 98
+        //POR ULTIMO, REALIZAMOS LA LLAMADA A userData.js                                                              //
+        Meteor.call('updUserDataSocialNetworks', newData);                                                             // 100
+      }                                                                                                                // 101
+                                                                                                                       //
+      console.log(valuesButton);                                                                                       // 103
+      console.log(valuesInput);                                                                                        // 104
                                                                                                                        //
       //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                         //
-    }                                                                                                                  // 81
+      $('#dialog-NewSocialNetwork').modal('hide');                                                                     // 108
+    }                                                                                                                  // 109
                                                                                                                        //
-    return clickSaveData;                                                                                              // 37
-  }()                                                                                                                  // 37
-});                                                                                                                    // 5
+    return clickSaveData;                                                                                              // 60
+  }()                                                                                                                  // 60
+});                                                                                                                    // 6
                                                                                                                        //
-Template.socialNetworkBox.helpers({});                                                                                 // 84
+Template.socialNetworkBox.helpers({                                                                                    // 112
+  'modeAddNewSN': function () {                                                                                        // 113
+    function modeAddNewSN() {                                                                                          // 113
+      var result = new Object();                                                                                       // 114
+                                                                                                                       //
+      var currentDataUser = Session.get('datauser');                                                                   // 116
+      console.log("currentDataUser");                                                                                  // 117
+      console.log(currentDataUser);                                                                                    // 118
+      var selectOptions = ["WhatsApp", "Instagram", "Facebook"];                                                       // 119
+      var numSocialNetworks = 0;                                                                                       // 120
+                                                                                                                       //
+      var datauserSN = [];                                                                                             // 122
+                                                                                                                       //
+      if (currentDataUser.userWhats) {                                                                                 // 124
+        var numSele = selectOptions.indexOf("WhatsApp");                                                               // 125
+        selectOptions.splice(numSele, 1);                                                                              // 126
+        numSocialNetworks += 1;                                                                                        // 127
+        datauserSN.push(currentDataUser.userWhats);                                                                    // 128
+      }                                                                                                                // 129
+                                                                                                                       //
+      if (currentDataUser.userFb) {                                                                                    // 131
+        var numSele = selectOptions.indexOf("Facebook");                                                               // 132
+        selectOptions.splice(numSele, 1);                                                                              // 133
+        numSocialNetworks += 1;                                                                                        // 134
+        datauserSN.push(currentDataUser.userFb);                                                                       // 135
+      }                                                                                                                // 136
+                                                                                                                       //
+      if (currentDataUser.userInsta) {                                                                                 // 138
+        var numSele = selectOptions.indexOf("Instagram");                                                              // 139
+        selectOptions.splice(numSele, 1);                                                                              // 140
+        numSocialNetworks += 1;                                                                                        // 141
+        datauserSN.push(currentDataUser.userInsta);                                                                    // 142
+      }                                                                                                                // 143
+                                                                                                                       //
+      console.log("Select Options");                                                                                   // 145
+      console.log(selectOptions);                                                                                      // 146
+      console.log("datauserSN");                                                                                       // 147
+      console.log(datauserSN);                                                                                         // 148
+                                                                                                                       //
+      Session.set('getDataUserSN', datauserSN);                                                                        // 150
+                                                                                                                       //
+      Session.set('countSocialNetworks', numSocialNetworks);                                                           // 152
+                                                                                                                       //
+      Session.set('optionsAva', selectOptions);                                                                        // 154
+                                                                                                                       //
+      if (selectOptions.length > 0) {                                                                                  // 157
+        result.messageMode = "Añade tu red social a twiiterClone";                                                     // 158
+        Session.set('modeToAdd', true);                                                                                // 159
+      } else {                                                                                                         // 160
+        //POR ULTIMO VAMOS A AÑADIR LOS CAMPOS PARA PODER SER EDITADOS                                                 //
+        var aux = ["WhatsApp", "Instagram", "Facebook"];                                                               // 162
+        var contentToAppend = [];                                                                                      // 163
+        for (var i = 0; i < numSocialNetworks; i++) {                                                                  // 164
+          var objAux = new Object();                                                                                   // 165
+          objAux.id = i;                                                                                               // 166
+          objAux.valueBtn = aux[i];                                                                                    // 167
+          objAux.placeholder = datauserSN[i];                                                                          // 168
+                                                                                                                       //
+          contentToAppend.push(objAux);                                                                                // 170
+        }                                                                                                              // 171
+        result.messageMode = "Edita tu red social";                                                                    // 172
+        Session.set('appendThis', contentToAppend);                                                                    // 173
+        Session.set('modeToAdd', false);                                                                               // 174
+      }                                                                                                                // 175
+      return result;                                                                                                   // 176
+    }                                                                                                                  // 177
+                                                                                                                       //
+    return modeAddNewSN;                                                                                               // 113
+  }(),                                                                                                                 // 113
+                                                                                                                       //
+  'contentToAppend': function () {                                                                                     // 179
+    function contentToAppend() {                                                                                       // 179
+      return Session.get('appendThis');                                                                                // 180
+    }                                                                                                                  // 181
+                                                                                                                       //
+    return contentToAppend;                                                                                            // 179
+  }(),                                                                                                                 // 179
+                                                                                                                       //
+  'userHaveSN': function () {                                                                                          // 183
+    function userHaveSN() {                                                                                            // 183
+      return Session.get('modeToAdd');                                                                                 // 184
+    }                                                                                                                  // 185
+                                                                                                                       //
+    return userHaveSN;                                                                                                 // 183
+  }()                                                                                                                  // 183
+});                                                                                                                    // 112
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"tweetBox.js":function(){
@@ -2484,106 +2707,108 @@ Template.userManagement.events({                                                
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
 Template.userProfile.onCreated(function () {                                                                           // 1
-	currentUserName = this.data.name;                                                                                     // 2
+  currentUserName = this.data.name;                                                                                    // 2
 });                                                                                                                    // 3
                                                                                                                        //
 Template.userProfile.events({                                                                                          // 5
-	'click #logout': function () {                                                                                        // 6
-		function clickLogout() {                                                                                             // 6
-			Meteor.logout();                                                                                                    // 7
-			window.location = "/";                                                                                              // 8
-		}                                                                                                                    // 9
+  'click #logout': function () {                                                                                       // 6
+    function clickLogout() {                                                                                           // 6
+      Meteor.logout();                                                                                                 // 7
+      window.location = "/";                                                                                           // 8
+    }                                                                                                                  // 9
                                                                                                                        //
-		return clickLogout;                                                                                                  // 6
-	}(),                                                                                                                  // 6
-	'click #editProfile': function () {                                                                                   // 10
-		function clickEditProfile() {                                                                                        // 10
-			window.location = "/editProfile/" + currentUserName;                                                                // 11
-		}                                                                                                                    // 12
+    return clickLogout;                                                                                                // 6
+  }(),                                                                                                                 // 6
+  'click #editProfile': function () {                                                                                  // 10
+    function clickEditProfile() {                                                                                      // 10
+      window.location = "/editProfile/" + currentUserName;                                                             // 11
+    }                                                                                                                  // 12
                                                                                                                        //
-		return clickEditProfile;                                                                                             // 10
-	}()                                                                                                                   // 10
+    return clickEditProfile;                                                                                           // 10
+  }()                                                                                                                  // 10
 });                                                                                                                    // 5
                                                                                                                        //
 Template.userProfile.helpers({                                                                                         // 15
-	'dataUserFound': function () {                                                                                        // 16
-		function dataUserFound() {                                                                                           // 16
-			Meteor.call('findUserData', currentUserName, function (err, res) {                                                  // 17
-				Session.set('dataUser', res);                                                                                      // 18
-			});                                                                                                                 // 19
+  'dataUserFound': function () {                                                                                       // 16
+    function dataUserFound() {                                                                                         // 16
+      Meteor.call('findUserData', currentUserName, function (err, res) {                                               // 17
+        Session.set('dataUser', res);                                                                                  // 18
+      });                                                                                                              // 19
                                                                                                                        //
-			dataUser = Session.get('dataUser');                                                                                 // 21
-			return dataUser;                                                                                                    // 22
-		}                                                                                                                    // 23
+      dataUser = Session.get('dataUser');                                                                              // 21
+      return dataUser;                                                                                                 // 22
+    }                                                                                                                  // 23
                                                                                                                        //
-		return dataUserFound;                                                                                                // 16
-	}(),                                                                                                                  // 16
-	'userImgFound': function () {                                                                                         // 24
-		function userImgFound() {                                                                                            // 24
-			console.log(dataUser);                                                                                              // 25
-			if (dataUser.userImg) {                                                                                             // 26
-				Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                                 // 27
-					$('#imgCurrentUser').attr("src", res);                                                                            // 28
-				});                                                                                                                // 29
-			} else {                                                                                                            // 30
-				console.log("Imagen test");                                                                                        // 31
-				$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                           // 32
-			}                                                                                                                   // 33
-		}                                                                                                                    // 34
+    return dataUserFound;                                                                                              // 16
+  }(),                                                                                                                 // 16
+  'userImgFound': function () {                                                                                        // 24
+    function userImgFound() {                                                                                          // 24
+      console.log(dataUser);                                                                                           // 25
+      if (dataUser.userImg) {                                                                                          // 26
+        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 27
+          $('#imgCurrentUser').attr("src", res);                                                                       // 28
+        });                                                                                                            // 29
+      } else {                                                                                                         // 30
+        console.log("Imagen test");                                                                                    // 31
+        $('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                       // 32
+      }                                                                                                                // 33
+    }                                                                                                                  // 34
                                                                                                                        //
-		return userImgFound;                                                                                                 // 24
-	}(),                                                                                                                  // 24
-	'tweets': function () {                                                                                               // 35
-		function tweets(username) {                                                                                          // 35
-			Meteor.call('tweetsPublish', username, function (err, res) {                                                        // 36
-				Session.set('numTweets', res);                                                                                     // 37
-			});                                                                                                                 // 38
-			return Session.get('numTweets');                                                                                    // 39
-		}                                                                                                                    // 40
+    return userImgFound;                                                                                               // 24
+  }(),                                                                                                                 // 24
+  'tweets': function () {                                                                                              // 35
+    function tweets(username) {                                                                                        // 35
+      Meteor.call('tweetsPublish', username, function (err, res) {                                                     // 36
+        Session.set('numTweets', res);                                                                                 // 37
+      });                                                                                                              // 38
+      return Session.get('numTweets');                                                                                 // 39
+    }                                                                                                                  // 40
                                                                                                                        //
-		return tweets;                                                                                                       // 35
-	}(),                                                                                                                  // 35
-	'following': function () {                                                                                            // 41
-		function following() {                                                                                               // 41
-			Meteor.call('usersFollowings', function (err, res) {                                                                // 42
-				Session.set('numFollowings', res);                                                                                 // 43
-			});                                                                                                                 // 44
-			return Session.get('numFollowings');                                                                                // 45
-		}                                                                                                                    // 46
+    return tweets;                                                                                                     // 35
+  }(),                                                                                                                 // 35
+  'following': function () {                                                                                           // 41
+    function following() {                                                                                             // 41
+      Meteor.call('usersFollowings', function (err, res) {                                                             // 42
+        Session.set('numFollowings', res);                                                                             // 43
+      });                                                                                                              // 44
+      return Session.get('numFollowings');                                                                             // 45
+    }                                                                                                                  // 46
                                                                                                                        //
-		return following;                                                                                                    // 41
-	}(),                                                                                                                  // 41
-	'followers': function () {                                                                                            // 47
-		function followers() {                                                                                               // 47
-			Meteor.call('usersFollowers', function (err, res) {                                                                 // 48
-				Session.set('numFollowers', res);                                                                                  // 49
-			});                                                                                                                 // 50
-			return Session.get('numFollowers');                                                                                 // 51
-		}                                                                                                                    // 52
+    return following;                                                                                                  // 41
+  }(),                                                                                                                 // 41
+  'followers': function () {                                                                                           // 47
+    function followers() {                                                                                             // 47
+      Meteor.call('usersFollowers', function (err, res) {                                                              // 48
+        Session.set('numFollowers', res);                                                                              // 49
+      });                                                                                                              // 50
+      return Session.get('numFollowers');                                                                              // 51
+    }                                                                                                                  // 52
                                                                                                                        //
-		return followers;                                                                                                    // 47
-	}(),                                                                                                                  // 47
-	'existsSocialNetwork': function () {                                                                                  // 53
-		function existsSocialNetwork() {                                                                                     // 53
-			var btnSocial = "";                                                                                                 // 54
-			if (dataUser.userFb) {                                                                                              // 55
-				btnSocial += "<button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='fa fa-facebook' style='font-size: 24px;'></i></button>";
-			}                                                                                                                   // 57
+    return followers;                                                                                                  // 47
+  }(),                                                                                                                 // 47
+  'existsSocialNetwork': function () {                                                                                 // 53
+    function existsSocialNetwork() {                                                                                   // 53
                                                                                                                        //
-			if (dataUser.userInsta) {                                                                                           // 59
-				btnSocial += "<button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='fa fa-instagram' style='font-size: 24px;'></i></button>";
-			}                                                                                                                   // 61
+      var btnSocial = [];                                                                                              // 55
                                                                                                                        //
-			if (dataUser.userWhats) {                                                                                           // 63
-				btnSocial += "<button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='fa fa-whatsapp' style='font-size: 24px;'></i></button>";
-			}                                                                                                                   // 65
-			console.log(btnSocial);                                                                                             // 66
+      if (dataUser.userFb) {                                                                                           // 57
+        btnSocial.push("fa fa-facebook");                                                                              // 58
+      }                                                                                                                // 59
                                                                                                                        //
-			return btnSocial;                                                                                                   // 68
-		}                                                                                                                    // 69
+      if (dataUser.userInsta) {                                                                                        // 61
+        btnSocial.push("fa fa-instagram");                                                                             // 62
+      }                                                                                                                // 63
                                                                                                                        //
-		return existsSocialNetwork;                                                                                          // 53
-	}()                                                                                                                   // 53
+      if (dataUser.userWhats) {                                                                                        // 65
+        btnSocial.push("fa fa-whatsapp");                                                                              // 66
+      }                                                                                                                // 67
+      console.log(btnSocial);                                                                                          // 68
+                                                                                                                       //
+      return btnSocial;                                                                                                // 70
+    }                                                                                                                  // 71
+                                                                                                                       //
+    return existsSocialNetwork;                                                                                        // 53
+  }()                                                                                                                  // 53
 });                                                                                                                    // 15
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

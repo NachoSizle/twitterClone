@@ -51,17 +51,19 @@ Template.userProfile.helpers({
     	return Session.get('numFollowers');
   	},
   	'existsSocialNetwork': function(){
-  		var btnSocial = "";
+  		
+  		var btnSocial = [];
+
   		if(dataUser.userFb){
-  			btnSocial += "<button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='fa fa-facebook' style='font-size: 24px;'></i></button>"
+  			btnSocial.push("fa fa-facebook");
   		}
 
   		if(dataUser.userInsta){
-  			btnSocial += "<button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='fa fa-instagram' style='font-size: 24px;'></i></button>"
+  			btnSocial.push("fa fa-instagram");
   		}
 
   		if(dataUser.userWhats){
-  			btnSocial += "<button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='fa fa-whatsapp' style='font-size: 24px;'></i></button>"
+  			btnSocial.push("fa fa-whatsapp");
   		}
   		console.log(btnSocial);
   		

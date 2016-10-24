@@ -303,3 +303,8 @@ textarea {
   padding-right: 0px;
   padding-left: 0px;
 }
+
+.input-group .form-control{
+  margin-right: 5px;
+  width: 80%;
+}

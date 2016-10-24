@@ -800,22 +800,22 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=970dd5fd1e6c12217ed76314f9904b0e4cabf48f",
+      "url": "/app/app.js?hash=b6c4e5de7425a1ff0f2548010ec0fecb42156b97",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/970dd5fd1e6c12217ed76314f9904b0e4cabf48f.map",
-      "size": 356044,
-      "hash": "970dd5fd1e6c12217ed76314f9904b0e4cabf48f"
+      "sourceMapUrl": "/app/b6c4e5de7425a1ff0f2548010ec0fecb42156b97.map",
+      "size": 383511,
+      "hash": "b6c4e5de7425a1ff0f2548010ec0fecb42156b97"
     },
     {
       "path": "merged-stylesheets.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/merged-stylesheets.css?hash=07cce5cb4379b63be5755e7a6cb25997329d990a",
+      "url": "/merged-stylesheets.css?hash=539a8372454ca24f4a586c02bd83d0877240763a",
       "sourceMap": "merged-stylesheets.css.map",
-      "sourceMapUrl": "/07cce5cb4379b63be5755e7a6cb25997329d990a.map",
-      "size": 159523,
-      "hash": "07cce5cb4379b63be5755e7a6cb25997329d990a"
+      "sourceMapUrl": "/539a8372454ca24f4a586c02bd83d0877240763a.map",
+      "size": 159590,
+      "hash": "539a8372454ca24f4a586c02bd83d0877240763a"
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",

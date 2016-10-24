@@ -4,18 +4,33 @@
       <div class="panel-body">
 	<!-- CONTAINER TO ADD NEW SOCIAL NETWORK -->
 		<div class="row">
-		  <h3>Añade tu red social a twiiterClone!</h3>
-		  <div class="col-lg-6" id="containerInputs">
-		  	
-		  </div><!-- /.col-lg-6 -->
-		  <div>
-			  <button id="btnNewSN" class="btn btn-primary" type="button">
-				<span class="glyphicon glyphicon-plus-sign"></span>
-	  		  </button>
-	  		  <button id="saveData" class="btn btn-primary" type="button">
-				<span class="glyphicon glyphicon-ok"></span>
-	  		  </button>
-  		  </div>
+		{{# if modeAddNewSN}}
+			<h3>{{modeAddNewSN.messageMode}}</h3>
+			<div class="col-lg-6" id="containerInputs">
+			{{#each contentToAppend}}
+				<div class='input-group' id='inputGroup{{this.id}}' style='margin-bottom: 10px;'>
+	          		<div class='input-group-btn' id='containerInputs'>
+	          			<button id="{{this.id}}" type='button' class='btn btn-default' aria-haspopup='true' aria-expanded='false'>{{this.valueBtn}}
+          				</button>
+	          		</div>
+	          		<input id='input{{this.id}}' type='text' class='form-control inputSN' aria-label='...' placeholder='{{this.placeholder}}'>
+	          		<button id='clearDataUser{{this.id}}' type='button' class='btn btn-danger' aria-haspopup='true' aria-expanded='false'>
+	          			<span id='{{this.id}}' class="glyphicon glyphicon-remove"></span>
+          			</button>
+	          	</div>
+	        {{/each}}
+			</div><!-- /.col-lg-6 -->
+		{{/if}}
+			<div>
+				{{# if userHaveSN}}
+				  	<button id="btnNewSN" class="btn btn-primary" type="button">
+						<span class="glyphicon glyphicon-plus-sign"></span>
+		  		  	</button>
+		  		{{/if}}
+	  		  	<button id="saveData" class="btn btn-primary" type="button">
+					<span class="glyphicon glyphicon-ok"></span>
+	  		  	</button>
+	  		</div>
 		</div>
       </div>
     </div>

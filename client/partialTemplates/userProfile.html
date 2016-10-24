@@ -34,9 +34,9 @@
                   <li><a href="#" id="logout">Salir</a></li>
                 </ul>
                 <div id="optionsUserProfile">
-                  {{# if existsSocialNetwork}}  
-                    {{this}}
-                  {{/if}}
+                  {{# each existsSocialNetwork}}  
+                    <button type='button' class='btn btn-warning btn-circle optionsUserProfile'><i class='{{this}}' style='font-size: 24px;'></i></button>
+                  {{/each}}
                 </div>
               </div>
             </div>

@@ -31,13 +31,25 @@ Meteor.methods({
   },
 
   'updUserData': function(newData){
-    console.log(newData);
     DataUser.update({_id: newData.userId}, {$set: {userDescription : newData.description, userImg : newData.imgId}});
   },
 
   'updUserDataSocialNetworks': function(newData){
-    console.log(newData);
-    DataUser.update({_id: newData.userId}, {$set: {userFb : newData.userFb, userWhats : newData.userWhats, userInsta : newData.userInsta}});
+    if((newData.userFb != null) && (newData.userInsta != null) && (newData.userWhats != null)){
+      DataUser.update({_id: newData.userId}, {$set: {userFb : newData.userFb, userWhats : newData.userWhats, userInsta : newData.userInsta}});
+    } else {
+      if(newData.userFb != null){
+        DataUser.update({_id: newData.userId}, {$set: {userFb : newData.userFb}});
+      }
+
+      if(newData.userInsta != null){
+        DataUser.update({_id: newData.userId}, {$set: {userInsta : newData.userInsta}});
+      }
+
+      if(newData.userWhats != null){
+        DataUser.update({_id: newData.userId}, {$set: {userWhats : newData.userWhats}});
+      }
+    }
   },
 
   'insertNewImage': function(code){

@@ -3,6 +3,7 @@ Template.editProfile.onCreated(function(){
 	Meteor.call('findUserData', this.data, function(err, res) {
 		Session.set('datauser',res);
   	});
+  	currentDataUser = Session.get('datauser');
 });
 
 Template.editProfile.events({  
@@ -97,5 +98,12 @@ Template.editProfile.helpers({
 	      	Session.set('numFollowers',res);
 	    });
     	return Session.get('numFollowers');
+  	},
+  	'userHaveSN' : function(dataUserFound){
+	    if((dataUserFound.userWhats) && (dataUserFound.userFb) && (dataUserFound.userInsta)){
+	      return false;
+	    } else {
+	      return true;
+	    }
   	},
 });
