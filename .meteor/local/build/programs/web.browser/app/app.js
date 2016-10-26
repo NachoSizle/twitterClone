@@ -409,56 +409,55 @@ Template["socialNetworkBox"] = new Template("Template.socialNetworkBox", (functi
         },                                                                                                             // 28
         style: "margin-bottom: 10px;"                                                                                  // 29
       }, "\n\t          \t\t", HTML.DIV({                                                                              // 30
-        class: "input-group-btn",                                                                                      // 31
-        id: "containerInputs"                                                                                          // 32
-      }, "\n\t          \t\t\t", HTML.BUTTON({                                                                         // 33
-        id: function() {                                                                                               // 34
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                            // 35
-        },                                                                                                             // 36
-        type: "button",                                                                                                // 37
-        class: "btn btn-default",                                                                                      // 38
-        "aria-haspopup": "true",                                                                                       // 39
-        "aria-expanded": "false"                                                                                       // 40
-      }, Blaze.View("lookup:..valueBtn", function() {                                                                  // 41
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "valueBtn"));                                        // 42
-      }), "\n          \t\t\t\t"), "\n\t          \t\t"), "\n\t          \t\t", HTML.INPUT({                           // 43
-        id: function() {                                                                                               // 44
-          return [ "input", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                               // 45
-        },                                                                                                             // 46
-        type: "text",                                                                                                  // 47
-        class: "form-control inputSN",                                                                                 // 48
-        "aria-label": "...",                                                                                           // 49
-        placeholder: function() {                                                                                      // 50
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "placeholder"));                                   // 51
-        }                                                                                                              // 52
-      }), "\n\t          \t\t", HTML.BUTTON({                                                                          // 53
-        id: function() {                                                                                               // 54
-          return [ "clearDataUser", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                       // 55
-        },                                                                                                             // 56
-        type: "button",                                                                                                // 57
-        class: "btn btn-danger",                                                                                       // 58
-        "aria-haspopup": "true",                                                                                       // 59
-        "aria-expanded": "false"                                                                                       // 60
-      }, "\n\t          \t\t\t", HTML.SPAN({                                                                           // 61
-        id: function() {                                                                                               // 62
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                            // 63
-        },                                                                                                             // 64
-        class: "glyphicon glyphicon-remove"                                                                            // 65
-      }), "\n          \t\t\t"), "\n\t          \t"), "\n\t        " ];                                                // 66
-    }), "\n\t\t\t"), HTML.Comment(" /.col-lg-6 "), "\n\t\t" ];                                                         // 67
-  }), "\n\t\t\t", HTML.DIV("\n\t\t\t\t", Blaze.If(function() {                                                         // 68
-    return Spacebars.call(view.lookup("userHaveSN"));                                                                  // 69
-  }, function() {                                                                                                      // 70
-    return [ "\n\t\t\t\t  \t", HTML.BUTTON({                                                                           // 71
-      id: "btnNewSN",                                                                                                  // 72
-      class: "btn btn-primary",                                                                                        // 73
-      type: "button"                                                                                                   // 74
-    }, "\n\t\t\t\t\t\t", HTML.SPAN({                                                                                   // 75
-      class: "glyphicon glyphicon-plus-sign"                                                                           // 76
-    }), "\n\t\t  \t\t  \t"), "\n\t\t  \t\t" ];                                                                         // 77
+        class: "input-group-btn"                                                                                       // 31
+      }, "\n\t          \t\t\t", HTML.BUTTON({                                                                         // 32
+        id: function() {                                                                                               // 33
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                            // 34
+        },                                                                                                             // 35
+        type: "button",                                                                                                // 36
+        class: "btn btn-default btnOptionsSN",                                                                         // 37
+        "aria-haspopup": "true",                                                                                       // 38
+        "aria-expanded": "false"                                                                                       // 39
+      }, Blaze.View("lookup:..valueBtn", function() {                                                                  // 40
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "valueBtn"));                                        // 41
+      })), "\n\t          \t\t"), "\n\t          \t\t", HTML.INPUT({                                                   // 42
+        id: function() {                                                                                               // 43
+          return [ "input", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                               // 44
+        },                                                                                                             // 45
+        type: "text",                                                                                                  // 46
+        class: "form-control inputSN",                                                                                 // 47
+        "aria-label": "...",                                                                                           // 48
+        placeholder: function() {                                                                                      // 49
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "placeholder"));                                   // 50
+        }                                                                                                              // 51
+      }), "\n\t          \t\t", HTML.BUTTON({                                                                          // 52
+        id: function() {                                                                                               // 53
+          return [ "clearDataUser", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                       // 54
+        },                                                                                                             // 55
+        type: "button",                                                                                                // 56
+        class: "btn btn-danger",                                                                                       // 57
+        "aria-haspopup": "true",                                                                                       // 58
+        "aria-expanded": "false"                                                                                       // 59
+      }, "\n\t          \t\t\t", HTML.SPAN({                                                                           // 60
+        id: function() {                                                                                               // 61
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                            // 62
+        },                                                                                                             // 63
+        class: "glyphicon glyphicon-remove"                                                                            // 64
+      }), "\n\t      \t\t\t"), "\n\t          \t"), "\n\t        " ];                                                  // 65
+    }), "\n\t\t\t"), HTML.Comment(" /.col-lg-6 "), "\n\t\t" ];                                                         // 66
+  }), "\n\t\t\t", HTML.DIV("\n\t\t\t\t", Blaze.If(function() {                                                         // 67
+    return Spacebars.call(view.lookup("userHaveSN"));                                                                  // 68
+  }, function() {                                                                                                      // 69
+    return [ "\n\t\t\t\t  \t", HTML.BUTTON({                                                                           // 70
+      id: "btnNewSN",                                                                                                  // 71
+      class: "btn btn-primary",                                                                                        // 72
+      type: "button"                                                                                                   // 73
+    }, "\n\t\t\t\t\t\t", HTML.SPAN({                                                                                   // 74
+      class: "glyphicon glyphicon-plus-sign"                                                                           // 75
+    }), "\n\t\t  \t\t  \t"), "\n\t\t  \t\t" ];                                                                         // 76
   }), "\n\t  \t\t  \t", HTML.Raw('<button id="saveData" class="btn btn-primary" type="button">\n\t\t\t\t\t<span class="glyphicon glyphicon-ok"></span>\n\t  \t\t  \t</button>'), "\n\t  \t\t"), "\n\t\t"), "\n      "), "\n    "), "\n  ");
-}));                                                                                                                   // 79
-                                                                                                                       // 80
+}));                                                                                                                   // 78
+                                                                                                                       // 79
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.tweetBox.js":function(){
@@ -1714,209 +1713,313 @@ Template.notificationsNew.events({                                              
 Template.socialNetworkBox.onRendered(function () {                                                                     // 1
   selectOptions = Session.get('optionsAva');                                                                           // 2
   currentDataUser = Session.get('datauser');                                                                           // 3
-});                                                                                                                    // 4
+  Session.set('inputNotEmpty', true);                                                                                  // 4
+  Session.set('removeDataSN', false);                                                                                  // 5
+});                                                                                                                    // 6
                                                                                                                        //
-Template.socialNetworkBox.events({                                                                                     // 6
-  'click #btnNewSN': function () {                                                                                     // 7
-    function clickBtnNewSN() {                                                                                         // 7
-      var numSocialNetworks = Session.get('countSocialNetworks');                                                      // 8
-      if (numSocialNetworks < 3) {                                                                                     // 9
-        Session.set('countSocialNetworks', numSocialNetworks + 1);                                                     // 10
-        var avaSelecOptions = "";                                                                                      // 11
+Template.socialNetworkBox.events({                                                                                     // 8
+  'click #btnNewSN': function () {                                                                                     // 9
+    function clickBtnNewSN() {                                                                                         // 9
+      var numSocialNetworks = Session.get('countSocialNetworks');                                                      // 10
+      console.log(numSocialNetworks);                                                                                  // 11
                                                                                                                        //
-        for (var i = 0; i < selectOptions.length; i++) {                                                               // 13
-          avaSelecOptions += "<li><a href='#'>" + selectOptions[i] + "</a></li>";                                      // 14
-        }                                                                                                              // 15
+      if (numSocialNetworks < 3) {                                                                                     // 13
                                                                                                                        //
-        $('#containerInputs').append("<div class='input-group' style='margin-bottom: 10px;'>" + "<div class='input-group-btn' id='containerInputs'>" + "<button id='" + numSocialNetworks + "' type='button' class='btn btn-default dropdown-toggle btnDropDown' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Choose" + "<span class='caret'> </span>" + "</button>" + "<ul id='dropdownMenu" + numSocialNetworks + "' class='dropdown-menu'>" + avaSelecOptions + "</ul>" + "</div>" + "<input id='input" + numSocialNetworks + "' type='text' class='form-control inputSN' aria-label='...' placeholder='Username...'>" + "</div>");
-      };                                                                                                               // 28
-    }                                                                                                                  // 29
+        var avaSelecOptions = "";                                                                                      // 15
+        var selectOptionsArray = Session.get('optionsAva');                                                            // 16
                                                                                                                        //
-    return clickBtnNewSN;                                                                                              // 7
-  }(),                                                                                                                 // 7
-  'click .btnDropDown': function () {                                                                                  // 30
-    function clickBtnDropDown(event) {                                                                                 // 30
-      Session.set('btnTap', event.target.id);                                                                          // 31
-    }                                                                                                                  // 32
+        for (var i = 0; i < selectOptionsArray.length; i++) {                                                          // 18
+          avaSelecOptions += "<li><a href='#'>" + selectOptionsArray[i] + "</a></li>";                                 // 19
+        }                                                                                                              // 20
                                                                                                                        //
-    return clickBtnDropDown;                                                                                           // 30
-  }(),                                                                                                                 // 30
-  'click .dropdown-menu li a': function () {                                                                           // 33
-    function clickDropdownMenuLiA(event) {                                                                             // 33
-      var btnTap = Session.get('btnTap');                                                                              // 34
-      var selectOption = event.target.text;                                                                            // 35
+        $('#containerInputs').append("<div class='input-group' id='inputGroup" + numSocialNetworks + "' style='margin-bottom: 10px;'>" + "<div class='input-group-btn'>" + "<button id='" + numSocialNetworks + "' type='button' class='btn btn-default dropdown-toggle btnDropDown btnOptionsSN' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Choose" + "<span class='caret'></span>" + "</button>" + "<ul id='dropdownMenu" + numSocialNetworks + "' class='dropdown-menu'>" + avaSelecOptions + "</ul>" + "</div>" + "<input id='input" + numSocialNetworks + "' type='text' class='form-control inputSN' aria-label='...' placeholder='Username...'>" + "<button id='clearDataUser" + numSocialNetworks + "' type='button' class='btn btn-danger' aria-haspopup='true' aria-expanded='false'>" + "<span id='" + numSocialNetworks + "' class='glyphicon glyphicon-remove'></span>" + "</button>" + "</div>");
+        numSocialNetworks++;                                                                                           // 36
+        Session.set('countSocialNetworks', numSocialNetworks);                                                         // 37
+      };                                                                                                               // 38
+                                                                                                                       //
+      if (numSocialNetworks === 3) {                                                                                   // 40
+        $('#btnNewSN').hide();                                                                                         // 41
+      };                                                                                                               // 42
+    }                                                                                                                  // 43
+                                                                                                                       //
+    return clickBtnNewSN;                                                                                              // 9
+  }(),                                                                                                                 // 9
+  'click .btnDropDown': function () {                                                                                  // 44
+    function clickBtnDropDown(event) {                                                                                 // 44
+      Session.set('btnTap', event.target.id);                                                                          // 45
+    }                                                                                                                  // 46
+                                                                                                                       //
+    return clickBtnDropDown;                                                                                           // 44
+  }(),                                                                                                                 // 44
+  'click .dropdown-menu li a': function () {                                                                           // 47
+    function clickDropdownMenuLiA(event) {                                                                             // 47
+      var btnTap = Session.get('btnTap');                                                                              // 48
+      var selectOption = event.target.text;                                                                            // 49
       //AÑADIR A UN ARRAY LAS SELECCIONES QUE HACEMOS PARA QUE NO SE PUEDAN REPETIR.                                   //
       //ES DECIR, UN USUARIO SOLO VA A PODER ENLAZAR 1 CUENTA DE FACEBOOK, INSTAGRAM                                   //
       //O WHATSAPP.                                                                                                    //
-      var numSele = selectOptions.indexOf(selectOption);                                                               // 39
-      if (numSele >= 0) {                                                                                              // 40
-        selectOptions.splice(numSele, 1);                                                                              // 41
-      }                                                                                                                // 42
+      var arrOptions = Session.get('optionsAva');                                                                      // 53
+                                                                                                                       //
+      var numSele = arrOptions.indexOf(selectOption);                                                                  // 55
+      if (numSele >= 0) {                                                                                              // 56
+        arrOptions.splice(numSele, 1);                                                                                 // 57
+      }                                                                                                                // 58
                                                                                                                        //
       //VAMOS A COMPROBAR QUE SI selectOption ES WHATSAPP LE VAMOS A PONER AL INPUT UN FORMATO PARA QUE                //
       //EL USUARIO SOLO PUEDA INTRODUCIR NUMEROS                                                                       //
-      if (selectOption === "WhatsApp") {                                                                               // 46
-        $('#input' + btnTap).attr("type", "number");                                                                   // 47
-      }                                                                                                                // 48
+      if (selectOption === "WhatsApp") {                                                                               // 62
+        $('#input' + btnTap).attr("type", "number");                                                                   // 63
+      }                                                                                                                // 64
                                                                                                                        //
       //UNA VEZ SELECCIONADO LA OPCION DEL DROPDOWN, TRANSFORMAMOS EL DROPDOWN A UN BTN DESHABILITADO                  //
-      $('#' + btnTap).html(selectOption);                                                                              // 51
+      $('#' + btnTap).html(selectOption);                                                                              // 67
                                                                                                                        //
-      $('#dropdownMenu' + btnTap).remove();                                                                            // 53
-    }                                                                                                                  // 54
+      $('#dropdownMenu' + btnTap).remove();                                                                            // 69
                                                                                                                        //
-    return clickDropdownMenuLiA;                                                                                       // 33
-  }(),                                                                                                                 // 33
-  'click .btn-danger': function () {                                                                                   // 55
-    function clickBtnDanger(event) {                                                                                   // 55
+      Session.set('optionsAva', arrOptions);                                                                           // 71
+    }                                                                                                                  // 72
+                                                                                                                       //
+    return clickDropdownMenuLiA;                                                                                       // 47
+  }(),                                                                                                                 // 47
+  'click .btn-danger': function () {                                                                                   // 73
+    function clickBtnDanger(event) {                                                                                   // 73
+                                                                                                                       //
       //GUARDAMOS EL ID (numero entre 0 y 2) PARA DESPUES IDENTIFICAR EL INPUT-GROUP Y ASI ELIMINAR LOS DATOS DE MONGODB
-      var selectOption = event.target.id;                                                                              // 57
-      console.log($('#clearDataUser' + selectOption));                                                                 // 58
-    }                                                                                                                  // 59
+      var selectOption = event.target.id;                                                                              // 76
+      //AHORA BUSCAMOS EL CAMPO A ELIMINAR Y LLAMAMOS AL METODO DE userData.js                                         //
+      var btnToRem = $('#' + selectOption).text();                                                                     // 78
+      var newData = new Object();                                                                                      // 79
                                                                                                                        //
-    return clickBtnDanger;                                                                                             // 55
-  }(),                                                                                                                 // 55
-  'click #saveData': function () {                                                                                     // 60
-    function clickSaveData() {                                                                                         // 60
+      if (btnToRem != 'Choose') {                                                                                      // 81
+        newData.userId = Session.get('datauser')._id;                                                                  // 82
+        newData.propertyToRem = btnToRem;                                                                              // 83
+                                                                                                                       //
+        Meteor.call('removeDataSocialNetworks', newData);                                                              // 85
+      };                                                                                                               // 86
+                                                                                                                       //
+      //POR ULTIMO VAMOS A INFORMAR AL USUARIO QUE SE HA ELIMINADO LA RED SOCIAL                                       //
+      //PARA ELLO, VAMOS A ELIMINAR EL inputGroup DE LA SN QUE SE HA ELIMINADO                                         //
+      $('#inputGroup' + selectOption).remove();                                                                        // 90
+      Session.set('removeDataSN', true);                                                                               // 91
+                                                                                                                       //
+      //ACTUALIZAMOS EL VALOR DE optionsAva EN Session.keys                                                            //
+      var auxOptions = Session.get('optionsAva');                                                                      // 94
+                                                                                                                       //
+      if (btnToRem != "Choose") {                                                                                      // 96
+        if (auxOptions.indexOf(newData.propertyToRem) === -1) {                                                        // 97
+          auxOptions.push(newData.propertyToRem);                                                                      // 98
+          Session.set('optionsAva', auxOptions);                                                                       // 99
+        };                                                                                                             // 100
+      };                                                                                                               // 101
+                                                                                                                       //
+      //ACTUALIZAMOS EL VALOR DE countSocialNetworks EN Session.keys                                                   //
+      var auxCount = Session.get('countSocialNetworks');                                                               // 104
+      auxCount--;                                                                                                      // 105
+      Session.set('countSocialNetworks', auxCount);                                                                    // 106
+                                                                                                                       //
+      //CUANDO SE BORRA UN INPUTGROUP HAY QUE REESTABLECER LOS ID PARA QUE EMPIECEN POR 0 HASTA 2                      //
+                                                                                                                       //
+      for (var i = 0; i < auxCount; i++) {                                                                             // 110
+        $('.input-group').attr('id', 'inputGroup' + i);                                                                // 111
+                                                                                                                       //
+        $('.btnOptionsSN').attr('id', i);                                                                              // 113
+                                                                                                                       //
+        $('.dropdown-menu').attr('id', 'dropdownMenu' + i);                                                            // 115
+                                                                                                                       //
+        $('.inputSN').attr('id', 'input' + i);                                                                         // 117
+                                                                                                                       //
+        $('.glyphicon-remove').attr('id', i);                                                                          // 119
+                                                                                                                       //
+        $('.btn-danger').attr('id', 'clearDataUser' + i);                                                              // 121
+      }                                                                                                                // 122
+                                                                                                                       //
+      console.log("countSocialNetworks");                                                                              // 124
+      console.log(auxCount);                                                                                           // 125
+                                                                                                                       //
+      if (auxCount < 3) {                                                                                              // 127
+        $('#btnNewSN').show();                                                                                         // 128
+      }                                                                                                                // 129
+    }                                                                                                                  // 130
+                                                                                                                       //
+    return clickBtnDanger;                                                                                             // 73
+  }(),                                                                                                                 // 73
+  'click #saveData': function () {                                                                                     // 131
+    function clickSaveData() {                                                                                         // 131
       //DE ESTA MANERA OBTENEMOS TODOS LOS BLOQUES QUE HEMOS AÑADIDO DINÁMICAMENTE                                     //
       //HAY QUE OBTENER TODOS LOS VALORES SELECCIONADOS EN CADA DROPDOWN Y EL CONTENIDO DE SUS RESPECTIVOS INPUT       //
       //TODO                                                                                                           //
-      var valuesInput = [];                                                                                            // 64
-      var valuesButton = [];                                                                                           // 65
+      var valuesInput = [];                                                                                            // 135
+      var valuesButton = [];                                                                                           // 136
+      var inputsEmpty = [];                                                                                            // 137
                                                                                                                        //
-      $('.inputSN').each(function () {                                                                                 // 67
-        if ($(this).val() != "") {                                                                                     // 68
-          valuesInput.push($(this).val());                                                                             // 69
-        }                                                                                                              // 70
-      });                                                                                                              // 71
+      $('.inputSN').each(function () {                                                                                 // 139
+        if (Session.get('modeToAdd') === false) {                                                                      // 140
+          //ESTAMOS EDITANDO LAS REDES SOCIALES EXISTENTES                                                             //
+          if ($(this).val() === "") {                                                                                  // 142
+            valuesInput.push($(this).attr('placeholder'));                                                             // 143
+          } else {                                                                                                     // 144
+            valuesInput.push($(this).val());                                                                           // 145
+          }                                                                                                            // 146
+          Session.set('inputNotEmpty', true);                                                                          // 147
+        } else {                                                                                                       // 148
+          //ESTAMOS AÑADIENDO UNA NUEVA RED SOCIAL                                                                     //
+          if ($(this).val() != "") {                                                                                   // 150
+            valuesInput.push($(this).val());                                                                           // 151
+            Session.set('inputNotEmpty', true);                                                                        // 152
+          } else {                                                                                                     // 153
+            //ESTE ES EL CASO DE QUE EL USUARIO NO INTRODUZCA NADA EN EL INPUT DE LA RED SOCIAL                        //
+            //SI ENTRA EN ESTE else HAY QUE PARAR LA EJECUCION DEL RESTO DEL METODO                                    //
+            //PARA ELLO GUARDAMOS UN BOOLEAN EN UNA Session.key                                                        //
+            Session.set('inputNotEmpty', false);                                                                       // 157
+            inputsEmpty.push($(this).attr('id'));                                                                      // 158
+            console.log("inputsEmpty");                                                                                // 159
+            console.log(inputsEmpty);                                                                                  // 160
+          }                                                                                                            // 161
+        };                                                                                                             // 162
+      });                                                                                                              // 163
                                                                                                                        //
-      $('.input-group button').each(function () {                                                                      // 73
-        valuesButton.push($(this).text());                                                                             // 74
-      });                                                                                                              // 75
+      $('.btnOptionsSN').each(function () {                                                                            // 165
+        valuesButton.push($(this).text());                                                                             // 166
+      });                                                                                                              // 167
                                                                                                                        //
-      //COMPROBAMOS QUE SE HA INTRODUCIDO ALGUN VALOR O SELECCIONADO ALGUNA RED SOCIAL PARA AÑADIRLA                   //
-      if (valuesInput && valuesButton) {                                                                               // 78
-        //AHORA OBTENEMOS EL _id DEL USUARIO Y LO AÑADIMOS AL OBJETO QUE LE VAMOS A PASAR                              //
-        //A LA LLAMADA A userData.js QUE SE ENCARGARÁ DE ACTUALIZAR EL REGISTRO.                                       //
-        var newData = new Object();                                                                                    // 81
-        newData.userId = Session.get('datauser')._id;                                                                  // 82
+      if (Session.get('inputNotEmpty')) {                                                                              // 169
+        //COMPROBAMOS QUE SE HA INTRODUCIDO ALGUN VALOR O SELECCIONADO ALGUNA RED SOCIAL PARA AÑADIRLA                 //
+        if (valuesInput && valuesButton) {                                                                             // 171
+          //AHORA OBTENEMOS EL _id DEL USUARIO Y LO AÑADIMOS AL OBJETO QUE LE VAMOS A PASAR                            //
+          //A LA LLAMADA A userData.js QUE SE ENCARGARÁ DE ACTUALIZAR EL REGISTRO.                                     //
+          var newData = new Object();                                                                                  // 174
+          newData.userId = Session.get('datauser')._id;                                                                // 175
                                                                                                                        //
-        for (i = 0; i < valuesButton.length; i++) {                                                                    // 84
-          var valu = valuesButton[i];                                                                                  // 85
-          var num = valuesButton.indexOf(valu);                                                                        // 86
+          for (i = 0; i < valuesButton.length; i++) {                                                                  // 177
+            var valu = valuesButton[i];                                                                                // 178
+            var num = valuesButton.indexOf(valu);                                                                      // 179
                                                                                                                        //
-          if (num >= 0) {                                                                                              // 88
-            if ("WhatsApp" === valu) {                                                                                 // 89
-              newData.userWhats = valuesInput[num];                                                                    // 90
-            } else if ("Facebook" === valu) {                                                                          // 91
-              newData.userFb = valuesInput[num];                                                                       // 92
-            } else if ("Instagram" === valu) {                                                                         // 93
-              newData.userInsta = valuesInput[num];                                                                    // 94
-            }                                                                                                          // 95
-          }                                                                                                            // 96
-        }                                                                                                              // 97
-        console.log(newData);                                                                                          // 98
-        //POR ULTIMO, REALIZAMOS LA LLAMADA A userData.js                                                              //
-        Meteor.call('updUserDataSocialNetworks', newData);                                                             // 100
-      }                                                                                                                // 101
+            if (num >= 0) {                                                                                            // 181
+              if ("WhatsApp" === valu) {                                                                               // 182
+                newData.userWhats = valuesInput[num];                                                                  // 183
+              } else if ("Facebook" === valu) {                                                                        // 184
+                newData.userFb = valuesInput[num];                                                                     // 185
+              } else if ("Instagram" === valu) {                                                                       // 186
+                newData.userInsta = valuesInput[num];                                                                  // 187
+              }                                                                                                        // 188
+            }                                                                                                          // 189
+          }                                                                                                            // 190
+          console.log(newData);                                                                                        // 191
+          //POR ULTIMO, REALIZAMOS LA LLAMADA A userData.js                                                            //
+          Meteor.call('updUserDataSocialNetworks', newData);                                                           // 193
+        }                                                                                                              // 194
                                                                                                                        //
-      console.log(valuesButton);                                                                                       // 103
-      console.log(valuesInput);                                                                                        // 104
+        console.log("valuesButton");                                                                                   // 196
+        console.log(valuesButton);                                                                                     // 197
+        console.log("valuesInput");                                                                                    // 198
+        console.log(valuesInput);                                                                                      // 199
                                                                                                                        //
-      //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                         //
-      $('#dialog-NewSocialNetwork').modal('hide');                                                                     // 108
-    }                                                                                                                  // 109
+        //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                       //
+        $('#dialog-NewSocialNetwork').modal('hide');                                                                   // 203
+      } else {                                                                                                         // 204
+        //SI ENCUENTRA QUE ALGUN INPUT ESTÁ VACIO SE ILUMINARÁ EN ROJO DICHO INPUT PARA ELLO TOMAMOS EL VALOR DE       //
+        //var inputsEmpty = [];                                                                                        //
                                                                                                                        //
-    return clickSaveData;                                                                                              // 60
-  }()                                                                                                                  // 60
-});                                                                                                                    // 6
+      };                                                                                                               // 208
                                                                                                                        //
-Template.socialNetworkBox.helpers({                                                                                    // 112
-  'modeAddNewSN': function () {                                                                                        // 113
-    function modeAddNewSN() {                                                                                          // 113
-      var result = new Object();                                                                                       // 114
+      //EN EL CASO DE QUE SE DE CLICK A SALVAR DATOS DESPUES DE HABER ELIMINADO UNA RED SOCIAL                         //
+      //SE TENDRÁ QUE DECIR AL SISTEMA QUE CAMBIE LA OPCION DE EDITAR SN A AÑADIR SN                                   //
+      if (Session.get('removeDataSN')) {                                                                               // 212
+        Session.set('modeToAdd', true);                                                                                // 213
+        Session.set('removeDataSN', false);                                                                            // 214
+      };                                                                                                               // 215
+    }                                                                                                                  // 216
                                                                                                                        //
-      var currentDataUser = Session.get('datauser');                                                                   // 116
-      console.log("currentDataUser");                                                                                  // 117
-      console.log(currentDataUser);                                                                                    // 118
-      var selectOptions = ["WhatsApp", "Instagram", "Facebook"];                                                       // 119
-      var numSocialNetworks = 0;                                                                                       // 120
+    return clickSaveData;                                                                                              // 131
+  }()                                                                                                                  // 131
+});                                                                                                                    // 8
                                                                                                                        //
-      var datauserSN = [];                                                                                             // 122
+Template.socialNetworkBox.helpers({                                                                                    // 219
+  'modeAddNewSN': function () {                                                                                        // 220
+    function modeAddNewSN() {                                                                                          // 220
+      var result = new Object();                                                                                       // 221
                                                                                                                        //
-      if (currentDataUser.userWhats) {                                                                                 // 124
-        var numSele = selectOptions.indexOf("WhatsApp");                                                               // 125
-        selectOptions.splice(numSele, 1);                                                                              // 126
-        numSocialNetworks += 1;                                                                                        // 127
-        datauserSN.push(currentDataUser.userWhats);                                                                    // 128
-      }                                                                                                                // 129
+      var currentDataUser = Session.get('datauser');                                                                   // 223
+      console.log("currentDataUser");                                                                                  // 224
+      console.log(currentDataUser);                                                                                    // 225
+      var selectOptions = ["WhatsApp", "Instagram", "Facebook"];                                                       // 226
+      var numSocialNetworks = 0;                                                                                       // 227
                                                                                                                        //
-      if (currentDataUser.userFb) {                                                                                    // 131
-        var numSele = selectOptions.indexOf("Facebook");                                                               // 132
-        selectOptions.splice(numSele, 1);                                                                              // 133
-        numSocialNetworks += 1;                                                                                        // 134
-        datauserSN.push(currentDataUser.userFb);                                                                       // 135
-      }                                                                                                                // 136
+      var datauserSN = [];                                                                                             // 229
                                                                                                                        //
-      if (currentDataUser.userInsta) {                                                                                 // 138
-        var numSele = selectOptions.indexOf("Instagram");                                                              // 139
-        selectOptions.splice(numSele, 1);                                                                              // 140
-        numSocialNetworks += 1;                                                                                        // 141
-        datauserSN.push(currentDataUser.userInsta);                                                                    // 142
-      }                                                                                                                // 143
+      if (currentDataUser.userWhats) {                                                                                 // 231
+        var numSele = selectOptions.indexOf("WhatsApp");                                                               // 232
+        selectOptions.splice(numSele, 1);                                                                              // 233
+        numSocialNetworks += 1;                                                                                        // 234
+        datauserSN.push(currentDataUser.userWhats);                                                                    // 235
+      }                                                                                                                // 236
                                                                                                                        //
-      console.log("Select Options");                                                                                   // 145
-      console.log(selectOptions);                                                                                      // 146
-      console.log("datauserSN");                                                                                       // 147
-      console.log(datauserSN);                                                                                         // 148
+      if (currentDataUser.userFb) {                                                                                    // 238
+        var numSele = selectOptions.indexOf("Facebook");                                                               // 239
+        selectOptions.splice(numSele, 1);                                                                              // 240
+        numSocialNetworks += 1;                                                                                        // 241
+        datauserSN.push(currentDataUser.userFb);                                                                       // 242
+      }                                                                                                                // 243
                                                                                                                        //
-      Session.set('getDataUserSN', datauserSN);                                                                        // 150
+      if (currentDataUser.userInsta) {                                                                                 // 245
+        var numSele = selectOptions.indexOf("Instagram");                                                              // 246
+        selectOptions.splice(numSele, 1);                                                                              // 247
+        numSocialNetworks += 1;                                                                                        // 248
+        datauserSN.push(currentDataUser.userInsta);                                                                    // 249
+      }                                                                                                                // 250
                                                                                                                        //
-      Session.set('countSocialNetworks', numSocialNetworks);                                                           // 152
+      console.log("Select Options");                                                                                   // 252
+      console.log(selectOptions);                                                                                      // 253
+      console.log("datauserSN");                                                                                       // 254
+      console.log(datauserSN);                                                                                         // 255
                                                                                                                        //
-      Session.set('optionsAva', selectOptions);                                                                        // 154
+      Session.set('getDataUserSN', datauserSN);                                                                        // 257
                                                                                                                        //
-      if (selectOptions.length > 0) {                                                                                  // 157
-        result.messageMode = "Añade tu red social a twiiterClone";                                                     // 158
-        Session.set('modeToAdd', true);                                                                                // 159
-      } else {                                                                                                         // 160
+      Session.set('countSocialNetworks', numSocialNetworks);                                                           // 259
+                                                                                                                       //
+      Session.set('optionsAva', selectOptions);                                                                        // 261
+                                                                                                                       //
+      if (selectOptions.length > 0) {                                                                                  // 264
+        result.messageMode = "Añade tu red social a twiiterClone";                                                     // 265
+        Session.set('modeToAdd', true);                                                                                // 266
+      } else {                                                                                                         // 267
         //POR ULTIMO VAMOS A AÑADIR LOS CAMPOS PARA PODER SER EDITADOS                                                 //
-        var aux = ["WhatsApp", "Instagram", "Facebook"];                                                               // 162
-        var contentToAppend = [];                                                                                      // 163
-        for (var i = 0; i < numSocialNetworks; i++) {                                                                  // 164
-          var objAux = new Object();                                                                                   // 165
-          objAux.id = i;                                                                                               // 166
-          objAux.valueBtn = aux[i];                                                                                    // 167
-          objAux.placeholder = datauserSN[i];                                                                          // 168
+        var aux = ["WhatsApp", "Facebook", "Instagram"];                                                               // 269
+        var contentToAppend = [];                                                                                      // 270
+        for (var i = 0; i < numSocialNetworks; i++) {                                                                  // 271
+          var objAux = new Object();                                                                                   // 272
+          objAux.id = i;                                                                                               // 273
+          objAux.valueBtn = aux[i];                                                                                    // 274
+          objAux.placeholder = datauserSN[i];                                                                          // 275
                                                                                                                        //
-          contentToAppend.push(objAux);                                                                                // 170
-        }                                                                                                              // 171
-        result.messageMode = "Edita tu red social";                                                                    // 172
-        Session.set('appendThis', contentToAppend);                                                                    // 173
-        Session.set('modeToAdd', false);                                                                               // 174
-      }                                                                                                                // 175
-      return result;                                                                                                   // 176
-    }                                                                                                                  // 177
+          contentToAppend.push(objAux);                                                                                // 277
+        }                                                                                                              // 278
+        result.messageMode = "Edita tu red social";                                                                    // 279
+        Session.set('appendThis', contentToAppend);                                                                    // 280
+        Session.set('modeToAdd', false);                                                                               // 281
+      }                                                                                                                // 282
+      return result;                                                                                                   // 283
+    }                                                                                                                  // 284
                                                                                                                        //
-    return modeAddNewSN;                                                                                               // 113
-  }(),                                                                                                                 // 113
+    return modeAddNewSN;                                                                                               // 220
+  }(),                                                                                                                 // 220
                                                                                                                        //
-  'contentToAppend': function () {                                                                                     // 179
-    function contentToAppend() {                                                                                       // 179
-      return Session.get('appendThis');                                                                                // 180
-    }                                                                                                                  // 181
+  'contentToAppend': function () {                                                                                     // 286
+    function contentToAppend() {                                                                                       // 286
+      return Session.get('appendThis');                                                                                // 287
+    }                                                                                                                  // 288
                                                                                                                        //
-    return contentToAppend;                                                                                            // 179
-  }(),                                                                                                                 // 179
+    return contentToAppend;                                                                                            // 286
+  }(),                                                                                                                 // 286
                                                                                                                        //
-  'userHaveSN': function () {                                                                                          // 183
-    function userHaveSN() {                                                                                            // 183
-      return Session.get('modeToAdd');                                                                                 // 184
-    }                                                                                                                  // 185
+  'userHaveSN': function () {                                                                                          // 290
+    function userHaveSN() {                                                                                            // 290
+      return Session.get('modeToAdd');                                                                                 // 291
+    }                                                                                                                  // 292
                                                                                                                        //
-    return userHaveSN;                                                                                                 // 183
-  }()                                                                                                                  // 183
-});                                                                                                                    // 112
+    return userHaveSN;                                                                                                 // 290
+  }()                                                                                                                  // 290
+});                                                                                                                    // 219
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"tweetBox.js":function(){

@@ -528,11 +528,36 @@ Meteor.methods({                                                                
     }                                                                                                  // 52
   },                                                                                                   // 53
                                                                                                        //
-  'insertNewImage': function insertNewImage(code) {                                                    // 55
-    return Images.insert({                                                                             // 56
-      imgCode: code                                                                                    // 57
-    });                                                                                                // 56
-  }                                                                                                    // 59
+  'removeDataSocialNetworks': function removeDataSocialNetworks(newData) {                             // 55
+    console.log(newData.userId + " " + newData.propertyToRem);                                         // 56
+                                                                                                       //
+    switch (newData.propertyToRem) {                                                                   // 58
+      case "WhatsApp":                                                                                 // 59
+        {                                                                                              // 59
+          DataUser.update({ _id: newData.userId }, { $unset: { "userWhats": 1 } });                    // 60
+        };                                                                                             // 61
+        break;                                                                                         // 62
+      case "Instagram":                                                                                // 63
+        {                                                                                              // 63
+          DataUser.update({ _id: newData.userId }, { $unset: { "userInsta": 1 } });                    // 64
+        };                                                                                             // 65
+        break;                                                                                         // 66
+      case "Facebook":                                                                                 // 67
+        {                                                                                              // 67
+          DataUser.update({ _id: newData.userId }, { $unset: { "userFb": 1 } });                       // 68
+        };                                                                                             // 69
+        break;                                                                                         // 70
+    }                                                                                                  // 58
+                                                                                                       //
+    //ESTE COMANDO ES EL QUE SE UTILIZA EN MONGO                                                       //
+    //db.dataUser.update({"_id": "rQTzzDMfr4ZkiR7S8"},  {"$unset":{"userWhats":1}});                   //
+  },                                                                                                   // 75
+                                                                                                       //
+  'insertNewImage': function insertNewImage(code) {                                                    // 77
+    return Images.insert({                                                                             // 78
+      imgCode: code                                                                                    // 79
+    });                                                                                                // 78
+  }                                                                                                    // 81
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

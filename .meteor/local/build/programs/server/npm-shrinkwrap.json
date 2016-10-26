@@ -13,9 +13,9 @@
       "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.5.tgz"
     },
     "fibers": {
-      "version": "1.0.13",
-      "from": "fibers@1.0.13",
-      "resolved": "https://registry.npmjs.org/fibers/-/fibers-1.0.13.tgz"
+      "version": "1.0.15",
+      "from": "fibers@1.0.15",
+      "resolved": "https://registry.npmjs.org/fibers/-/fibers-1.0.15.tgz"
     },
     "meteor-promise": {
       "version": "0.7.2",

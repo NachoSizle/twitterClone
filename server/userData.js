@@ -52,6 +52,28 @@ Meteor.methods({
     }
   },
 
+  'removeDataSocialNetworks': function(newData){
+    console.log(newData.userId + " " + newData.propertyToRem);
+
+    switch(newData.propertyToRem){
+        case "WhatsApp": {
+          DataUser.update({_id: newData.userId},  {$unset: { "userWhats" : 1 }});
+        };
+          break;
+        case "Instagram": {
+          DataUser.update({_id: newData.userId},  {$unset: { "userInsta" : 1 }});
+        };
+          break;
+        case "Facebook": {
+          DataUser.update({_id: newData.userId},  {$unset: { "userFb" : 1 }});
+        };
+          break;
+      }
+    
+    //ESTE COMANDO ES EL QUE SE UTILIZA EN MONGO
+    //db.dataUser.update({"_id": "rQTzzDMfr4ZkiR7S8"},  {"$unset":{"userWhats":1}});
+  },
+
   'insertNewImage': function(code){
     return Images.insert({
       imgCode : code

@@ -324,11 +324,11 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/mongo.js?hash=ed0b13aca2f180af120dd0cfdba64ac79e2a624f",
+      "url": "/packages/mongo.js?hash=a64766c07614137458bc14091ef472eedee23bd0",
       "sourceMap": "packages/mongo.js.map",
-      "sourceMapUrl": "/packages/ed0b13aca2f180af120dd0cfdba64ac79e2a624f.map",
-      "size": 108386,
-      "hash": "ed0b13aca2f180af120dd0cfdba64ac79e2a624f"
+      "sourceMapUrl": "/packages/a64766c07614137458bc14091ef472eedee23bd0.map",
+      "size": 108366,
+      "hash": "a64766c07614137458bc14091ef472eedee23bd0"
     },
     {
       "path": "packages/blaze-html-templates.js",
@@ -800,11 +800,11 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=b6c4e5de7425a1ff0f2548010ec0fecb42156b97",
+      "url": "/app/app.js?hash=24147cc5384247e26384a1ac2d90b352a50f6352",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/b6c4e5de7425a1ff0f2548010ec0fecb42156b97.map",
-      "size": 383511,
-      "hash": "b6c4e5de7425a1ff0f2548010ec0fecb42156b97"
+      "sourceMapUrl": "/app/24147cc5384247e26384a1ac2d90b352a50f6352.map",
+      "size": 396619,
+      "hash": "24147cc5384247e26384a1ac2d90b352a50f6352"
     },
     {
       "path": "merged-stylesheets.css",
