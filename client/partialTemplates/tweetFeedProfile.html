@@ -1,44 +1,48 @@
 <template name="tweetFeedProfile">  
-  <div class="tweetfeed-container">
-    <div class="panel panel-default tweetfeed">
-      <div class="panel-body">
-        <!-- Texto para el contenido del Twitt -->
-        {{#each tweetMessageProfile}}
-          <div class="panel panel-info"><!--Contenido de la cabecera + el mensaje del twiit-->
-            <div class="panel-heading"><!--Cabecera del twiit-->
-              <h3 class="panel-title">@{{this.user}} 
-                <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                {{convertDateTime}}
-              </h3>
-            </div><!--Cabecera del twiit-->
-            <div class="panel-body"><!--Contenido del twiit-->
-              {{this.message}}
-            </div><!--Contenido del twiit-->
+  {{#if Template.subscriptionsReady}}
+    <div class="tweetfeed-container">
+      <div class="panel panel-default tweetfeed">
+        <div class="panel-body">
+          <!-- Texto para el contenido del Twitt -->
+          {{#each tweetMessageProfile}}
+            <div class="panel panel-info"><!--Contenido de la cabecera + el mensaje del twiit-->
+              <div class="panel-heading"><!--Cabecera del twiit-->
+                <h3 class="panel-title">@{{this.user}} 
+                  <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                  {{convertDateTime}}
+                </h3>
+              </div><!--Cabecera del twiit-->
+              <div class="panel-body"><!--Contenido del twiit-->
+                {{this.message}}
+              </div><!--Contenido del twiit-->
 
-            <div class="btn-group" role="group" id="btnGroupInteractions">
-              <a class="btn btn-secondary">
-                <span class="glyphicon glyphicon-bullhorn"></span>
-              </a>
-              {{#if numComment}}
-                <a href="{{pathFor 'twiitCommentPage' _id=this._id}}" class="btn btn-secondary">
-                  <span class="glyphicon glyphicon-comment"></span>
-                  <span class="badge-numFav badge">{{this.numComment}}</span>
+              <div class="btn-group" role="group" id="btnGroupInteractions">
+                <a class="btn btn-secondary">
+                  <span class="glyphicon glyphicon-bullhorn"></span>
                 </a>
-              {{/if}}
-              {{#if numFav}}
-                <a id="btnFav" class="btn btn-secondary">
-                  <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
-                  <span class="badge badge-numFav">{{this.numFav}}</span>
-                </a>
-              {{else}}
-                <a id="btnFav" class="btn btn-secondary">
-                  <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
-                </a>
-              {{/if}}
-            </div>
-          </div><!--Contenido de la cabecera + el mensaje del twiit-->
-        {{/each}}
+                {{#if numComment}}
+                  <a href="{{pathFor 'twiitCommentPage' _id=this._id}}" class="btn btn-secondary">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    <span class="badge-numFav badge">{{this.numComment}}</span>
+                  </a>
+                {{/if}}
+                {{#if numFav}}
+                  <a id="btnFav" class="btn btn-secondary">
+                    <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                    <span class="badge badge-numFav">{{this.numFav}}</span>
+                  </a>
+                {{else}}
+                  <a id="btnFav" class="btn btn-secondary">
+                    <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                  </a>
+                {{/if}}
+              </div>
+            </div><!--Contenido de la cabecera + el mensaje del twiit-->
+          {{/each}}
+        </div>
       </div>
     </div>
-  </div>
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

@@ -1,5 +1,6 @@
 <template name="notificationsNew">
- <a id="linkToNotif" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+  {{#if Template.subscriptionsReady}}
+    <a id="linkToNotif" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
     <!--Notificaciones-->
     <span class="glyphicon glyphicon-inbox"></span>
 
@@ -12,10 +13,14 @@
           {{/if}}
         {{/if}}
       {{/if}}
-  </a>
-  {{#unless notificationCount}}
-  <ul class="notification dropdown-menu dropdown-menu-center">
-    <li><span>No Notifications</span></li>
-  </ul>
-  {{/unless}}
+
+    </a>
+    {{#unless notificationCount}}
+    <ul class="notification dropdown-menu dropdown-menu-center">
+      <li><span>No Notifications</span></li>
+    </ul>
+    {{/unless}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

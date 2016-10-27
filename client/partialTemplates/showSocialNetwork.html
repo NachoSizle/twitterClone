@@ -1,0 +1,14 @@
+<template name="showSocialNetwork"> 
+  	{{#if Template.subscriptionsReady}}
+  		<div class="socialNetwork-container">
+		    <div class="panel panel-default col-sm-6 col-md-6 col-lg-6">
+	      		<div class="panel-body">
+			  		<!-- CONTAINER TO ADD NEW SOCIAL NETWORK -->
+					<p>{{socialNetwork}}</p>	
+		      	</div>
+	    	</div>
+	  	</div>
+	{{else}}
+	  {{> loading}}
+	{{/if}}
+</template>

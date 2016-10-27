@@ -156,6 +156,7 @@ install("reactive-dict");
 install("iron:controller");
 install("iron:router");
 install("fourseven:scss");
+install("sacha:spin");
 install("livedata");
 install("hot-code-push");
 install("launch-screen");

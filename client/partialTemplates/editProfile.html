@@ -1,58 +1,62 @@
 <template name="editProfile">
-  {{# if dataUserFound}}
-    <div class="user-container">
-      <div class="panel panel-default userBox">
-        <div class="panel-body">
-          <!--Mensaje para el usuario registrado-->
-          <div class="row">
-            <!--CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO-->
-            <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
-              <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
-              <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
-              A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
-              <img id="imgCurrentUser" src="{{userImgFound}}" class="img-responsive">
+  {{#if Template.subscriptionsReady}}
+    {{# if dataUserFound}}
+      <div class="user-container">
+        <div class="panel panel-default userBox">
+          <div class="panel-body">
+            <!--Mensaje para el usuario registrado-->
+            <div class="row">
+              <!--CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO-->
+              <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
+                <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
+                <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
+                A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
+                <img id="imgCurrentUser" src="{{userImgFound}}" class="img-responsive">
 
-              <label id="btnCurrentUser" class="btn btn-default btn-lg btn-file iconToEditImg">
-                  <span class="glyphicon glyphicon-camera"></span> 
-                  <input id="inputFile" type="file" style="display: none;">
-              </label>
+                <label id="btnCurrentUser" class="btn btn-default btn-lg btn-file iconToEditImg">
+                    <span class="glyphicon glyphicon-camera"></span> 
+                    <input id="inputFile" type="file" style="display: none;">
+                </label>
 
+              </div>
+              <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
+              <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
+                <!--ESTA DESCRIPCION ES GENERICA. HAY QUE CAMBIARLA POR LA QUE APAREZCA EN userData.description-->
+                <textarea class="form-control" rows="5" id="userDescription" placeholder="{{dataUserFound.userDescription}}"></textarea>
+              </div>
             </div>
-            <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
-            <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
-              <!--ESTA DESCRIPCION ES GENERICA. HAY QUE CAMBIARLA POR LA QUE APAREZCA EN userData.description-->
-              <textarea class="form-control" rows="5" id="userDescription" placeholder="{{dataUserFound.userDescription}}"></textarea>
-            </div>
-          </div>
 
-          <div class="currentUserName">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-              <h3><strong>{{dataUserFound.userName}}</strong></h3>
-              <h5>@{{dataUserFound.userNameProfile}}</h5>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-              <button id="saveChanges" class="btn btn-primary optionsUserProfile" type="button">
-                <span class="glyphicon glyphicon-ok"></span>
-              </button>
-              {{# if userHaveSN dataUserFound}}
-                <button class="btn btn-primary optionsUserProfile" type="button" style="margin-right:7px" data-toggle="modal" data-target="#dialog-NewSocialNetwork">
-                  <span class="glyphicon glyphicon-plus-sign"></span>
-                  <span class="glyphicon glyphicon-user"></span>
+            <div class="currentUserName">
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <h3><strong>{{dataUserFound.userName}}</strong></h3>
+                <h5>@{{dataUserFound.userNameProfile}}</h5>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <button id="saveChanges" class="btn btn-primary optionsUserProfile" type="button">
+                  <span class="glyphicon glyphicon-ok"></span>
                 </button>
-              {{else}}
-                <button class="btn btn-primary optionsUserProfile" type="button" style="margin-right:7px" data-toggle="modal" data-target="#dialog-NewSocialNetwork">
-                  <span class="glyphicon glyphicon-pencil"></span>
-                  <span class="glyphicon glyphicon-user"></span>
-                </button>
-              {{/if}}
+                {{# if userHaveSN dataUserFound}}
+                  <button class="btn btn-primary optionsUserProfile" type="button" style="margin-right:7px" data-toggle="modal" data-target="#dialog-NewSocialNetwork">
+                    <span class="glyphicon glyphicon-plus-sign"></span>
+                    <span class="glyphicon glyphicon-user"></span>
+                  </button>
+                {{else}}
+                  <button class="btn btn-primary optionsUserProfile" type="button" style="margin-right:7px" data-toggle="modal" data-target="#dialog-NewSocialNetwork">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="glyphicon glyphicon-user"></span>
+                  </button>
+                {{/if}}
+              </div>
             </div>
-          </div>
 
-          <div class="modal fade" id="dialog-NewSocialNetwork">
-            {{> socialNetworkBox}}
+            <div class="modal fade" id="dialog-NewSocialNetwork">
+              {{> socialNetworkBox}}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    {{/if}}
+  {{else}}
+    {{> loading}}
   {{/if}}
 </template>

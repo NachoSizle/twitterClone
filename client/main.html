@@ -6,8 +6,12 @@
 
 <body id="bodyPpal"> 
 	<div class="row">
-		{{# if currentUser}}
-	    	{{> navBarTemplate}}
+		{{#if Template.subscriptionsReady}}
+		    {{# if currentUser}}
+		    	{{> navBarTemplate}}
+		  	{{/if}}
+	  	{{else}}
+		    {{> loading}}
 	  	{{/if}}
 		<!--{{> btnFloating}}-->
 	</div>

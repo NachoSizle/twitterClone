@@ -21,58 +21,61 @@
     </div>
   </nav>
   -->
-
-  <div class="tweetfeed-container">
-    <div class="panel panel-default tweetfeed">
-      <div class="panel-body">
-        <!-- Texto para el contenido del Twitt -->
-        {{#if countNotifTwiit}}
-          {{#each tweetMessage}}
-            {{saveIdInArr}}
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h3 class="panel-title">@{{this.actorNotif}} 
-                  <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                   {{convertDateTime}}
-                 </h3>
-              </div>
-              <div class="panel-body">
-                {{this.twiitMessage}}
-              </div>
-              <div class="btn-group" role="group" id="btnGroupInteractions">
-                <a class="btn btn-secondary">
-                  <span class="glyphicon glyphicon-bullhorn"></span>
-                </a>
-                {{#if findNumComment}}
-                  <a href="{{pathFor 'twiitCommentPage' _id=this._id}}" class="btn btn-secondary">
+  {{#if Template.subscriptionsReady}}
+    <div class="tweetfeed-container">
+      <div class="panel panel-default tweetfeed">
+        <div class="panel-body">
+          <!-- Texto para el contenido del Twitt -->
+          {{#if countNotifTwiit}}
+            {{#each tweetMessage}}
+              {{saveIdInArr}}
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">@{{this.actorNotif}} 
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                     {{convertDateTime}}
+                   </h3>
+                </div>
+                <div class="panel-body">
+                  {{this.twiitMessage}}
+                </div>
+                <div class="btn-group" role="group" id="btnGroupInteractions">
+                  <a class="btn btn-secondary">
+                    <span class="glyphicon glyphicon-bullhorn"></span>
+                  </a>
+                  {{#if findNumComment}}
+                    <a href="{{pathFor 'twiitCommentPage' _id=this._id}}" class="btn btn-secondary">
+                      <span class="glyphicon glyphicon-comment"></span>
+                      <span class="badge-numFav badge">{{numComment}}</span>
+                    </a>
+                  {{else}}
+                    <a id="btnComm" class="btn btn-secondary">
                     <span class="glyphicon glyphicon-comment"></span>
-                    <span class="badge-numFav badge">{{numComment}}</span>
                   </a>
-                {{else}}
-                  <a id="btnComm" class="btn btn-secondary">
-                  <span class="glyphicon glyphicon-comment"></span>
-                </a>
-                {{/if}}
-                {{#if numFavorite}}
-                  <a id="btnFav" class="btn btn-secondary">
-                    <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
-                    <span class="badge badge-numFav">{{numFav}}</span>
-                  </a>
-                {{else}}
-                  <a id="btnFav" class="btn btn-secondary">
-                    <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
-                  </a>
-                {{/if}}
+                  {{/if}}
+                  {{#if numFavorite}}
+                    <a id="btnFav" class="btn btn-secondary">
+                      <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                      <span class="badge badge-numFav">{{numFav}}</span>
+                    </a>
+                  {{else}}
+                    <a id="btnFav" class="btn btn-secondary">
+                      <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                    </a>
+                  {{/if}}
+                </div>
               </div>
+            {{/each}}
+             <button id="btnDismissNotif" class="btn btn-info pull-right" type="button">OK</button>
+          {{else}}
+            <div class="panel-info">
+              <p>Oooooooops Twiit Page New</p>    
             </div>
-          {{/each}}
-           <button id="btnDismissNotif" class="btn btn-info pull-right" type="button">OK</button>
-        {{else}}
-          <div class="panel-info">
-            <p>Oooooooops Twiit Page New</p>    
-          </div>
-        {{/if}}
+          {{/if}}
+        </div>
       </div>
     </div>
-  </div>
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

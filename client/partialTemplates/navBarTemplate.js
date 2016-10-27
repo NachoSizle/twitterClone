@@ -12,8 +12,19 @@ Template.navBarTemplate.onCreated( function() {
 		Notification.requestPermission();
 	}
 	*/
+
 });
 
+//ESTA ES OTRA FORMA DE HACER APARECER EL SPINNER CUANDO NO SE HA CARGADO LA TEMPLATE
+/*
+	Session.set("onRender", true);
+});
+
+Template.navBarTemplate.onRendered(function() {
+	Session.set("onRender", false);
+    return Session.get("onRender");
+});
+*/
 Template.navBarTemplate.events({
 	'click #recommendationsBtn' : function(){
 		//console.log("A quien seguir");

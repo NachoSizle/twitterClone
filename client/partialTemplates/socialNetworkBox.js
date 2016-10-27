@@ -8,7 +8,6 @@ Template.socialNetworkBox.onRendered(function(){
 Template.socialNetworkBox.events({
   	'click #btnNewSN': function(){
   		var numSocialNetworks = Session.get('countSocialNetworks');
-      console.log(numSocialNetworks);
 
   		if(numSocialNetworks < 3){
 
@@ -28,7 +27,7 @@ Template.socialNetworkBox.events({
   				+ avaSelecOptions
   				+ "</ul>"
   				+ "</div>"
-  				+ "<input id='input" + numSocialNetworks + "' type='text' class='form-control inputSN' aria-label='...' placeholder='Username...'>"
+  				+ "<input required id='input" + numSocialNetworks + "' type='text' class='form-control inputSN inputNewSN' aria-label='...' placeholder='Username...'>"
   				+ "<button id='clearDataUser" + numSocialNetworks + "' type='button' class='btn btn-danger' aria-haspopup='true' aria-expanded='false'>"
           + "<span id='" + numSocialNetworks + "' class='glyphicon glyphicon-remove'></span>"
           + "</button>"
@@ -39,6 +38,7 @@ Template.socialNetworkBox.events({
 
       if(numSocialNetworks === 3){
         $('#btnNewSN').hide();
+        Session.set('removeDataSN', false);
       };
   	},
   	'click .btnDropDown': function(event){
@@ -121,10 +121,8 @@ Template.socialNetworkBox.events({
         $('.btn-danger').attr('id', 'clearDataUser' +  i);
       }
 
-      console.log("countSocialNetworks");
-      console.log(auxCount);
-
       if(auxCount < 3){
+        Session.set('modeToAdd', true);
         $('#btnNewSN').show();
       }
     },
@@ -134,38 +132,59 @@ Template.socialNetworkBox.events({
   		//TODO
       var valuesInput = [];
   		var valuesButton = [];
-      var inputsEmpty = [];
+      var foundInputNewSN = false;
 
-  		$('.inputSN').each(function() {
-        if(Session.get('modeToAdd') === false){
-          //ESTAMOS EDITANDO LAS REDES SOCIALES EXISTENTES
+      //PARA CADA CASO HAY QUE COMPROBAR QUE LOS INPUT QUE TIENEN, ESTAN RELLENADOS. EN EL CASO DE LAS REDES QUE 
+      //YA EXISTEN EN MNONGODB, SE COGERÁ SU PLACEHOLDER.
+      if(Session.get('modeToAdd') === true){
+        //ESTE ES EL CASO QUE SE DA CUANDO SE HA INTRODUCIDO UNA NUEVA RED SOCIAL PARA ANIADIRLA A MONGODB
+        //ESTE CASO SALTA CUANDO SE HA DADO AL BOTON DE addNewSN
+
+        //RECORREMOS LOS INPUT QUE VIENEN DIRECTAMENTE DE MONGODB
+        $('.inputSN').each(function() {
           if($(this).val() === ""){
             valuesInput.push($(this).attr('placeholder'));
           } else {
             valuesInput.push($(this).val());
           }
-          Session.set('inputNotEmpty', true);
-        } else {
-          //ESTAMOS AÑADIENDO UNA NUEVA RED SOCIAL
+        });
+
+        //RECORREMOS LOS INPUT CREADOS CON EL BTN addNewSN
+        $('.inputNewSN').each(function(){
           if($(this).val() != ""){
             valuesInput.push($(this).val());
             Session.set('inputNotEmpty', true);
           } else {
-            //ESTE ES EL CASO DE QUE EL USUARIO NO INTRODUZCA NADA EN EL INPUT DE LA RED SOCIAL
-            //SI ENTRA EN ESTE else HAY QUE PARAR LA EJECUCION DEL RESTO DEL METODO
-            //PARA ELLO GUARDAMOS UN BOOLEAN EN UNA Session.key
             Session.set('inputNotEmpty', false);
-            inputsEmpty.push($(this).attr('id'));
-            console.log("inputsEmpty");
-            console.log(inputsEmpty);
           }
-        };
-  		});
+          foundInputNewSN = true;
+        });
 
+        if(foundInputNewSN){
+          valuesInput.splice(valuesInput.length - 1, 1);
+          foundInputNewSN = false;
+        }
+
+      } else {
+        //ESTE CASO SE PRODUCE CUANDO LAS REDES QUE SE MUESTRAN AL USUARIO SON TODAS YA EXISTENTES EN MONGODB
+        //POR TANTO, SOLO RECORREMOS LOS INPUT QUE VIENEN DIRECTAMENTE DE MONGODB
+        $('.inputSN').each(function() {
+          if($(this).val() === ""){
+            valuesInput.push($(this).attr('placeholder'));
+          } else {
+            valuesInput.push($(this).val());
+          }
+        });
+
+        Session.set('inputNotEmpty', true);
+      };
+
+      //RECOGEMOS LOS VALORES DE LOS BOTONES DESACTIVADOS (NOMBRES REDES SOCIALES)
       $('.btnOptionsSN').each(function() {
         valuesButton.push($(this).text());
       });
 
+      //ESTA PARTE ESTA CORRECTA
       if(Session.get('inputNotEmpty')){
         //COMPROBAMOS QUE SE HA INTRODUCIDO ALGUN VALOR O SELECCIONADO ALGUNA RED SOCIAL PARA AÑADIRLA
         if(valuesInput && valuesButton){
@@ -188,29 +207,19 @@ Template.socialNetworkBox.events({
               }
             }
           }
-          console.log(newData);
           //POR ULTIMO, REALIZAMOS LA LLAMADA A userData.js
           Meteor.call('updUserDataSocialNetworks', newData);
         }
         
-        console.log("valuesButton");
-        console.log(valuesButton);
-        console.log("valuesInput");
-        console.log(valuesInput);
-        
 
         //HAY QUE DECIRLE AL MODAL QUE SE CIERRE
         $('#dialog-NewSocialNetwork').modal('hide');
-      } else {
-        //SI ENCUENTRA QUE ALGUN INPUT ESTÁ VACIO SE ILUMINARÁ EN ROJO DICHO INPUT PARA ELLO TOMAMOS EL VALOR DE 
-        //var inputsEmpty = [];
-        
-      };
+      }
 
       //EN EL CASO DE QUE SE DE CLICK A SALVAR DATOS DESPUES DE HABER ELIMINADO UNA RED SOCIAL
       //SE TENDRÁ QUE DECIR AL SISTEMA QUE CAMBIE LA OPCION DE EDITAR SN A AÑADIR SN
       if(Session.get('removeDataSN')){
-        Session.set('modeToAdd', true);
+        Session.set('modeToAdd', false);
         Session.set('removeDataSN', false);
       };
   	},
@@ -221,8 +230,7 @@ Template.socialNetworkBox.helpers({
     var result = new Object();
 
     var currentDataUser = Session.get('datauser');
-    console.log("currentDataUser");
-    console.log(currentDataUser);
+
     var selectOptions = ["WhatsApp", "Instagram", "Facebook"];
     var numSocialNetworks = 0;
 
@@ -249,11 +257,6 @@ Template.socialNetworkBox.helpers({
       datauserSN.push(currentDataUser.userInsta);
     }
 
-    console.log("Select Options");
-    console.log(selectOptions);
-    console.log("datauserSN");
-    console.log(datauserSN);
-
     Session.set('getDataUserSN', datauserSN);
 
     Session.set('countSocialNetworks', numSocialNetworks);
@@ -261,10 +264,10 @@ Template.socialNetworkBox.helpers({
     Session.set('optionsAva', selectOptions);
 
 
-    if(selectOptions.length > 0){
+    if(selectOptions.length > 0 && selectOptions.length <= 3){
       result.messageMode = "Añade tu red social a twiiterClone";
       Session.set('modeToAdd', true);
-    } else {
+    } else if(selectOptions.length === 0){
       //POR ULTIMO VAMOS A AÑADIR LOS CAMPOS PARA PODER SER EDITADOS
       var aux = ["WhatsApp", "Facebook", "Instagram"];
       var contentToAppend = [];
@@ -279,7 +282,8 @@ Template.socialNetworkBox.helpers({
       result.messageMode = "Edita tu red social";
       Session.set('appendThis', contentToAppend);
       Session.set('modeToAdd', false);
-    }
+    } 
+
     return result;
   },
 
@@ -288,6 +292,12 @@ Template.socialNetworkBox.helpers({
   },
 
 	'userHaveSN' : function(){
-    return Session.get('modeToAdd');
+    if(Session.get('optionsAva').length > 0){
+      return true;
+    } else if(Session.get('modeToAdd')){
+      return true;
+    } else {
+      return false;
+    }
   },
 });   

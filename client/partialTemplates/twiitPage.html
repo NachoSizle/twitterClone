@@ -1,29 +1,33 @@
 <template name="twiitPage">  
-  <div class="tweetfeed-container">
-    <div class="panel panel-default tweetfeed">
-      <div class="panel-body">
-        <!-- Texto para el contenido del Twitt -->
-        {{# if countNotifTwiit}}
-          {{#each tweetMessage}}
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h3 class="panel-title">@{{this.twiitNotifUserName}} 
-                  <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                   {{convertDateTime}}
-                 </h3>
+  {{#if Template.subscriptionsReady}}
+    <div class="tweetfeed-container">
+      <div class="panel panel-default tweetfeed">
+        <div class="panel-body">
+          <!-- Texto para el contenido del Twitt -->
+          {{# if countNotifTwiit}}
+            {{#each tweetMessage}}
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">@{{this.twiitNotifUserName}} 
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                     {{convertDateTime}}
+                   </h3>
+                </div>
+                <div class="panel-body">
+                  {{this.twiitMessage}}
+                </div>
               </div>
-              <div class="panel-body">
-                {{this.twiitMessage}}
-              </div>
+            {{/each}}
+             <button class="btn btn-info pull-right" type="button">OK</button>
+          {{else}}
+            <div class="panel-info">
+              <p>Oooooooops</p>    
             </div>
-          {{/each}}
-           <button class="btn btn-info pull-right" type="button">OK</button>
-        {{else}}
-          <div class="panel-info">
-            <p>Oooooooops</p>    
-          </div>
-        {{/if}}
+          {{/if}}
+        </div>
       </div>
     </div>
-  </div>
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

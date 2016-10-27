@@ -193,12 +193,13 @@ install("iron:location");                                                       
 install("iron:controller");                                                                                    // 99
 install("iron:router");                                                                                        // 100
 install("fourseven:scss");                                                                                     // 101
-install("webapp");                                                                                             // 102
-install("livedata");                                                                                           // 103
-install("hot-code-push");                                                                                      // 104
-install("launch-screen");                                                                                      // 105
-install("autoupdate");                                                                                         // 106
-                                                                                                               // 107
+install("sacha:spin");                                                                                         // 102
+install("webapp");                                                                                             // 103
+install("livedata");                                                                                           // 104
+install("hot-code-push");                                                                                      // 105
+install("launch-screen");                                                                                      // 106
+install("autoupdate");                                                                                         // 107
+                                                                                                               // 108
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"process.js":["process",function(require,exports,module){

@@ -9,6 +9,11 @@ Template.userProfile.events({
   	},
   	'click #editProfile': function(){
   		window.location = "/editProfile/" + currentUserName;
+  	},
+  	'click .optionsUserProfile': function(event){
+  		//PRIMERO COGEMOS EL NOMBRE DE LA RED SOCIAL DE LA QUE VAMOS A MOSTRAR LA INFORMACION
+  		Session.set("SocialNetworkToShow", event.target.id);
+  		//A CONTINUACION SE ABRIRA EL MODAL CON LA INFORMACION DE LA RED SOCIAL
   	}
 });
 
@@ -22,7 +27,6 @@ Template.userProfile.helpers({
 	  	return dataUser;
 	},
 	'userImgFound': function(){
-		console.log(dataUser);
 		if(dataUser.userImg){
 			Meteor.call('findUserImg', dataUser.userImg, function(err, res) {
 				$('#imgCurrentUser').attr("src", res);
@@ -55,18 +59,29 @@ Template.userProfile.helpers({
   		var btnSocial = [];
 
   		if(dataUser.userFb){
-  			btnSocial.push("fa fa-facebook");
+  			var newData = new Object();
+  			newData.color = "primary";
+  			newData.class = "fa fa-facebook";
+  			newData.id = "Facebook";
+  			btnSocial.push(newData);
   		}
 
   		if(dataUser.userInsta){
-  			btnSocial.push("fa fa-instagram");
+  			var newData = new Object();
+  			newData.color = "warning";
+  			newData.class = "fa fa-instagram";
+  			newData.id = "Instagram";
+  			btnSocial.push(newData);
   		}
 
   		if(dataUser.userWhats){
-  			btnSocial.push("fa fa-whatsapp");
+  			var newData = new Object();
+  			newData.color = "success";
+  			newData.class = "fa fa-whatsapp";
+  			newData.id = "WhatsApp";
+  			btnSocial.push(newData);
   		}
-  		console.log(btnSocial);
-  		
+
   		return btnSocial;
   	}
 });
