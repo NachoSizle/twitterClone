@@ -27,13 +27,17 @@
                   <h5>@{{dataUserFound.userNameProfile}}</h5>
                 </div>
                 <div class="col-md-7 col-sm-7 col-xs-7 dropdown btnOptionsProfile">
-                  <button id="dropdownOptionsUser" class="btn btn-primary dropdown-toggle optionsUserProfile" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <span class="glyphicon glyphicon-option-vertical"></span>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownOptionsUser">
-                    <li><a href="#" id="editProfile">Editar Perfil</a></li>
-                    <li><a href="#" id="logout">Salir</a></li>
-                  </ul>
+                  {{# if showProfileOtherUser}}
+                    <button id="dropdownOptionsUser" class="btn btn-primary dropdown-toggle optionsUserProfile" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <span class="glyphicon glyphicon-option-vertical"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownOptionsUser">
+                      <li><a href="#" id="editProfile">Editar Perfil</a></li>
+                      <li><a href="#" id="removeProfile">Eliminar Perfil</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#" id="logout">Salir</a></li>
+                    </ul>
+                  {{/if}}
                   <div id="optionsUserProfile">
                     {{# each existsSocialNetwork}}  
                       <button type='button' id="btn{{this.id}}" class='btn btn-{{this.color}} btn-circle optionsUserProfile' data-toggle="modal" data-target="#dialog-showSocialNetwork">

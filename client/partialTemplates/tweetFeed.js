@@ -96,5 +96,4 @@ Template.tweetFeed.events({
         Session.set('idCurrentTwiit', this._id);
     }
   }
-
 });

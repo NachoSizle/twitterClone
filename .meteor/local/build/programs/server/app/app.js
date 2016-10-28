@@ -35,46 +35,63 @@ Router.route('/Profile/:username', {                                            
 	data: function data() {                                                                               // 11
 		var user = new Object();                                                                             // 12
 		user.name = this.params.username;                                                                    // 13
-		return user;                                                                                         // 14
-	}                                                                                                     // 15
+                                                                                                       //
+		var currentUser = Session.get('currentUser');                                                        // 15
+                                                                                                       //
+		Meteor.call('findUserData', user.name, function (err, res) {                                         // 17
+			Session.set('dataUserShowProfile', res);                                                            // 18
+		});                                                                                                  // 19
+                                                                                                       //
+		dataUserShowProfile = Session.get('dataUserShowProfile');                                            // 21
+                                                                                                       //
+		if (dataUserShowProfile) {                                                                           // 23
+			if (dataUserShowProfile.userNameProfile != currentUser) {                                           // 24
+				Session.set('showProfileOtherUser', false);                                                        // 25
+			} else {                                                                                            // 26
+				Session.set('showProfileOtherUser', true);                                                         // 27
+			}                                                                                                   // 28
+		}                                                                                                    // 29
+                                                                                                       //
+		return user;                                                                                         // 31
+	}                                                                                                     // 32
 });                                                                                                    // 9
-Router.route('/Notifications/:userName', {                                                             // 17
-	name: 'twiitPageNew',                                                                                 // 18
-	data: function data() {                                                                               // 19
-		var user = new Object();                                                                             // 20
-		user.name = this.params.userName;                                                                    // 21
-		return user;                                                                                         // 22
-	}                                                                                                     // 23
-});                                                                                                    // 17
+Router.route('/Notifications/:userName', {                                                             // 34
+	name: 'twiitPageNew',                                                                                 // 35
+	data: function data() {                                                                               // 36
+		var user = new Object();                                                                             // 37
+		user.name = this.params.userName;                                                                    // 38
+		return user;                                                                                         // 39
+	}                                                                                                     // 40
+});                                                                                                    // 34
 //Router.route('/Comments', {name: 'twiitCommentPage'});                                               //
 /*SE ACCEDE POR PATHFOR*/                                                                              //
-Router.route('/Comments/:_id', {                                                                       // 27
-	name: 'twiitCommentPage',                                                                             // 28
-	data: function data() {                                                                               // 29
-		var mode = Session.get('notificationsModeOn');                                                       // 30
-		var idTwiit = new Object();                                                                          // 31
-		idTwiit._id = this.params._id;                                                                       // 32
+Router.route('/Comments/:_id', {                                                                       // 44
+	name: 'twiitCommentPage',                                                                             // 45
+	data: function data() {                                                                               // 46
+		var mode = Session.get('notificationsModeOn');                                                       // 47
+		var idTwiit = new Object();                                                                          // 48
+		idTwiit._id = this.params._id;                                                                       // 49
                                                                                                        //
-		if (mode) {                                                                                          // 34
-			idTwiit.mode = mode;                                                                                // 35
-		}                                                                                                    // 36
+		if (mode) {                                                                                          // 51
+			idTwiit.mode = mode;                                                                                // 52
+		}                                                                                                    // 53
                                                                                                        //
-		return idTwiit;                                                                                      // 38
-	}                                                                                                     // 39
-});                                                                                                    // 27
-Router.route('/twiits/:_id', {                                                                         // 41
-	name: 'twiitPage',                                                                                    // 42
-	data: function data() {                                                                               // 43
-		return this.params;                                                                                  // 44
-	}                                                                                                     // 45
-});                                                                                                    // 41
+		return idTwiit;                                                                                      // 55
+	}                                                                                                     // 56
+});                                                                                                    // 44
+Router.route('/twiits/:_id', {                                                                         // 58
+	name: 'twiitPage',                                                                                    // 59
+	data: function data() {                                                                               // 60
+		return this.params;                                                                                  // 61
+	}                                                                                                     // 62
+});                                                                                                    // 58
                                                                                                        //
-Router.route('/editProfile/:userName', {                                                               // 48
-	name: 'editProfile',                                                                                  // 49
-	data: function data() {                                                                               // 50
-		return this.params.userName;                                                                         // 51
-	}                                                                                                     // 52
-});                                                                                                    // 48
+Router.route('/editProfile/:userName', {                                                               // 65
+	name: 'editProfile',                                                                                  // 66
+	data: function data() {                                                                               // 67
+		return this.params.userName;                                                                         // 68
+	}                                                                                                     // 69
+});                                                                                                    // 65
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){

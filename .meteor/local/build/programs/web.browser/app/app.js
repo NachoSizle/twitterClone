@@ -629,86 +629,92 @@ Template["tweetFeed"] = new Template("Template.tweetFeed", (function() {        
         class: "panel-heading"                                                                                      // 22
       }, HTML.Comment("Cabecera del twiit"), "\n                ", HTML.H3({                                        // 23
         class: "panel-title"                                                                                        // 24
-      }, "@", Blaze.View("lookup:..user", function() {                                                              // 25
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                         // 26
-      }), " \n                  ", HTML.SPAN({                                                                      // 27
-        class: "glyphicon glyphicon-triangle-right",                                                                // 28
-        "aria-hidden": "true"                                                                                       // 29
-      }), "\n                  ", Blaze.View("lookup:convertDateTime", function() {                                 // 30
-        return Spacebars.mustache(view.lookup("convertDateTime"));                                                  // 31
+      }, "\n                  ", HTML.A({                                                                           // 25
+        href: function() {                                                                                          // 26
+          return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                           // 27
+            username: Spacebars.dot(view.lookup("."), "user")                                                       // 28
+          }));                                                                                                      // 29
+        }                                                                                                           // 30
+      }, "@", Blaze.View("lookup:..user", function() {                                                              // 31
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                         // 32
+      })), " \n                  ", HTML.SPAN({                                                                     // 33
+        class: "glyphicon glyphicon-triangle-right",                                                                // 34
+        "aria-hidden": "true"                                                                                       // 35
+      }), "\n                  ", Blaze.View("lookup:convertDateTime", function() {                                 // 36
+        return Spacebars.mustache(view.lookup("convertDateTime"));                                                  // 37
       }), "\n                "), "\n              "), HTML.Comment("Cabecera del twiit"), "\n              ", HTML.DIV({
-        class: "panel-body"                                                                                         // 33
-      }, HTML.Comment("Contenido del twiit"), "\n                ", Blaze.View("lookup:..message", function() {     // 34
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                      // 35
-      }), "\n              "), HTML.Comment("Contenido del twiit"), "\n\n              ", HTML.DIV({                // 36
-        class: "btn-group",                                                                                         // 37
-        role: "group",                                                                                              // 38
-        id: "btnGroupInteractions"                                                                                  // 39
-      }, "\n                ", HTML.A({                                                                             // 40
-        class: "btn btn-secondary"                                                                                  // 41
-      }, "\n                  ", HTML.SPAN({                                                                        // 42
-        class: "glyphicon glyphicon-bullhorn"                                                                       // 43
-      }), "\n                "), "\n                ", Blaze.If(function() {                                        // 44
-        return Spacebars.call(view.lookup("numComment"));                                                           // 45
-      }, function() {                                                                                               // 46
-        return [ "\n                  ", HTML.A({                                                                   // 47
-          href: function() {                                                                                        // 48
-            return Spacebars.mustache(view.lookup("pathFor"), "twiitCommentPage", Spacebars.kw({                    // 49
-              _id: Spacebars.dot(view.lookup("."), "_id")                                                           // 50
-            }));                                                                                                    // 51
-          },                                                                                                        // 52
-          class: "btn"                                                                                              // 53
-        }, "\n                    ", HTML.SPAN({                                                                    // 54
-          class: "glyphicon glyphicon-comment"                                                                      // 55
-        }), "\n                    ", HTML.SPAN({                                                                   // 56
-          class: "badge badge-numFav "                                                                              // 57
-        }, Blaze.View("lookup:..numComment", function() {                                                           // 58
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numComment"));                                 // 59
-        })), "\n                  "), "\n                " ];                                                       // 60
-      }, function() {                                                                                               // 61
-        return [ "\n                  ", HTML.A({                                                                   // 62
-          id: "btnComm",                                                                                            // 63
-          class: "btn btn-secondary"                                                                                // 64
-        }, "\n                    ", HTML.SPAN({                                                                    // 65
-          class: "glyphicon glyphicon-comment"                                                                      // 66
-        }), "\n                "), "\n                " ];                                                          // 67
-      }), "\n                ", Blaze.If(function() {                                                               // 68
-        return Spacebars.call(view.lookup("numFav"));                                                               // 69
-      }, function() {                                                                                               // 70
-        return [ "\n                ", HTML.A({                                                                     // 71
-          id: "btnFav",                                                                                             // 72
-          class: "btn btn-secondary"                                                                                // 73
-        }, "\n                  ", HTML.SPAN({                                                                      // 74
-          id: function() {                                                                                          // 75
-            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 76
-          },                                                                                                        // 77
-          class: function() {                                                                                       // 78
-            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 79
-          }                                                                                                         // 80
-        }), "\n                  ", HTML.SPAN({                                                                     // 81
-          class: "badge badge-numFav"                                                                               // 82
-        }, Blaze.View("lookup:..numFav", function() {                                                               // 83
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numFav"));                                     // 84
-        })), "\n                "), "\n                " ];                                                         // 85
-      }, function() {                                                                                               // 86
-        return [ "\n                  ", HTML.A({                                                                   // 87
-          id: "btnFav",                                                                                             // 88
-          class: "btn btn-secondary"                                                                                // 89
-        }, "\n                  ", HTML.SPAN({                                                                      // 90
-          id: function() {                                                                                          // 91
-            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 92
-          },                                                                                                        // 93
-          class: function() {                                                                                       // 94
-            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 95
-          }                                                                                                         // 96
-        }), "\n                "), "\n                " ];                                                          // 97
+        class: "panel-body"                                                                                         // 39
+      }, HTML.Comment("Contenido del twiit"), "\n                ", Blaze.View("lookup:..message", function() {     // 40
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                      // 41
+      }), "\n              "), HTML.Comment("Contenido del twiit"), "\n\n              ", HTML.DIV({                // 42
+        class: "btn-group",                                                                                         // 43
+        role: "group",                                                                                              // 44
+        id: "btnGroupInteractions"                                                                                  // 45
+      }, "\n                ", HTML.A({                                                                             // 46
+        class: "btn btn-secondary"                                                                                  // 47
+      }, "\n                  ", HTML.SPAN({                                                                        // 48
+        class: "glyphicon glyphicon-bullhorn"                                                                       // 49
+      }), "\n                "), "\n                ", Blaze.If(function() {                                        // 50
+        return Spacebars.call(view.lookup("numComment"));                                                           // 51
+      }, function() {                                                                                               // 52
+        return [ "\n                  ", HTML.A({                                                                   // 53
+          href: function() {                                                                                        // 54
+            return Spacebars.mustache(view.lookup("pathFor"), "twiitCommentPage", Spacebars.kw({                    // 55
+              _id: Spacebars.dot(view.lookup("."), "_id")                                                           // 56
+            }));                                                                                                    // 57
+          },                                                                                                        // 58
+          class: "btn"                                                                                              // 59
+        }, "\n                    ", HTML.SPAN({                                                                    // 60
+          class: "glyphicon glyphicon-comment"                                                                      // 61
+        }), "\n                    ", HTML.SPAN({                                                                   // 62
+          class: "badge badge-numFav "                                                                              // 63
+        }, Blaze.View("lookup:..numComment", function() {                                                           // 64
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numComment"));                                 // 65
+        })), "\n                  "), "\n                " ];                                                       // 66
+      }, function() {                                                                                               // 67
+        return [ "\n                  ", HTML.A({                                                                   // 68
+          id: "btnComm",                                                                                            // 69
+          class: "btn btn-secondary"                                                                                // 70
+        }, "\n                    ", HTML.SPAN({                                                                    // 71
+          class: "glyphicon glyphicon-comment"                                                                      // 72
+        }), "\n                "), "\n                " ];                                                          // 73
+      }), "\n                ", Blaze.If(function() {                                                               // 74
+        return Spacebars.call(view.lookup("numFav"));                                                               // 75
+      }, function() {                                                                                               // 76
+        return [ "\n                ", HTML.A({                                                                     // 77
+          id: "btnFav",                                                                                             // 78
+          class: "btn btn-secondary"                                                                                // 79
+        }, "\n                  ", HTML.SPAN({                                                                      // 80
+          id: function() {                                                                                          // 81
+            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 82
+          },                                                                                                        // 83
+          class: function() {                                                                                       // 84
+            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 85
+          }                                                                                                         // 86
+        }), "\n                  ", HTML.SPAN({                                                                     // 87
+          class: "badge badge-numFav"                                                                               // 88
+        }, Blaze.View("lookup:..numFav", function() {                                                               // 89
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numFav"));                                     // 90
+        })), "\n                "), "\n                " ];                                                         // 91
+      }, function() {                                                                                               // 92
+        return [ "\n                  ", HTML.A({                                                                   // 93
+          id: "btnFav",                                                                                             // 94
+          class: "btn btn-secondary"                                                                                // 95
+        }, "\n                  ", HTML.SPAN({                                                                      // 96
+          id: function() {                                                                                          // 97
+            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 98
+          },                                                                                                        // 99
+          class: function() {                                                                                       // 100
+            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 101
+          }                                                                                                         // 102
+        }), "\n                "), "\n                " ];                                                          // 103
       }), "\n              "), "\n            "), HTML.Comment("Contenido de la cabecera + el mensaje del twiit"), "\n          " ];
-    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                            // 99
-  }, function() {                                                                                                   // 100
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 101
-  });                                                                                                               // 102
-}));                                                                                                                // 103
-                                                                                                                    // 104
+    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                            // 105
+  }, function() {                                                                                                   // 106
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 107
+  });                                                                                                               // 108
+}));                                                                                                                // 109
+                                                                                                                    // 110
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.tweetFeedProfile.js":function(){
@@ -740,80 +746,83 @@ Template["tweetFeedProfile"] = new Template("Template.tweetFeedProfile", (functi
       }, HTML.Comment("Contenido de la cabecera + el mensaje del twiit"), "\n              ", HTML.DIV({            // 19
         class: "panel-heading"                                                                                      // 20
       }, HTML.Comment("Cabecera del twiit"), "\n                ", HTML.H3({                                        // 21
-        class: "panel-title"                                                                                        // 22
-      }, "@", Blaze.View("lookup:..user", function() {                                                              // 23
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                         // 24
-      }), " \n                  ", HTML.SPAN({                                                                      // 25
-        class: "glyphicon glyphicon-triangle-right",                                                                // 26
-        "aria-hidden": "true"                                                                                       // 27
-      }), "\n                  ", Blaze.View("lookup:convertDateTime", function() {                                 // 28
-        return Spacebars.mustache(view.lookup("convertDateTime"));                                                  // 29
+        class: "panel-title userNameProfile",                                                                       // 22
+        id: function() {                                                                                            // 23
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                       // 24
+        }                                                                                                           // 25
+      }, "@", Blaze.View("lookup:..user", function() {                                                              // 26
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                         // 27
+      }), "\n                  ", HTML.SPAN({                                                                       // 28
+        class: "glyphicon glyphicon-triangle-right",                                                                // 29
+        "aria-hidden": "true"                                                                                       // 30
+      }), "\n                  ", Blaze.View("lookup:convertDateTime", function() {                                 // 31
+        return Spacebars.mustache(view.lookup("convertDateTime"));                                                  // 32
       }), "\n                "), "\n              "), HTML.Comment("Cabecera del twiit"), "\n              ", HTML.DIV({
-        class: "panel-body"                                                                                         // 31
-      }, HTML.Comment("Contenido del twiit"), "\n                ", Blaze.View("lookup:..message", function() {     // 32
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                      // 33
-      }), "\n              "), HTML.Comment("Contenido del twiit"), "\n\n              ", HTML.DIV({                // 34
-        class: "btn-group",                                                                                         // 35
-        role: "group",                                                                                              // 36
-        id: "btnGroupInteractions"                                                                                  // 37
-      }, "\n                ", HTML.A({                                                                             // 38
-        class: "btn btn-secondary"                                                                                  // 39
-      }, "\n                  ", HTML.SPAN({                                                                        // 40
-        class: "glyphicon glyphicon-bullhorn"                                                                       // 41
-      }), "\n                "), "\n                ", Blaze.If(function() {                                        // 42
-        return Spacebars.call(view.lookup("numComment"));                                                           // 43
-      }, function() {                                                                                               // 44
-        return [ "\n                  ", HTML.A({                                                                   // 45
-          href: function() {                                                                                        // 46
-            return Spacebars.mustache(view.lookup("pathFor"), "twiitCommentPage", Spacebars.kw({                    // 47
-              _id: Spacebars.dot(view.lookup("."), "_id")                                                           // 48
-            }));                                                                                                    // 49
-          },                                                                                                        // 50
-          class: "btn btn-secondary"                                                                                // 51
-        }, "\n                    ", HTML.SPAN({                                                                    // 52
-          class: "glyphicon glyphicon-comment"                                                                      // 53
-        }), "\n                    ", HTML.SPAN({                                                                   // 54
-          class: "badge-numFav badge"                                                                               // 55
-        }, Blaze.View("lookup:..numComment", function() {                                                           // 56
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numComment"));                                 // 57
-        })), "\n                  "), "\n                " ];                                                       // 58
-      }), "\n                ", Blaze.If(function() {                                                               // 59
-        return Spacebars.call(view.lookup("numFav"));                                                               // 60
-      }, function() {                                                                                               // 61
-        return [ "\n                  ", HTML.A({                                                                   // 62
-          id: "btnFav",                                                                                             // 63
-          class: "btn btn-secondary"                                                                                // 64
-        }, "\n                    ", HTML.SPAN({                                                                    // 65
-          id: function() {                                                                                          // 66
-            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 67
-          },                                                                                                        // 68
-          class: function() {                                                                                       // 69
-            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 70
-          }                                                                                                         // 71
-        }), "\n                    ", HTML.SPAN({                                                                   // 72
-          class: "badge badge-numFav"                                                                               // 73
-        }, Blaze.View("lookup:..numFav", function() {                                                               // 74
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numFav"));                                     // 75
-        })), "\n                  "), "\n                " ];                                                       // 76
-      }, function() {                                                                                               // 77
-        return [ "\n                  ", HTML.A({                                                                   // 78
-          id: "btnFav",                                                                                             // 79
-          class: "btn btn-secondary"                                                                                // 80
-        }, "\n                    ", HTML.SPAN({                                                                    // 81
-          id: function() {                                                                                          // 82
-            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 83
-          },                                                                                                        // 84
-          class: function() {                                                                                       // 85
-            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 86
-          }                                                                                                         // 87
-        }), "\n                  "), "\n                " ];                                                        // 88
+        class: "panel-body"                                                                                         // 34
+      }, HTML.Comment("Contenido del twiit"), "\n                ", Blaze.View("lookup:..message", function() {     // 35
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                      // 36
+      }), "\n              "), HTML.Comment("Contenido del twiit"), "\n\n              ", HTML.DIV({                // 37
+        class: "btn-group",                                                                                         // 38
+        role: "group",                                                                                              // 39
+        id: "btnGroupInteractions"                                                                                  // 40
+      }, "\n                ", HTML.A({                                                                             // 41
+        class: "btn btn-secondary"                                                                                  // 42
+      }, "\n                  ", HTML.SPAN({                                                                        // 43
+        class: "glyphicon glyphicon-bullhorn"                                                                       // 44
+      }), "\n                "), "\n                ", Blaze.If(function() {                                        // 45
+        return Spacebars.call(view.lookup("numComment"));                                                           // 46
+      }, function() {                                                                                               // 47
+        return [ "\n                  ", HTML.A({                                                                   // 48
+          href: function() {                                                                                        // 49
+            return Spacebars.mustache(view.lookup("pathFor"), "twiitCommentPage", Spacebars.kw({                    // 50
+              _id: Spacebars.dot(view.lookup("."), "_id")                                                           // 51
+            }));                                                                                                    // 52
+          },                                                                                                        // 53
+          class: "btn btn-secondary"                                                                                // 54
+        }, "\n                    ", HTML.SPAN({                                                                    // 55
+          class: "glyphicon glyphicon-comment"                                                                      // 56
+        }), "\n                    ", HTML.SPAN({                                                                   // 57
+          class: "badge-numFav badge"                                                                               // 58
+        }, Blaze.View("lookup:..numComment", function() {                                                           // 59
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numComment"));                                 // 60
+        })), "\n                  "), "\n                " ];                                                       // 61
+      }), "\n                ", Blaze.If(function() {                                                               // 62
+        return Spacebars.call(view.lookup("numFav"));                                                               // 63
+      }, function() {                                                                                               // 64
+        return [ "\n                  ", HTML.A({                                                                   // 65
+          id: "btnFav",                                                                                             // 66
+          class: "btn btn-secondary"                                                                                // 67
+        }, "\n                    ", HTML.SPAN({                                                                    // 68
+          id: function() {                                                                                          // 69
+            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 70
+          },                                                                                                        // 71
+          class: function() {                                                                                       // 72
+            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 73
+          }                                                                                                         // 74
+        }), "\n                    ", HTML.SPAN({                                                                   // 75
+          class: "badge badge-numFav"                                                                               // 76
+        }, Blaze.View("lookup:..numFav", function() {                                                               // 77
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numFav"));                                     // 78
+        })), "\n                  "), "\n                " ];                                                       // 79
+      }, function() {                                                                                               // 80
+        return [ "\n                  ", HTML.A({                                                                   // 81
+          id: "btnFav",                                                                                             // 82
+          class: "btn btn-secondary"                                                                                // 83
+        }, "\n                    ", HTML.SPAN({                                                                    // 84
+          id: function() {                                                                                          // 85
+            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 86
+          },                                                                                                        // 87
+          class: function() {                                                                                       // 88
+            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 89
+          }                                                                                                         // 90
+        }), "\n                  "), "\n                " ];                                                        // 91
       }), "\n              "), "\n            "), HTML.Comment("Contenido de la cabecera + el mensaje del twiit"), "\n          " ];
-    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                            // 90
-  }, function() {                                                                                                   // 91
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 92
-  });                                                                                                               // 93
-}));                                                                                                                // 94
-                                                                                                                    // 95
+    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                            // 93
+  }, function() {                                                                                                   // 94
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 95
+  });                                                                                                               // 96
+}));                                                                                                                // 97
+                                                                                                                    // 98
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.twiitCommentPage.js":function(){
@@ -846,130 +855,136 @@ Template["twiitCommentPage"] = new Template("Template.twiitCommentPage", (functi
         class: "panel-heading"                                                                                      // 20
       }, HTML.Comment("Cabecera del twiit"), "\n                ", HTML.H3({                                        // 21
         class: "panel-title"                                                                                        // 22
-      }, "@", Blaze.View("lookup:..user", function() {                                                              // 23
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                         // 24
-      }), " \n                  ", HTML.SPAN({                                                                      // 25
-        class: "glyphicon glyphicon-triangle-right",                                                                // 26
-        "aria-hidden": "true"                                                                                       // 27
-      }), "\n                  ", Blaze.View("lookup:convertDateTime", function() {                                 // 28
-        return Spacebars.mustache(view.lookup("convertDateTime"));                                                  // 29
+      }, "\n                  ", HTML.A({                                                                           // 23
+        href: function() {                                                                                          // 24
+          return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                           // 25
+            username: Spacebars.dot(view.lookup("."), "user")                                                       // 26
+          }));                                                                                                      // 27
+        }                                                                                                           // 28
+      }, "@", Blaze.View("lookup:..user", function() {                                                              // 29
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                         // 30
+      })), " \n                  ", HTML.SPAN({                                                                     // 31
+        class: "glyphicon glyphicon-triangle-right",                                                                // 32
+        "aria-hidden": "true"                                                                                       // 33
+      }), "\n                  ", Blaze.View("lookup:convertDateTime", function() {                                 // 34
+        return Spacebars.mustache(view.lookup("convertDateTime"));                                                  // 35
       }), "\n                "), "\n              "), HTML.Comment("Cabecera del twiit"), "\n              ", HTML.DIV({
-        class: "panel-body"                                                                                         // 31
-      }, HTML.Comment("Contenido del twiit"), "\n                ", Blaze.View("lookup:..message", function() {     // 32
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                      // 33
-      }), "\n              "), HTML.Comment("Contenido del twiit"), "\n\n              ", HTML.DIV({                // 34
-        class: "btn-group",                                                                                         // 35
-        role: "group",                                                                                              // 36
-        id: "btnGroupInteractions"                                                                                  // 37
-      }, "\n                ", HTML.A({                                                                             // 38
-        class: "btn btn-secondary"                                                                                  // 39
-      }, "\n                  ", HTML.SPAN({                                                                        // 40
-        class: "glyphicon glyphicon-bullhorn"                                                                       // 41
-      }), "\n                "), "\n\n                ", HTML.A({                                                   // 42
-        id: "btnComm",                                                                                              // 43
-        class: "btn btn-secondary"                                                                                  // 44
-      }, "\n                  ", HTML.SPAN({                                                                        // 45
-        class: "glyphicon glyphicon-comment"                                                                        // 46
-      }), "\n                  ", HTML.SPAN({                                                                       // 47
-        class: "badge-numFav badge"                                                                                 // 48
-      }, Blaze.View("lookup:..numComment", function() {                                                             // 49
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numComment"));                                   // 50
-      })), "\n                "), "\n\n                ", Blaze.If(function() {                                     // 51
-        return Spacebars.call(view.lookup("numFav"));                                                               // 52
-      }, function() {                                                                                               // 53
-        return [ "\n                  ", HTML.A({                                                                   // 54
-          id: "btnFav",                                                                                             // 55
-          class: "btn btn-secondary"                                                                                // 56
-        }, "\n                    ", HTML.SPAN({                                                                    // 57
-          id: function() {                                                                                          // 58
-            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 59
-          },                                                                                                        // 60
-          class: function() {                                                                                       // 61
-            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 62
-          }                                                                                                         // 63
-        }), "\n                    ", HTML.SPAN({                                                                   // 64
-          class: "badge badge-numFav"                                                                               // 65
-        }, Blaze.View("lookup:..numFav", function() {                                                               // 66
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numFav"));                                     // 67
-        })), "\n                  "), "\n                " ];                                                       // 68
-      }, function() {                                                                                               // 69
-        return [ "\n                  ", HTML.A({                                                                   // 70
-          id: "btnFav",                                                                                             // 71
-          class: "btn btn-secondary"                                                                                // 72
-        }, "\n                    ", HTML.SPAN({                                                                    // 73
-          id: function() {                                                                                          // 74
-            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 75
-          },                                                                                                        // 76
-          class: function() {                                                                                       // 77
-            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 78
-          }                                                                                                         // 79
-        }), "\n                  "), "\n                " ];                                                        // 80
+        class: "panel-body"                                                                                         // 37
+      }, HTML.Comment("Contenido del twiit"), "\n                ", Blaze.View("lookup:..message", function() {     // 38
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                      // 39
+      }), "\n              "), HTML.Comment("Contenido del twiit"), "\n\n              ", HTML.DIV({                // 40
+        class: "btn-group",                                                                                         // 41
+        role: "group",                                                                                              // 42
+        id: "btnGroupInteractions"                                                                                  // 43
+      }, "\n                ", HTML.A({                                                                             // 44
+        class: "btn btn-secondary"                                                                                  // 45
+      }, "\n                  ", HTML.SPAN({                                                                        // 46
+        class: "glyphicon glyphicon-bullhorn"                                                                       // 47
+      }), "\n                "), "\n\n                ", HTML.A({                                                   // 48
+        id: "btnComm",                                                                                              // 49
+        class: "btn btn-secondary"                                                                                  // 50
+      }, "\n                  ", HTML.SPAN({                                                                        // 51
+        class: "glyphicon glyphicon-comment"                                                                        // 52
+      }), "\n                  ", HTML.SPAN({                                                                       // 53
+        class: "badge-numFav badge"                                                                                 // 54
+      }, Blaze.View("lookup:..numComment", function() {                                                             // 55
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numComment"));                                   // 56
+      })), "\n                "), "\n\n                ", Blaze.If(function() {                                     // 57
+        return Spacebars.call(view.lookup("numFav"));                                                               // 58
+      }, function() {                                                                                               // 59
+        return [ "\n                  ", HTML.A({                                                                   // 60
+          id: "btnFav",                                                                                             // 61
+          class: "btn btn-secondary"                                                                                // 62
+        }, "\n                    ", HTML.SPAN({                                                                    // 63
+          id: function() {                                                                                          // 64
+            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 65
+          },                                                                                                        // 66
+          class: function() {                                                                                       // 67
+            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 68
+          }                                                                                                         // 69
+        }), "\n                    ", HTML.SPAN({                                                                   // 70
+          class: "badge badge-numFav"                                                                               // 71
+        }, Blaze.View("lookup:..numFav", function() {                                                               // 72
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numFav"));                                     // 73
+        })), "\n                  "), "\n                " ];                                                       // 74
+      }, function() {                                                                                               // 75
+        return [ "\n                  ", HTML.A({                                                                   // 76
+          id: "btnFav",                                                                                             // 77
+          class: "btn btn-secondary"                                                                                // 78
+        }, "\n                    ", HTML.SPAN({                                                                    // 79
+          id: function() {                                                                                          // 80
+            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 81
+          },                                                                                                        // 82
+          class: function() {                                                                                       // 83
+            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 84
+          }                                                                                                         // 85
+        }), "\n                  "), "\n                " ];                                                        // 86
       }), "\n              "), "\n            "), HTML.Comment("Contenido de la cabecera + el mensaje del twiit"), "\n          " ];
-    }), "\n          ", Blaze.Each(function() {                                                                     // 82
-      return Spacebars.call(view.lookup("tweetThatCommentMessage"));                                                // 83
-    }, function() {                                                                                                 // 84
-      return [ "\n            ", HTML.DIV({                                                                         // 85
-        class: "panel panel-info"                                                                                   // 86
-      }, HTML.Comment("Contenido de la cabecera + el mensaje del twiit"), "\n              ", HTML.DIV({            // 87
-        class: "panel-heading"                                                                                      // 88
-      }, HTML.Comment("Cabecera del twiit"), "\n                ", HTML.H3({                                        // 89
-        class: "panel-title"                                                                                        // 90
-      }, "@", Blaze.View("lookup:..user", function() {                                                              // 91
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                         // 92
-      }), " \n                  ", HTML.SPAN({                                                                      // 93
-        class: "glyphicon glyphicon-triangle-right",                                                                // 94
-        "aria-hidden": "true"                                                                                       // 95
-      }), "\n                  ", Blaze.View("lookup:convertDateTime", function() {                                 // 96
-        return Spacebars.mustache(view.lookup("convertDateTime"));                                                  // 97
+    }), "\n          ", Blaze.Each(function() {                                                                     // 88
+      return Spacebars.call(view.lookup("tweetThatCommentMessage"));                                                // 89
+    }, function() {                                                                                                 // 90
+      return [ "\n            ", HTML.DIV({                                                                         // 91
+        class: "panel panel-info"                                                                                   // 92
+      }, HTML.Comment("Contenido de la cabecera + el mensaje del twiit"), "\n              ", HTML.DIV({            // 93
+        class: "panel-heading"                                                                                      // 94
+      }, HTML.Comment("Cabecera del twiit"), "\n                ", HTML.H3({                                        // 95
+        class: "panel-title"                                                                                        // 96
+      }, "@", Blaze.View("lookup:..user", function() {                                                              // 97
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "user"));                                         // 98
+      }), " \n                  ", HTML.SPAN({                                                                      // 99
+        class: "glyphicon glyphicon-triangle-right",                                                                // 100
+        "aria-hidden": "true"                                                                                       // 101
+      }), "\n                  ", Blaze.View("lookup:convertDateTime", function() {                                 // 102
+        return Spacebars.mustache(view.lookup("convertDateTime"));                                                  // 103
       }), "\n                "), "\n              "), HTML.Comment("Cabecera del twiit"), "\n              ", HTML.DIV({
-        class: "panel-body"                                                                                         // 99
-      }, HTML.Comment("Contenido del twiit"), "\n                ", Blaze.View("lookup:..message", function() {     // 100
-        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                      // 101
-      }), "\n              "), HTML.Comment("Contenido del twiit"), "\n\n              ", HTML.DIV({                // 102
-        class: "btn-group",                                                                                         // 103
-        role: "group",                                                                                              // 104
-        id: "btnGroupInteractions"                                                                                  // 105
-      }, "\n                ", HTML.A({                                                                             // 106
-        class: "btn btn-secondary"                                                                                  // 107
-      }, "\n                  ", HTML.SPAN({                                                                        // 108
-        class: "glyphicon glyphicon-bullhorn"                                                                       // 109
-      }), "\n                "), "\n                ", Blaze.If(function() {                                        // 110
-        return Spacebars.call(view.lookup("numFav"));                                                               // 111
-      }, function() {                                                                                               // 112
-        return [ "\n                ", HTML.A({                                                                     // 113
-          id: "btnFav",                                                                                             // 114
-          class: "btn btn-secondary"                                                                                // 115
-        }, "\n                  ", HTML.SPAN({                                                                      // 116
-          id: function() {                                                                                          // 117
-            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 118
-          },                                                                                                        // 119
-          class: function() {                                                                                       // 120
-            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 121
-          }                                                                                                         // 122
-        }), "\n                  ", HTML.SPAN({                                                                     // 123
-          class: "badge badge-numFav"                                                                               // 124
-        }, Blaze.View("lookup:..numFav", function() {                                                               // 125
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numFav"));                                     // 126
-        })), "\n                "), "\n                " ];                                                         // 127
-      }, function() {                                                                                               // 128
-        return [ "\n                  ", HTML.A({                                                                   // 129
-          id: "btnFav",                                                                                             // 130
-          class: "btn btn-secondary"                                                                                // 131
-        }, "\n                  ", HTML.SPAN({                                                                      // 132
-          id: function() {                                                                                          // 133
-            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 134
-          },                                                                                                        // 135
-          class: function() {                                                                                       // 136
-            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 137
-          }                                                                                                         // 138
-        }), "\n                "), "\n                " ];                                                          // 139
+        class: "panel-body"                                                                                         // 105
+      }, HTML.Comment("Contenido del twiit"), "\n                ", Blaze.View("lookup:..message", function() {     // 106
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "message"));                                      // 107
+      }), "\n              "), HTML.Comment("Contenido del twiit"), "\n\n              ", HTML.DIV({                // 108
+        class: "btn-group",                                                                                         // 109
+        role: "group",                                                                                              // 110
+        id: "btnGroupInteractions"                                                                                  // 111
+      }, "\n                ", HTML.A({                                                                             // 112
+        class: "btn btn-secondary"                                                                                  // 113
+      }, "\n                  ", HTML.SPAN({                                                                        // 114
+        class: "glyphicon glyphicon-bullhorn"                                                                       // 115
+      }), "\n                "), "\n                ", Blaze.If(function() {                                        // 116
+        return Spacebars.call(view.lookup("numFav"));                                                               // 117
+      }, function() {                                                                                               // 118
+        return [ "\n                ", HTML.A({                                                                     // 119
+          id: "btnFav",                                                                                             // 120
+          class: "btn btn-secondary"                                                                                // 121
+        }, "\n                  ", HTML.SPAN({                                                                      // 122
+          id: function() {                                                                                          // 123
+            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 124
+          },                                                                                                        // 125
+          class: function() {                                                                                       // 126
+            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 127
+          }                                                                                                         // 128
+        }), "\n                  ", HTML.SPAN({                                                                     // 129
+          class: "badge badge-numFav"                                                                               // 130
+        }, Blaze.View("lookup:..numFav", function() {                                                               // 131
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "numFav"));                                     // 132
+        })), "\n                "), "\n                " ];                                                         // 133
+      }, function() {                                                                                               // 134
+        return [ "\n                  ", HTML.A({                                                                   // 135
+          id: "btnFav",                                                                                             // 136
+          class: "btn btn-secondary"                                                                                // 137
+        }, "\n                  ", HTML.SPAN({                                                                      // 138
+          id: function() {                                                                                          // 139
+            return Spacebars.mustache(view.lookup("idToFavBtn"));                                                   // 140
+          },                                                                                                        // 141
+          class: function() {                                                                                       // 142
+            return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                   // 143
+          }                                                                                                         // 144
+        }), "\n                "), "\n                " ];                                                          // 145
       }), "\n              "), "\n            "), HTML.Comment("Contenido de la cabecera + el mensaje del twiit"), "\n          " ];
-    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                            // 141
-  }, function() {                                                                                                   // 142
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 143
-  });                                                                                                               // 144
-}));                                                                                                                // 145
-                                                                                                                    // 146
+    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                            // 147
+  }, function() {                                                                                                   // 148
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 149
+  });                                                                                                               // 150
+}));                                                                                                                // 151
+                                                                                                                    // 152
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.twiitPage.js":function(){
@@ -1068,95 +1083,101 @@ Template["twiitPageNew"] = new Template("Template.twiitPageNew", (function() {  
           class: "panel-heading"                                                                                    // 25
         }, "\n                  ", HTML.H3({                                                                        // 26
           class: "panel-title"                                                                                      // 27
-        }, "@", Blaze.View("lookup:..actorNotif", function() {                                                      // 28
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                 // 29
-        }), " \n                    ", HTML.SPAN({                                                                  // 30
-          class: "glyphicon glyphicon-triangle-right",                                                              // 31
-          "aria-hidden": "true"                                                                                     // 32
-        }), "\n                     ", Blaze.View("lookup:convertDateTime", function() {                            // 33
-          return Spacebars.mustache(view.lookup("convertDateTime"));                                                // 34
-        }), "\n                   "), "\n                "), "\n                ", HTML.DIV({                       // 35
-          class: "panel-body"                                                                                       // 36
-        }, "\n                  ", Blaze.View("lookup:..twiitMessage", function() {                                 // 37
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "twiitMessage"));                               // 38
-        }), "\n                "), "\n                ", HTML.DIV({                                                 // 39
-          class: "btn-group",                                                                                       // 40
-          role: "group",                                                                                            // 41
-          id: "btnGroupInteractions"                                                                                // 42
-        }, "\n                  ", HTML.A({                                                                         // 43
-          class: "btn btn-secondary"                                                                                // 44
-        }, "\n                    ", HTML.SPAN({                                                                    // 45
-          class: "glyphicon glyphicon-bullhorn"                                                                     // 46
-        }), "\n                  "), "\n                  ", Blaze.If(function() {                                  // 47
-          return Spacebars.call(view.lookup("findNumComment"));                                                     // 48
-        }, function() {                                                                                             // 49
-          return [ "\n                    ", HTML.A({                                                               // 50
-            href: function() {                                                                                      // 51
-              return Spacebars.mustache(view.lookup("pathFor"), "twiitCommentPage", Spacebars.kw({                  // 52
-                _id: Spacebars.dot(view.lookup("."), "_id")                                                         // 53
-              }));                                                                                                  // 54
-            },                                                                                                      // 55
-            class: "btn btn-secondary"                                                                              // 56
-          }, "\n                      ", HTML.SPAN({                                                                // 57
-            class: "glyphicon glyphicon-comment"                                                                    // 58
-          }), "\n                      ", HTML.SPAN({                                                               // 59
-            class: "badge-numFav badge"                                                                             // 60
-          }, Blaze.View("lookup:numComment", function() {                                                           // 61
-            return Spacebars.mustache(view.lookup("numComment"));                                                   // 62
-          })), "\n                    "), "\n                  " ];                                                 // 63
-        }, function() {                                                                                             // 64
-          return [ "\n                    ", HTML.A({                                                               // 65
-            id: "btnComm",                                                                                          // 66
-            class: "btn btn-secondary"                                                                              // 67
-          }, "\n                    ", HTML.SPAN({                                                                  // 68
-            class: "glyphicon glyphicon-comment"                                                                    // 69
-          }), "\n                  "), "\n                  " ];                                                    // 70
-        }), "\n                  ", Blaze.If(function() {                                                           // 71
-          return Spacebars.call(view.lookup("numFavorite"));                                                        // 72
-        }, function() {                                                                                             // 73
-          return [ "\n                    ", HTML.A({                                                               // 74
-            id: "btnFav",                                                                                           // 75
-            class: "btn btn-secondary"                                                                              // 76
-          }, "\n                      ", HTML.SPAN({                                                                // 77
-            id: function() {                                                                                        // 78
-              return Spacebars.mustache(view.lookup("idToFavBtn"));                                                 // 79
-            },                                                                                                      // 80
-            class: function() {                                                                                     // 81
-              return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                 // 82
-            }                                                                                                       // 83
-          }), "\n                      ", HTML.SPAN({                                                               // 84
-            class: "badge badge-numFav"                                                                             // 85
-          }, Blaze.View("lookup:numFav", function() {                                                               // 86
-            return Spacebars.mustache(view.lookup("numFav"));                                                       // 87
-          })), "\n                    "), "\n                  " ];                                                 // 88
-        }, function() {                                                                                             // 89
-          return [ "\n                    ", HTML.A({                                                               // 90
-            id: "btnFav",                                                                                           // 91
-            class: "btn btn-secondary"                                                                              // 92
-          }, "\n                      ", HTML.SPAN({                                                                // 93
-            id: function() {                                                                                        // 94
-              return Spacebars.mustache(view.lookup("idToFavBtn"));                                                 // 95
-            },                                                                                                      // 96
-            class: function() {                                                                                     // 97
-              return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                 // 98
-            }                                                                                                       // 99
-          }), "\n                    "), "\n                  " ];                                                  // 100
-        }), "\n                "), "\n              "), "\n            " ];                                         // 101
-      }), "\n             ", HTML.BUTTON({                                                                          // 102
-        id: "btnDismissNotif",                                                                                      // 103
-        class: "btn btn-info pull-right",                                                                           // 104
-        type: "button"                                                                                              // 105
-      }, "OK"), "\n          " ];                                                                                   // 106
-    }, function() {                                                                                                 // 107
-      return [ "\n            ", HTML.DIV({                                                                         // 108
-        class: "panel-info"                                                                                         // 109
-      }, "\n              ", HTML.P("Oooooooops Twiit Page New"), "    \n            "), "\n          " ];          // 110
-    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                            // 111
-  }, function() {                                                                                                   // 112
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 113
-  }) ];                                                                                                             // 114
-}));                                                                                                                // 115
-                                                                                                                    // 116
+        }, "\n                    ", HTML.A({                                                                       // 28
+          href: function() {                                                                                        // 29
+            return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                         // 30
+              username: Spacebars.dot(view.lookup("."), "user")                                                     // 31
+            }));                                                                                                    // 32
+          }                                                                                                         // 33
+        }, "@", Blaze.View("lookup:..actorNotif", function() {                                                      // 34
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                 // 35
+        })), " \n                    ", HTML.SPAN({                                                                 // 36
+          class: "glyphicon glyphicon-triangle-right",                                                              // 37
+          "aria-hidden": "true"                                                                                     // 38
+        }), "\n                     ", Blaze.View("lookup:convertDateTime", function() {                            // 39
+          return Spacebars.mustache(view.lookup("convertDateTime"));                                                // 40
+        }), "\n                   "), "\n                "), "\n                ", HTML.DIV({                       // 41
+          class: "panel-body"                                                                                       // 42
+        }, "\n                  ", Blaze.View("lookup:..twiitMessage", function() {                                 // 43
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "twiitMessage"));                               // 44
+        }), "\n                "), "\n                ", HTML.DIV({                                                 // 45
+          class: "btn-group",                                                                                       // 46
+          role: "group",                                                                                            // 47
+          id: "btnGroupInteractions"                                                                                // 48
+        }, "\n                  ", HTML.A({                                                                         // 49
+          class: "btn btn-secondary"                                                                                // 50
+        }, "\n                    ", HTML.SPAN({                                                                    // 51
+          class: "glyphicon glyphicon-bullhorn"                                                                     // 52
+        }), "\n                  "), "\n                  ", Blaze.If(function() {                                  // 53
+          return Spacebars.call(view.lookup("findNumComment"));                                                     // 54
+        }, function() {                                                                                             // 55
+          return [ "\n                    ", HTML.A({                                                               // 56
+            href: function() {                                                                                      // 57
+              return Spacebars.mustache(view.lookup("pathFor"), "twiitCommentPage", Spacebars.kw({                  // 58
+                _id: Spacebars.dot(view.lookup("."), "_id")                                                         // 59
+              }));                                                                                                  // 60
+            },                                                                                                      // 61
+            class: "btn btn-secondary"                                                                              // 62
+          }, "\n                      ", HTML.SPAN({                                                                // 63
+            class: "glyphicon glyphicon-comment"                                                                    // 64
+          }), "\n                      ", HTML.SPAN({                                                               // 65
+            class: "badge-numFav badge"                                                                             // 66
+          }, Blaze.View("lookup:numComment", function() {                                                           // 67
+            return Spacebars.mustache(view.lookup("numComment"));                                                   // 68
+          })), "\n                    "), "\n                  " ];                                                 // 69
+        }, function() {                                                                                             // 70
+          return [ "\n                    ", HTML.A({                                                               // 71
+            id: "btnComm",                                                                                          // 72
+            class: "btn btn-secondary"                                                                              // 73
+          }, "\n                    ", HTML.SPAN({                                                                  // 74
+            class: "glyphicon glyphicon-comment"                                                                    // 75
+          }), "\n                  "), "\n                  " ];                                                    // 76
+        }), "\n                  ", Blaze.If(function() {                                                           // 77
+          return Spacebars.call(view.lookup("numFavorite"));                                                        // 78
+        }, function() {                                                                                             // 79
+          return [ "\n                    ", HTML.A({                                                               // 80
+            id: "btnFav",                                                                                           // 81
+            class: "btn btn-secondary"                                                                              // 82
+          }, "\n                      ", HTML.SPAN({                                                                // 83
+            id: function() {                                                                                        // 84
+              return Spacebars.mustache(view.lookup("idToFavBtn"));                                                 // 85
+            },                                                                                                      // 86
+            class: function() {                                                                                     // 87
+              return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                 // 88
+            }                                                                                                       // 89
+          }), "\n                      ", HTML.SPAN({                                                               // 90
+            class: "badge badge-numFav"                                                                             // 91
+          }, Blaze.View("lookup:numFav", function() {                                                               // 92
+            return Spacebars.mustache(view.lookup("numFav"));                                                       // 93
+          })), "\n                    "), "\n                  " ];                                                 // 94
+        }, function() {                                                                                             // 95
+          return [ "\n                    ", HTML.A({                                                               // 96
+            id: "btnFav",                                                                                           // 97
+            class: "btn btn-secondary"                                                                              // 98
+          }, "\n                      ", HTML.SPAN({                                                                // 99
+            id: function() {                                                                                        // 100
+              return Spacebars.mustache(view.lookup("idToFavBtn"));                                                 // 101
+            },                                                                                                      // 102
+            class: function() {                                                                                     // 103
+              return [ "glyphicon glyphicon-heart ", Spacebars.mustache(view.lookup("classFav")) ];                 // 104
+            }                                                                                                       // 105
+          }), "\n                    "), "\n                  " ];                                                  // 106
+        }), "\n                "), "\n              "), "\n            " ];                                         // 107
+      }), "\n             ", HTML.BUTTON({                                                                          // 108
+        id: "btnDismissNotif",                                                                                      // 109
+        class: "btn btn-info pull-right",                                                                           // 110
+        type: "button"                                                                                              // 111
+      }, "OK"), "\n          " ];                                                                                   // 112
+    }, function() {                                                                                                 // 113
+      return [ "\n            ", HTML.DIV({                                                                         // 114
+        class: "panel-info"                                                                                         // 115
+      }, "\n              ", HTML.P("Oooooooops Twiit Page New"), "    \n            "), "\n          " ];          // 116
+    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                            // 117
+  }, function() {                                                                                                   // 118
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 119
+  }) ];                                                                                                             // 120
+}));                                                                                                                // 121
+                                                                                                                    // 122
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.userManagement.js":function(){
@@ -1284,82 +1305,92 @@ Template["userProfile"] = new Template("Template.userProfile", (function() {    
           return Spacebars.mustache(Spacebars.dot(view.lookup("dataUserFound"), "userNameProfile"));                // 43
         })), "\n                "), "\n                ", HTML.DIV({                                                // 44
           class: "col-md-7 col-sm-7 col-xs-7 dropdown btnOptionsProfile"                                            // 45
-        }, "\n                  ", HTML.BUTTON({                                                                    // 46
-          id: "dropdownOptionsUser",                                                                                // 47
-          class: "btn btn-primary dropdown-toggle optionsUserProfile",                                              // 48
-          type: "button",                                                                                           // 49
-          "data-toggle": "dropdown",                                                                                // 50
-          "aria-haspopup": "true",                                                                                  // 51
-          "aria-expanded": "true"                                                                                   // 52
-        }, "\n                    ", HTML.SPAN({                                                                    // 53
-          class: "glyphicon glyphicon-option-vertical"                                                              // 54
-        }), "\n                  "), "\n                  ", HTML.UL({                                              // 55
-          class: "dropdown-menu",                                                                                   // 56
-          "aria-labelledby": "dropdownOptionsUser"                                                                  // 57
-        }, "\n                    ", HTML.LI(HTML.A({                                                               // 58
-          href: "#",                                                                                                // 59
-          id: "editProfile"                                                                                         // 60
-        }, "Editar Perfil")), "\n                    ", HTML.LI(HTML.A({                                            // 61
-          href: "#",                                                                                                // 62
-          id: "logout"                                                                                              // 63
-        }, "Salir")), "\n                  "), "\n                  ", HTML.DIV({                                   // 64
-          id: "optionsUserProfile"                                                                                  // 65
-        }, "\n                    ", Blaze.Each(function() {                                                        // 66
-          return Spacebars.call(view.lookup("existsSocialNetwork"));                                                // 67
-        }, function() {                                                                                             // 68
-          return [ "  \n                      ", HTML.BUTTON({                                                      // 69
-            type: "button",                                                                                         // 70
-            id: function() {                                                                                        // 71
-              return [ "btn", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                          // 72
-            },                                                                                                      // 73
-            class: function() {                                                                                     // 74
+        }, "\n                  ", Blaze.If(function() {                                                            // 46
+          return Spacebars.call(view.lookup("showProfileOtherUser"));                                               // 47
+        }, function() {                                                                                             // 48
+          return [ "\n                    ", HTML.BUTTON({                                                          // 49
+            id: "dropdownOptionsUser",                                                                              // 50
+            class: "btn btn-primary dropdown-toggle optionsUserProfile",                                            // 51
+            type: "button",                                                                                         // 52
+            "data-toggle": "dropdown",                                                                              // 53
+            "aria-haspopup": "true",                                                                                // 54
+            "aria-expanded": "true"                                                                                 // 55
+          }, "\n                      ", HTML.SPAN({                                                                // 56
+            class: "glyphicon glyphicon-option-vertical"                                                            // 57
+          }), "\n                    "), "\n                    ", HTML.UL({                                        // 58
+            class: "dropdown-menu",                                                                                 // 59
+            "aria-labelledby": "dropdownOptionsUser"                                                                // 60
+          }, "\n                      ", HTML.LI(HTML.A({                                                           // 61
+            href: "#",                                                                                              // 62
+            id: "editProfile"                                                                                       // 63
+          }, "Editar Perfil")), "\n                      ", HTML.LI(HTML.A({                                        // 64
+            href: "#",                                                                                              // 65
+            id: "removeProfile"                                                                                     // 66
+          }, "Eliminar Perfil")), "\n                      ", HTML.LI({                                             // 67
+            role: "separator",                                                                                      // 68
+            class: "divider"                                                                                        // 69
+          }), "\n                      ", HTML.LI(HTML.A({                                                          // 70
+            href: "#",                                                                                              // 71
+            id: "logout"                                                                                            // 72
+          }, "Salir")), "\n                    "), "\n                  " ];                                        // 73
+        }), "\n                  ", HTML.DIV({                                                                      // 74
+          id: "optionsUserProfile"                                                                                  // 75
+        }, "\n                    ", Blaze.Each(function() {                                                        // 76
+          return Spacebars.call(view.lookup("existsSocialNetwork"));                                                // 77
+        }, function() {                                                                                             // 78
+          return [ "  \n                      ", HTML.BUTTON({                                                      // 79
+            type: "button",                                                                                         // 80
+            id: function() {                                                                                        // 81
+              return [ "btn", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                          // 82
+            },                                                                                                      // 83
+            class: function() {                                                                                     // 84
               return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile" ];
-            },                                                                                                      // 76
-            "data-toggle": "modal",                                                                                 // 77
-            "data-target": "#dialog-showSocialNetwork"                                                              // 78
-          }, "\n                        ", HTML.I({                                                                 // 79
-            id: function() {                                                                                        // 80
-              return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                     // 81
-            },                                                                                                      // 82
-            class: function() {                                                                                     // 83
-              return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                  // 84
-            },                                                                                                      // 85
-            style: "font-size: 24px;"                                                                               // 86
-          }), "\n                      "), "\n                    " ];                                              // 87
+            },                                                                                                      // 86
+            "data-toggle": "modal",                                                                                 // 87
+            "data-target": "#dialog-showSocialNetwork"                                                              // 88
+          }, "\n                        ", HTML.I({                                                                 // 89
+            id: function() {                                                                                        // 90
+              return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                     // 91
+            },                                                                                                      // 92
+            class: function() {                                                                                     // 93
+              return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                  // 94
+            },                                                                                                      // 95
+            style: "font-size: 24px;"                                                                               // 96
+          }), "\n                      "), "\n                    " ];                                              // 97
         }), "\n                  "), "\n                "), "\n              "), "\n                \n              ", HTML.Comment('\n              <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>\n              <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>\n              '), "\n              ", HTML.TABLE({
-          class: "table"                                                                                            // 89
-        }, "  \n                ", HTML.TR("\n                  ", HTML.TD({                                        // 90
-          class: "tableHeader"                                                                                      // 91
-        }, "Twitts"), "\n                  ", HTML.TD({                                                             // 92
-          class: "tableHeader"                                                                                      // 93
-        }, "Siguiendo"), "\n                  ", HTML.TD({                                                          // 94
-          class: "tableHeader"                                                                                      // 95
-        }, "Seguidores"), "\n                "), "\n                ", HTML.TR("\n                  ", HTML.TD({    // 96
-          class: "tableContent"                                                                                     // 97
-        }, Blaze.View("lookup:tweets", function() {                                                                 // 98
-          return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));  // 99
-        })), "\n                  ", HTML.TD({                                                                      // 100
-          class: "tableContent"                                                                                     // 101
-        }, Blaze.View("lookup:following", function() {                                                              // 102
-          return Spacebars.mustache(view.lookup("following"));                                                      // 103
-        })), "\n                  ", HTML.TD({                                                                      // 104
-          class: "tableContent"                                                                                     // 105
-        }, Blaze.View("lookup:followers", function() {                                                              // 106
-          return Spacebars.mustache(view.lookup("followers"));                                                      // 107
-        })), "\n                "), "\n              "), "\n\n              ", HTML.DIV({                           // 108
-          class: "modal fade",                                                                                      // 109
-          id: "dialog-showSocialNetwork"                                                                            // 110
+          class: "table"                                                                                            // 99
+        }, "  \n                ", HTML.TR("\n                  ", HTML.TD({                                        // 100
+          class: "tableHeader"                                                                                      // 101
+        }, "Twitts"), "\n                  ", HTML.TD({                                                             // 102
+          class: "tableHeader"                                                                                      // 103
+        }, "Siguiendo"), "\n                  ", HTML.TD({                                                          // 104
+          class: "tableHeader"                                                                                      // 105
+        }, "Seguidores"), "\n                "), "\n                ", HTML.TR("\n                  ", HTML.TD({    // 106
+          class: "tableContent"                                                                                     // 107
+        }, Blaze.View("lookup:tweets", function() {                                                                 // 108
+          return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));  // 109
+        })), "\n                  ", HTML.TD({                                                                      // 110
+          class: "tableContent"                                                                                     // 111
+        }, Blaze.View("lookup:following", function() {                                                              // 112
+          return Spacebars.mustache(view.lookup("following"));                                                      // 113
+        })), "\n                  ", HTML.TD({                                                                      // 114
+          class: "tableContent"                                                                                     // 115
+        }, Blaze.View("lookup:followers", function() {                                                              // 116
+          return Spacebars.mustache(view.lookup("followers"));                                                      // 117
+        })), "\n                "), "\n              "), "\n\n              ", HTML.DIV({                           // 118
+          class: "modal fade",                                                                                      // 119
+          id: "dialog-showSocialNetwork"                                                                            // 120
         }, "\n                ", Spacebars.include(view.lookupTemplate("showSocialNetwork")), "\n              "), "\n\n            "), "\n          "), "\n        "), "\n        ", HTML.DIV({
-          id: "divTweetFeed",                                                                                       // 112
-          class: "col-md-8 col-sm-8"                                                                                // 113
-        }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n      " ];                               // 114
-      }), "\n    " ];                                                                                               // 115
-    }), "\n  " ];                                                                                                   // 116
-  }, function() {                                                                                                   // 117
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 118
-  });                                                                                                               // 119
-}));                                                                                                                // 120
-                                                                                                                    // 121
+          id: "divTweetFeed",                                                                                       // 122
+          class: "col-md-8 col-sm-8"                                                                                // 123
+        }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n      " ];                               // 124
+      }), "\n    " ];                                                                                               // 125
+    }), "\n  " ];                                                                                                   // 126
+  }, function() {                                                                                                   // 127
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 128
+  });                                                                                                               // 129
+}));                                                                                                                // 130
+                                                                                                                    // 131
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editProfile.js":function(){
@@ -2448,7 +2479,6 @@ Template.tweetFeed.events({                                                     
                                                                                                                     //
     return clickBtnComm;                                                                                            // 89
   }()                                                                                                               // 89
-                                                                                                                    //
 });                                                                                                                 // 47
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2551,8 +2581,8 @@ Template.tweetFeedProfile.events({                                              
     }                                                                                                               // 68
                                                                                                                     //
     return clickBtnFav;                                                                                             // 37
-  }() /*,                                                                                                           // 37
-      'click #btnComm' : function(){                                                                                //
+  }(), /*                                                                                                           // 37
+       'click #btnComm' : function(){                                                                               //
        var numComment = UserUtils.findNumComment(this._id);                                                         //
        //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A                             //
        //LA RUTA /Comments. SI NO, SE ABRE EL MODAL Y SE PUEDE HACER EL COMENTARIO                                  //
@@ -2561,7 +2591,14 @@ Template.tweetFeedProfile.events({                                              
            Session.set('commentMode', true);                                                                        //
            Session.set('idCurrentTwiit', this._id);                                                                 //
        }                                                                                                            //
-      }*/                                                                                                           //
+       }*/                                                                                                          //
+  'click .userNameProfile': function () {                                                                           // 79
+    function clickUserNameProfile(event) {                                                                          // 79
+      window.location = "/Profile/" + event.target.id;                                                              // 80
+    }                                                                                                               // 81
+                                                                                                                    //
+    return clickUserNameProfile;                                                                                    // 79
+  }()                                                                                                               // 79
 });                                                                                                                 // 36
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3122,7 +3159,14 @@ Template.userProfile.helpers({                                                  
     }                                                                                                               // 86
                                                                                                                     //
     return existsSocialNetwork;                                                                                     // 57
-  }()                                                                                                               // 57
+  }(),                                                                                                              // 57
+  'showProfileOtherUser': function () {                                                                             // 87
+    function showProfileOtherUser() {                                                                               // 87
+      return Session.get('showProfileOtherUser');                                                                   // 88
+    }                                                                                                               // 89
+                                                                                                                    //
+    return showProfileOtherUser;                                                                                    // 87
+  }()                                                                                                               // 87
 });                                                                                                                 // 20
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3225,65 +3269,82 @@ Router.route('/Profile/:username', {                                            
 		function data() {                                                                                                 // 11
 			var user = new Object();                                                                                         // 12
 			user.name = this.params.username;                                                                                // 13
-			return user;                                                                                                     // 14
-		}                                                                                                                 // 15
+                                                                                                                    //
+			var currentUser = Session.get('currentUser');                                                                    // 15
+                                                                                                                    //
+			Meteor.call('findUserData', user.name, function (err, res) {                                                     // 17
+				Session.set('dataUserShowProfile', res);                                                                        // 18
+			});                                                                                                              // 19
+                                                                                                                    //
+			dataUserShowProfile = Session.get('dataUserShowProfile');                                                        // 21
+                                                                                                                    //
+			if (dataUserShowProfile) {                                                                                       // 23
+				if (dataUserShowProfile.userNameProfile != currentUser) {                                                       // 24
+					Session.set('showProfileOtherUser', false);                                                                    // 25
+				} else {                                                                                                        // 26
+					Session.set('showProfileOtherUser', true);                                                                     // 27
+				}                                                                                                               // 28
+			}                                                                                                                // 29
+                                                                                                                    //
+			return user;                                                                                                     // 31
+		}                                                                                                                 // 32
                                                                                                                     //
 		return data;                                                                                                      // 11
 	}()                                                                                                                // 11
 });                                                                                                                 // 9
-Router.route('/Notifications/:userName', {                                                                          // 17
-	name: 'twiitPageNew',                                                                                              // 18
-	data: function () {                                                                                                // 19
-		function data() {                                                                                                 // 19
-			var user = new Object();                                                                                         // 20
-			user.name = this.params.userName;                                                                                // 21
-			return user;                                                                                                     // 22
-		}                                                                                                                 // 23
+Router.route('/Notifications/:userName', {                                                                          // 34
+	name: 'twiitPageNew',                                                                                              // 35
+	data: function () {                                                                                                // 36
+		function data() {                                                                                                 // 36
+			var user = new Object();                                                                                         // 37
+			user.name = this.params.userName;                                                                                // 38
+			return user;                                                                                                     // 39
+		}                                                                                                                 // 40
                                                                                                                     //
-		return data;                                                                                                      // 19
-	}()                                                                                                                // 19
-});                                                                                                                 // 17
+		return data;                                                                                                      // 36
+	}()                                                                                                                // 36
+});                                                                                                                 // 34
 //Router.route('/Comments', {name: 'twiitCommentPage'});                                                            //
 /*SE ACCEDE POR PATHFOR*/                                                                                           //
-Router.route('/Comments/:_id', {                                                                                    // 27
-	name: 'twiitCommentPage',                                                                                          // 28
-	data: function () {                                                                                                // 29
-		function data() {                                                                                                 // 29
-			var mode = Session.get('notificationsModeOn');                                                                   // 30
-			var idTwiit = new Object();                                                                                      // 31
-			idTwiit._id = this.params._id;                                                                                   // 32
+Router.route('/Comments/:_id', {                                                                                    // 44
+	name: 'twiitCommentPage',                                                                                          // 45
+	data: function () {                                                                                                // 46
+		function data() {                                                                                                 // 46
+			var mode = Session.get('notificationsModeOn');                                                                   // 47
+			var idTwiit = new Object();                                                                                      // 48
+			idTwiit._id = this.params._id;                                                                                   // 49
                                                                                                                     //
-			if (mode) {                                                                                                      // 34
-				idTwiit.mode = mode;                                                                                            // 35
-			}                                                                                                                // 36
+			if (mode) {                                                                                                      // 51
+				idTwiit.mode = mode;                                                                                            // 52
+			}                                                                                                                // 53
                                                                                                                     //
-			return idTwiit;                                                                                                  // 38
-		}                                                                                                                 // 39
+			return idTwiit;                                                                                                  // 55
+		}                                                                                                                 // 56
                                                                                                                     //
-		return data;                                                                                                      // 29
-	}()                                                                                                                // 29
-});                                                                                                                 // 27
-Router.route('/twiits/:_id', {                                                                                      // 41
-	name: 'twiitPage',                                                                                                 // 42
-	data: function () {                                                                                                // 43
-		function data() {                                                                                                 // 43
-			return this.params;                                                                                              // 44
-		}                                                                                                                 // 45
+		return data;                                                                                                      // 46
+	}()                                                                                                                // 46
+});                                                                                                                 // 44
+Router.route('/twiits/:_id', {                                                                                      // 58
+	name: 'twiitPage',                                                                                                 // 59
+	data: function () {                                                                                                // 60
+		function data() {                                                                                                 // 60
+			return this.params;                                                                                              // 61
+		}                                                                                                                 // 62
                                                                                                                     //
-		return data;                                                                                                      // 43
-	}()                                                                                                                // 43
-});                                                                                                                 // 41
+		return data;                                                                                                      // 60
+	}()                                                                                                                // 60
+});                                                                                                                 // 58
                                                                                                                     //
-Router.route('/editProfile/:userName', {                                                                            // 48
-	name: 'editProfile',                                                                                               // 49
-	data: function () {                                                                                                // 50
-		function data() {                                                                                                 // 50
-			return this.params.userName;                                                                                     // 51
-		}                                                                                                                 // 52
+Router.route('/editProfile/:userName', {                                                                            // 65
+	name: 'editProfile',                                                                                               // 66
+	data: function () {                                                                                                // 67
+		function data() {                                                                                                 // 67
+			return this.params.userName;                                                                                     // 68
+		}                                                                                                                 // 69
                                                                                                                     //
-		return data;                                                                                                      // 50
-	}()                                                                                                                // 50
-});                                                                                                                 // 48
+		return data;                                                                                                      // 67
+	}()                                                                                                                // 67
+});                                                                                                                 // 65
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){

@@ -31,7 +31,8 @@
               {{saveIdInArr}}
               <div class="panel panel-info">
                 <div class="panel-heading">
-                  <h3 class="panel-title">@{{this.actorNotif}} 
+                  <h3 class="panel-title">
+                    <a href="{{pathFor 'userProfile' username=this.user}}">@{{this.actorNotif}}</a> 
                     <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
                      {{convertDateTime}}
                    </h3>

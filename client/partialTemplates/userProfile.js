@@ -83,5 +83,8 @@ Template.userProfile.helpers({
   		}
 
   		return btnSocial;
+  	},
+  	'showProfileOtherUser' : function(){
+  		return Session.get('showProfileOtherUser');
   	}
 });

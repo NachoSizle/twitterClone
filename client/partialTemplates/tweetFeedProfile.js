@@ -65,7 +65,7 @@ Template.tweetFeedProfile.events({
       $("#"+ this._id).addClass("heartNoFav");
       $("#"+ this._id).removeClass("heartFav");
     }
-  }/*,
+  },/*
   'click #btnComm' : function(){
     var numComment = UserUtils.findNumComment(this._id);
     //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A 
@@ -76,4 +76,7 @@ Template.tweetFeedProfile.events({
         Session.set('idCurrentTwiit', this._id);
     }
   }*/   
+  'click .userNameProfile' : function(event){
+    window.location = "/Profile/" + event.target.id;
+  }
 })

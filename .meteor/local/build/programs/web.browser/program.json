@@ -811,11 +811,11 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=41dff8e0cde80b3fb7ce1c6493efc76000b5fe9c",
+      "url": "/app/app.js?hash=efeeb9a3b7217a303c37f1ff8b4418c3a06d6eeb",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/41dff8e0cde80b3fb7ce1c6493efc76000b5fe9c.map",
-      "size": 413074,
-      "hash": "41dff8e0cde80b3fb7ce1c6493efc76000b5fe9c"
+      "sourceMapUrl": "/app/efeeb9a3b7217a303c37f1ff8b4418c3a06d6eeb.map",
+      "size": 420524,
+      "hash": "efeeb9a3b7217a303c37f1ff8b4418c3a06d6eeb"
     },
     {
       "path": "merged-stylesheets.css",
