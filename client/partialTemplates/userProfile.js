@@ -10,10 +10,29 @@ Template.userProfile.events({
   	'click #editProfile': function(){
   		window.location = "/editProfile/" + currentUserName;
   	},
-  	'click .optionsUserProfile': function(event){
-  		//PRIMERO COGEMOS EL NOMBRE DE LA RED SOCIAL DE LA QUE VAMOS A MOSTRAR LA INFORMACION
-  		Session.set("SocialNetworkToShow", event.target.id);
-  		//A CONTINUACION SE ABRIRA EL MODAL CON LA INFORMACION DE LA RED SOCIAL
+  	'click .btnShowSN': function(event){
+
+  		var idSN = event.target.id;
+  		if(idSN === "Facebook"){
+  			window.open("https://www.facebook.com/search/all/?q=" + Session.get('dataUser').userFb);
+  		} else if(idSN === "Instagram"){
+  			window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");
+  		} else if(idSN === "WhatsApp"){
+  			//EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE
+			//AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)
+			//EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL
+			//EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?
+			//SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER
+			//SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.
+			Session.set('userToSentPet', currentUserName);
+			if(!Session.get('showProfileOtherUser')){
+				//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
+				$('#dialog-showSocialNetwork').modal('show');
+			} else {
+				//INICIALIZAMOS EL TOOLTIP
+				$('[data-toggle="tooltip"]').tooltip('show'); 
+			}
+  		}
   	}
 });
 
@@ -36,20 +55,20 @@ Template.userProfile.helpers({
 			$('#imgCurrentUser').attr("src", "/profileImgTest.png");
 		}
 	},
-	'tweets': function(username){
-	  	Meteor.call('tweetsPublish', username, function(err, res) {
+	'tweets': function(){
+	  	Meteor.call('tweetsPublish', currentUserName, function(err, res) {
 	    	Session.set('numTweets',res);
 	  	});
 	  	return Session.get('numTweets');
 	},
   	'following': function(){
-		Meteor.call('usersFollowings', function(err, res) {
+		Meteor.call('usersFollowings', currentUserName, function(err, res) {
       		Session.set('numFollowings',res);
     	});
     	return Session.get('numFollowings');
   	},
   	'followers': function(){
-	    Meteor.call('usersFollowers', function(err, res) {
+	    Meteor.call('usersFollowers', currentUserName, function(err, res) {
 	      	Session.set('numFollowers',res);
 	    });
     	return Session.get('numFollowers');
@@ -86,5 +105,10 @@ Template.userProfile.helpers({
   	},
   	'showProfileOtherUser' : function(){
   		return Session.get('showProfileOtherUser');
+  	},
+  	'isWhatsapp' : function(){
+  		if(this.id === "WhatsApp"){
+  			return true;
+  		}
   	}
 });

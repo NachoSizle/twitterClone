@@ -1,10 +1,18 @@
 <template name="showSocialNetwork"> 
   	{{#if Template.subscriptionsReady}}
-  		<div class="socialNetwork-container">
+  		<div class="sentPet-container">
 		    <div class="panel panel-default col-sm-6 col-md-6 col-lg-6">
 	      		<div class="panel-body">
-			  		<!-- CONTAINER TO ADD NEW SOCIAL NETWORK -->
-					<p>{{socialNetwork}}</p>	
+	      			{{# unless showProfileOtherUser}}
+		  				<!--<img src="/emoticonoSad.png" class="img-responsive">-->
+			          	<p>Se va a enviar una petición de WhatsApp a {{userNameToSentPet}}. ¿Deseas continuar?</p>
+			          	<button id="sent" type="button" class="btn btn-primary">
+			            	<i class="glyphicon glyphicon-ok-circle"></i>
+			          	</button>
+			          	<button id="noSent" type="button" class="btn btn-danger">
+			            	<i class="glyphicon glyphicon-remove-circle"></i>
+			         	</button>
+		         	{{/unless}}
 		      	</div>
 	    	</div>
 	  	</div>

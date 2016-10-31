@@ -1,15 +1,23 @@
 Template.showSocialNetwork.onRendered(function(){
-  socialNetwork = Session.get('SocialNetworkToShow');
+
 });
 
 Template.showSocialNetwork.events({
-  	
+  	'click #sent': function(){
+
+  	}, 
+  	'click #noSent': function(){
+  		
+  	}
 });
 
 Template.showSocialNetwork.helpers({
-  'socialNetwork': function(){
-    return Session.get('SocialNetworkToShow');
-  }
+  	'userNameToSentPet': function(){
+    	return Session.get('userToSentPet');
+  	},
+  	'showProfileOtherUser' : function(){
+		return Session.get('showProfileOtherUser');
+	}
 });   
 
 

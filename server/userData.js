@@ -78,5 +78,32 @@ Meteor.methods({
     return Images.insert({
       imgCode : code
     });
+  },
+
+  'removeThisUser': function(userToRemove){
+    //HAY QUE ELIMINAR EL USUARIO DE dataUser Y DE users
+    var idImgUser = DataUser.findOne({userId: userToRemove.id}).userImg;
+
+    if(idImgUser){
+      Images.remove({_id: idImgUser});
+    }
+   
+    Notifications.remove({recepNotif: userToRemove.name});
+    Relationships.remove({follower: userToRemove.name});
+    Relationships.remove({following: userToRemove.name});
+
+    Favs.find({idUserTapFav: userToRemove.id}).fetch().map(function(data) {
+      if(data.idUserTapFav){
+        var aux = data.idUserTapFav;
+        var pos = aux.indexOf(userToRemove.id);
+        if(pos != -1){
+          UserUtils.removeFavToTwiit(data.idTwiit, userToRemove.id);
+        }
+      }
+    });
+
+    Twitts.remove({user: userToRemove.name});
+    Meteor.users.remove({_id: userToRemove.id});
+    DataUser.remove({userId: userToRemove.id});
   }
 });

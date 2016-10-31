@@ -6,13 +6,13 @@ Meteor.methods({
     return resul.length;
   },
   
-  'usersFollowers': function() {
-    var currentFollowers = UserUtils.findFollowers(Meteor.user().username);
+  'usersFollowers': function(username) {
+    var currentFollowers = UserUtils.findFollowers(username);
     return currentFollowers.length;
   },
 
-  'usersFollowings': function() {
-	  var currentFollowings = UserUtils.findFollowings(Meteor.user().username);
+  'usersFollowings': function(username) {
+	  var currentFollowings = UserUtils.findFollowings(username);
     
     return currentFollowings.length;
   }

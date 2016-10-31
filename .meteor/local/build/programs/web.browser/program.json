@@ -811,22 +811,22 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=efeeb9a3b7217a303c37f1ff8b4418c3a06d6eeb",
+      "url": "/app/app.js?hash=56ea586bac879ad29ce0fc01000dbf2abf26b4e9",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/efeeb9a3b7217a303c37f1ff8b4418c3a06d6eeb.map",
-      "size": 420524,
-      "hash": "efeeb9a3b7217a303c37f1ff8b4418c3a06d6eeb"
+      "sourceMapUrl": "/app/56ea586bac879ad29ce0fc01000dbf2abf26b4e9.map",
+      "size": 452547,
+      "hash": "56ea586bac879ad29ce0fc01000dbf2abf26b4e9"
     },
     {
       "path": "merged-stylesheets.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/merged-stylesheets.css?hash=70d06691879c17b2094ab1e80736b5c3df28cc3d",
+      "url": "/merged-stylesheets.css?hash=2b3ee8e64e4eabe2d921187d803926e1b52c65bf",
       "sourceMap": "merged-stylesheets.css.map",
-      "sourceMapUrl": "/70d06691879c17b2094ab1e80736b5c3df28cc3d.map",
-      "size": 159842,
-      "hash": "70d06691879c17b2094ab1e80736b5c3df28cc3d"
+      "sourceMapUrl": "/2b3ee8e64e4eabe2d921187d803926e1b52c65bf.map",
+      "size": 160932,
+      "hash": "2b3ee8e64e4eabe2d921187d803926e1b52c65bf"
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
@@ -872,6 +872,15 @@
       "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
       "size": 18028,
       "hash": "ca35b697d99cae4d1b60f2d60fcd37771987eb07"
+    },
+    {
+      "path": "app/emoticonoSad.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/emoticonoSad.png",
+      "size": 12083,
+      "hash": "8343293e1d0cb2e213883bf200ca56c82442b5f2"
     },
     {
       "path": "app/imgLogFaceBook.png",

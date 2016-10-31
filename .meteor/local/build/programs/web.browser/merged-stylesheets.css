@@ -9018,3 +9018,76 @@ form input:focus:required:invalid {
 .socialNetwork-container {
   margin: 30%;
 }
+
+.removeProfile-container {
+  margin: 25%;
+}
+
+.removeProfile-container .panel {
+  background-color: #d9edf7;
+  border: 2px solid #bce8f1;
+}
+
+.removeProfile-container img {
+  max-width: 50%;
+  margin: 25%;
+  margin-bottom: 10px;
+}
+
+.removeProfile-container p {
+  text-align: center;
+}
+
+.removeProfile-container i {
+  font-size: 20px;
+}
+
+.removeProfile-container .btn-danger {
+  float: right;
+}
+
+.sentPet-container {
+  margin: 25%;
+}
+
+.sentPet-container .panel {
+  background-color: #d9edf7;
+  border: 2px solid #bce8f1;
+}
+
+.sentPet-container img {
+  max-width: 50%;
+  margin: 25%;
+  margin-bottom: 10px;
+}
+
+.sentPet-container p {
+  text-align: center;
+}
+
+.sentPet-container i {
+  font-size: 20px;
+}
+
+.sentPet-container .btn-danger {
+  float: right;
+}
+
+.bubble {
+  margin: 50px;
+  padding: 20px;
+  position: relative;
+  border-radius: 8px 8px 8px 8px;
+  width: 200px;
+}
+
+.bubble:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 20px;
+  border-top: 20px solid blue;
+  border-top-color: inherit;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}

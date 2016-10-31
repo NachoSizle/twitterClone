@@ -10,7 +10,8 @@ Meteor.startup(() => {
   	},
   	update: function(id, doc){
   		return true;
-  	}
+  	}, 
+    
   });
 
   Favs.allow({

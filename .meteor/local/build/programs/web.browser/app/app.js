@@ -410,6 +410,93 @@ Template["notificationsNew"] = new Template("Template.notificationsNew", (functi
                                                                                                                     // 50
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"template.removeProfile.js":function(){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                  //
+// client/partialTemplates/template.removeProfile.js                                                                //
+//                                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                    //
+                                                                                                                    // 1
+Template.__checkName("removeProfile");                                                                              // 2
+Template["removeProfile"] = new Template("Template.removeProfile", (function() {                                    // 3
+  var view = this;                                                                                                  // 4
+  return Blaze.If(function() {                                                                                      // 5
+    return Spacebars.call(view.templateInstance().subscriptionsReady());                                            // 6
+  }, function() {                                                                                                   // 7
+    return [ "\n    ", HTML.DIV({                                                                                   // 8
+      class: "removeProfile-container"                                                                              // 9
+    }, "\n      ", HTML.DIV({                                                                                       // 10
+      class: "panel panel-default col-sm-6 col-md-6 col-lg-6"                                                       // 11
+    }, "\n        ", HTML.DIV({                                                                                     // 12
+      class: "panel-body"                                                                                           // 13
+    }, "\n          ", HTML.IMG({                                                                                   // 14
+      src: "/emoticonoSad.png",                                                                                     // 15
+      class: "img-responsive"                                                                                       // 16
+    }), "\n          ", HTML.P("Estas a punto de eliminar completamente tu perfil. ¿Deseas continuar?"), "\n          ", HTML.BUTTON({
+      id: "remove",                                                                                                 // 18
+      type: "button",                                                                                               // 19
+      class: "btn btn-primary"                                                                                      // 20
+    }, "\n            ", HTML.I({                                                                                   // 21
+      class: "glyphicon glyphicon-ok-circle"                                                                        // 22
+    }), "\n          "), "\n          ", HTML.BUTTON({                                                              // 23
+      id: "noRemove",                                                                                               // 24
+      type: "button",                                                                                               // 25
+      class: "btn btn-danger"                                                                                       // 26
+    }, "\n            ", HTML.I({                                                                                   // 27
+      class: "glyphicon glyphicon-remove-circle"                                                                    // 28
+    }), "\n          "), "\n        "), "\n      "), "\n    "), "\n  " ];                                           // 29
+  }, function() {                                                                                                   // 30
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 31
+  });                                                                                                               // 32
+}));                                                                                                                // 33
+                                                                                                                    // 34
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.sentPeticion.js":function(){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                  //
+// client/partialTemplates/template.sentPeticion.js                                                                 //
+//                                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                    //
+                                                                                                                    // 1
+Template.__checkName("sentPeticion");                                                                               // 2
+Template["sentPeticion"] = new Template("Template.sentPeticion", (function() {                                      // 3
+  var view = this;                                                                                                  // 4
+  return Blaze.If(function() {                                                                                      // 5
+    return Spacebars.call(view.templateInstance().subscriptionsReady());                                            // 6
+  }, function() {                                                                                                   // 7
+    return [ "\n  \t\t", HTML.DIV({                                                                                 // 8
+      class: "sentPet-container"                                                                                    // 9
+    }, "\n\t\t    ", HTML.DIV({                                                                                     // 10
+      class: "panel panel-default col-sm-6 col-md-6 col-lg-6"                                                       // 11
+    }, "\n\t      \t\t", HTML.DIV({                                                                                 // 12
+      class: "panel-body"                                                                                           // 13
+    }, "\n\t  \t\t\t\t", HTML.Comment('<img src="/emoticonoSad.png" class="img-responsive">'), "\n\t\t          \t", HTML.P("Se va a enviar una petición de WhatsApp a ", Blaze.View("lookup:userNameToSentPet", function() {
+      return Spacebars.mustache(view.lookup("userNameToSentPet"));                                                  // 15
+    }), ". ¿Deseas continuar?"), "\n\t\t          \t", HTML.BUTTON({                                                // 16
+      id: "sent",                                                                                                   // 17
+      type: "button",                                                                                               // 18
+      class: "btn btn-primary"                                                                                      // 19
+    }, "\n\t\t            \t", HTML.I({                                                                             // 20
+      class: "glyphicon glyphicon-ok-circle"                                                                        // 21
+    }), "\n\t\t          \t"), "\n\t\t          \t", HTML.BUTTON({                                                  // 22
+      id: "noSent",                                                                                                 // 23
+      type: "button",                                                                                               // 24
+      class: "btn btn-danger"                                                                                       // 25
+    }, "\n\t\t            \t", HTML.I({                                                                             // 26
+      class: "glyphicon glyphicon-remove-circle"                                                                    // 27
+    }), "\n\t\t         \t"), "\n\t\t      \t"), "\n\t    \t"), "\n\t  \t"), "\n\t" ];                              // 28
+  }, function() {                                                                                                   // 29
+    return [ "\n\t  ", Spacebars.include(view.lookupTemplate("loading")), "\n\t" ];                                 // 30
+  });                                                                                                               // 31
+}));                                                                                                                // 32
+                                                                                                                    // 33
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"template.showSocialNetwork.js":function(){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -426,19 +513,35 @@ Template["showSocialNetwork"] = new Template("Template.showSocialNetwork", (func
     return Spacebars.call(view.templateInstance().subscriptionsReady());                                            // 6
   }, function() {                                                                                                   // 7
     return [ "\n  \t\t", HTML.DIV({                                                                                 // 8
-      class: "socialNetwork-container"                                                                              // 9
+      class: "sentPet-container"                                                                                    // 9
     }, "\n\t\t    ", HTML.DIV({                                                                                     // 10
       class: "panel panel-default col-sm-6 col-md-6 col-lg-6"                                                       // 11
     }, "\n\t      \t\t", HTML.DIV({                                                                                 // 12
       class: "panel-body"                                                                                           // 13
-    }, "\n\t\t\t  \t\t", HTML.Comment(" CONTAINER TO ADD NEW SOCIAL NETWORK "), "\n\t\t\t\t\t", HTML.P(Blaze.View("lookup:socialNetwork", function() {
-      return Spacebars.mustache(view.lookup("socialNetwork"));                                                      // 15
-    })), "\t\n\t\t      \t"), "\n\t    \t"), "\n\t  \t"), "\n\t" ];                                                 // 16
-  }, function() {                                                                                                   // 17
-    return [ "\n\t  ", Spacebars.include(view.lookupTemplate("loading")), "\n\t" ];                                 // 18
-  });                                                                                                               // 19
-}));                                                                                                                // 20
-                                                                                                                    // 21
+    }, "\n\t      \t\t\t", Blaze.Unless(function() {                                                                // 14
+      return Spacebars.call(view.lookup("showProfileOtherUser"));                                                   // 15
+    }, function() {                                                                                                 // 16
+      return [ "\n\t\t  \t\t\t\t", HTML.Comment('<img src="/emoticonoSad.png" class="img-responsive">'), "\n\t\t\t          \t", HTML.P("Se va a enviar una petición de WhatsApp a ", Blaze.View("lookup:userNameToSentPet", function() {
+        return Spacebars.mustache(view.lookup("userNameToSentPet"));                                                // 18
+      }), ". ¿Deseas continuar?"), "\n\t\t\t          \t", HTML.BUTTON({                                            // 19
+        id: "sent",                                                                                                 // 20
+        type: "button",                                                                                             // 21
+        class: "btn btn-primary"                                                                                    // 22
+      }, "\n\t\t\t            \t", HTML.I({                                                                         // 23
+        class: "glyphicon glyphicon-ok-circle"                                                                      // 24
+      }), "\n\t\t\t          \t"), "\n\t\t\t          \t", HTML.BUTTON({                                            // 25
+        id: "noSent",                                                                                               // 26
+        type: "button",                                                                                             // 27
+        class: "btn btn-danger"                                                                                     // 28
+      }, "\n\t\t\t            \t", HTML.I({                                                                         // 29
+        class: "glyphicon glyphicon-remove-circle"                                                                  // 30
+      }), "\n\t\t\t         \t"), "\n\t\t         \t" ];                                                            // 31
+    }), "\n\t\t      \t"), "\n\t    \t"), "\n\t  \t"), "\n\t" ];                                                    // 32
+  }, function() {                                                                                                   // 33
+    return [ "\n\t  ", Spacebars.include(view.lookupTemplate("loading")), "\n\t" ];                                 // 34
+  });                                                                                                               // 35
+}));                                                                                                                // 36
+                                                                                                                    // 37
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.socialNetworkBox.js":function(){
@@ -1086,7 +1189,7 @@ Template["twiitPageNew"] = new Template("Template.twiitPageNew", (function() {  
         }, "\n                    ", HTML.A({                                                                       // 28
           href: function() {                                                                                        // 29
             return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                         // 30
-              username: Spacebars.dot(view.lookup("."), "user")                                                     // 31
+              username: Spacebars.dot(view.lookup("."), "actorNotif")                                               // 31
             }));                                                                                                    // 32
           }                                                                                                         // 33
         }, "@", Blaze.View("lookup:..actorNotif", function() {                                                      // 34
@@ -1325,72 +1428,124 @@ Template["userProfile"] = new Template("Template.userProfile", (function() {    
             id: "editProfile"                                                                                       // 63
           }, "Editar Perfil")), "\n                      ", HTML.LI(HTML.A({                                        // 64
             href: "#",                                                                                              // 65
-            id: "removeProfile"                                                                                     // 66
-          }, "Eliminar Perfil")), "\n                      ", HTML.LI({                                             // 67
-            role: "separator",                                                                                      // 68
-            class: "divider"                                                                                        // 69
-          }), "\n                      ", HTML.LI(HTML.A({                                                          // 70
-            href: "#",                                                                                              // 71
-            id: "logout"                                                                                            // 72
-          }, "Salir")), "\n                    "), "\n                  " ];                                        // 73
-        }), "\n                  ", HTML.DIV({                                                                      // 74
-          id: "optionsUserProfile"                                                                                  // 75
-        }, "\n                    ", Blaze.Each(function() {                                                        // 76
-          return Spacebars.call(view.lookup("existsSocialNetwork"));                                                // 77
-        }, function() {                                                                                             // 78
-          return [ "  \n                      ", HTML.BUTTON({                                                      // 79
-            type: "button",                                                                                         // 80
-            id: function() {                                                                                        // 81
-              return [ "btn", Spacebars.mustache(Spacebars.dot(view.lookup("."), "id")) ];                          // 82
-            },                                                                                                      // 83
-            class: function() {                                                                                     // 84
-              return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile" ];
-            },                                                                                                      // 86
-            "data-toggle": "modal",                                                                                 // 87
-            "data-target": "#dialog-showSocialNetwork"                                                              // 88
-          }, "\n                        ", HTML.I({                                                                 // 89
-            id: function() {                                                                                        // 90
-              return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                     // 91
-            },                                                                                                      // 92
-            class: function() {                                                                                     // 93
-              return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                  // 94
-            },                                                                                                      // 95
-            style: "font-size: 24px;"                                                                               // 96
-          }), "\n                      "), "\n                    " ];                                              // 97
+            id: "removeProfile",                                                                                    // 66
+            "data-toggle": "modal",                                                                                 // 67
+            "data-target": "#dialog-removeProfile"                                                                  // 68
+          }, "Eliminar Perfil")), "\n                      ", HTML.LI({                                             // 69
+            role: "separator",                                                                                      // 70
+            class: "divider"                                                                                        // 71
+          }), "\n                      ", HTML.LI(HTML.A({                                                          // 72
+            href: "#",                                                                                              // 73
+            id: "logout"                                                                                            // 74
+          }, "Salir")), "\n                    "), "\n                  " ];                                        // 75
+        }), "\n                  ", HTML.DIV({                                                                      // 76
+          id: "optionsUserProfile"                                                                                  // 77
+        }, "\n                    ", Blaze.Each(function() {                                                        // 78
+          return Spacebars.call(view.lookup("existsSocialNetwork"));                                                // 79
+        }, function() {                                                                                             // 80
+          return [ "  \n                      ", Blaze.If(function() {                                              // 81
+            return Spacebars.call(view.lookup("showProfileOtherUser"));                                             // 82
+          }, function() {                                                                                           // 83
+            return [ "\n                        ", Blaze.If(function() {                                            // 84
+              return Spacebars.call(view.lookup("isWhatsapp"));                                                     // 85
+            }, function() {                                                                                         // 86
+              return [ "\n                          ", HTML.BUTTON({                                                // 87
+                type: "button",                                                                                     // 88
+                id: function() {                                                                                    // 89
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                 // 90
+                },                                                                                                  // 91
+                class: function() {                                                                                 // 92
+                  return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile btnShowSN" ];
+                },                                                                                                  // 94
+                "data-toggle": "tooltip",                                                                           // 95
+                title: function() {                                                                                 // 96
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("dataUserFound"), "userWhats"));              // 97
+                },                                                                                                  // 98
+                "data-placement": "top"                                                                             // 99
+              }, "\n                            ", HTML.I({                                                         // 100
+                id: function() {                                                                                    // 101
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                 // 102
+                },                                                                                                  // 103
+                class: function() {                                                                                 // 104
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                              // 105
+                },                                                                                                  // 106
+                style: "font-size: 24px;"                                                                           // 107
+              }), "\n                          "), "\n                        " ];                                  // 108
+            }, function() {                                                                                         // 109
+              return [ "\n                          ", HTML.BUTTON({                                                // 110
+                type: "button",                                                                                     // 111
+                id: function() {                                                                                    // 112
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                 // 113
+                },                                                                                                  // 114
+                class: function() {                                                                                 // 115
+                  return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile btnShowSN" ];
+                }                                                                                                   // 117
+              }, "\n                            ", HTML.I({                                                         // 118
+                id: function() {                                                                                    // 119
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                 // 120
+                },                                                                                                  // 121
+                class: function() {                                                                                 // 122
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                              // 123
+                },                                                                                                  // 124
+                style: "font-size: 24px;"                                                                           // 125
+              }), "\n                          "), "\n                        " ];                                  // 126
+            }), "\n                      " ];                                                                       // 127
+          }, function() {                                                                                           // 128
+            return [ "\n                        ", HTML.BUTTON({                                                    // 129
+              type: "button",                                                                                       // 130
+              id: function() {                                                                                      // 131
+                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                   // 132
+              },                                                                                                    // 133
+              class: function() {                                                                                   // 134
+                return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile btnShowSN" ];
+              }                                                                                                     // 136
+            }, "\n                          ", HTML.I({                                                             // 137
+              id: function() {                                                                                      // 138
+                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                   // 139
+              },                                                                                                    // 140
+              class: function() {                                                                                   // 141
+                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                // 142
+              },                                                                                                    // 143
+              style: "font-size: 24px;"                                                                             // 144
+            }), "\n                        "), "\n                      " ];                                        // 145
+          }), "\n                    " ];                                                                           // 146
         }), "\n                  "), "\n                "), "\n              "), "\n                \n              ", HTML.Comment('\n              <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>\n              <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>\n              '), "\n              ", HTML.TABLE({
-          class: "table"                                                                                            // 99
-        }, "  \n                ", HTML.TR("\n                  ", HTML.TD({                                        // 100
-          class: "tableHeader"                                                                                      // 101
-        }, "Twitts"), "\n                  ", HTML.TD({                                                             // 102
-          class: "tableHeader"                                                                                      // 103
-        }, "Siguiendo"), "\n                  ", HTML.TD({                                                          // 104
-          class: "tableHeader"                                                                                      // 105
-        }, "Seguidores"), "\n                "), "\n                ", HTML.TR("\n                  ", HTML.TD({    // 106
-          class: "tableContent"                                                                                     // 107
-        }, Blaze.View("lookup:tweets", function() {                                                                 // 108
-          return Spacebars.mustache(view.lookup("tweets"), Spacebars.dot(view.lookup("currentUser"), "username"));  // 109
-        })), "\n                  ", HTML.TD({                                                                      // 110
-          class: "tableContent"                                                                                     // 111
-        }, Blaze.View("lookup:following", function() {                                                              // 112
-          return Spacebars.mustache(view.lookup("following"));                                                      // 113
-        })), "\n                  ", HTML.TD({                                                                      // 114
-          class: "tableContent"                                                                                     // 115
-        }, Blaze.View("lookup:followers", function() {                                                              // 116
-          return Spacebars.mustache(view.lookup("followers"));                                                      // 117
-        })), "\n                "), "\n              "), "\n\n              ", HTML.DIV({                           // 118
-          class: "modal fade",                                                                                      // 119
-          id: "dialog-showSocialNetwork"                                                                            // 120
-        }, "\n                ", Spacebars.include(view.lookupTemplate("showSocialNetwork")), "\n              "), "\n\n            "), "\n          "), "\n        "), "\n        ", HTML.DIV({
-          id: "divTweetFeed",                                                                                       // 122
-          class: "col-md-8 col-sm-8"                                                                                // 123
-        }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n      " ];                               // 124
-      }), "\n    " ];                                                                                               // 125
-    }), "\n  " ];                                                                                                   // 126
-  }, function() {                                                                                                   // 127
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 128
-  });                                                                                                               // 129
-}));                                                                                                                // 130
-                                                                                                                    // 131
+          class: "table"                                                                                            // 148
+        }, "  \n                ", HTML.TR("\n                  ", HTML.TD({                                        // 149
+          class: "tableHeader"                                                                                      // 150
+        }, "Twitts"), "\n                  ", HTML.TD({                                                             // 151
+          class: "tableHeader"                                                                                      // 152
+        }, "Siguiendo"), "\n                  ", HTML.TD({                                                          // 153
+          class: "tableHeader"                                                                                      // 154
+        }, "Seguidores"), "\n                "), "\n                ", HTML.TR("\n                  ", HTML.TD({    // 155
+          class: "tableContent"                                                                                     // 156
+        }, Blaze.View("lookup:tweets", function() {                                                                 // 157
+          return Spacebars.mustache(view.lookup("tweets"));                                                         // 158
+        })), "\n                  ", HTML.TD({                                                                      // 159
+          class: "tableContent"                                                                                     // 160
+        }, Blaze.View("lookup:following", function() {                                                              // 161
+          return Spacebars.mustache(view.lookup("following"));                                                      // 162
+        })), "\n                  ", HTML.TD({                                                                      // 163
+          class: "tableContent"                                                                                     // 164
+        }, Blaze.View("lookup:followers", function() {                                                              // 165
+          return Spacebars.mustache(view.lookup("followers"));                                                      // 166
+        })), "\n                "), "\n              "), "\n              \n              ", HTML.DIV({             // 167
+          class: "modal fade",                                                                                      // 168
+          id: "dialog-showSocialNetwork"                                                                            // 169
+        }, "\n                ", Spacebars.include(view.lookupTemplate("sentPeticion")), "\n              "), "\n\n              ", HTML.DIV({
+          class: "modal fade",                                                                                      // 171
+          id: "dialog-removeProfile"                                                                                // 172
+        }, "\n                ", Spacebars.include(view.lookupTemplate("removeProfile")), "\n              "), "\n\n            "), "\n          "), "\n        "), "\n        ", HTML.DIV({
+          id: "divTweetFeed",                                                                                       // 174
+          class: "col-md-8 col-sm-8"                                                                                // 175
+        }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n      " ];                               // 176
+      }), "\n    " ];                                                                                               // 177
+    }), "\n  " ];                                                                                                   // 178
+  }, function() {                                                                                                   // 179
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                 // 180
+  });                                                                                                               // 181
+}));                                                                                                                // 182
+                                                                                                                    // 183
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editProfile.js":function(){
@@ -1881,6 +2036,77 @@ Template.notificationsNew.events({                                              
 });                                                                                                                 // 36
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"removeProfile.js":function(){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                  //
+// client/partialTemplates/removeProfile.js                                                                         //
+//                                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                    //
+Template.removeProfile.events({                                                                                     // 1
+    'click #remove': function () {                                                                                  // 2
+        function clickRemove() {                                                                                    // 2
+            var userToRemove = new Object();                                                                        // 3
+            var aux = Session.get('dataUser');                                                                      // 4
+                                                                                                                    //
+            userToRemove.id = aux.userId;                                                                           // 6
+            userToRemove.name = aux.userNameProfile;                                                                // 7
+                                                                                                                    //
+            console.log(userToRemove);                                                                              // 9
+                                                                                                                    //
+            Meteor.call('removeThisUser', userToRemove);                                                            // 11
+                                                                                                                    //
+            window.location = "/";                                                                                  // 13
+        }                                                                                                           // 14
+                                                                                                                    //
+        return clickRemove;                                                                                         // 2
+    }(),                                                                                                            // 2
+    'click #noRemove': function () {                                                                                // 15
+        function clickNoRemove() {                                                                                  // 15
+            //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                //
+            $('#dialog-removeProfile').modal('hide');                                                               // 17
+        }                                                                                                           // 18
+                                                                                                                    //
+        return clickNoRemove;                                                                                       // 15
+    }()                                                                                                             // 15
+});                                                                                                                 // 1
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"sentPeticion.js":function(){
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                  //
+// client/partialTemplates/sentPeticion.js                                                                          //
+//                                                                                                                  //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                    //
+Template.sentPeticion.onRendered(function () {});                                                                   // 1
+                                                                                                                    //
+Template.sentPeticion.events({                                                                                      // 5
+  'click #sent': function () {                                                                                      // 6
+    function clickSent() {}                                                                                         // 6
+                                                                                                                    //
+    return clickSent;                                                                                               // 6
+  }(),                                                                                                              // 6
+  'click #noSent': function () {                                                                                    // 9
+    function clickNoSent() {}                                                                                       // 9
+                                                                                                                    //
+    return clickNoSent;                                                                                             // 9
+  }()                                                                                                               // 9
+});                                                                                                                 // 5
+                                                                                                                    //
+Template.sentPeticion.helpers({                                                                                     // 14
+  'userNameToSentPet': function () {                                                                                // 15
+    function userNameToSentPet() {                                                                                  // 15
+      return Session.get('userToSentPet');                                                                          // 16
+    }                                                                                                               // 17
+                                                                                                                    //
+    return userNameToSentPet;                                                                                       // 15
+  }()                                                                                                               // 15
+});                                                                                                                 // 14
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"showSocialNetwork.js":function(){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1889,21 +2115,37 @@ Template.notificationsNew.events({                                              
 //                                                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                     //
-Template.showSocialNetwork.onRendered(function () {                                                                 // 1
-  socialNetwork = Session.get('SocialNetworkToShow');                                                               // 2
-});                                                                                                                 // 3
+Template.showSocialNetwork.onRendered(function () {});                                                              // 1
                                                                                                                     //
-Template.showSocialNetwork.events({});                                                                              // 5
+Template.showSocialNetwork.events({                                                                                 // 5
+  'click #sent': function () {                                                                                      // 6
+    function clickSent() {}                                                                                         // 6
                                                                                                                     //
-Template.showSocialNetwork.helpers({                                                                                // 9
-  'socialNetwork': function () {                                                                                    // 10
-    function socialNetwork() {                                                                                      // 10
-      return Session.get('SocialNetworkToShow');                                                                    // 11
-    }                                                                                                               // 12
+    return clickSent;                                                                                               // 6
+  }(),                                                                                                              // 6
+  'click #noSent': function () {                                                                                    // 9
+    function clickNoSent() {}                                                                                       // 9
                                                                                                                     //
-    return socialNetwork;                                                                                           // 10
-  }()                                                                                                               // 10
-});                                                                                                                 // 9
+    return clickNoSent;                                                                                             // 9
+  }()                                                                                                               // 9
+});                                                                                                                 // 5
+                                                                                                                    //
+Template.showSocialNetwork.helpers({                                                                                // 14
+  'userNameToSentPet': function () {                                                                                // 15
+    function userNameToSentPet() {                                                                                  // 15
+      return Session.get('userToSentPet');                                                                          // 16
+    }                                                                                                               // 17
+                                                                                                                    //
+    return userNameToSentPet;                                                                                       // 15
+  }(),                                                                                                              // 15
+  'showProfileOtherUser': function () {                                                                             // 18
+    function showProfileOtherUser() {                                                                               // 18
+      return Session.get('showProfileOtherUser');                                                                   // 19
+    }                                                                                                               // 20
+                                                                                                                    //
+    return showProfileOtherUser;                                                                                    // 18
+  }()                                                                                                               // 18
+});                                                                                                                 // 14
                                                                                                                     //
 //EN EL MODAL EMERGENTE QUE MSTRARÁ LA INFORMACION AÑADIDA DEL USUARIO SOBRE SU RED SOCIAL                          //
 //SE IMPLEMENTARA QUE PINCHE EN EL NOMBRE DE USUARIO Y QUE SE REDIRIJA LA PAGINA A LA                               //
@@ -3058,116 +3300,144 @@ Template.userProfile.events({                                                   
                                                                                                                     //
     return clickEditProfile;                                                                                        // 10
   }(),                                                                                                              // 10
-  'click .optionsUserProfile': function () {                                                                        // 13
-    function clickOptionsUserProfile(event) {                                                                       // 13
-      //PRIMERO COGEMOS EL NOMBRE DE LA RED SOCIAL DE LA QUE VAMOS A MOSTRAR LA INFORMACION                         //
-      Session.set("SocialNetworkToShow", event.target.id);                                                          // 15
-      //A CONTINUACION SE ABRIRA EL MODAL CON LA INFORMACION DE LA RED SOCIAL                                       //
-    }                                                                                                               // 17
+  'click .btnShowSN': function () {                                                                                 // 13
+    function clickBtnShowSN(event) {                                                                                // 13
                                                                                                                     //
-    return clickOptionsUserProfile;                                                                                 // 13
+      var idSN = event.target.id;                                                                                   // 15
+      if (idSN === "Facebook") {                                                                                    // 16
+        window.open("https://www.facebook.com/search/all/?q=" + Session.get('dataUser').userFb);                    // 17
+      } else if (idSN === "Instagram") {                                                                            // 18
+        window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");                        // 19
+      } else if (idSN === "WhatsApp") {                                                                             // 20
+        //EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE              //
+        //AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)                                //
+        //EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL            //
+        //EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?       //
+        //SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER            //
+        //SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.                                  //
+        Session.set('userToSentPet', currentUserName);                                                              // 27
+        if (!Session.get('showProfileOtherUser')) {                                                                 // 28
+          //ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                          //
+          $('#dialog-showSocialNetwork').modal('show');                                                             // 30
+        } else {                                                                                                    // 31
+          //INICIALIZAMOS EL TOOLTIP                                                                                //
+          $('[data-toggle="tooltip"]').tooltip('show');                                                             // 33
+        }                                                                                                           // 34
+      }                                                                                                             // 35
+    }                                                                                                               // 36
+                                                                                                                    //
+    return clickBtnShowSN;                                                                                          // 13
   }()                                                                                                               // 13
 });                                                                                                                 // 5
                                                                                                                     //
-Template.userProfile.helpers({                                                                                      // 20
-  'dataUserFound': function () {                                                                                    // 21
-    function dataUserFound() {                                                                                      // 21
-      Meteor.call('findUserData', currentUserName, function (err, res) {                                            // 22
-        Session.set('dataUser', res);                                                                               // 23
-      });                                                                                                           // 24
+Template.userProfile.helpers({                                                                                      // 39
+  'dataUserFound': function () {                                                                                    // 40
+    function dataUserFound() {                                                                                      // 40
+      Meteor.call('findUserData', currentUserName, function (err, res) {                                            // 41
+        Session.set('dataUser', res);                                                                               // 42
+      });                                                                                                           // 43
                                                                                                                     //
-      dataUser = Session.get('dataUser');                                                                           // 26
-      return dataUser;                                                                                              // 27
-    }                                                                                                               // 28
+      dataUser = Session.get('dataUser');                                                                           // 45
+      return dataUser;                                                                                              // 46
+    }                                                                                                               // 47
                                                                                                                     //
-    return dataUserFound;                                                                                           // 21
-  }(),                                                                                                              // 21
-  'userImgFound': function () {                                                                                     // 29
-    function userImgFound() {                                                                                       // 29
-      if (dataUser.userImg) {                                                                                       // 30
-        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                          // 31
-          $('#imgCurrentUser').attr("src", res);                                                                    // 32
-        });                                                                                                         // 33
-      } else {                                                                                                      // 34
-        console.log("Imagen test");                                                                                 // 35
-        $('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                    // 36
-      }                                                                                                             // 37
-    }                                                                                                               // 38
+    return dataUserFound;                                                                                           // 40
+  }(),                                                                                                              // 40
+  'userImgFound': function () {                                                                                     // 48
+    function userImgFound() {                                                                                       // 48
+      if (dataUser.userImg) {                                                                                       // 49
+        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                          // 50
+          $('#imgCurrentUser').attr("src", res);                                                                    // 51
+        });                                                                                                         // 52
+      } else {                                                                                                      // 53
+        console.log("Imagen test");                                                                                 // 54
+        $('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                    // 55
+      }                                                                                                             // 56
+    }                                                                                                               // 57
                                                                                                                     //
-    return userImgFound;                                                                                            // 29
-  }(),                                                                                                              // 29
-  'tweets': function () {                                                                                           // 39
-    function tweets(username) {                                                                                     // 39
-      Meteor.call('tweetsPublish', username, function (err, res) {                                                  // 40
-        Session.set('numTweets', res);                                                                              // 41
-      });                                                                                                           // 42
-      return Session.get('numTweets');                                                                              // 43
-    }                                                                                                               // 44
+    return userImgFound;                                                                                            // 48
+  }(),                                                                                                              // 48
+  'tweets': function () {                                                                                           // 58
+    function tweets() {                                                                                             // 58
+      Meteor.call('tweetsPublish', currentUserName, function (err, res) {                                           // 59
+        Session.set('numTweets', res);                                                                              // 60
+      });                                                                                                           // 61
+      return Session.get('numTweets');                                                                              // 62
+    }                                                                                                               // 63
                                                                                                                     //
-    return tweets;                                                                                                  // 39
-  }(),                                                                                                              // 39
-  'following': function () {                                                                                        // 45
-    function following() {                                                                                          // 45
-      Meteor.call('usersFollowings', function (err, res) {                                                          // 46
-        Session.set('numFollowings', res);                                                                          // 47
-      });                                                                                                           // 48
-      return Session.get('numFollowings');                                                                          // 49
-    }                                                                                                               // 50
+    return tweets;                                                                                                  // 58
+  }(),                                                                                                              // 58
+  'following': function () {                                                                                        // 64
+    function following() {                                                                                          // 64
+      Meteor.call('usersFollowings', currentUserName, function (err, res) {                                         // 65
+        Session.set('numFollowings', res);                                                                          // 66
+      });                                                                                                           // 67
+      return Session.get('numFollowings');                                                                          // 68
+    }                                                                                                               // 69
                                                                                                                     //
-    return following;                                                                                               // 45
-  }(),                                                                                                              // 45
-  'followers': function () {                                                                                        // 51
-    function followers() {                                                                                          // 51
-      Meteor.call('usersFollowers', function (err, res) {                                                           // 52
-        Session.set('numFollowers', res);                                                                           // 53
-      });                                                                                                           // 54
-      return Session.get('numFollowers');                                                                           // 55
-    }                                                                                                               // 56
+    return following;                                                                                               // 64
+  }(),                                                                                                              // 64
+  'followers': function () {                                                                                        // 70
+    function followers() {                                                                                          // 70
+      Meteor.call('usersFollowers', currentUserName, function (err, res) {                                          // 71
+        Session.set('numFollowers', res);                                                                           // 72
+      });                                                                                                           // 73
+      return Session.get('numFollowers');                                                                           // 74
+    }                                                                                                               // 75
                                                                                                                     //
-    return followers;                                                                                               // 51
-  }(),                                                                                                              // 51
-  'existsSocialNetwork': function () {                                                                              // 57
-    function existsSocialNetwork() {                                                                                // 57
+    return followers;                                                                                               // 70
+  }(),                                                                                                              // 70
+  'existsSocialNetwork': function () {                                                                              // 76
+    function existsSocialNetwork() {                                                                                // 76
                                                                                                                     //
-      var btnSocial = [];                                                                                           // 59
+      var btnSocial = [];                                                                                           // 78
                                                                                                                     //
-      if (dataUser.userFb) {                                                                                        // 61
-        var newData = new Object();                                                                                 // 62
-        newData.color = "primary";                                                                                  // 63
-        newData['class'] = "fa fa-facebook";                                                                        // 64
-        newData.id = "Facebook";                                                                                    // 65
-        btnSocial.push(newData);                                                                                    // 66
-      }                                                                                                             // 67
+      if (dataUser.userFb) {                                                                                        // 80
+        var newData = new Object();                                                                                 // 81
+        newData.color = "primary";                                                                                  // 82
+        newData['class'] = "fa fa-facebook";                                                                        // 83
+        newData.id = "Facebook";                                                                                    // 84
+        btnSocial.push(newData);                                                                                    // 85
+      }                                                                                                             // 86
                                                                                                                     //
-      if (dataUser.userInsta) {                                                                                     // 69
-        var newData = new Object();                                                                                 // 70
-        newData.color = "warning";                                                                                  // 71
-        newData['class'] = "fa fa-instagram";                                                                       // 72
-        newData.id = "Instagram";                                                                                   // 73
-        btnSocial.push(newData);                                                                                    // 74
-      }                                                                                                             // 75
+      if (dataUser.userInsta) {                                                                                     // 88
+        var newData = new Object();                                                                                 // 89
+        newData.color = "warning";                                                                                  // 90
+        newData['class'] = "fa fa-instagram";                                                                       // 91
+        newData.id = "Instagram";                                                                                   // 92
+        btnSocial.push(newData);                                                                                    // 93
+      }                                                                                                             // 94
                                                                                                                     //
-      if (dataUser.userWhats) {                                                                                     // 77
-        var newData = new Object();                                                                                 // 78
-        newData.color = "success";                                                                                  // 79
-        newData['class'] = "fa fa-whatsapp";                                                                        // 80
-        newData.id = "WhatsApp";                                                                                    // 81
-        btnSocial.push(newData);                                                                                    // 82
-      }                                                                                                             // 83
+      if (dataUser.userWhats) {                                                                                     // 96
+        var newData = new Object();                                                                                 // 97
+        newData.color = "success";                                                                                  // 98
+        newData['class'] = "fa fa-whatsapp";                                                                        // 99
+        newData.id = "WhatsApp";                                                                                    // 100
+        btnSocial.push(newData);                                                                                    // 101
+      }                                                                                                             // 102
                                                                                                                     //
-      return btnSocial;                                                                                             // 85
-    }                                                                                                               // 86
+      return btnSocial;                                                                                             // 104
+    }                                                                                                               // 105
                                                                                                                     //
-    return existsSocialNetwork;                                                                                     // 57
-  }(),                                                                                                              // 57
-  'showProfileOtherUser': function () {                                                                             // 87
-    function showProfileOtherUser() {                                                                               // 87
-      return Session.get('showProfileOtherUser');                                                                   // 88
-    }                                                                                                               // 89
+    return existsSocialNetwork;                                                                                     // 76
+  }(),                                                                                                              // 76
+  'showProfileOtherUser': function () {                                                                             // 106
+    function showProfileOtherUser() {                                                                               // 106
+      return Session.get('showProfileOtherUser');                                                                   // 107
+    }                                                                                                               // 108
                                                                                                                     //
-    return showProfileOtherUser;                                                                                    // 87
-  }()                                                                                                               // 87
-});                                                                                                                 // 20
+    return showProfileOtherUser;                                                                                    // 106
+  }(),                                                                                                              // 106
+  'isWhatsapp': function () {                                                                                       // 109
+    function isWhatsapp() {                                                                                         // 109
+      if (this.id === "WhatsApp") {                                                                                 // 110
+        return true;                                                                                                // 111
+      }                                                                                                             // 112
+    }                                                                                                               // 113
+                                                                                                                    //
+    return isWhatsapp;                                                                                              // 109
+  }()                                                                                                               // 109
+});                                                                                                                 // 39
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"main.html":["./template.main.js",function(require,exports,module){
@@ -3524,6 +3794,8 @@ require("./client/partialTemplates/template.navBarTemplate.js");
 require("./client/partialTemplates/template.not_found.js");
 require("./client/partialTemplates/template.notifications.js");
 require("./client/partialTemplates/template.notificationsNew.js");
+require("./client/partialTemplates/template.removeProfile.js");
+require("./client/partialTemplates/template.sentPeticion.js");
 require("./client/partialTemplates/template.showSocialNetwork.js");
 require("./client/partialTemplates/template.socialNetworkBox.js");
 require("./client/partialTemplates/template.tweetBox.js");
@@ -3543,6 +3815,8 @@ require("./client/partialTemplates/followUsers.js");
 require("./client/partialTemplates/navBarTemplate.js");
 require("./client/partialTemplates/notifications.js");
 require("./client/partialTemplates/notificationsNew.js");
+require("./client/partialTemplates/removeProfile.js");
+require("./client/partialTemplates/sentPeticion.js");
 require("./client/partialTemplates/showSocialNetwork.js");
 require("./client/partialTemplates/socialNetworkBox.js");
 require("./client/partialTemplates/tweetBox.js");

@@ -574,7 +574,34 @@ Meteor.methods({                                                                
     return Images.insert({                                                                             // 78
       imgCode: code                                                                                    // 79
     });                                                                                                // 78
-  }                                                                                                    // 81
+  },                                                                                                   // 81
+                                                                                                       //
+  'removeThisUser': function removeThisUser(userToRemove) {                                            // 83
+    //HAY QUE ELIMINAR EL USUARIO DE dataUser Y DE users                                               //
+    var idImgUser = DataUser.findOne({ userId: userToRemove.id }).userImg;                             // 85
+                                                                                                       //
+    if (idImgUser) {                                                                                   // 87
+      Images.remove({ _id: idImgUser });                                                               // 88
+    }                                                                                                  // 89
+                                                                                                       //
+    Notifications.remove({ recepNotif: userToRemove.name });                                           // 91
+    Relationships.remove({ follower: userToRemove.name });                                             // 92
+    Relationships.remove({ following: userToRemove.name });                                            // 93
+                                                                                                       //
+    Favs.find({ idUserTapFav: userToRemove.id }).fetch().map(function (data) {                         // 95
+      if (data.idUserTapFav) {                                                                         // 96
+        var aux = data.idUserTapFav;                                                                   // 97
+        var pos = aux.indexOf(userToRemove.id);                                                        // 98
+        if (pos != -1) {                                                                               // 99
+          UserUtils.removeFavToTwiit(data.idTwiit, userToRemove.id);                                   // 100
+        }                                                                                              // 101
+      }                                                                                                // 102
+    });                                                                                                // 103
+                                                                                                       //
+    Twitts.remove({ user: userToRemove.name });                                                        // 105
+    Meteor.users.remove({ _id: userToRemove.id });                                                     // 106
+    DataUser.remove({ userId: userToRemove.id });                                                      // 107
+  }                                                                                                    // 108
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -594,13 +621,13 @@ Meteor.methods({                                                                
     return resul.length;                                                                               // 6
   },                                                                                                   // 7
                                                                                                        //
-  'usersFollowers': function usersFollowers() {                                                        // 9
-    var currentFollowers = UserUtils.findFollowers(Meteor.user().username);                            // 10
+  'usersFollowers': function usersFollowers(username) {                                                // 9
+    var currentFollowers = UserUtils.findFollowers(username);                                          // 10
     return currentFollowers.length;                                                                    // 11
   },                                                                                                   // 12
                                                                                                        //
-  'usersFollowings': function usersFollowings() {                                                      // 14
-    var currentFollowings = UserUtils.findFollowings(Meteor.user().username);                          // 15
+  'usersFollowings': function usersFollowings(username) {                                              // 14
+    var currentFollowings = UserUtils.findFollowings(username);                                        // 15
                                                                                                        //
     return currentFollowings.length;                                                                   // 17
   }                                                                                                    // 18
@@ -628,36 +655,37 @@ Meteor.startup(function () {                                                    
     update: function update(id, doc) {                                                                 // 11
       return true;                                                                                     // 12
     }                                                                                                  // 13
+                                                                                                       //
   });                                                                                                  // 7
                                                                                                        //
-  Favs.allow({                                                                                         // 16
-    insert: function insert(userId, disconnect) {                                                      // 17
-      return true;                                                                                     // 18
-    },                                                                                                 // 19
-    update: function update(userId, doc) {                                                             // 20
-      console.log("Update Oper");                                                                      // 21
-      return true;                                                                                     // 22
-    }                                                                                                  // 23
-  });                                                                                                  // 16
+  Favs.allow({                                                                                         // 17
+    insert: function insert(userId, disconnect) {                                                      // 18
+      return true;                                                                                     // 19
+    },                                                                                                 // 20
+    update: function update(userId, doc) {                                                             // 21
+      console.log("Update Oper");                                                                      // 22
+      return true;                                                                                     // 23
+    }                                                                                                  // 24
+  });                                                                                                  // 17
                                                                                                        //
-  Notifications.allow({                                                                                // 26
-    update: function update(userId, doc) {                                                             // 27
-      return true;                                                                                     // 28
-    }                                                                                                  // 29
-  });                                                                                                  // 26
+  Notifications.allow({                                                                                // 27
+    update: function update(userId, doc) {                                                             // 28
+      return true;                                                                                     // 29
+    }                                                                                                  // 30
+  });                                                                                                  // 27
                                                                                                        //
-  DataUser.allow({                                                                                     // 32
-    insert: function insert(userId, disconnect) {                                                      // 33
-      return true;                                                                                     // 34
-    }                                                                                                  // 35
-  });                                                                                                  // 32
+  DataUser.allow({                                                                                     // 33
+    insert: function insert(userId, disconnect) {                                                      // 34
+      return true;                                                                                     // 35
+    }                                                                                                  // 36
+  });                                                                                                  // 33
                                                                                                        //
-  Images.allow({                                                                                       // 38
-    insert: function insert(userId, disconnect) {                                                      // 39
-      return true;                                                                                     // 40
-    }                                                                                                  // 41
-  });                                                                                                  // 38
-});                                                                                                    // 43
+  Images.allow({                                                                                       // 39
+    insert: function insert(userId, disconnect) {                                                      // 40
+      return true;                                                                                     // 41
+    }                                                                                                  // 42
+  });                                                                                                  // 39
+});                                                                                                    // 44
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }]}},{"extensions":[".js",".json"]});
