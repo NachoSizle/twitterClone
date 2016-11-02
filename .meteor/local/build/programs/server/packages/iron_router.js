@@ -1468,5 +1468,3 @@ if (typeof Package === 'undefined') Package = {};
 });
 
 })();
-
-//# sourceMappingURL=iron_router.js.map

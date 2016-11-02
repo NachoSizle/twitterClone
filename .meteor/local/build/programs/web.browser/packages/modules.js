@@ -139,7 +139,7 @@ install("ejson");                                                               
 install("id-map");                                                                                             // 45
 install("ordered-dict");                                                                                       // 46
 install("tracker");                                                                                            // 47
-install("babel-runtime");                                                                                      // 48
+install("babel-runtime", "meteor/babel-runtime/babel-runtime.js");                                             // 48
 install("random");                                                                                             // 49
 install("mongo-id");                                                                                           // 50
 install("diff-sequence");                                                                                      // 51

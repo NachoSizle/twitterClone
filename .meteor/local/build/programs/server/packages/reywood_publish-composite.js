@@ -484,5 +484,3 @@ if (typeof Package === 'undefined') Package = {};
 Package['reywood:publish-composite'] = {};
 
 })();
-
-//# sourceMappingURL=reywood_publish-composite.js.map

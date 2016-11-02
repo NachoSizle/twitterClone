@@ -1575,8 +1575,8 @@ Template.editProfile.events({                                                   
 						}                                                                                                             // 16
 						newData.userId = userAux._id;                                                                                 // 17
                                                                                                                     //
-						//AHORA NOS GUARDAMOS EL _id DEL DOCUEMNTO QUE VAMSO A INSERTAR EN LA COLECCION Images                        //
-						//QUE ALMACENARÁ LA NUEVA FOTO                                                                                //
+						//AHORA NOS GUARDAMOS EL _id DEL DOCUEMNTO QUE VAMSO A INSERTAR EN LA COLECCION Images                        // 19
+						//QUE ALMACENARÁ LA NUEVA FOTO                                                                                // 20
 						var codeImg = $('#imgCurrentUser').attr("src");                                                               // 21
                                                                                                                     //
 						Meteor.call('insertNewImage', codeImg, function (err, res) {                                                  // 23
@@ -1586,7 +1586,7 @@ Template.editProfile.events({                                                   
 								window.location = "/Profile/" + userAux.userNameProfile;                                                    // 27
 						});                                                                                                           // 28
                                                                                                                     //
-						/*                                                                                                            //
+						/*                                                                                                            // 30
       //REALIZAMOS LA PETICION AJAX PARA GUARDAR LA IMAGEN EN PUBLIC                                                //
       //RECUPERAMOS LA IMAGEN QUE HEMOS SUBIDO                                                                      //
       		var file = $('#inputFile')[0].files[0];                                                                     //
@@ -1613,7 +1613,7 @@ Template.editProfile.events({                                                   
 		'change #inputFile': function () {                                                                                // 53
 				function changeInputFile() {                                                                                    // 53
                                                                                                                     //
-						//RECUPERAMOS LA IMAGEN QUE HEMOS SUBIDO                                                                      //
+						//RECUPERAMOS LA IMAGEN QUE HEMOS SUBIDO                                                                      // 55
 						var file = $('#inputFile')[0].files[0];                                                                       // 56
                                                                                                                     //
 						reader = new FileReader();                                                                                    // 58
@@ -1774,10 +1774,10 @@ Template.navBarTemplate.onCreated(function () {                                 
 	Session.set('navBarCollapse', false);                                                                              // 3
 	Session.set('currentUser', Meteor.user().username);                                                                // 4
                                                                                                                     //
-	//PEDIMOS PERMISO AL USUARIO PARA MOSTRARLE NOTIFICACIONES                                                         //
+	//PEDIMOS PERMISO AL USUARIO PARA MOSTRARLE NOTIFICACIONES                                                         // 6
 	console.log(navigator.platform);                                                                                   // 7
                                                                                                                     //
-	/*                                                                                                                 //
+	/*                                                                                                                 // 9
  HAY QUE CONTROLAR ESTO PORQUE NO FUNCIONA EL NOTIFICATION EN IPHONE                                                //
  if(navigator.platform != 'iPad' || navigator.platform != 'iPhone' || navigator.platform != 'iPod'){                //
  	Notification.requestPermission();                                                                                 //
@@ -1785,8 +1785,8 @@ Template.navBarTemplate.onCreated(function () {                                 
  */                                                                                                                 //
 });                                                                                                                 // 16
                                                                                                                     //
-//ESTA ES OTRA FORMA DE HACER APARECER EL SPINNER CUANDO NO SE HA CARGADO LA TEMPLATE                               //
-/*                                                                                                                  //
+//ESTA ES OTRA FORMA DE HACER APARECER EL SPINNER CUANDO NO SE HA CARGADO LA TEMPLATE                               // 18
+/*                                                                                                                  // 19
 	Session.set("onRender", true);                                                                                     //
 });                                                                                                                 //
                                                                                                                     //
@@ -1798,7 +1798,7 @@ Template.navBarTemplate.onRendered(function() {                                 
 Template.navBarTemplate.events({                                                                                    // 28
 	'click #recommendationsBtn': function () {                                                                         // 29
 		function clickRecommendationsBtn() {                                                                              // 29
-			//console.log("A quien seguir");                                                                                 //
+			//console.log("A quien seguir");                                                                                 // 30
 		}                                                                                                                 // 31
                                                                                                                     //
 		return clickRecommendationsBtn;                                                                                   // 29
@@ -1879,7 +1879,7 @@ Template.navBarTemplate.helpers({                                               
 		return userImgFound;                                                                                              // 59
 	}()                                                                                                                // 59
 });                                                                                                                 // 52
-//PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                 //
+//PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                 // 73
 $(window).resize(function () {                                                                                      // 74
 	console.log("Change");                                                                                             // 75
 	Session.set('sizeDisplay', $(window).width());                                                                     // 76
@@ -1895,8 +1895,8 @@ $(window).resize(function () {                                                  
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                     //
 Template.notifications.onCreated(function () {                                                                      // 1
-  //console.log("Usuario: ");                                                                                       //
-  //console.log(Meteor.user().username);                                                                            //
+  //console.log("Usuario: ");                                                                                       // 2
+  //console.log(Meteor.user().username);                                                                            // 3
   Meteor.subscribe('notifications', Meteor.user().username);                                                        // 4
 });                                                                                                                 // 5
                                                                                                                     //
@@ -1922,7 +1922,7 @@ Template.notifications.helpers({                                                
   }(),                                                                                                              // 16
   notificationCount: function () {                                                                                  // 19
     function notificationCount() {                                                                                  // 19
-      /*                                                                                                            //
+      /*                                                                                                            // 20
       var followings = UserUtils.findFollowings(Meteor.user().username);                                            //
       return Notifications.find({twiitNotifUserName: { $nin: followings }, read: false}).count();                   //
       */                                                                                                            //
@@ -1940,7 +1940,7 @@ Template.notifications.helpers({                                                
   }()                                                                                                               // 26
 });                                                                                                                 // 7
                                                                                                                     //
-/*                                                                                                                  //
+/*                                                                                                                  // 31
 Template.notificationItem.helpers({                                                                                 //
   notificationTwiitPath: function() {                                                                               //
     var path = this.twiitId;                                                                                        //
@@ -1967,8 +1967,8 @@ Template.notificationItem.events({                                              
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                     //
 Template.notificationsNew.onCreated(function () {                                                                   // 1
-  //console.log("Usuario: ");                                                                                       //
-  //console.log(Meteor.user().username);                                                                            //
+  //console.log("Usuario: ");                                                                                       // 2
+  //console.log(Meteor.user().username);                                                                            // 3
   Meteor.subscribe('notifications', Meteor.user().username);                                                        // 4
 });                                                                                                                 // 5
                                                                                                                     //
@@ -1987,7 +1987,7 @@ Template.notificationsNew.helpers({                                             
   }(),                                                                                                              // 8
   notifications: function () {                                                                                      // 16
     function notifications() {                                                                                      // 16
-      //followings = UserUtils.findFollowings(Meteor.user().username);                                              //
+      //followings = UserUtils.findFollowings(Meteor.user().username);                                              // 17
       return Notifications.find({ recepNotif: Meteor.user().username, read: false });                               // 18
     }                                                                                                               // 19
                                                                                                                     //
@@ -1995,7 +1995,7 @@ Template.notificationsNew.helpers({                                             
   }(),                                                                                                              // 16
   notificationCount: function () {                                                                                  // 20
     function notificationCount() {                                                                                  // 20
-      /*                                                                                                            //
+      /*                                                                                                            // 21
       var followings = UserUtils.findFollowings(Meteor.user().username);                                            //
       return Notifications.find({twiitNotifUserName: { $nin: followings }, read: false}).count();                   //
       */                                                                                                            //
@@ -2064,7 +2064,7 @@ Template.removeProfile.events({                                                 
     }(),                                                                                                            // 2
     'click #noRemove': function () {                                                                                // 15
         function clickNoRemove() {                                                                                  // 15
-            //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                //
+            //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                // 16
             $('#dialog-removeProfile').modal('hide');                                                               // 17
         }                                                                                                           // 18
                                                                                                                     //
@@ -2147,15 +2147,15 @@ Template.showSocialNetwork.helpers({                                            
   }()                                                                                                               // 18
 });                                                                                                                 // 14
                                                                                                                     //
-//EN EL MODAL EMERGENTE QUE MSTRARÁ LA INFORMACION AÑADIDA DEL USUARIO SOBRE SU RED SOCIAL                          //
-//SE IMPLEMENTARA QUE PINCHE EN EL NOMBRE DE USUARIO Y QUE SE REDIRIJA LA PAGINA A LA                               //
-//PAGINA DE PERFIL DE USUARIO QUE CORRESPONDA                                                                       //
+//EN EL MODAL EMERGENTE QUE MSTRARÁ LA INFORMACION AÑADIDA DEL USUARIO SOBRE SU RED SOCIAL                          // 24
+//SE IMPLEMENTARA QUE PINCHE EN EL NOMBRE DE USUARIO Y QUE SE REDIRIJA LA PAGINA A LA                               // 25
+//PAGINA DE PERFIL DE USUARIO QUE CORRESPONDA                                                                       // 26
                                                                                                                     //
-//EN INSTAGRAM SE REDIRIGIRÁ A: https://www.instagram.com/{{currentUser.userInsta}}/                                //
-//EN FACEBOOK SE REDIRIGIRÁ A: https://www.facebook.com/search/all/?q={{currentUser.userFb}}                        //
+//EN INSTAGRAM SE REDIRIGIRÁ A: https://www.instagram.com/{{currentUser.userInsta}}/                                // 28
+//EN FACEBOOK SE REDIRIGIRÁ A: https://www.facebook.com/search/all/?q={{currentUser.userFb}}                        // 29
                                                                                                                     //
-//EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE                      //
-//AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)                                        //
+//EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE                      // 31
+//AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)                                        // 32
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"socialNetworkBox.js":function(){
@@ -2211,9 +2211,9 @@ Template.socialNetworkBox.events({                                              
     function clickDropdownMenuLiA(event) {                                                                          // 47
       var btnTap = Session.get('btnTap');                                                                           // 48
       var selectOption = event.target.text;                                                                         // 49
-      //AÑADIR A UN ARRAY LAS SELECCIONES QUE HACEMOS PARA QUE NO SE PUEDAN REPETIR.                                //
-      //ES DECIR, UN USUARIO SOLO VA A PODER ENLAZAR 1 CUENTA DE FACEBOOK, INSTAGRAM                                //
-      //O WHATSAPP.                                                                                                 //
+      //AÑADIR A UN ARRAY LAS SELECCIONES QUE HACEMOS PARA QUE NO SE PUEDAN REPETIR.                                // 50
+      //ES DECIR, UN USUARIO SOLO VA A PODER ENLAZAR 1 CUENTA DE FACEBOOK, INSTAGRAM                                // 51
+      //O WHATSAPP.                                                                                                 // 52
       var arrOptions = Session.get('optionsAva');                                                                   // 53
                                                                                                                     //
       var numSele = arrOptions.indexOf(selectOption);                                                               // 55
@@ -2221,13 +2221,13 @@ Template.socialNetworkBox.events({                                              
         arrOptions.splice(numSele, 1);                                                                              // 57
       }                                                                                                             // 58
                                                                                                                     //
-      //VAMOS A COMPROBAR QUE SI selectOption ES WHATSAPP LE VAMOS A PONER AL INPUT UN FORMATO PARA QUE             //
-      //EL USUARIO SOLO PUEDA INTRODUCIR NUMEROS                                                                    //
+      //VAMOS A COMPROBAR QUE SI selectOption ES WHATSAPP LE VAMOS A PONER AL INPUT UN FORMATO PARA QUE             // 60
+      //EL USUARIO SOLO PUEDA INTRODUCIR NUMEROS                                                                    // 61
       if (selectOption === "WhatsApp") {                                                                            // 62
         $('#input' + btnTap).attr("type", "number");                                                                // 63
       }                                                                                                             // 64
                                                                                                                     //
-      //UNA VEZ SELECCIONADO LA OPCION DEL DROPDOWN, TRANSFORMAMOS EL DROPDOWN A UN BTN DESHABILITADO               //
+      //UNA VEZ SELECCIONADO LA OPCION DEL DROPDOWN, TRANSFORMAMOS EL DROPDOWN A UN BTN DESHABILITADO               // 66
       $('#' + btnTap).html(selectOption);                                                                           // 67
                                                                                                                     //
       $('#dropdownMenu' + btnTap).remove();                                                                         // 69
@@ -2242,7 +2242,7 @@ Template.socialNetworkBox.events({                                              
                                                                                                                     //
       //GUARDAMOS EL ID (numero entre 0 y 2) PARA DESPUES IDENTIFICAR EL INPUT-GROUP Y ASI ELIMINAR LOS DATOS DE MONGODB
       var selectOption = event.target.id;                                                                           // 76
-      //AHORA BUSCAMOS EL CAMPO A ELIMINAR Y LLAMAMOS AL METODO DE userData.js                                      //
+      //AHORA BUSCAMOS EL CAMPO A ELIMINAR Y LLAMAMOS AL METODO DE userData.js                                      // 77
       var btnToRem = $('#' + selectOption).text();                                                                  // 78
       var newData = new Object();                                                                                   // 79
                                                                                                                     //
@@ -2253,12 +2253,12 @@ Template.socialNetworkBox.events({                                              
         Meteor.call('removeDataSocialNetworks', newData);                                                           // 85
       };                                                                                                            // 86
                                                                                                                     //
-      //POR ULTIMO VAMOS A INFORMAR AL USUARIO QUE SE HA ELIMINADO LA RED SOCIAL                                    //
-      //PARA ELLO, VAMOS A ELIMINAR EL inputGroup DE LA SN QUE SE HA ELIMINADO                                      //
+      //POR ULTIMO VAMOS A INFORMAR AL USUARIO QUE SE HA ELIMINADO LA RED SOCIAL                                    // 88
+      //PARA ELLO, VAMOS A ELIMINAR EL inputGroup DE LA SN QUE SE HA ELIMINADO                                      // 89
       $('#inputGroup' + selectOption).remove();                                                                     // 90
       Session.set('removeDataSN', true);                                                                            // 91
                                                                                                                     //
-      //ACTUALIZAMOS EL VALOR DE optionsAva EN Session.keys                                                         //
+      //ACTUALIZAMOS EL VALOR DE optionsAva EN Session.keys                                                         // 93
       var auxOptions = Session.get('optionsAva');                                                                   // 94
                                                                                                                     //
       if (btnToRem != "Choose") {                                                                                   // 96
@@ -2268,12 +2268,12 @@ Template.socialNetworkBox.events({                                              
         };                                                                                                          // 100
       };                                                                                                            // 101
                                                                                                                     //
-      //ACTUALIZAMOS EL VALOR DE countSocialNetworks EN Session.keys                                                //
+      //ACTUALIZAMOS EL VALOR DE countSocialNetworks EN Session.keys                                                // 103
       var auxCount = Session.get('countSocialNetworks');                                                            // 104
       auxCount--;                                                                                                   // 105
       Session.set('countSocialNetworks', auxCount);                                                                 // 106
                                                                                                                     //
-      //CUANDO SE BORRA UN INPUTGROUP HAY QUE REESTABLECER LOS ID PARA QUE EMPIECEN POR 0 HASTA 2                   //
+      //CUANDO SE BORRA UN INPUTGROUP HAY QUE REESTABLECER LOS ID PARA QUE EMPIECEN POR 0 HASTA 2                   // 108
                                                                                                                     //
       for (var i = 0; i < auxCount; i++) {                                                                          // 110
         $('.input-group').attr('id', 'inputGroup' + i);                                                             // 111
@@ -2299,20 +2299,20 @@ Template.socialNetworkBox.events({                                              
   }(),                                                                                                              // 73
   'click #saveData': function () {                                                                                  // 129
     function clickSaveData() {                                                                                      // 129
-      //DE ESTA MANERA OBTENEMOS TODOS LOS BLOQUES QUE HEMOS AÑADIDO DINÁMICAMENTE                                  //
-      //HAY QUE OBTENER TODOS LOS VALORES SELECCIONADOS EN CADA DROPDOWN Y EL CONTENIDO DE SUS RESPECTIVOS INPUT    //
-      //TODO                                                                                                        //
+      //DE ESTA MANERA OBTENEMOS TODOS LOS BLOQUES QUE HEMOS AÑADIDO DINÁMICAMENTE                                  // 130
+      //HAY QUE OBTENER TODOS LOS VALORES SELECCIONADOS EN CADA DROPDOWN Y EL CONTENIDO DE SUS RESPECTIVOS INPUT    // 131
+      //TODO                                                                                                        // 132
       var valuesInput = [];                                                                                         // 133
       var valuesButton = [];                                                                                        // 134
       var foundInputNewSN = false;                                                                                  // 135
                                                                                                                     //
-      //PARA CADA CASO HAY QUE COMPROBAR QUE LOS INPUT QUE TIENEN, ESTAN RELLENADOS. EN EL CASO DE LAS REDES QUE    //
-      //YA EXISTEN EN MNONGODB, SE COGERÁ SU PLACEHOLDER.                                                           //
+      //PARA CADA CASO HAY QUE COMPROBAR QUE LOS INPUT QUE TIENEN, ESTAN RELLENADOS. EN EL CASO DE LAS REDES QUE    // 137
+      //YA EXISTEN EN MNONGODB, SE COGERÁ SU PLACEHOLDER.                                                           // 138
       if (Session.get('modeToAdd') === true) {                                                                      // 139
-        //ESTE ES EL CASO QUE SE DA CUANDO SE HA INTRODUCIDO UNA NUEVA RED SOCIAL PARA ANIADIRLA A MONGODB          //
-        //ESTE CASO SALTA CUANDO SE HA DADO AL BOTON DE addNewSN                                                    //
+        //ESTE ES EL CASO QUE SE DA CUANDO SE HA INTRODUCIDO UNA NUEVA RED SOCIAL PARA ANIADIRLA A MONGODB          // 140
+        //ESTE CASO SALTA CUANDO SE HA DADO AL BOTON DE addNewSN                                                    // 141
                                                                                                                     //
-        //RECORREMOS LOS INPUT QUE VIENEN DIRECTAMENTE DE MONGODB                                                   //
+        //RECORREMOS LOS INPUT QUE VIENEN DIRECTAMENTE DE MONGODB                                                   // 143
         $('.inputSN').each(function () {                                                                            // 144
           if ($(this).val() === "") {                                                                               // 145
             valuesInput.push($(this).attr('placeholder'));                                                          // 146
@@ -2321,7 +2321,7 @@ Template.socialNetworkBox.events({                                              
           }                                                                                                         // 149
         });                                                                                                         // 150
                                                                                                                     //
-        //RECORREMOS LOS INPUT CREADOS CON EL BTN addNewSN                                                          //
+        //RECORREMOS LOS INPUT CREADOS CON EL BTN addNewSN                                                          // 152
         $('.inputNewSN').each(function () {                                                                         // 153
           if ($(this).val() != "") {                                                                                // 154
             valuesInput.push($(this).val());                                                                        // 155
@@ -2337,8 +2337,8 @@ Template.socialNetworkBox.events({                                              
           foundInputNewSN = false;                                                                                  // 165
         }                                                                                                           // 166
       } else {                                                                                                      // 168
-        //ESTE CASO SE PRODUCE CUANDO LAS REDES QUE SE MUESTRAN AL USUARIO SON TODAS YA EXISTENTES EN MONGODB       //
-        //POR TANTO, SOLO RECORREMOS LOS INPUT QUE VIENEN DIRECTAMENTE DE MONGODB                                   //
+        //ESTE CASO SE PRODUCE CUANDO LAS REDES QUE SE MUESTRAN AL USUARIO SON TODAS YA EXISTENTES EN MONGODB       // 169
+        //POR TANTO, SOLO RECORREMOS LOS INPUT QUE VIENEN DIRECTAMENTE DE MONGODB                                   // 170
         $('.inputSN').each(function () {                                                                            // 171
           if ($(this).val() === "") {                                                                               // 172
             valuesInput.push($(this).attr('placeholder'));                                                          // 173
@@ -2350,17 +2350,17 @@ Template.socialNetworkBox.events({                                              
         Session.set('inputNotEmpty', true);                                                                         // 179
       };                                                                                                            // 180
                                                                                                                     //
-      //RECOGEMOS LOS VALORES DE LOS BOTONES DESACTIVADOS (NOMBRES REDES SOCIALES)                                  //
+      //RECOGEMOS LOS VALORES DE LOS BOTONES DESACTIVADOS (NOMBRES REDES SOCIALES)                                  // 182
       $('.btnOptionsSN').each(function () {                                                                         // 183
         valuesButton.push($(this).text());                                                                          // 184
       });                                                                                                           // 185
                                                                                                                     //
-      //ESTA PARTE ESTA CORRECTA                                                                                    //
+      //ESTA PARTE ESTA CORRECTA                                                                                    // 187
       if (Session.get('inputNotEmpty')) {                                                                           // 188
-        //COMPROBAMOS QUE SE HA INTRODUCIDO ALGUN VALOR O SELECCIONADO ALGUNA RED SOCIAL PARA AÑADIRLA              //
+        //COMPROBAMOS QUE SE HA INTRODUCIDO ALGUN VALOR O SELECCIONADO ALGUNA RED SOCIAL PARA AÑADIRLA              // 189
         if (valuesInput && valuesButton) {                                                                          // 190
-          //AHORA OBTENEMOS EL _id DEL USUARIO Y LO AÑADIMOS AL OBJETO QUE LE VAMOS A PASAR                         //
-          //A LA LLAMADA A userData.js QUE SE ENCARGARÁ DE ACTUALIZAR EL REGISTRO.                                  //
+          //AHORA OBTENEMOS EL _id DEL USUARIO Y LO AÑADIMOS AL OBJETO QUE LE VAMOS A PASAR                         // 191
+          //A LA LLAMADA A userData.js QUE SE ENCARGARÁ DE ACTUALIZAR EL REGISTRO.                                  // 192
           var newData = new Object();                                                                               // 193
           newData.userId = Session.get('datauser')._id;                                                             // 194
                                                                                                                     //
@@ -2378,16 +2378,16 @@ Template.socialNetworkBox.events({                                              
               }                                                                                                     // 207
             }                                                                                                       // 208
           }                                                                                                         // 209
-          //POR ULTIMO, REALIZAMOS LA LLAMADA A userData.js                                                         //
+          //POR ULTIMO, REALIZAMOS LA LLAMADA A userData.js                                                         // 210
           Meteor.call('updUserDataSocialNetworks', newData);                                                        // 211
         }                                                                                                           // 212
                                                                                                                     //
-        //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                    //
+        //HAY QUE DECIRLE AL MODAL QUE SE CIERRE                                                                    // 215
         $('#dialog-NewSocialNetwork').modal('hide');                                                                // 216
       }                                                                                                             // 217
                                                                                                                     //
-      //EN EL CASO DE QUE SE DE CLICK A SALVAR DATOS DESPUES DE HABER ELIMINADO UNA RED SOCIAL                      //
-      //SE TENDRÁ QUE DECIR AL SISTEMA QUE CAMBIE LA OPCION DE EDITAR SN A AÑADIR SN                                //
+      //EN EL CASO DE QUE SE DE CLICK A SALVAR DATOS DESPUES DE HABER ELIMINADO UNA RED SOCIAL                      // 219
+      //SE TENDRÁ QUE DECIR AL SISTEMA QUE CAMBIE LA OPCION DE EDITAR SN A AÑADIR SN                                // 220
       if (Session.get('removeDataSN')) {                                                                            // 221
         Session.set('modeToAdd', false);                                                                            // 222
         Session.set('removeDataSN', false);                                                                         // 223
@@ -2441,7 +2441,7 @@ Template.socialNetworkBox.helpers({                                             
         result.messageMode = "Añade tu red social a twiiterClone";                                                  // 268
         Session.set('modeToAdd', true);                                                                             // 269
       } else if (selectOptions.length === 0) {                                                                      // 270
-        //POR ULTIMO VAMOS A AÑADIR LOS CAMPOS PARA PODER SER EDITADOS                                              //
+        //POR ULTIMO VAMOS A AÑADIR LOS CAMPOS PARA PODER SER EDITADOS                                              // 271
         var aux = ["WhatsApp", "Facebook", "Instagram"];                                                            // 272
         var contentToAppend = [];                                                                                   // 273
         for (var i = 0; i < numSocialNetworks; i++) {                                                               // 274
@@ -2495,7 +2495,7 @@ Template.socialNetworkBox.helpers({                                             
 //                                                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                     //
-//DETECTAMOS QUE SE ENCUENTRA EN EL CLIENTE EL CODIGO QUE SE VA  AEJECUTAR                                          //
+//DETECTAMOS QUE SE ENCUENTRA EN EL CLIENTE EL CODIGO QUE SE VA  AEJECUTAR                                          // 1
 if (Meteor.isClient) {                                                                                              // 2
                                                                                                                     //
 	Template.tweetBox.onRendered(function () {                                                                         // 4
@@ -2532,11 +2532,11 @@ if (Meteor.isClient) {                                                          
 					tweet.twiitId = twiitId;                                                                                       // 30
 					tweet.numComment = numComment;                                                                                 // 31
 					tweet.typeOfNotif = "comment";                                                                                 // 32
-					//recepNotif                                                                                                   //
+					//recepNotif                                                                                                   // 33
 					tweet.recepUser = UserUtils.findUserFromTwiit(twiitId);                                                        // 34
 				} else {                                                                                                        // 35
 					tweet.typeOfNotif = "twiit";                                                                                   // 36
-					//recepNotif                                                                                                   //
+					//recepNotif                                                                                                   // 37
 					tweet.recepUser = Meteor.user().username;                                                                      // 38
 				}                                                                                                               // 39
                                                                                                                     //
@@ -2563,8 +2563,8 @@ if (Meteor.isClient) {                                                          
 				if (Session.get('numChars') > 140) {                                                                            // 54
 					return 'errCharCount'; // o el nombre que le disteis en el fichero css                                         // 55
 				} else {                                                                                                        // 56
-						return 'charCount'; //o el nombre que le disteis en el fichero css                                            // 57
-					}                                                                                                              // 58
+					return 'charCount'; //o el nombre que le disteis en el fichero css                                             // 57
+				}                                                                                                               // 58
 			}                                                                                                                // 59
                                                                                                                     //
 			return charClass;                                                                                                // 53
@@ -2646,9 +2646,9 @@ Template.tweetFeed.helpers({                                                    
       var username = Meteor.user().username;                                                                        // 32
                                                                                                                     //
       var numNotif = UserUtils.findNumberNotif(username);                                                           // 34
-      //PRIMERO TENEMOS QUE COMPROBAR SI HAY NOTIFICACIONES                                                         //
+      //PRIMERO TENEMOS QUE COMPROBAR SI HAY NOTIFICACIONES                                                         // 35
       if (numNotif === 1) {                                                                                         // 36
-        //BUSCAMOS LAS NOTIFICACIONES DISPONIBLES                                                                   //
+        //BUSCAMOS LAS NOTIFICACIONES DISPONIBLES                                                                   // 37
         var notif = UserUtils.findOneNotification(username);                                                        // 38
                                                                                                                     //
         UserUtils.createNotifToBrowser(notif.typeOfNotif, notif.actorNotif);                                        // 40
@@ -2668,12 +2668,12 @@ Template.tweetFeed.events({                                                     
       var idUser = Meteor.users.findOne({ username: currentUser })._id;                                             // 50
                                                                                                                     //
       console.log(this._id);                                                                                        // 52
-      //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO                                         //
+      //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO                                         // 53
       var userTapFav = UserUtils.findFavsForTwiit(this._id);                                                        // 54
                                                                                                                     //
-      //HACEMOS UNA COMPROBACION DE QUE EL TWIIT NO TIENE NINGUN FAV O QUE SI LO TIENE                              //
+      //HACEMOS UNA COMPROBACION DE QUE EL TWIIT NO TIENE NINGUN FAV O QUE SI LO TIENE                              // 56
       if (!userTapFav) {                                                                                            // 57
-        //console.log("No tiene FAVS");                                                                             //
+        //console.log("No tiene FAVS");                                                                             // 58
         UserUtils.addFavToTwiit(this._id, idUser);                                                                  // 59
         $("#" + this._id).addClass("heartFav");                                                                     // 60
         $("#" + this._id).removeClass("heartNoFav");                                                                // 61
@@ -2681,7 +2681,7 @@ Template.tweetFeed.events({                                                     
         var arrAux = userTapFav.idUserTapFav;                                                                       // 63
       }                                                                                                             // 64
                                                                                                                     //
-      //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                    //
+      //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                    // 66
       if (arrAux.indexOf(idUser) === -1) {                                                                          // 67
         UserUtils.addFavToTwiit(this._id, idUser);                                                                  // 68
                                                                                                                     //
@@ -2696,9 +2696,9 @@ Template.tweetFeed.events({                                                     
         $("#" + this._id).addClass("heartFav");                                                                     // 78
         $("#" + this._id).removeClass("heartNoFav");                                                                // 79
       } else {                                                                                                      // 80
-        //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                             //
-        //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                          //
-        //LA OPERACION INVERSA                                                                                      //
+        //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                             // 81
+        //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                          // 82
+        //LA OPERACION INVERSA                                                                                      // 83
         UserUtils.removeFavToTwiit(this._id, idUser);                                                               // 84
         $("#" + this._id).addClass("heartNoFav");                                                                   // 85
         $("#" + this._id).removeClass("heartFav");                                                                  // 86
@@ -2710,8 +2710,8 @@ Template.tweetFeed.events({                                                     
   'click #btnComm': function () {                                                                                   // 89
     function clickBtnComm() {                                                                                       // 89
       var numComment = UserUtils.findNumComment(this._id);                                                          // 90
-      //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A                              //
-      //LA RUTA /Comments. SI NO, SE ABRE EL MODAL Y SE PUEDE HACER EL COMENTARIO                                   //
+      //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A                              // 91
+      //LA RUTA /Comments. SI NO, SE ABRE EL MODAL Y SE PUEDE HACER EL COMENTARIO                                   // 92
       if (numComment === 0) {                                                                                       // 93
         $("#dialog-NewTwiit").modal();                                                                              // 94
         Session.set('commentMode', true);                                                                           // 95
@@ -2792,11 +2792,11 @@ Template.tweetFeedProfile.events({                                              
     function clickBtnFav() {                                                                                        // 37
       var currentUser = Session.get('currentUser');                                                                 // 38
       var idUser = Meteor.users.findOne({ username: currentUser })._id;                                             // 39
-      //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO                                         //
+      //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO                                         // 40
       var userTapFav = UserUtils.findFavsForTwiit(this._id);                                                        // 41
       var arrAux = userTapFav.idUserTapFav;                                                                         // 42
                                                                                                                     //
-      //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                    //
+      //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                    // 44
       if (arrAux.indexOf(idUser) === -1) {                                                                          // 45
         UserUtils.addFavToTwiit(this._id, idUser);                                                                  // 46
                                                                                                                     //
@@ -2813,9 +2813,9 @@ Template.tweetFeedProfile.events({                                              
         $("#" + this._id).addClass("heartFav");                                                                     // 58
         $("#" + this._id).removeClass("heartNoFav");                                                                // 59
       } else {                                                                                                      // 60
-        //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                             //
-        //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                          //
-        //LA OPERACION INVERSA                                                                                      //
+        //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                             // 61
+        //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                          // 62
+        //LA OPERACION INVERSA                                                                                      // 63
         UserUtils.removeFavToTwiit(this._id, idUser);                                                               // 64
         $("#" + this._id).addClass("heartNoFav");                                                                   // 65
         $("#" + this._id).removeClass("heartFav");                                                                  // 66
@@ -2858,12 +2858,12 @@ Template.twiitCommentPage.onCreated(function () {                               
 });                                                                                                                 // 4
                                                                                                                     //
 Template.twiitCommentPage.helpers({                                                                                 // 6
-  //DEVUELVE EL MENSAJE ORIGINAL DEL QUE SE PRODUCEN LOS COMENTARIOS                                                //
+  //DEVUELVE EL MENSAJE ORIGINAL DEL QUE SE PRODUCEN LOS COMENTARIOS                                                // 7
   'tweetMessage': function () {                                                                                     // 8
     function tweetMessage() {                                                                                       // 8
-      //HAY QUE CONSEGUIR PASAR A ESTA VISTA EL this._id DE tweetFeed PARA PODER                                    //
-      //DEVOLVER EL TWEET INICIAL Y DE AHI PASAR A MOSTRAR CON tweetThatCommentMessage                              //
-      //TODOS LOS COMENTARIOS QUE TENGA!                                                                            //
+      //HAY QUE CONSEGUIR PASAR A ESTA VISTA EL this._id DE tweetFeed PARA PODER                                    // 9
+      //DEVOLVER EL TWEET INICIAL Y DE AHI PASAR A MOSTRAR CON tweetThatCommentMessage                              // 10
+      //TODOS LOS COMENTARIOS QUE TENGA!                                                                            // 11
       if (this.mode) {                                                                                              // 12
         id = UserUtils.findTwiitFromNotif(this._id);                                                                // 13
         return Twitts.find(id, { sort: { timestamp: -1 } });                                                        // 14
@@ -2919,10 +2919,10 @@ Template.twiitCommentPage.events({                                              
     function clickBtnFav() {                                                                                        // 44
       var currentUser = Session.get('currentUser');                                                                 // 45
       var idUser = Meteor.users.findOne({ username: currentUser })._id;                                             // 46
-      //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO                                         //
+      //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO                                         // 47
       var userTapFav = UserUtils.findFavsForTwiit(this._id);                                                        // 48
       var arrAux = userTapFav.idUserTapFav;                                                                         // 49
-      //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                    //
+      //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                    // 50
       if (arrAux.indexOf(idUser) === -1) {                                                                          // 51
         UserUtils.addFavToTwiit(this._id, idUser);                                                                  // 52
                                                                                                                     //
@@ -2939,9 +2939,9 @@ Template.twiitCommentPage.events({                                              
         $("#" + this._id).addClass("heartFav");                                                                     // 64
         $("#" + this._id).removeClass("heartNoFav");                                                                // 65
       } else {                                                                                                      // 66
-        //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                             //
-        //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                          //
-        //LA OPERACION INVERSA                                                                                      //
+        //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                             // 67
+        //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                          // 68
+        //LA OPERACION INVERSA                                                                                      // 69
         UserUtils.removeFavToTwiit(this._id, idUser);                                                               // 70
         $("#" + this._id).addClass("heartNoFav");                                                                   // 71
         $("#" + this._id).removeClass("heartFav");                                                                  // 72
@@ -3084,8 +3084,8 @@ Template.twiitPageNew.helpers({                                                 
   }(),                                                                                                              // 33
   'findNumComment': function () {                                                                                   // 36
     function findNumComment() {                                                                                     // 36
-      //AQUI this._id ES EL _ID DE LA COLLECTION NOTIFICATIONS                                                      //
-      //POR LO QUE HABRA QUE SACAR EL CAMPO twiitId                                                                 //
+      //AQUI this._id ES EL _ID DE LA COLLECTION NOTIFICATIONS                                                      // 37
+      //POR LO QUE HABRA QUE SACAR EL CAMPO twiitId                                                                 // 38
       var twiitId = UserUtils.findTwiitFromNotif(this._id);                                                         // 39
                                                                                                                     //
       var num = UserUtils.findNumComment(twiitId);                                                                  // 41
@@ -3162,12 +3162,12 @@ Template.twiitPageNew.events({                                                  
       var currentUser = Session.get('currentUser');                                                                 // 84
       var idUser = Meteor.users.findOne({ username: currentUser })._id;                                             // 85
                                                                                                                     //
-      //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO                                         //
+      //BUSCAMOS A LOS USUARIOS QUE HAN DADO FAV AL TWIIT QUE SE HA PULSADO                                         // 87
       var idAux = UserUtils.findTwiitFromNotif(this._id);                                                           // 88
       var userTapFav = UserUtils.findFavsForTwiit(idAux);                                                           // 89
       var arrAux = userTapFav.idUserTapFav;                                                                         // 90
                                                                                                                     //
-      //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                    //
+      //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS                                    // 92
       if (arrAux.indexOf(idUser) === -1) {                                                                          // 93
         UserUtils.addFavToTwiit(idAux, idUser);                                                                     // 94
                                                                                                                     //
@@ -3184,9 +3184,9 @@ Template.twiitPageNew.events({                                                  
         $("#" + this._id).addClass("heartFav");                                                                     // 106
         $("#" + this._id).removeClass("heartNoFav");                                                                // 107
       } else {                                                                                                      // 108
-        //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                             //
-        //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                          //
-        //LA OPERACION INVERSA                                                                                      //
+        //EN EL CASO DE QUE YA LE HAYA DADO A FAV Y QUIERA QUITAR EL FAV QUE LE HA DADO                             // 109
+        //SE EJECUTARÁ ESTE OTRO MÉTODO QUE LO QUE HACE ES LO MISMO QUE addFavToTwiit PERO                          // 110
+        //LA OPERACION INVERSA                                                                                      // 111
         UserUtils.removeFavToTwiit(idAux, idUser);                                                                  // 112
         $("#" + this._id).addClass("heartNoFav");                                                                   // 113
         $("#" + this._id).removeClass("heartFav");                                                                  // 114
@@ -3198,8 +3198,8 @@ Template.twiitPageNew.events({                                                  
   'click #btnComm': function () {                                                                                   // 117
     function clickBtnComm() {                                                                                       // 117
       var numComment = UserUtils.findNumComment(UserUtils.findTwiitFromNotif(this._id));                            // 118
-      //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A                              //
-      //LA RUTA /Comments. SI NO, SE ABRE EL MODAL Y SE PUEDE HACER EL COMENTARIO                                   //
+      //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A                              // 119
+      //LA RUTA /Comments. SI NO, SE ABRE EL MODAL Y SE PUEDE HACER EL COMENTARIO                                   // 120
       if (numComment === 0) {                                                                                       // 121
         $("#dialog-NewTwiit").modal();                                                                              // 122
         Session.set('commentMode', true);                                                                           // 123
@@ -3235,7 +3235,7 @@ Template.userManagement.events({                                                
         if (error) alert(error);                                                                                    // 12
       });                                                                                                           // 13
                                                                                                                     //
-      //Creamos el nuevo usuario en DataUser                                                                        //
+      //Creamos el nuevo usuario en DataUser                                                                        // 15
       var userData = new Object();                                                                                  // 16
       userData.userName = user.profile.fullname;                                                                    // 17
       userData.userNameProfile = user.username;                                                                     // 18
@@ -3309,18 +3309,18 @@ Template.userProfile.events({                                                   
       } else if (idSN === "Instagram") {                                                                            // 18
         window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");                        // 19
       } else if (idSN === "WhatsApp") {                                                                             // 20
-        //EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE              //
-        //AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)                                //
-        //EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL            //
-        //EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?       //
-        //SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER            //
-        //SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.                                  //
+        //EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE              // 21
+        //AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)                                // 22
+        //EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL            // 23
+        //EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?       // 24
+        //SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER            // 25
+        //SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.                                  // 26
         Session.set('userToSentPet', currentUserName);                                                              // 27
         if (!Session.get('showProfileOtherUser')) {                                                                 // 28
-          //ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                          //
+          //ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                          // 29
           $('#dialog-showSocialNetwork').modal('show');                                                             // 30
         } else {                                                                                                    // 31
-          //INICIALIZAMOS EL TOOLTIP                                                                                //
+          //INICIALIZAMOS EL TOOLTIP                                                                                // 32
           $('[data-toggle="tooltip"]').tooltip('show');                                                             // 33
         }                                                                                                           // 34
       }                                                                                                             // 35
@@ -3464,27 +3464,28 @@ module.exports = require("./template.main.js");                                 
 Template.body.addContent((function() {                                                                              // 2
   var view = this;                                                                                                  // 3
   return HTML.DIV({                                                                                                 // 4
-    class: "row"                                                                                                    // 5
-  }, "\n\t\t", Blaze.If(function() {                                                                                // 6
-    return Spacebars.call(view.templateInstance().subscriptionsReady());                                            // 7
-  }, function() {                                                                                                   // 8
-    return [ "\n\t\t    ", Blaze.If(function() {                                                                    // 9
-      return Spacebars.call(view.lookup("currentUser"));                                                            // 10
-    }, function() {                                                                                                 // 11
-      return [ "\n\t\t    \t", Spacebars.include(view.lookupTemplate("navBarTemplate")), "\n\t\t  \t" ];            // 12
-    }), "\n\t  \t" ];                                                                                               // 13
-  }, function() {                                                                                                   // 14
-    return [ "\n\t\t    ", Spacebars.include(view.lookupTemplate("loading")), "\n\t  \t" ];                         // 15
-  }), HTML.Raw("\n\t\t<!--{{> btnFloating}}-->\n\t"));                                                              // 16
-}));                                                                                                                // 17
-Meteor.startup(Template.body.renderToDocument);                                                                     // 18
-Meteor.startup(function() {                                                                                         // 19
-  var attrs = {"id":"bodyPpal"};                                                                                    // 20
-  for (var prop in attrs) {                                                                                         // 21
-    document.body.setAttribute(prop, attrs[prop]);                                                                  // 22
-  }                                                                                                                 // 23
-});                                                                                                                 // 24
-                                                                                                                    // 25
+    class: "row",                                                                                                   // 5
+    id: "containerNavBar"                                                                                           // 6
+  }, "\n\t\t", Blaze.If(function() {                                                                                // 7
+    return Spacebars.call(view.templateInstance().subscriptionsReady());                                            // 8
+  }, function() {                                                                                                   // 9
+    return [ "\n\t\t    ", Blaze.If(function() {                                                                    // 10
+      return Spacebars.call(view.lookup("currentUser"));                                                            // 11
+    }, function() {                                                                                                 // 12
+      return [ "\n\t\t    \t", Spacebars.include(view.lookupTemplate("navBarTemplate")), "\n\t\t  \t" ];            // 13
+    }), "\n\t  \t" ];                                                                                               // 14
+  }, function() {                                                                                                   // 15
+    return [ "\n\t\t    ", Spacebars.include(view.lookupTemplate("loading")), "\n\t  \t" ];                         // 16
+  }), HTML.Raw("\n\t\t<!--{{> btnFloating}}-->\n\t"));                                                              // 17
+}));                                                                                                                // 18
+Meteor.startup(Template.body.renderToDocument);                                                                     // 19
+Meteor.startup(function() {                                                                                         // 20
+  var attrs = {"id":"bodyPpal"};                                                                                    // 21
+  for (var prop in attrs) {                                                                                         // 22
+    document.body.setAttribute(prop, attrs[prop]);                                                                  // 23
+  }                                                                                                                 // 24
+});                                                                                                                 // 25
+                                                                                                                    // 26
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"main.js":["meteor/templating","meteor/reactive-var","./main.html",function(require,exports,module){
@@ -3531,7 +3532,7 @@ Router.configure({                                                              
 });                                                                                                                 // 1
                                                                                                                     //
 Router.route('/', { name: 'userManagement' });                                                                      // 6
-/*SE ACCEDE POR WINDOW.LOCATION*/                                                                                   //
+/*SE ACCEDE POR WINDOW.LOCATION*/                                                                                   // 7
 Router.route('/whoToFollow', { name: 'followUsers' });                                                              // 8
 Router.route('/Profile/:username', {                                                                                // 9
 	name: 'userProfile',                                                                                               // 10
@@ -3574,8 +3575,8 @@ Router.route('/Notifications/:userName', {                                      
 		return data;                                                                                                      // 36
 	}()                                                                                                                // 36
 });                                                                                                                 // 34
-//Router.route('/Comments', {name: 'twiitCommentPage'});                                                            //
-/*SE ACCEDE POR PATHFOR*/                                                                                           //
+//Router.route('/Comments', {name: 'twiitCommentPage'});                                                            // 42
+/*SE ACCEDE POR PATHFOR*/                                                                                           // 43
 Router.route('/Comments/:_id', {                                                                                    // 44
 	name: 'twiitCommentPage',                                                                                          // 45
 	data: function () {                                                                                                // 46
@@ -3636,23 +3637,23 @@ UserUtils.findTweets = function (username) {                                    
                                                                                                                     //
   return currentTweets;                                                                                             // 10
 };                                                                                                                  // 11
-//SIGUIENDO                                                                                                         //
+//SIGUIENDO                                                                                                         // 12
 UserUtils.findFollowings = function (username) {                                                                    // 13
   var currentFollowings = Relationships.find({ follower: username }).fetch().map(function (data) {                  // 14
     return data.following;                                                                                          // 15
   });                                                                                                               // 16
-  //console.log("Siguiendo: ");                                                                                     //
-  //console.log(currentFollowings);                                                                                 //
+  //console.log("Siguiendo: ");                                                                                     // 17
+  //console.log(currentFollowings);                                                                                 // 18
                                                                                                                     //
   return currentFollowings;                                                                                         // 20
 };                                                                                                                  // 21
-//SEGUIDORES                                                                                                        //
+//SEGUIDORES                                                                                                        // 22
 UserUtils.findFollowers = function (username) {                                                                     // 23
   var currentFollowers = Relationships.find({ following: username }).fetch().map(function (data) {                  // 24
     return data.following;                                                                                          // 25
   });                                                                                                               // 26
-  //console.log("Seguidores: ");                                                                                    //
-  //console.log(currentFollowers);                                                                                  //
+  //console.log("Seguidores: ");                                                                                    // 27
+  //console.log(currentFollowers);                                                                                  // 28
                                                                                                                     //
   return currentFollowers;                                                                                          // 30
 };                                                                                                                  // 31
@@ -3680,53 +3681,53 @@ UserUtils.findFavsForTwiit = function (id) {                                    
                                                                                                                     //
 UserUtils.addFavToTwiit = function (id, idUser) {                                                                   // 54
   var resultToUpdate = false;                                                                                       // 55
-  //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT              //
+  //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT              // 56
   var favObject = UserUtils.findFavsForTwiit(id);                                                                   // 57
                                                                                                                     //
   if (!favObject) {                                                                                                 // 59
-    //console.log("No tiene FAVS");                                                                                 //
+    //console.log("No tiene FAVS");                                                                                 // 60
                                                                                                                     //
   } else {                                                                                                          // 62
-      var arrAux = favObject.idUserTapFav;                                                                          // 63
-      var idFav = favObject._id;                                                                                    // 64
+    var arrAux = favObject.idUserTapFav;                                                                            // 63
+    var idFav = favObject._id;                                                                                      // 64
                                                                                                                     //
-      arrAux.push(idUser);                                                                                          // 66
-      var num = UserUtils.findNumberFavPerTwiit(id);                                                                // 67
-      num++;                                                                                                        // 68
+    arrAux.push(idUser);                                                                                            // 66
+    var num = UserUtils.findNumberFavPerTwiit(id);                                                                  // 67
+    num++;                                                                                                          // 68
                                                                                                                     //
-      //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                                     //
-      res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                                 // 71
-      resT = Twitts.update(id, { $set: { numFav: num } });                                                          // 72
+    //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                                       // 70
+    res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                                   // 71
+    resT = Twitts.update(id, { $set: { numFav: num } });                                                            // 72
                                                                                                                     //
-      //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                          //
-      if (res && resT) {                                                                                            // 75
-        resultToUpdate = true;                                                                                      // 76
-      }                                                                                                             // 77
-    }                                                                                                               // 78
+    //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                            // 74
+    if (res && resT) {                                                                                              // 75
+      resultToUpdate = true;                                                                                        // 76
+    }                                                                                                               // 77
+  }                                                                                                                 // 78
                                                                                                                     //
   return resultToUpdate;                                                                                            // 80
 };                                                                                                                  // 81
                                                                                                                     //
 UserUtils.removeFavToTwiit = function (id, idUser) {                                                                // 83
   var resultToUpdate = false;                                                                                       // 84
-  //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT              //
+  //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT              // 85
   var favObject = UserUtils.findFavsForTwiit(id);                                                                   // 86
   var arrAux = favObject.idUserTapFav;                                                                              // 87
   var idFav = favObject._id;                                                                                        // 88
                                                                                                                     //
-  //HAY QUE AVERIGUAR LA POSICION DEL idUser DENTRO DEL ARRAY DE LA BBDD                                            //
+  //HAY QUE AVERIGUAR LA POSICION DEL idUser DENTRO DEL ARRAY DE LA BBDD                                            // 90
   var posIdUser = arrAux.indexOf(idUser);                                                                           // 91
-  //AHORA ELIMINAMOS EL ELEMENTO ASOCIADO A ESA POSICION                                                            //
+  //AHORA ELIMINAMOS EL ELEMENTO ASOCIADO A ESA POSICION                                                            // 92
   delete arrAux[posIdUser];                                                                                         // 93
                                                                                                                     //
   var num = UserUtils.findNumberFavPerTwiit(id);                                                                    // 95
   num--;                                                                                                            // 96
                                                                                                                     //
-  //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                                         //
+  //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                                         // 98
   res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                                     // 99
   resT = Twitts.update(id, { $set: { numFav: num } });                                                              // 100
                                                                                                                     //
-  //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                              //
+  //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                              // 102
   if (res && resT) {                                                                                                // 103
     resultToUpdate = true;                                                                                          // 104
   }                                                                                                                 // 105
@@ -3743,7 +3744,7 @@ UserUtils.findNumComment = function (idTweet) {                                 
   return Twitts.findOne({ _id: idTweet }).numComment;                                                               // 116
 };                                                                                                                  // 117
                                                                                                                     //
-//PARA MOSTRAR NOTIFICACIONES EN EL NAVEGADOR WEB                                                                   //
+//PARA MOSTRAR NOTIFICACIONES EN EL NAVEGADOR WEB                                                                   // 119
 UserUtils.createNotifToBrowser = function (typeNotif, userName) {                                                   // 120
   if (Notification) {                                                                                               // 121
     if (Notification.permission !== "granted") {                                                                    // 122
@@ -3767,12 +3768,12 @@ UserUtils.createNotifToBrowser = function (typeNotif, userName) {               
     var noti = new Notification(title, extra);                                                                      // 140
                                                                                                                     //
     noti.onclick = function () {                                                                                    // 142
-      // Al hacer click                                                                                             //
+      // Al hacer click                                                                                             // 143
       window.location = "/Notifications/" + Meteor.user().username;                                                 // 144
     };                                                                                                              // 145
                                                                                                                     //
     noti.onclose = {                                                                                                // 147
-      // Al cerrar                                                                                                  //
+      // Al cerrar                                                                                                  // 148
     };                                                                                                              // 147
                                                                                                                     //
     setTimeout(function () {                                                                                        // 151

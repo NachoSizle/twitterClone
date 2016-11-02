@@ -623,5 +623,3 @@ if (typeof Package === 'undefined') Package = {};
 Package['iron:url'] = {};
 
 })();
-
-//# sourceMappingURL=iron_url.js.map

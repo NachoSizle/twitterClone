@@ -740,5 +740,3 @@ if (typeof Package === 'undefined') Package = {};
 Package['iron:dynamic-template'] = {};
 
 })();
-
-//# sourceMappingURL=iron_dynamic-template.js.map

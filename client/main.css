@@ -1,7 +1,4 @@
 /* CSS declarations go here */
-.tweetbox-container {
-  margin: 45px;
-}
 
 .tweetbox {
   background-color: rgb(240, 247, 254);
@@ -24,9 +21,9 @@
 }
 
 .tweetbox-container {
-  margin: 30px;
+  margin-top: 50px;
   margin-left: 10px;
-  margin-right: 0px;
+  margin-right: 10px;
 }
 
 .tweetbox,.userBox {
@@ -51,7 +48,7 @@
 
 .user-container {
   margin-top: 10px;
-  margin-left: 25px;
+  margin-left: 10px;
   margin-right: 10px;
 }
 
@@ -113,7 +110,7 @@
 }
 
 .tweetfeed-container {
-  margin: 30px;
+  margin: 10px;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -155,7 +152,7 @@ textarea {
 }
 
 #divTweetFeed{
-  padding-right: 0px;
+  padding: 0px;
 }
 /*
 #imgLogTwiiterClone{
@@ -391,4 +388,9 @@ form input:focus:required:invalid{
   border-top-color: inherit;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
+}
+
+/*ELIMINAMOS LOS PADDING QUE HACEN QUE NO SE ADAPTE CORRECTAMENTE A LA PANTALLA*/
+#containerNavBar{
+  margin: 0px;
 }

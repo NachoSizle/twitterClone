@@ -69,6 +69,30 @@ Blaze._warn = function (msg) {                                                  
   }                                                                                                                    // 31
 };                                                                                                                     // 32
                                                                                                                        // 33
+var nativeBind = Function.prototype.bind;                                                                              // 34
+                                                                                                                       // 35
+// An implementation of _.bind which allows better optimization.                                                       // 36
+// See: https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#3-managing-arguments                        // 37
+if (nativeBind) {                                                                                                      // 38
+  Blaze._bind = function (func, obj) {                                                                                 // 39
+    if (arguments.length === 2) {                                                                                      // 40
+      return nativeBind.call(func, obj);                                                                               // 41
+    }                                                                                                                  // 42
+                                                                                                                       // 43
+    // Copy the arguments so this function can be optimized.                                                           // 44
+    var args = new Array(arguments.length);                                                                            // 45
+    for (var i = 0; i < args.length; i++) {                                                                            // 46
+      args[i] = arguments[i];                                                                                          // 47
+    }                                                                                                                  // 48
+                                                                                                                       // 49
+    return nativeBind.apply(func, args.slice(1));                                                                      // 50
+  };                                                                                                                   // 51
+}                                                                                                                      // 52
+else {                                                                                                                 // 53
+  // A slower but backwards compatible version.                                                                        // 54
+  Blaze._bind = _.bind;                                                                                                // 55
+}                                                                                                                      // 56
+                                                                                                                       // 57
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1306,74 +1330,94 @@ Blaze._makeAttributeHandler = function (elem, name, value) {                    
   } else if ((elem.tagName === 'OPTION' && name === 'selected') ||                                                     // 296
              (elem.tagName === 'INPUT' && name === 'checked')) {                                                       // 297
     return new BooleanHandler(name, value);                                                                            // 298
-  } else if ((elem.tagName === 'TEXTAREA' || elem.tagName === 'INPUT')                                                 // 299
-             && name === 'value') {                                                                                    // 300
-    // internally, TEXTAREAs tracks their value in the 'value'                                                         // 301
-    // attribute just like INPUTs.                                                                                     // 302
-    return new DOMPropertyHandler(name, value);                                                                        // 303
-  } else if (name.substring(0,6) === 'xlink:') {                                                                       // 304
-    return new XlinkHandler(name.substring(6), value);                                                                 // 305
-  } else if (isUrlAttribute(elem.tagName, name)) {                                                                     // 306
-    return new UrlHandler(name, value);                                                                                // 307
-  } else {                                                                                                             // 308
-    return new AttributeHandler(name, value);                                                                          // 309
-  }                                                                                                                    // 310
-                                                                                                                       // 311
-  // XXX will need one for 'style' on IE, though modern browsers                                                       // 312
-  // seem to handle setAttribute ok.                                                                                   // 313
-};                                                                                                                     // 314
-                                                                                                                       // 315
-                                                                                                                       // 316
-ElementAttributesUpdater = function (elem) {                                                                           // 317
-  this.elem = elem;                                                                                                    // 318
-  this.handlers = {};                                                                                                  // 319
-};                                                                                                                     // 320
-                                                                                                                       // 321
-// Update attributes on `elem` to the dictionary `attrs`, whose                                                        // 322
-// values are strings.                                                                                                 // 323
-ElementAttributesUpdater.prototype.update = function(newAttrs) {                                                       // 324
-  var elem = this.elem;                                                                                                // 325
-  var handlers = this.handlers;                                                                                        // 326
-                                                                                                                       // 327
-  for (var k in handlers) {                                                                                            // 328
-    if (! _.has(newAttrs, k)) {                                                                                        // 329
-      // remove attributes (and handlers) for attribute names                                                          // 330
-      // that don't exist as keys of `newAttrs` and so won't                                                           // 331
-      // be visited when traversing it.  (Attributes that                                                              // 332
-      // exist in the `newAttrs` object but are `null`                                                                 // 333
-      // are handled later.)                                                                                           // 334
-      var handler = handlers[k];                                                                                       // 335
-      var oldValue = handler.value;                                                                                    // 336
-      handler.value = null;                                                                                            // 337
-      handler.update(elem, oldValue, null);                                                                            // 338
-      delete handlers[k];                                                                                              // 339
-    }                                                                                                                  // 340
-  }                                                                                                                    // 341
-                                                                                                                       // 342
-  for (var k in newAttrs) {                                                                                            // 343
-    var handler = null;                                                                                                // 344
-    var oldValue;                                                                                                      // 345
-    var value = newAttrs[k];                                                                                           // 346
-    if (! _.has(handlers, k)) {                                                                                        // 347
-      if (value !== null) {                                                                                            // 348
-        // make new handler                                                                                            // 349
-        handler = Blaze._makeAttributeHandler(elem, k, value);                                                         // 350
-        handlers[k] = handler;                                                                                         // 351
-        oldValue = null;                                                                                               // 352
-      }                                                                                                                // 353
-    } else {                                                                                                           // 354
-      handler = handlers[k];                                                                                           // 355
-      oldValue = handler.value;                                                                                        // 356
-    }                                                                                                                  // 357
-    if (oldValue !== value) {                                                                                          // 358
-      handler.value = value;                                                                                           // 359
-      handler.update(elem, oldValue, value);                                                                           // 360
-      if (value === null)                                                                                              // 361
-        delete handlers[k];                                                                                            // 362
-    }                                                                                                                  // 363
-  }                                                                                                                    // 364
-};                                                                                                                     // 365
-                                                                                                                       // 366
+  } else if (name === 'autofocus' || name === 'disabled' || name === 'hidden' ||                                       // 299
+             name === 'readonly' || name === 'required') {                                                             // 300
+    return new BooleanHandler(name, value);                                                                            // 301
+  } else if (elem.tagName === 'FORM' && name === 'novalidate') {                                                       // 302
+    return new BooleanHandler(name, value);                                                                            // 303
+  } else if (elem.tagName === 'IFRAME' && name === 'sandbox' && !value) {                                              // 304
+    // Disable sandbox mode (others values will be handled as a normal attr)                                           // 305
+    return new BooleanHandler(name, !!value);                                                                          // 306
+  } else if (elem.tagName === 'IMG' && name === 'ismap') {                                                             // 307
+    return new BooleanHandler(name, value);                                                                            // 308
+  } else if ((elem.tagName === 'INPUT' || elem.tagName === 'SELECT')                                                   // 309
+             && name === 'multiple') {                                                                                 // 310
+    return new BooleanHandler(name, value);                                                                            // 311
+  } else if (elem.tagName === 'OL' && name === 'reversed') {                                                           // 312
+    return new BooleanHandler(name, value);                                                                            // 313
+  } else if (elem.tagName === 'SCRIPT' && name === 'defer') {                                                          // 314
+    return new BooleanHandler(name, value);                                                                            // 315
+  } else if (elem.tagName === 'VIDEO' && (name === 'autoplay' ||                                                       // 316
+             name === 'controls' || name === 'loop' || name === 'muted')) {                                            // 317
+    return new BooleanHandler(name, value);                                                                            // 318
+  } else if ((elem.tagName === 'TEXTAREA' || elem.tagName === 'INPUT')                                                 // 319
+             && name === 'value') {                                                                                    // 320
+    // internally, TEXTAREAs tracks their value in the 'value'                                                         // 321
+    // attribute just like INPUTs.                                                                                     // 322
+    return new DOMPropertyHandler(name, value);                                                                        // 323
+  } else if (name.substring(0,6) === 'xlink:') {                                                                       // 324
+    return new XlinkHandler(name.substring(6), value);                                                                 // 325
+  } else if (isUrlAttribute(elem.tagName, name)) {                                                                     // 326
+    return new UrlHandler(name, value);                                                                                // 327
+  } else {                                                                                                             // 328
+    return new AttributeHandler(name, value);                                                                          // 329
+  }                                                                                                                    // 330
+                                                                                                                       // 331
+  // XXX will need one for 'style' on IE, though modern browsers                                                       // 332
+  // seem to handle setAttribute ok.                                                                                   // 333
+};                                                                                                                     // 334
+                                                                                                                       // 335
+                                                                                                                       // 336
+ElementAttributesUpdater = function (elem) {                                                                           // 337
+  this.elem = elem;                                                                                                    // 338
+  this.handlers = {};                                                                                                  // 339
+};                                                                                                                     // 340
+                                                                                                                       // 341
+// Update attributes on `elem` to the dictionary `attrs`, whose                                                        // 342
+// values are strings.                                                                                                 // 343
+ElementAttributesUpdater.prototype.update = function(newAttrs) {                                                       // 344
+  var elem = this.elem;                                                                                                // 345
+  var handlers = this.handlers;                                                                                        // 346
+                                                                                                                       // 347
+  for (var k in handlers) {                                                                                            // 348
+    if (! _.has(newAttrs, k)) {                                                                                        // 349
+      // remove attributes (and handlers) for attribute names                                                          // 350
+      // that don't exist as keys of `newAttrs` and so won't                                                           // 351
+      // be visited when traversing it.  (Attributes that                                                              // 352
+      // exist in the `newAttrs` object but are `null`                                                                 // 353
+      // are handled later.)                                                                                           // 354
+      var handler = handlers[k];                                                                                       // 355
+      var oldValue = handler.value;                                                                                    // 356
+      handler.value = null;                                                                                            // 357
+      handler.update(elem, oldValue, null);                                                                            // 358
+      delete handlers[k];                                                                                              // 359
+    }                                                                                                                  // 360
+  }                                                                                                                    // 361
+                                                                                                                       // 362
+  for (var k in newAttrs) {                                                                                            // 363
+    var handler = null;                                                                                                // 364
+    var oldValue;                                                                                                      // 365
+    var value = newAttrs[k];                                                                                           // 366
+    if (! _.has(handlers, k)) {                                                                                        // 367
+      if (value !== null) {                                                                                            // 368
+        // make new handler                                                                                            // 369
+        handler = Blaze._makeAttributeHandler(elem, k, value);                                                         // 370
+        handlers[k] = handler;                                                                                         // 371
+        oldValue = null;                                                                                               // 372
+      }                                                                                                                // 373
+    } else {                                                                                                           // 374
+      handler = handlers[k];                                                                                           // 375
+      oldValue = handler.value;                                                                                        // 376
+    }                                                                                                                  // 377
+    if (oldValue !== value) {                                                                                          // 378
+      handler.value = value;                                                                                           // 379
+      handler.update(elem, oldValue, value);                                                                           // 380
+      if (value === null)                                                                                              // 381
+        delete handlers[k];                                                                                            // 382
+    }                                                                                                                  // 383
+  }                                                                                                                    // 384
+};                                                                                                                     // 385
+                                                                                                                       // 386
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -1463,7 +1507,7 @@ var materializeDOMInner = function (htmljs, intoArray, parentView, workStack) { 
       }                                                                                                                // 70
     } else if (HTML.isArray(htmljs)) {                                                                                 // 71
       for (var i = htmljs.length-1; i >= 0; i--) {                                                                     // 72
-        workStack.push(_.bind(Blaze._materializeDOM, null,                                                             // 73
+        workStack.push(Blaze._bind(Blaze._materializeDOM, null,                                                        // 73
                               htmljs[i], intoArray, parentView, workStack));                                           // 74
       }                                                                                                                // 75
       return;                                                                                                          // 76
@@ -1556,7 +1600,7 @@ var materializeTag = function (tag, parentView, workStack) {                    
       }                                                                                                                // 163
     });                                                                                                                // 164
     // now push the task that calculates childNodesAndRanges                                                           // 165
-    workStack.push(_.bind(Blaze._materializeDOM, null,                                                                 // 166
+    workStack.push(Blaze._bind(Blaze._materializeDOM, null,                                                            // 166
                           children, childNodesAndRanges, parentView,                                                   // 167
                           workStack));                                                                                 // 168
   }                                                                                                                    // 169
@@ -1862,719 +1906,716 @@ Blaze.View.prototype.autorun = function (f, _inViewScope, displayName) {        
   if (this._isInRender) {                                                                                              // 186
     throw new Error("Can't call View#autorun from inside render(); try calling it from the created or rendered callback");
   }                                                                                                                    // 188
-  if (Tracker.active) {                                                                                                // 189
-    throw new Error("Can't call View#autorun from a Tracker Computation; try calling it from the created or rendered callback");
-  }                                                                                                                    // 191
-                                                                                                                       // 192
-  var templateInstanceFunc = Blaze.Template._currentTemplateInstanceFunc;                                              // 193
-                                                                                                                       // 194
-  var func = function viewAutorun(c) {                                                                                 // 195
-    return Blaze._withCurrentView(_inViewScope || self, function () {                                                  // 196
-      return Blaze.Template._withTemplateInstanceFunc(                                                                 // 197
-        templateInstanceFunc, function () {                                                                            // 198
-          return f.call(self, c);                                                                                      // 199
-        });                                                                                                            // 200
-    });                                                                                                                // 201
-  };                                                                                                                   // 202
-                                                                                                                       // 203
-  // Give the autorun function a better name for debugging and profiling.                                              // 204
-  // The `displayName` property is not part of the spec but browsers like Chrome                                       // 205
-  // and Firefox prefer it in debuggers over the name function was declared by.                                        // 206
-  func.displayName =                                                                                                   // 207
-    (self.name || 'anonymous') + ':' + (displayName || 'anonymous');                                                   // 208
-  var comp = Tracker.autorun(func);                                                                                    // 209
-                                                                                                                       // 210
-  var stopComputation = function () { comp.stop(); };                                                                  // 211
-  self.onViewDestroyed(stopComputation);                                                                               // 212
-  comp.onStop(function () {                                                                                            // 213
-    self.removeViewDestroyedListener(stopComputation);                                                                 // 214
-  });                                                                                                                  // 215
+                                                                                                                       // 189
+  var templateInstanceFunc = Blaze.Template._currentTemplateInstanceFunc;                                              // 190
+                                                                                                                       // 191
+  var func = function viewAutorun(c) {                                                                                 // 192
+    return Blaze._withCurrentView(_inViewScope || self, function () {                                                  // 193
+      return Blaze.Template._withTemplateInstanceFunc(                                                                 // 194
+        templateInstanceFunc, function () {                                                                            // 195
+          return f.call(self, c);                                                                                      // 196
+        });                                                                                                            // 197
+    });                                                                                                                // 198
+  };                                                                                                                   // 199
+                                                                                                                       // 200
+  // Give the autorun function a better name for debugging and profiling.                                              // 201
+  // The `displayName` property is not part of the spec but browsers like Chrome                                       // 202
+  // and Firefox prefer it in debuggers over the name function was declared by.                                        // 203
+  func.displayName =                                                                                                   // 204
+    (self.name || 'anonymous') + ':' + (displayName || 'anonymous');                                                   // 205
+  var comp = Tracker.autorun(func);                                                                                    // 206
+                                                                                                                       // 207
+  var stopComputation = function () { comp.stop(); };                                                                  // 208
+  self.onViewDestroyed(stopComputation);                                                                               // 209
+  comp.onStop(function () {                                                                                            // 210
+    self.removeViewDestroyedListener(stopComputation);                                                                 // 211
+  });                                                                                                                  // 212
+                                                                                                                       // 213
+  return comp;                                                                                                         // 214
+};                                                                                                                     // 215
                                                                                                                        // 216
-  return comp;                                                                                                         // 217
-};                                                                                                                     // 218
+Blaze.View.prototype._errorIfShouldntCallSubscribe = function () {                                                     // 217
+  var self = this;                                                                                                     // 218
                                                                                                                        // 219
-Blaze.View.prototype._errorIfShouldntCallSubscribe = function () {                                                     // 220
-  var self = this;                                                                                                     // 221
-                                                                                                                       // 222
-  if (! self.isCreated) {                                                                                              // 223
-    throw new Error("View#subscribe must be called from the created callback at the earliest");                        // 224
-  }                                                                                                                    // 225
-  if (self._isInRender) {                                                                                              // 226
+  if (! self.isCreated) {                                                                                              // 220
+    throw new Error("View#subscribe must be called from the created callback at the earliest");                        // 221
+  }                                                                                                                    // 222
+  if (self._isInRender) {                                                                                              // 223
     throw new Error("Can't call View#subscribe from inside render(); try calling it from the created or rendered callback");
-  }                                                                                                                    // 228
-  if (self.isDestroyed) {                                                                                              // 229
+  }                                                                                                                    // 225
+  if (self.isDestroyed) {                                                                                              // 226
     throw new Error("Can't call View#subscribe from inside the destroyed callback, try calling it inside created or rendered.");
-  }                                                                                                                    // 231
-};                                                                                                                     // 232
-                                                                                                                       // 233
-/**                                                                                                                    // 234
- * Just like Blaze.View#autorun, but with Meteor.subscribe instead of                                                  // 235
- * Tracker.autorun. Stop the subscription when the view is destroyed.                                                  // 236
- * @return {SubscriptionHandle} A handle to the subscription so that you can                                           // 237
- * see if it is ready, or stop it manually                                                                             // 238
- */                                                                                                                    // 239
-Blaze.View.prototype.subscribe = function (args, options) {                                                            // 240
-  var self = this;                                                                                                     // 241
-  options = options || {};                                                                                             // 242
-                                                                                                                       // 243
-  self._errorIfShouldntCallSubscribe();                                                                                // 244
-                                                                                                                       // 245
-  var subHandle;                                                                                                       // 246
-  if (options.connection) {                                                                                            // 247
-    subHandle = options.connection.subscribe.apply(options.connection, args);                                          // 248
-  } else {                                                                                                             // 249
-    subHandle = Meteor.subscribe.apply(Meteor, args);                                                                  // 250
-  }                                                                                                                    // 251
-                                                                                                                       // 252
-  self.onViewDestroyed(function () {                                                                                   // 253
-    subHandle.stop();                                                                                                  // 254
-  });                                                                                                                  // 255
+  }                                                                                                                    // 228
+};                                                                                                                     // 229
+                                                                                                                       // 230
+/**                                                                                                                    // 231
+ * Just like Blaze.View#autorun, but with Meteor.subscribe instead of                                                  // 232
+ * Tracker.autorun. Stop the subscription when the view is destroyed.                                                  // 233
+ * @return {SubscriptionHandle} A handle to the subscription so that you can                                           // 234
+ * see if it is ready, or stop it manually                                                                             // 235
+ */                                                                                                                    // 236
+Blaze.View.prototype.subscribe = function (args, options) {                                                            // 237
+  var self = this;                                                                                                     // 238
+  options = options || {};                                                                                             // 239
+                                                                                                                       // 240
+  self._errorIfShouldntCallSubscribe();                                                                                // 241
+                                                                                                                       // 242
+  var subHandle;                                                                                                       // 243
+  if (options.connection) {                                                                                            // 244
+    subHandle = options.connection.subscribe.apply(options.connection, args);                                          // 245
+  } else {                                                                                                             // 246
+    subHandle = Meteor.subscribe.apply(Meteor, args);                                                                  // 247
+  }                                                                                                                    // 248
+                                                                                                                       // 249
+  self.onViewDestroyed(function () {                                                                                   // 250
+    subHandle.stop();                                                                                                  // 251
+  });                                                                                                                  // 252
+                                                                                                                       // 253
+  return subHandle;                                                                                                    // 254
+};                                                                                                                     // 255
                                                                                                                        // 256
-  return subHandle;                                                                                                    // 257
-};                                                                                                                     // 258
-                                                                                                                       // 259
-Blaze.View.prototype.firstNode = function () {                                                                         // 260
-  if (! this._isAttached)                                                                                              // 261
-    throw new Error("View must be attached before accessing its DOM");                                                 // 262
+Blaze.View.prototype.firstNode = function () {                                                                         // 257
+  if (! this._isAttached)                                                                                              // 258
+    throw new Error("View must be attached before accessing its DOM");                                                 // 259
+                                                                                                                       // 260
+  return this._domrange.firstNode();                                                                                   // 261
+};                                                                                                                     // 262
                                                                                                                        // 263
-  return this._domrange.firstNode();                                                                                   // 264
-};                                                                                                                     // 265
-                                                                                                                       // 266
-Blaze.View.prototype.lastNode = function () {                                                                          // 267
-  if (! this._isAttached)                                                                                              // 268
-    throw new Error("View must be attached before accessing its DOM");                                                 // 269
+Blaze.View.prototype.lastNode = function () {                                                                          // 264
+  if (! this._isAttached)                                                                                              // 265
+    throw new Error("View must be attached before accessing its DOM");                                                 // 266
+                                                                                                                       // 267
+  return this._domrange.lastNode();                                                                                    // 268
+};                                                                                                                     // 269
                                                                                                                        // 270
-  return this._domrange.lastNode();                                                                                    // 271
-};                                                                                                                     // 272
-                                                                                                                       // 273
-Blaze._fireCallbacks = function (view, which) {                                                                        // 274
-  Blaze._withCurrentView(view, function () {                                                                           // 275
-    Tracker.nonreactive(function fireCallbacks() {                                                                     // 276
-      var cbs = view._callbacks[which];                                                                                // 277
-      for (var i = 0, N = (cbs && cbs.length); i < N; i++)                                                             // 278
-        cbs[i] && cbs[i].call(view);                                                                                   // 279
-    });                                                                                                                // 280
-  });                                                                                                                  // 281
-};                                                                                                                     // 282
-                                                                                                                       // 283
-Blaze._createView = function (view, parentView, forExpansion) {                                                        // 284
-  if (view.isCreated)                                                                                                  // 285
-    throw new Error("Can't render the same View twice");                                                               // 286
-                                                                                                                       // 287
-  view.parentView = (parentView || null);                                                                              // 288
-  view.isCreated = true;                                                                                               // 289
-  if (forExpansion)                                                                                                    // 290
-    view._isCreatedForExpansion = true;                                                                                // 291
+Blaze._fireCallbacks = function (view, which) {                                                                        // 271
+  Blaze._withCurrentView(view, function () {                                                                           // 272
+    Tracker.nonreactive(function fireCallbacks() {                                                                     // 273
+      var cbs = view._callbacks[which];                                                                                // 274
+      for (var i = 0, N = (cbs && cbs.length); i < N; i++)                                                             // 275
+        cbs[i] && cbs[i].call(view);                                                                                   // 276
+    });                                                                                                                // 277
+  });                                                                                                                  // 278
+};                                                                                                                     // 279
+                                                                                                                       // 280
+Blaze._createView = function (view, parentView, forExpansion) {                                                        // 281
+  if (view.isCreated)                                                                                                  // 282
+    throw new Error("Can't render the same View twice");                                                               // 283
+                                                                                                                       // 284
+  view.parentView = (parentView || null);                                                                              // 285
+  view.isCreated = true;                                                                                               // 286
+  if (forExpansion)                                                                                                    // 287
+    view._isCreatedForExpansion = true;                                                                                // 288
+                                                                                                                       // 289
+  Blaze._fireCallbacks(view, 'created');                                                                               // 290
+};                                                                                                                     // 291
                                                                                                                        // 292
-  Blaze._fireCallbacks(view, 'created');                                                                               // 293
-};                                                                                                                     // 294
-                                                                                                                       // 295
-var doFirstRender = function (view, initialContent) {                                                                  // 296
-  var domrange = new Blaze._DOMRange(initialContent);                                                                  // 297
-  view._domrange = domrange;                                                                                           // 298
-  domrange.view = view;                                                                                                // 299
-  view.isRendered = true;                                                                                              // 300
-  Blaze._fireCallbacks(view, 'rendered');                                                                              // 301
-                                                                                                                       // 302
-  var teardownHook = null;                                                                                             // 303
+var doFirstRender = function (view, initialContent) {                                                                  // 293
+  var domrange = new Blaze._DOMRange(initialContent);                                                                  // 294
+  view._domrange = domrange;                                                                                           // 295
+  domrange.view = view;                                                                                                // 296
+  view.isRendered = true;                                                                                              // 297
+  Blaze._fireCallbacks(view, 'rendered');                                                                              // 298
+                                                                                                                       // 299
+  var teardownHook = null;                                                                                             // 300
+                                                                                                                       // 301
+  domrange.onAttached(function attached(range, element) {                                                              // 302
+    view._isAttached = true;                                                                                           // 303
                                                                                                                        // 304
-  domrange.onAttached(function attached(range, element) {                                                              // 305
-    view._isAttached = true;                                                                                           // 306
-                                                                                                                       // 307
-    teardownHook = Blaze._DOMBackend.Teardown.onElementTeardown(                                                       // 308
-      element, function teardown() {                                                                                   // 309
-        Blaze._destroyView(view, true /* _skipNodes */);                                                               // 310
-      });                                                                                                              // 311
-  });                                                                                                                  // 312
-                                                                                                                       // 313
-  // tear down the teardown hook                                                                                       // 314
-  view.onViewDestroyed(function () {                                                                                   // 315
-    teardownHook && teardownHook.stop();                                                                               // 316
-    teardownHook = null;                                                                                               // 317
-  });                                                                                                                  // 318
+    teardownHook = Blaze._DOMBackend.Teardown.onElementTeardown(                                                       // 305
+      element, function teardown() {                                                                                   // 306
+        Blaze._destroyView(view, true /* _skipNodes */);                                                               // 307
+      });                                                                                                              // 308
+  });                                                                                                                  // 309
+                                                                                                                       // 310
+  // tear down the teardown hook                                                                                       // 311
+  view.onViewDestroyed(function () {                                                                                   // 312
+    teardownHook && teardownHook.stop();                                                                               // 313
+    teardownHook = null;                                                                                               // 314
+  });                                                                                                                  // 315
+                                                                                                                       // 316
+  return domrange;                                                                                                     // 317
+};                                                                                                                     // 318
                                                                                                                        // 319
-  return domrange;                                                                                                     // 320
-};                                                                                                                     // 321
-                                                                                                                       // 322
-// Take an uncreated View `view` and create and render it to DOM,                                                      // 323
-// setting up the autorun that updates the View.  Returns a new                                                        // 324
-// DOMRange, which has been associated with the View.                                                                  // 325
-//                                                                                                                     // 326
-// The private arguments `_workStack` and `_intoArray` are passed in                                                   // 327
-// by Blaze._materializeDOM and are only present for recursive calls                                                   // 328
-// (when there is some other _materializeView on the stack).  If                                                       // 329
-// provided, then we avoid the mutual recursion of calling back into                                                   // 330
-// Blaze._materializeDOM so that deep View hierarchies don't blow the                                                  // 331
-// stack.  Instead, we push tasks onto workStack for the initial                                                       // 332
-// rendering and subsequent setup of the View, and they are done after                                                 // 333
-// we return.  When there is a _workStack, we do not return the new                                                    // 334
-// DOMRange, but instead push it into _intoArray from a _workStack                                                     // 335
-// task.                                                                                                               // 336
-Blaze._materializeView = function (view, parentView, _workStack, _intoArray) {                                         // 337
-  Blaze._createView(view, parentView);                                                                                 // 338
-                                                                                                                       // 339
-  var domrange;                                                                                                        // 340
-  var lastHtmljs;                                                                                                      // 341
-  // We don't expect to be called in a Computation, but just in case,                                                  // 342
-  // wrap in Tracker.nonreactive.                                                                                      // 343
-  Tracker.nonreactive(function () {                                                                                    // 344
-    view.autorun(function doRender(c) {                                                                                // 345
-      // `view.autorun` sets the current view.                                                                         // 346
-      view.renderCount++;                                                                                              // 347
-      view._isInRender = true;                                                                                         // 348
-      // Any dependencies that should invalidate this Computation come                                                 // 349
-      // from this line:                                                                                               // 350
-      var htmljs = view._render();                                                                                     // 351
-      view._isInRender = false;                                                                                        // 352
-                                                                                                                       // 353
-      if (! c.firstRun) {                                                                                              // 354
-        Tracker.nonreactive(function doMaterialize() {                                                                 // 355
-          // re-render                                                                                                 // 356
-          var rangesAndNodes = Blaze._materializeDOM(htmljs, [], view);                                                // 357
-          if (! Blaze._isContentEqual(lastHtmljs, htmljs)) {                                                           // 358
-            domrange.setMembers(rangesAndNodes);                                                                       // 359
-            Blaze._fireCallbacks(view, 'rendered');                                                                    // 360
-          }                                                                                                            // 361
-        });                                                                                                            // 362
-      }                                                                                                                // 363
-      lastHtmljs = htmljs;                                                                                             // 364
-                                                                                                                       // 365
-      // Causes any nested views to stop immediately, not when we call                                                 // 366
-      // `setMembers` the next time around the autorun.  Otherwise,                                                    // 367
-      // helpers in the DOM tree to be replaced might be scheduled                                                     // 368
-      // to re-run before we have a chance to stop them.                                                               // 369
-      Tracker.onInvalidate(function () {                                                                               // 370
-        if (domrange) {                                                                                                // 371
-          domrange.destroyMembers();                                                                                   // 372
-        }                                                                                                              // 373
-      });                                                                                                              // 374
-    }, undefined, 'materialize');                                                                                      // 375
-                                                                                                                       // 376
-    // first render.  lastHtmljs is the first htmljs.                                                                  // 377
-    var initialContents;                                                                                               // 378
-    if (! _workStack) {                                                                                                // 379
-      initialContents = Blaze._materializeDOM(lastHtmljs, [], view);                                                   // 380
-      domrange = doFirstRender(view, initialContents);                                                                 // 381
-      initialContents = null; // help GC because we close over this scope a lot                                        // 382
-    } else {                                                                                                           // 383
-      // We're being called from Blaze._materializeDOM, so to avoid                                                    // 384
-      // recursion and save stack space, provide a description of the                                                  // 385
-      // work to be done instead of doing it.  Tasks pushed onto                                                       // 386
-      // _workStack will be done in LIFO order after we return.                                                        // 387
-      // The work will still be done within a Tracker.nonreactive,                                                     // 388
-      // because it will be done by some call to Blaze._materializeDOM                                                 // 389
-      // (which is always called in a Tracker.nonreactive).                                                            // 390
-      initialContents = [];                                                                                            // 391
-      // push this function first so that it happens last                                                              // 392
-      _workStack.push(function () {                                                                                    // 393
-        domrange = doFirstRender(view, initialContents);                                                               // 394
-        initialContents = null; // help GC because of all the closures here                                            // 395
-        _intoArray.push(domrange);                                                                                     // 396
-      });                                                                                                              // 397
-      // now push the task that calculates initialContents                                                             // 398
-      _workStack.push(_.bind(Blaze._materializeDOM, null,                                                              // 399
-                             lastHtmljs, initialContents, view, _workStack));                                          // 400
-    }                                                                                                                  // 401
-  });                                                                                                                  // 402
-                                                                                                                       // 403
-  if (! _workStack) {                                                                                                  // 404
-    return domrange;                                                                                                   // 405
-  } else {                                                                                                             // 406
-    return null;                                                                                                       // 407
-  }                                                                                                                    // 408
-};                                                                                                                     // 409
-                                                                                                                       // 410
-// Expands a View to HTMLjs, calling `render` recursively on all                                                       // 411
-// Views and evaluating any dynamic attributes.  Calls the `created`                                                   // 412
-// callback, but not the `materialized` or `rendered` callbacks.                                                       // 413
-// Destroys the view immediately, unless called in a Tracker Computation,                                              // 414
-// in which case the view will be destroyed when the Computation is                                                    // 415
-// invalidated.  If called in a Tracker Computation, the result is a                                                   // 416
-// reactive string; that is, the Computation will be invalidated                                                       // 417
-// if any changes are made to the view or subviews that might affect                                                   // 418
-// the HTML.                                                                                                           // 419
-Blaze._expandView = function (view, parentView) {                                                                      // 420
-  Blaze._createView(view, parentView, true /*forExpansion*/);                                                          // 421
-                                                                                                                       // 422
-  view._isInRender = true;                                                                                             // 423
-  var htmljs = Blaze._withCurrentView(view, function () {                                                              // 424
-    return view._render();                                                                                             // 425
-  });                                                                                                                  // 426
-  view._isInRender = false;                                                                                            // 427
-                                                                                                                       // 428
-  var result = Blaze._expand(htmljs, view);                                                                            // 429
-                                                                                                                       // 430
-  if (Tracker.active) {                                                                                                // 431
-    Tracker.onInvalidate(function () {                                                                                 // 432
-      Blaze._destroyView(view);                                                                                        // 433
-    });                                                                                                                // 434
-  } else {                                                                                                             // 435
-    Blaze._destroyView(view);                                                                                          // 436
-  }                                                                                                                    // 437
+// Take an uncreated View `view` and create and render it to DOM,                                                      // 320
+// setting up the autorun that updates the View.  Returns a new                                                        // 321
+// DOMRange, which has been associated with the View.                                                                  // 322
+//                                                                                                                     // 323
+// The private arguments `_workStack` and `_intoArray` are passed in                                                   // 324
+// by Blaze._materializeDOM and are only present for recursive calls                                                   // 325
+// (when there is some other _materializeView on the stack).  If                                                       // 326
+// provided, then we avoid the mutual recursion of calling back into                                                   // 327
+// Blaze._materializeDOM so that deep View hierarchies don't blow the                                                  // 328
+// stack.  Instead, we push tasks onto workStack for the initial                                                       // 329
+// rendering and subsequent setup of the View, and they are done after                                                 // 330
+// we return.  When there is a _workStack, we do not return the new                                                    // 331
+// DOMRange, but instead push it into _intoArray from a _workStack                                                     // 332
+// task.                                                                                                               // 333
+Blaze._materializeView = function (view, parentView, _workStack, _intoArray) {                                         // 334
+  Blaze._createView(view, parentView);                                                                                 // 335
+                                                                                                                       // 336
+  var domrange;                                                                                                        // 337
+  var lastHtmljs;                                                                                                      // 338
+  // We don't expect to be called in a Computation, but just in case,                                                  // 339
+  // wrap in Tracker.nonreactive.                                                                                      // 340
+  Tracker.nonreactive(function () {                                                                                    // 341
+    view.autorun(function doRender(c) {                                                                                // 342
+      // `view.autorun` sets the current view.                                                                         // 343
+      view.renderCount++;                                                                                              // 344
+      view._isInRender = true;                                                                                         // 345
+      // Any dependencies that should invalidate this Computation come                                                 // 346
+      // from this line:                                                                                               // 347
+      var htmljs = view._render();                                                                                     // 348
+      view._isInRender = false;                                                                                        // 349
+                                                                                                                       // 350
+      if (! c.firstRun) {                                                                                              // 351
+        Tracker.nonreactive(function doMaterialize() {                                                                 // 352
+          // re-render                                                                                                 // 353
+          var rangesAndNodes = Blaze._materializeDOM(htmljs, [], view);                                                // 354
+          if (! Blaze._isContentEqual(lastHtmljs, htmljs)) {                                                           // 355
+            domrange.setMembers(rangesAndNodes);                                                                       // 356
+            Blaze._fireCallbacks(view, 'rendered');                                                                    // 357
+          }                                                                                                            // 358
+        });                                                                                                            // 359
+      }                                                                                                                // 360
+      lastHtmljs = htmljs;                                                                                             // 361
+                                                                                                                       // 362
+      // Causes any nested views to stop immediately, not when we call                                                 // 363
+      // `setMembers` the next time around the autorun.  Otherwise,                                                    // 364
+      // helpers in the DOM tree to be replaced might be scheduled                                                     // 365
+      // to re-run before we have a chance to stop them.                                                               // 366
+      Tracker.onInvalidate(function () {                                                                               // 367
+        if (domrange) {                                                                                                // 368
+          domrange.destroyMembers();                                                                                   // 369
+        }                                                                                                              // 370
+      });                                                                                                              // 371
+    }, undefined, 'materialize');                                                                                      // 372
+                                                                                                                       // 373
+    // first render.  lastHtmljs is the first htmljs.                                                                  // 374
+    var initialContents;                                                                                               // 375
+    if (! _workStack) {                                                                                                // 376
+      initialContents = Blaze._materializeDOM(lastHtmljs, [], view);                                                   // 377
+      domrange = doFirstRender(view, initialContents);                                                                 // 378
+      initialContents = null; // help GC because we close over this scope a lot                                        // 379
+    } else {                                                                                                           // 380
+      // We're being called from Blaze._materializeDOM, so to avoid                                                    // 381
+      // recursion and save stack space, provide a description of the                                                  // 382
+      // work to be done instead of doing it.  Tasks pushed onto                                                       // 383
+      // _workStack will be done in LIFO order after we return.                                                        // 384
+      // The work will still be done within a Tracker.nonreactive,                                                     // 385
+      // because it will be done by some call to Blaze._materializeDOM                                                 // 386
+      // (which is always called in a Tracker.nonreactive).                                                            // 387
+      initialContents = [];                                                                                            // 388
+      // push this function first so that it happens last                                                              // 389
+      _workStack.push(function () {                                                                                    // 390
+        domrange = doFirstRender(view, initialContents);                                                               // 391
+        initialContents = null; // help GC because of all the closures here                                            // 392
+        _intoArray.push(domrange);                                                                                     // 393
+      });                                                                                                              // 394
+      // now push the task that calculates initialContents                                                             // 395
+      _workStack.push(Blaze._bind(Blaze._materializeDOM, null,                                                         // 396
+                             lastHtmljs, initialContents, view, _workStack));                                          // 397
+    }                                                                                                                  // 398
+  });                                                                                                                  // 399
+                                                                                                                       // 400
+  if (! _workStack) {                                                                                                  // 401
+    return domrange;                                                                                                   // 402
+  } else {                                                                                                             // 403
+    return null;                                                                                                       // 404
+  }                                                                                                                    // 405
+};                                                                                                                     // 406
+                                                                                                                       // 407
+// Expands a View to HTMLjs, calling `render` recursively on all                                                       // 408
+// Views and evaluating any dynamic attributes.  Calls the `created`                                                   // 409
+// callback, but not the `materialized` or `rendered` callbacks.                                                       // 410
+// Destroys the view immediately, unless called in a Tracker Computation,                                              // 411
+// in which case the view will be destroyed when the Computation is                                                    // 412
+// invalidated.  If called in a Tracker Computation, the result is a                                                   // 413
+// reactive string; that is, the Computation will be invalidated                                                       // 414
+// if any changes are made to the view or subviews that might affect                                                   // 415
+// the HTML.                                                                                                           // 416
+Blaze._expandView = function (view, parentView) {                                                                      // 417
+  Blaze._createView(view, parentView, true /*forExpansion*/);                                                          // 418
+                                                                                                                       // 419
+  view._isInRender = true;                                                                                             // 420
+  var htmljs = Blaze._withCurrentView(view, function () {                                                              // 421
+    return view._render();                                                                                             // 422
+  });                                                                                                                  // 423
+  view._isInRender = false;                                                                                            // 424
+                                                                                                                       // 425
+  var result = Blaze._expand(htmljs, view);                                                                            // 426
+                                                                                                                       // 427
+  if (Tracker.active) {                                                                                                // 428
+    Tracker.onInvalidate(function () {                                                                                 // 429
+      Blaze._destroyView(view);                                                                                        // 430
+    });                                                                                                                // 431
+  } else {                                                                                                             // 432
+    Blaze._destroyView(view);                                                                                          // 433
+  }                                                                                                                    // 434
+                                                                                                                       // 435
+  return result;                                                                                                       // 436
+};                                                                                                                     // 437
                                                                                                                        // 438
-  return result;                                                                                                       // 439
-};                                                                                                                     // 440
-                                                                                                                       // 441
-// Options: `parentView`                                                                                               // 442
-Blaze._HTMLJSExpander = HTML.TransformingVisitor.extend();                                                             // 443
-Blaze._HTMLJSExpander.def({                                                                                            // 444
-  visitObject: function (x) {                                                                                          // 445
-    if (x instanceof Blaze.Template)                                                                                   // 446
-      x = x.constructView();                                                                                           // 447
-    if (x instanceof Blaze.View)                                                                                       // 448
-      return Blaze._expandView(x, this.parentView);                                                                    // 449
-                                                                                                                       // 450
-    // this will throw an error; other objects are not allowed!                                                        // 451
-    return HTML.TransformingVisitor.prototype.visitObject.call(this, x);                                               // 452
-  },                                                                                                                   // 453
-  visitAttributes: function (attrs) {                                                                                  // 454
-    // expand dynamic attributes                                                                                       // 455
-    if (typeof attrs === 'function')                                                                                   // 456
-      attrs = Blaze._withCurrentView(this.parentView, attrs);                                                          // 457
-                                                                                                                       // 458
-    // call super (e.g. for case where `attrs` is an array)                                                            // 459
-    return HTML.TransformingVisitor.prototype.visitAttributes.call(this, attrs);                                       // 460
-  },                                                                                                                   // 461
-  visitAttribute: function (name, value, tag) {                                                                        // 462
-    // expand attribute values that are functions.  Any attribute value                                                // 463
-    // that contains Views must be wrapped in a function.                                                              // 464
-    if (typeof value === 'function')                                                                                   // 465
-      value = Blaze._withCurrentView(this.parentView, value);                                                          // 466
-                                                                                                                       // 467
-    return HTML.TransformingVisitor.prototype.visitAttribute.call(                                                     // 468
-      this, name, value, tag);                                                                                         // 469
-  }                                                                                                                    // 470
-});                                                                                                                    // 471
-                                                                                                                       // 472
-// Return Blaze.currentView, but only if it is being rendered                                                          // 473
-// (i.e. we are in its render() method).                                                                               // 474
-var currentViewIfRendering = function () {                                                                             // 475
-  var view = Blaze.currentView;                                                                                        // 476
-  return (view && view._isInRender) ? view : null;                                                                     // 477
-};                                                                                                                     // 478
-                                                                                                                       // 479
-Blaze._expand = function (htmljs, parentView) {                                                                        // 480
-  parentView = parentView || currentViewIfRendering();                                                                 // 481
-  return (new Blaze._HTMLJSExpander(                                                                                   // 482
-    {parentView: parentView})).visit(htmljs);                                                                          // 483
-};                                                                                                                     // 484
-                                                                                                                       // 485
-Blaze._expandAttributes = function (attrs, parentView) {                                                               // 486
-  parentView = parentView || currentViewIfRendering();                                                                 // 487
-  return (new Blaze._HTMLJSExpander(                                                                                   // 488
-    {parentView: parentView})).visitAttributes(attrs);                                                                 // 489
-};                                                                                                                     // 490
-                                                                                                                       // 491
-Blaze._destroyView = function (view, _skipNodes) {                                                                     // 492
-  if (view.isDestroyed)                                                                                                // 493
-    return;                                                                                                            // 494
-  view.isDestroyed = true;                                                                                             // 495
-                                                                                                                       // 496
-  Blaze._fireCallbacks(view, 'destroyed');                                                                             // 497
-                                                                                                                       // 498
-  // Destroy views and elements recursively.  If _skipNodes,                                                           // 499
-  // only recurse up to views, not elements, for the case where                                                        // 500
-  // the backend (jQuery) is recursing over the elements already.                                                      // 501
-                                                                                                                       // 502
-  if (view._domrange)                                                                                                  // 503
-    view._domrange.destroyMembers(_skipNodes);                                                                         // 504
-};                                                                                                                     // 505
-                                                                                                                       // 506
-Blaze._destroyNode = function (node) {                                                                                 // 507
-  if (node.nodeType === 1)                                                                                             // 508
-    Blaze._DOMBackend.Teardown.tearDownElement(node);                                                                  // 509
-};                                                                                                                     // 510
-                                                                                                                       // 511
-// Are the HTMLjs entities `a` and `b` the same?  We could be                                                          // 512
-// more elaborate here but the point is to catch the most basic                                                        // 513
-// cases.                                                                                                              // 514
-Blaze._isContentEqual = function (a, b) {                                                                              // 515
-  if (a instanceof HTML.Raw) {                                                                                         // 516
-    return (b instanceof HTML.Raw) && (a.value === b.value);                                                           // 517
-  } else if (a == null) {                                                                                              // 518
-    return (b == null);                                                                                                // 519
-  } else {                                                                                                             // 520
-    return (a === b) &&                                                                                                // 521
-      ((typeof a === 'number') || (typeof a === 'boolean') ||                                                          // 522
-       (typeof a === 'string'));                                                                                       // 523
-  }                                                                                                                    // 524
-};                                                                                                                     // 525
-                                                                                                                       // 526
-/**                                                                                                                    // 527
+// Options: `parentView`                                                                                               // 439
+Blaze._HTMLJSExpander = HTML.TransformingVisitor.extend();                                                             // 440
+Blaze._HTMLJSExpander.def({                                                                                            // 441
+  visitObject: function (x) {                                                                                          // 442
+    if (x instanceof Blaze.Template)                                                                                   // 443
+      x = x.constructView();                                                                                           // 444
+    if (x instanceof Blaze.View)                                                                                       // 445
+      return Blaze._expandView(x, this.parentView);                                                                    // 446
+                                                                                                                       // 447
+    // this will throw an error; other objects are not allowed!                                                        // 448
+    return HTML.TransformingVisitor.prototype.visitObject.call(this, x);                                               // 449
+  },                                                                                                                   // 450
+  visitAttributes: function (attrs) {                                                                                  // 451
+    // expand dynamic attributes                                                                                       // 452
+    if (typeof attrs === 'function')                                                                                   // 453
+      attrs = Blaze._withCurrentView(this.parentView, attrs);                                                          // 454
+                                                                                                                       // 455
+    // call super (e.g. for case where `attrs` is an array)                                                            // 456
+    return HTML.TransformingVisitor.prototype.visitAttributes.call(this, attrs);                                       // 457
+  },                                                                                                                   // 458
+  visitAttribute: function (name, value, tag) {                                                                        // 459
+    // expand attribute values that are functions.  Any attribute value                                                // 460
+    // that contains Views must be wrapped in a function.                                                              // 461
+    if (typeof value === 'function')                                                                                   // 462
+      value = Blaze._withCurrentView(this.parentView, value);                                                          // 463
+                                                                                                                       // 464
+    return HTML.TransformingVisitor.prototype.visitAttribute.call(                                                     // 465
+      this, name, value, tag);                                                                                         // 466
+  }                                                                                                                    // 467
+});                                                                                                                    // 468
+                                                                                                                       // 469
+// Return Blaze.currentView, but only if it is being rendered                                                          // 470
+// (i.e. we are in its render() method).                                                                               // 471
+var currentViewIfRendering = function () {                                                                             // 472
+  var view = Blaze.currentView;                                                                                        // 473
+  return (view && view._isInRender) ? view : null;                                                                     // 474
+};                                                                                                                     // 475
+                                                                                                                       // 476
+Blaze._expand = function (htmljs, parentView) {                                                                        // 477
+  parentView = parentView || currentViewIfRendering();                                                                 // 478
+  return (new Blaze._HTMLJSExpander(                                                                                   // 479
+    {parentView: parentView})).visit(htmljs);                                                                          // 480
+};                                                                                                                     // 481
+                                                                                                                       // 482
+Blaze._expandAttributes = function (attrs, parentView) {                                                               // 483
+  parentView = parentView || currentViewIfRendering();                                                                 // 484
+  return (new Blaze._HTMLJSExpander(                                                                                   // 485
+    {parentView: parentView})).visitAttributes(attrs);                                                                 // 486
+};                                                                                                                     // 487
+                                                                                                                       // 488
+Blaze._destroyView = function (view, _skipNodes) {                                                                     // 489
+  if (view.isDestroyed)                                                                                                // 490
+    return;                                                                                                            // 491
+  view.isDestroyed = true;                                                                                             // 492
+                                                                                                                       // 493
+  Blaze._fireCallbacks(view, 'destroyed');                                                                             // 494
+                                                                                                                       // 495
+  // Destroy views and elements recursively.  If _skipNodes,                                                           // 496
+  // only recurse up to views, not elements, for the case where                                                        // 497
+  // the backend (jQuery) is recursing over the elements already.                                                      // 498
+                                                                                                                       // 499
+  if (view._domrange)                                                                                                  // 500
+    view._domrange.destroyMembers(_skipNodes);                                                                         // 501
+};                                                                                                                     // 502
+                                                                                                                       // 503
+Blaze._destroyNode = function (node) {                                                                                 // 504
+  if (node.nodeType === 1)                                                                                             // 505
+    Blaze._DOMBackend.Teardown.tearDownElement(node);                                                                  // 506
+};                                                                                                                     // 507
+                                                                                                                       // 508
+// Are the HTMLjs entities `a` and `b` the same?  We could be                                                          // 509
+// more elaborate here but the point is to catch the most basic                                                        // 510
+// cases.                                                                                                              // 511
+Blaze._isContentEqual = function (a, b) {                                                                              // 512
+  if (a instanceof HTML.Raw) {                                                                                         // 513
+    return (b instanceof HTML.Raw) && (a.value === b.value);                                                           // 514
+  } else if (a == null) {                                                                                              // 515
+    return (b == null);                                                                                                // 516
+  } else {                                                                                                             // 517
+    return (a === b) &&                                                                                                // 518
+      ((typeof a === 'number') || (typeof a === 'boolean') ||                                                          // 519
+       (typeof a === 'string'));                                                                                       // 520
+  }                                                                                                                    // 521
+};                                                                                                                     // 522
+                                                                                                                       // 523
+/**                                                                                                                    // 524
  * @summary The View corresponding to the current template helper, event handler, callback, or autorun.  If there isn't one, `null`.
- * @locus Client                                                                                                       // 529
- * @type {Blaze.View}                                                                                                  // 530
- */                                                                                                                    // 531
-Blaze.currentView = null;                                                                                              // 532
-                                                                                                                       // 533
-Blaze._withCurrentView = function (view, func) {                                                                       // 534
-  var oldView = Blaze.currentView;                                                                                     // 535
-  try {                                                                                                                // 536
-    Blaze.currentView = view;                                                                                          // 537
-    return func();                                                                                                     // 538
-  } finally {                                                                                                          // 539
-    Blaze.currentView = oldView;                                                                                       // 540
-  }                                                                                                                    // 541
-};                                                                                                                     // 542
-                                                                                                                       // 543
-// Blaze.render publicly takes a View or a Template.                                                                   // 544
-// Privately, it takes any HTMLJS (extended with Views and Templates)                                                  // 545
-// except null or undefined, or a function that returns any extended                                                   // 546
-// HTMLJS.                                                                                                             // 547
-var checkRenderContent = function (content) {                                                                          // 548
-  if (content === null)                                                                                                // 549
-    throw new Error("Can't render null");                                                                              // 550
-  if (typeof content === 'undefined')                                                                                  // 551
-    throw new Error("Can't render undefined");                                                                         // 552
-                                                                                                                       // 553
-  if ((content instanceof Blaze.View) ||                                                                               // 554
-      (content instanceof Blaze.Template) ||                                                                           // 555
-      (typeof content === 'function'))                                                                                 // 556
-    return;                                                                                                            // 557
-                                                                                                                       // 558
-  try {                                                                                                                // 559
-    // Throw if content doesn't look like HTMLJS at the top level                                                      // 560
-    // (i.e. verify that this is an HTML.Tag, or an array,                                                             // 561
-    // or a primitive, etc.)                                                                                           // 562
-    (new HTML.Visitor).visit(content);                                                                                 // 563
-  } catch (e) {                                                                                                        // 564
-    // Make error message suitable for public API                                                                      // 565
-    throw new Error("Expected Template or View");                                                                      // 566
-  }                                                                                                                    // 567
-};                                                                                                                     // 568
-                                                                                                                       // 569
-// For Blaze.render and Blaze.toHTML, take content and                                                                 // 570
-// wrap it in a View, unless it's a single View or                                                                     // 571
-// Template already.                                                                                                   // 572
-var contentAsView = function (content) {                                                                               // 573
-  checkRenderContent(content);                                                                                         // 574
-                                                                                                                       // 575
-  if (content instanceof Blaze.Template) {                                                                             // 576
-    return content.constructView();                                                                                    // 577
-  } else if (content instanceof Blaze.View) {                                                                          // 578
-    return content;                                                                                                    // 579
-  } else {                                                                                                             // 580
-    var func = content;                                                                                                // 581
-    if (typeof func !== 'function') {                                                                                  // 582
-      func = function () {                                                                                             // 583
-        return content;                                                                                                // 584
-      };                                                                                                               // 585
-    }                                                                                                                  // 586
-    return Blaze.View('render', func);                                                                                 // 587
-  }                                                                                                                    // 588
-};                                                                                                                     // 589
-                                                                                                                       // 590
-// For Blaze.renderWithData and Blaze.toHTMLWithData, wrap content                                                     // 591
-// in a function, if necessary, so it can be a content arg to                                                          // 592
-// a Blaze.With.                                                                                                       // 593
-var contentAsFunc = function (content) {                                                                               // 594
-  checkRenderContent(content);                                                                                         // 595
-                                                                                                                       // 596
-  if (typeof content !== 'function') {                                                                                 // 597
-    return function () {                                                                                               // 598
-      return content;                                                                                                  // 599
-    };                                                                                                                 // 600
-  } else {                                                                                                             // 601
-    return content;                                                                                                    // 602
-  }                                                                                                                    // 603
-};                                                                                                                     // 604
-                                                                                                                       // 605
-/**                                                                                                                    // 606
+ * @locus Client                                                                                                       // 526
+ * @type {Blaze.View}                                                                                                  // 527
+ */                                                                                                                    // 528
+Blaze.currentView = null;                                                                                              // 529
+                                                                                                                       // 530
+Blaze._withCurrentView = function (view, func) {                                                                       // 531
+  var oldView = Blaze.currentView;                                                                                     // 532
+  try {                                                                                                                // 533
+    Blaze.currentView = view;                                                                                          // 534
+    return func();                                                                                                     // 535
+  } finally {                                                                                                          // 536
+    Blaze.currentView = oldView;                                                                                       // 537
+  }                                                                                                                    // 538
+};                                                                                                                     // 539
+                                                                                                                       // 540
+// Blaze.render publicly takes a View or a Template.                                                                   // 541
+// Privately, it takes any HTMLJS (extended with Views and Templates)                                                  // 542
+// except null or undefined, or a function that returns any extended                                                   // 543
+// HTMLJS.                                                                                                             // 544
+var checkRenderContent = function (content) {                                                                          // 545
+  if (content === null)                                                                                                // 546
+    throw new Error("Can't render null");                                                                              // 547
+  if (typeof content === 'undefined')                                                                                  // 548
+    throw new Error("Can't render undefined");                                                                         // 549
+                                                                                                                       // 550
+  if ((content instanceof Blaze.View) ||                                                                               // 551
+      (content instanceof Blaze.Template) ||                                                                           // 552
+      (typeof content === 'function'))                                                                                 // 553
+    return;                                                                                                            // 554
+                                                                                                                       // 555
+  try {                                                                                                                // 556
+    // Throw if content doesn't look like HTMLJS at the top level                                                      // 557
+    // (i.e. verify that this is an HTML.Tag, or an array,                                                             // 558
+    // or a primitive, etc.)                                                                                           // 559
+    (new HTML.Visitor).visit(content);                                                                                 // 560
+  } catch (e) {                                                                                                        // 561
+    // Make error message suitable for public API                                                                      // 562
+    throw new Error("Expected Template or View");                                                                      // 563
+  }                                                                                                                    // 564
+};                                                                                                                     // 565
+                                                                                                                       // 566
+// For Blaze.render and Blaze.toHTML, take content and                                                                 // 567
+// wrap it in a View, unless it's a single View or                                                                     // 568
+// Template already.                                                                                                   // 569
+var contentAsView = function (content) {                                                                               // 570
+  checkRenderContent(content);                                                                                         // 571
+                                                                                                                       // 572
+  if (content instanceof Blaze.Template) {                                                                             // 573
+    return content.constructView();                                                                                    // 574
+  } else if (content instanceof Blaze.View) {                                                                          // 575
+    return content;                                                                                                    // 576
+  } else {                                                                                                             // 577
+    var func = content;                                                                                                // 578
+    if (typeof func !== 'function') {                                                                                  // 579
+      func = function () {                                                                                             // 580
+        return content;                                                                                                // 581
+      };                                                                                                               // 582
+    }                                                                                                                  // 583
+    return Blaze.View('render', func);                                                                                 // 584
+  }                                                                                                                    // 585
+};                                                                                                                     // 586
+                                                                                                                       // 587
+// For Blaze.renderWithData and Blaze.toHTMLWithData, wrap content                                                     // 588
+// in a function, if necessary, so it can be a content arg to                                                          // 589
+// a Blaze.With.                                                                                                       // 590
+var contentAsFunc = function (content) {                                                                               // 591
+  checkRenderContent(content);                                                                                         // 592
+                                                                                                                       // 593
+  if (typeof content !== 'function') {                                                                                 // 594
+    return function () {                                                                                               // 595
+      return content;                                                                                                  // 596
+    };                                                                                                                 // 597
+  } else {                                                                                                             // 598
+    return content;                                                                                                    // 599
+  }                                                                                                                    // 600
+};                                                                                                                     // 601
+                                                                                                                       // 602
+/**                                                                                                                    // 603
  * @summary Renders a template or View to DOM nodes and inserts it into the DOM, returning a rendered [View](#blaze_view) which can be passed to [`Blaze.remove`](#blaze_remove).
- * @locus Client                                                                                                       // 608
+ * @locus Client                                                                                                       // 605
  * @param {Template|Blaze.View} templateOrView The template (e.g. `Template.myTemplate`) or View object to render.  If a template, a View object is [constructed](#template_constructview).  If a View, it must be an unrendered View, which becomes a rendered View and is returned.
  * @param {DOMNode} parentNode The node that will be the parent of the rendered template.  It must be an Element node.
  * @param {DOMNode} [nextNode] Optional. If provided, must be a child of <em>parentNode</em>; the template will be inserted before this node. If not provided, the template will be inserted as the last child of parentNode.
  * @param {Blaze.View} [parentView] Optional. If provided, it will be set as the rendered View's [`parentView`](#view_parentview).
- */                                                                                                                    // 613
-Blaze.render = function (content, parentElement, nextNode, parentView) {                                               // 614
-  if (! parentElement) {                                                                                               // 615
-    Blaze._warn("Blaze.render without a parent element is deprecated. " +                                              // 616
-                "You must specify where to insert the rendered content.");                                             // 617
-  }                                                                                                                    // 618
-                                                                                                                       // 619
-  if (nextNode instanceof Blaze.View) {                                                                                // 620
-    // handle omitted nextNode                                                                                         // 621
-    parentView = nextNode;                                                                                             // 622
-    nextNode = null;                                                                                                   // 623
-  }                                                                                                                    // 624
-                                                                                                                       // 625
-  // parentElement must be a DOM node. in particular, can't be the                                                     // 626
-  // result of a call to `$`. Can't check if `parentElement instanceof                                                 // 627
-  // Node` since 'Node' is undefined in IE8.                                                                           // 628
-  if (parentElement && typeof parentElement.nodeType !== 'number')                                                     // 629
-    throw new Error("'parentElement' must be a DOM node");                                                             // 630
-  if (nextNode && typeof nextNode.nodeType !== 'number') // 'nextNode' is optional                                     // 631
-    throw new Error("'nextNode' must be a DOM node");                                                                  // 632
-                                                                                                                       // 633
-  parentView = parentView || currentViewIfRendering();                                                                 // 634
+ */                                                                                                                    // 610
+Blaze.render = function (content, parentElement, nextNode, parentView) {                                               // 611
+  if (! parentElement) {                                                                                               // 612
+    Blaze._warn("Blaze.render without a parent element is deprecated. " +                                              // 613
+                "You must specify where to insert the rendered content.");                                             // 614
+  }                                                                                                                    // 615
+                                                                                                                       // 616
+  if (nextNode instanceof Blaze.View) {                                                                                // 617
+    // handle omitted nextNode                                                                                         // 618
+    parentView = nextNode;                                                                                             // 619
+    nextNode = null;                                                                                                   // 620
+  }                                                                                                                    // 621
+                                                                                                                       // 622
+  // parentElement must be a DOM node. in particular, can't be the                                                     // 623
+  // result of a call to `$`. Can't check if `parentElement instanceof                                                 // 624
+  // Node` since 'Node' is undefined in IE8.                                                                           // 625
+  if (parentElement && typeof parentElement.nodeType !== 'number')                                                     // 626
+    throw new Error("'parentElement' must be a DOM node");                                                             // 627
+  if (nextNode && typeof nextNode.nodeType !== 'number') // 'nextNode' is optional                                     // 628
+    throw new Error("'nextNode' must be a DOM node");                                                                  // 629
+                                                                                                                       // 630
+  parentView = parentView || currentViewIfRendering();                                                                 // 631
+                                                                                                                       // 632
+  var view = contentAsView(content);                                                                                   // 633
+  Blaze._materializeView(view, parentView);                                                                            // 634
                                                                                                                        // 635
-  var view = contentAsView(content);                                                                                   // 636
-  Blaze._materializeView(view, parentView);                                                                            // 637
-                                                                                                                       // 638
-  if (parentElement) {                                                                                                 // 639
-    view._domrange.attach(parentElement, nextNode);                                                                    // 640
-  }                                                                                                                    // 641
+  if (parentElement) {                                                                                                 // 636
+    view._domrange.attach(parentElement, nextNode);                                                                    // 637
+  }                                                                                                                    // 638
+                                                                                                                       // 639
+  return view;                                                                                                         // 640
+};                                                                                                                     // 641
                                                                                                                        // 642
-  return view;                                                                                                         // 643
-};                                                                                                                     // 644
-                                                                                                                       // 645
-Blaze.insert = function (view, parentElement, nextNode) {                                                              // 646
-  Blaze._warn("Blaze.insert has been deprecated.  Specify where to insert the " +                                      // 647
-              "rendered content in the call to Blaze.render.");                                                        // 648
+Blaze.insert = function (view, parentElement, nextNode) {                                                              // 643
+  Blaze._warn("Blaze.insert has been deprecated.  Specify where to insert the " +                                      // 644
+              "rendered content in the call to Blaze.render.");                                                        // 645
+                                                                                                                       // 646
+  if (! (view && (view._domrange instanceof Blaze._DOMRange)))                                                         // 647
+    throw new Error("Expected template rendered with Blaze.render");                                                   // 648
                                                                                                                        // 649
-  if (! (view && (view._domrange instanceof Blaze._DOMRange)))                                                         // 650
-    throw new Error("Expected template rendered with Blaze.render");                                                   // 651
+  view._domrange.attach(parentElement, nextNode);                                                                      // 650
+};                                                                                                                     // 651
                                                                                                                        // 652
-  view._domrange.attach(parentElement, nextNode);                                                                      // 653
-};                                                                                                                     // 654
-                                                                                                                       // 655
-/**                                                                                                                    // 656
- * @summary Renders a template or View to DOM nodes with a data context.  Otherwise identical to `Blaze.render`.       // 657
- * @locus Client                                                                                                       // 658
- * @param {Template|Blaze.View} templateOrView The template (e.g. `Template.myTemplate`) or View object to render.     // 659
+/**                                                                                                                    // 653
+ * @summary Renders a template or View to DOM nodes with a data context.  Otherwise identical to `Blaze.render`.       // 654
+ * @locus Client                                                                                                       // 655
+ * @param {Template|Blaze.View} templateOrView The template (e.g. `Template.myTemplate`) or View object to render.     // 656
  * @param {Object|Function} data The data context to use, or a function returning a data context.  If a function is provided, it will be reactively re-run.
  * @param {DOMNode} parentNode The node that will be the parent of the rendered template.  It must be an Element node.
  * @param {DOMNode} [nextNode] Optional. If provided, must be a child of <em>parentNode</em>; the template will be inserted before this node. If not provided, the template will be inserted as the last child of parentNode.
  * @param {Blaze.View} [parentView] Optional. If provided, it will be set as the rendered View's [`parentView`](#view_parentview).
- */                                                                                                                    // 664
-Blaze.renderWithData = function (content, data, parentElement, nextNode, parentView) {                                 // 665
-  // We defer the handling of optional arguments to Blaze.render.  At this point,                                      // 666
-  // `nextNode` may actually be `parentView`.                                                                          // 667
-  return Blaze.render(Blaze._TemplateWith(data, contentAsFunc(content)),                                               // 668
-                          parentElement, nextNode, parentView);                                                        // 669
-};                                                                                                                     // 670
-                                                                                                                       // 671
-/**                                                                                                                    // 672
+ */                                                                                                                    // 661
+Blaze.renderWithData = function (content, data, parentElement, nextNode, parentView) {                                 // 662
+  // We defer the handling of optional arguments to Blaze.render.  At this point,                                      // 663
+  // `nextNode` may actually be `parentView`.                                                                          // 664
+  return Blaze.render(Blaze._TemplateWith(data, contentAsFunc(content)),                                               // 665
+                          parentElement, nextNode, parentView);                                                        // 666
+};                                                                                                                     // 667
+                                                                                                                       // 668
+/**                                                                                                                    // 669
  * @summary Removes a rendered View from the DOM, stopping all reactive updates and event listeners on it. Also destroys the Blaze.Template instance associated with the view.
- * @locus Client                                                                                                       // 674
+ * @locus Client                                                                                                       // 671
  * @param {Blaze.View} renderedView The return value from `Blaze.render` or `Blaze.renderWithData`, or the `view` property of a Blaze.Template instance. Calling `Blaze.remove(Template.instance().view)` from within a template event handler will destroy the view as well as that template and trigger the template's `onDestroyed` handlers.
- */                                                                                                                    // 676
-Blaze.remove = function (view) {                                                                                       // 677
-  if (! (view && (view._domrange instanceof Blaze._DOMRange)))                                                         // 678
-    throw new Error("Expected template rendered with Blaze.render");                                                   // 679
-                                                                                                                       // 680
-  while (view) {                                                                                                       // 681
-    if (! view.isDestroyed) {                                                                                          // 682
-      var range = view._domrange;                                                                                      // 683
-      if (range.attached && ! range.parentRange)                                                                       // 684
-        range.detach();                                                                                                // 685
-      range.destroy();                                                                                                 // 686
-    }                                                                                                                  // 687
-                                                                                                                       // 688
-    view = view._hasGeneratedParent && view.parentView;                                                                // 689
-  }                                                                                                                    // 690
-};                                                                                                                     // 691
-                                                                                                                       // 692
-/**                                                                                                                    // 693
- * @summary Renders a template or View to a string of HTML.                                                            // 694
- * @locus Client                                                                                                       // 695
+ */                                                                                                                    // 673
+Blaze.remove = function (view) {                                                                                       // 674
+  if (! (view && (view._domrange instanceof Blaze._DOMRange)))                                                         // 675
+    throw new Error("Expected template rendered with Blaze.render");                                                   // 676
+                                                                                                                       // 677
+  while (view) {                                                                                                       // 678
+    if (! view.isDestroyed) {                                                                                          // 679
+      var range = view._domrange;                                                                                      // 680
+      if (range.attached && ! range.parentRange)                                                                       // 681
+        range.detach();                                                                                                // 682
+      range.destroy();                                                                                                 // 683
+    }                                                                                                                  // 684
+                                                                                                                       // 685
+    view = view._hasGeneratedParent && view.parentView;                                                                // 686
+  }                                                                                                                    // 687
+};                                                                                                                     // 688
+                                                                                                                       // 689
+/**                                                                                                                    // 690
+ * @summary Renders a template or View to a string of HTML.                                                            // 691
+ * @locus Client                                                                                                       // 692
  * @param {Template|Blaze.View} templateOrView The template (e.g. `Template.myTemplate`) or View object from which to generate HTML.
- */                                                                                                                    // 697
-Blaze.toHTML = function (content, parentView) {                                                                        // 698
-  parentView = parentView || currentViewIfRendering();                                                                 // 699
+ */                                                                                                                    // 694
+Blaze.toHTML = function (content, parentView) {                                                                        // 695
+  parentView = parentView || currentViewIfRendering();                                                                 // 696
+                                                                                                                       // 697
+  return HTML.toHTML(Blaze._expandView(contentAsView(content), parentView));                                           // 698
+};                                                                                                                     // 699
                                                                                                                        // 700
-  return HTML.toHTML(Blaze._expandView(contentAsView(content), parentView));                                           // 701
-};                                                                                                                     // 702
-                                                                                                                       // 703
-/**                                                                                                                    // 704
- * @summary Renders a template or View to HTML with a data context.  Otherwise identical to `Blaze.toHTML`.            // 705
- * @locus Client                                                                                                       // 706
+/**                                                                                                                    // 701
+ * @summary Renders a template or View to HTML with a data context.  Otherwise identical to `Blaze.toHTML`.            // 702
+ * @locus Client                                                                                                       // 703
  * @param {Template|Blaze.View} templateOrView The template (e.g. `Template.myTemplate`) or View object from which to generate HTML.
- * @param {Object|Function} data The data context to use, or a function returning a data context.                      // 708
- */                                                                                                                    // 709
-Blaze.toHTMLWithData = function (content, data, parentView) {                                                          // 710
-  parentView = parentView || currentViewIfRendering();                                                                 // 711
-                                                                                                                       // 712
-  return HTML.toHTML(Blaze._expandView(Blaze._TemplateWith(                                                            // 713
-    data, contentAsFunc(content)), parentView));                                                                       // 714
-};                                                                                                                     // 715
-                                                                                                                       // 716
-Blaze._toText = function (htmljs, parentView, textMode) {                                                              // 717
-  if (typeof htmljs === 'function')                                                                                    // 718
-    throw new Error("Blaze._toText doesn't take a function, just HTMLjs");                                             // 719
-                                                                                                                       // 720
-  if ((parentView != null) && ! (parentView instanceof Blaze.View)) {                                                  // 721
-    // omitted parentView argument                                                                                     // 722
-    textMode = parentView;                                                                                             // 723
-    parentView = null;                                                                                                 // 724
-  }                                                                                                                    // 725
-  parentView = parentView || currentViewIfRendering();                                                                 // 726
-                                                                                                                       // 727
-  if (! textMode)                                                                                                      // 728
-    throw new Error("textMode required");                                                                              // 729
-  if (! (textMode === HTML.TEXTMODE.STRING ||                                                                          // 730
-         textMode === HTML.TEXTMODE.RCDATA ||                                                                          // 731
-         textMode === HTML.TEXTMODE.ATTRIBUTE))                                                                        // 732
-    throw new Error("Unknown textMode: " + textMode);                                                                  // 733
+ * @param {Object|Function} data The data context to use, or a function returning a data context.                      // 705
+ */                                                                                                                    // 706
+Blaze.toHTMLWithData = function (content, data, parentView) {                                                          // 707
+  parentView = parentView || currentViewIfRendering();                                                                 // 708
+                                                                                                                       // 709
+  return HTML.toHTML(Blaze._expandView(Blaze._TemplateWith(                                                            // 710
+    data, contentAsFunc(content)), parentView));                                                                       // 711
+};                                                                                                                     // 712
+                                                                                                                       // 713
+Blaze._toText = function (htmljs, parentView, textMode) {                                                              // 714
+  if (typeof htmljs === 'function')                                                                                    // 715
+    throw new Error("Blaze._toText doesn't take a function, just HTMLjs");                                             // 716
+                                                                                                                       // 717
+  if ((parentView != null) && ! (parentView instanceof Blaze.View)) {                                                  // 718
+    // omitted parentView argument                                                                                     // 719
+    textMode = parentView;                                                                                             // 720
+    parentView = null;                                                                                                 // 721
+  }                                                                                                                    // 722
+  parentView = parentView || currentViewIfRendering();                                                                 // 723
+                                                                                                                       // 724
+  if (! textMode)                                                                                                      // 725
+    throw new Error("textMode required");                                                                              // 726
+  if (! (textMode === HTML.TEXTMODE.STRING ||                                                                          // 727
+         textMode === HTML.TEXTMODE.RCDATA ||                                                                          // 728
+         textMode === HTML.TEXTMODE.ATTRIBUTE))                                                                        // 729
+    throw new Error("Unknown textMode: " + textMode);                                                                  // 730
+                                                                                                                       // 731
+  return HTML.toText(Blaze._expand(htmljs, parentView), textMode);                                                     // 732
+};                                                                                                                     // 733
                                                                                                                        // 734
-  return HTML.toText(Blaze._expand(htmljs, parentView), textMode);                                                     // 735
-};                                                                                                                     // 736
-                                                                                                                       // 737
-/**                                                                                                                    // 738
+/**                                                                                                                    // 735
  * @summary Returns the current data context, or the data context that was used when rendering a particular DOM element or View from a Meteor template.
- * @locus Client                                                                                                       // 740
- * @param {DOMElement|Blaze.View} [elementOrView] Optional.  An element that was rendered by a Meteor, or a View.      // 741
- */                                                                                                                    // 742
-Blaze.getData = function (elementOrView) {                                                                             // 743
-  var theWith;                                                                                                         // 744
-                                                                                                                       // 745
-  if (! elementOrView) {                                                                                               // 746
-    theWith = Blaze.getView('with');                                                                                   // 747
-  } else if (elementOrView instanceof Blaze.View) {                                                                    // 748
-    var view = elementOrView;                                                                                          // 749
-    theWith = (view.name === 'with' ? view :                                                                           // 750
-               Blaze.getView(view, 'with'));                                                                           // 751
-  } else if (typeof elementOrView.nodeType === 'number') {                                                             // 752
-    if (elementOrView.nodeType !== 1)                                                                                  // 753
-      throw new Error("Expected DOM element");                                                                         // 754
-    theWith = Blaze.getView(elementOrView, 'with');                                                                    // 755
-  } else {                                                                                                             // 756
-    throw new Error("Expected DOM element or View");                                                                   // 757
-  }                                                                                                                    // 758
+ * @locus Client                                                                                                       // 737
+ * @param {DOMElement|Blaze.View} [elementOrView] Optional.  An element that was rendered by a Meteor, or a View.      // 738
+ */                                                                                                                    // 739
+Blaze.getData = function (elementOrView) {                                                                             // 740
+  var theWith;                                                                                                         // 741
+                                                                                                                       // 742
+  if (! elementOrView) {                                                                                               // 743
+    theWith = Blaze.getView('with');                                                                                   // 744
+  } else if (elementOrView instanceof Blaze.View) {                                                                    // 745
+    var view = elementOrView;                                                                                          // 746
+    theWith = (view.name === 'with' ? view :                                                                           // 747
+               Blaze.getView(view, 'with'));                                                                           // 748
+  } else if (typeof elementOrView.nodeType === 'number') {                                                             // 749
+    if (elementOrView.nodeType !== 1)                                                                                  // 750
+      throw new Error("Expected DOM element");                                                                         // 751
+    theWith = Blaze.getView(elementOrView, 'with');                                                                    // 752
+  } else {                                                                                                             // 753
+    throw new Error("Expected DOM element or View");                                                                   // 754
+  }                                                                                                                    // 755
+                                                                                                                       // 756
+  return theWith ? theWith.dataVar.get() : null;                                                                       // 757
+};                                                                                                                     // 758
                                                                                                                        // 759
-  return theWith ? theWith.dataVar.get() : null;                                                                       // 760
-};                                                                                                                     // 761
-                                                                                                                       // 762
-// For back-compat                                                                                                     // 763
-Blaze.getElementData = function (element) {                                                                            // 764
-  Blaze._warn("Blaze.getElementData has been deprecated.  Use " +                                                      // 765
-              "Blaze.getData(element) instead.");                                                                      // 766
+// For back-compat                                                                                                     // 760
+Blaze.getElementData = function (element) {                                                                            // 761
+  Blaze._warn("Blaze.getElementData has been deprecated.  Use " +                                                      // 762
+              "Blaze.getData(element) instead.");                                                                      // 763
+                                                                                                                       // 764
+  if (element.nodeType !== 1)                                                                                          // 765
+    throw new Error("Expected DOM element");                                                                           // 766
                                                                                                                        // 767
-  if (element.nodeType !== 1)                                                                                          // 768
-    throw new Error("Expected DOM element");                                                                           // 769
+  return Blaze.getData(element);                                                                                       // 768
+};                                                                                                                     // 769
                                                                                                                        // 770
-  return Blaze.getData(element);                                                                                       // 771
-};                                                                                                                     // 772
-                                                                                                                       // 773
-// Both arguments are optional.                                                                                        // 774
-                                                                                                                       // 775
-/**                                                                                                                    // 776
- * @summary Gets either the current View, or the View enclosing the given DOM element.                                 // 777
- * @locus Client                                                                                                       // 778
- * @param {DOMElement} [element] Optional.  If specified, the View enclosing `element` is returned.                    // 779
- */                                                                                                                    // 780
-Blaze.getView = function (elementOrView, _viewName) {                                                                  // 781
-  var viewName = _viewName;                                                                                            // 782
-                                                                                                                       // 783
-  if ((typeof elementOrView) === 'string') {                                                                           // 784
-    // omitted elementOrView; viewName present                                                                         // 785
-    viewName = elementOrView;                                                                                          // 786
-    elementOrView = null;                                                                                              // 787
-  }                                                                                                                    // 788
-                                                                                                                       // 789
-  // We could eventually shorten the code by folding the logic                                                         // 790
-  // from the other methods into this method.                                                                          // 791
-  if (! elementOrView) {                                                                                               // 792
-    return Blaze._getCurrentView(viewName);                                                                            // 793
-  } else if (elementOrView instanceof Blaze.View) {                                                                    // 794
-    return Blaze._getParentView(elementOrView, viewName);                                                              // 795
-  } else if (typeof elementOrView.nodeType === 'number') {                                                             // 796
-    return Blaze._getElementView(elementOrView, viewName);                                                             // 797
-  } else {                                                                                                             // 798
-    throw new Error("Expected DOM element or View");                                                                   // 799
-  }                                                                                                                    // 800
-};                                                                                                                     // 801
-                                                                                                                       // 802
-// Gets the current view or its nearest ancestor of name                                                               // 803
-// `name`.                                                                                                             // 804
-Blaze._getCurrentView = function (name) {                                                                              // 805
-  var view = Blaze.currentView;                                                                                        // 806
-  // Better to fail in cases where it doesn't make sense                                                               // 807
-  // to use Blaze._getCurrentView().  There will be a current                                                          // 808
-  // view anywhere it does.  You can check Blaze.currentView                                                           // 809
-  // if you want to know whether there is one or not.                                                                  // 810
-  if (! view)                                                                                                          // 811
-    throw new Error("There is no current view");                                                                       // 812
-                                                                                                                       // 813
-  if (name) {                                                                                                          // 814
-    while (view && view.name !== name)                                                                                 // 815
-      view = view.parentView;                                                                                          // 816
-    return view || null;                                                                                               // 817
-  } else {                                                                                                             // 818
-    // Blaze._getCurrentView() with no arguments just returns                                                          // 819
-    // Blaze.currentView.                                                                                              // 820
-    return view;                                                                                                       // 821
-  }                                                                                                                    // 822
-};                                                                                                                     // 823
+// Both arguments are optional.                                                                                        // 771
+                                                                                                                       // 772
+/**                                                                                                                    // 773
+ * @summary Gets either the current View, or the View enclosing the given DOM element.                                 // 774
+ * @locus Client                                                                                                       // 775
+ * @param {DOMElement} [element] Optional.  If specified, the View enclosing `element` is returned.                    // 776
+ */                                                                                                                    // 777
+Blaze.getView = function (elementOrView, _viewName) {                                                                  // 778
+  var viewName = _viewName;                                                                                            // 779
+                                                                                                                       // 780
+  if ((typeof elementOrView) === 'string') {                                                                           // 781
+    // omitted elementOrView; viewName present                                                                         // 782
+    viewName = elementOrView;                                                                                          // 783
+    elementOrView = null;                                                                                              // 784
+  }                                                                                                                    // 785
+                                                                                                                       // 786
+  // We could eventually shorten the code by folding the logic                                                         // 787
+  // from the other methods into this method.                                                                          // 788
+  if (! elementOrView) {                                                                                               // 789
+    return Blaze._getCurrentView(viewName);                                                                            // 790
+  } else if (elementOrView instanceof Blaze.View) {                                                                    // 791
+    return Blaze._getParentView(elementOrView, viewName);                                                              // 792
+  } else if (typeof elementOrView.nodeType === 'number') {                                                             // 793
+    return Blaze._getElementView(elementOrView, viewName);                                                             // 794
+  } else {                                                                                                             // 795
+    throw new Error("Expected DOM element or View");                                                                   // 796
+  }                                                                                                                    // 797
+};                                                                                                                     // 798
+                                                                                                                       // 799
+// Gets the current view or its nearest ancestor of name                                                               // 800
+// `name`.                                                                                                             // 801
+Blaze._getCurrentView = function (name) {                                                                              // 802
+  var view = Blaze.currentView;                                                                                        // 803
+  // Better to fail in cases where it doesn't make sense                                                               // 804
+  // to use Blaze._getCurrentView().  There will be a current                                                          // 805
+  // view anywhere it does.  You can check Blaze.currentView                                                           // 806
+  // if you want to know whether there is one or not.                                                                  // 807
+  if (! view)                                                                                                          // 808
+    throw new Error("There is no current view");                                                                       // 809
+                                                                                                                       // 810
+  if (name) {                                                                                                          // 811
+    while (view && view.name !== name)                                                                                 // 812
+      view = view.parentView;                                                                                          // 813
+    return view || null;                                                                                               // 814
+  } else {                                                                                                             // 815
+    // Blaze._getCurrentView() with no arguments just returns                                                          // 816
+    // Blaze.currentView.                                                                                              // 817
+    return view;                                                                                                       // 818
+  }                                                                                                                    // 819
+};                                                                                                                     // 820
+                                                                                                                       // 821
+Blaze._getParentView = function (view, name) {                                                                         // 822
+  var v = view.parentView;                                                                                             // 823
                                                                                                                        // 824
-Blaze._getParentView = function (view, name) {                                                                         // 825
-  var v = view.parentView;                                                                                             // 826
-                                                                                                                       // 827
-  if (name) {                                                                                                          // 828
-    while (v && v.name !== name)                                                                                       // 829
-      v = v.parentView;                                                                                                // 830
-  }                                                                                                                    // 831
+  if (name) {                                                                                                          // 825
+    while (v && v.name !== name)                                                                                       // 826
+      v = v.parentView;                                                                                                // 827
+  }                                                                                                                    // 828
+                                                                                                                       // 829
+  return v || null;                                                                                                    // 830
+};                                                                                                                     // 831
                                                                                                                        // 832
-  return v || null;                                                                                                    // 833
-};                                                                                                                     // 834
-                                                                                                                       // 835
-Blaze._getElementView = function (elem, name) {                                                                        // 836
-  var range = Blaze._DOMRange.forElement(elem);                                                                        // 837
-  var view = null;                                                                                                     // 838
-  while (range && ! view) {                                                                                            // 839
-    view = (range.view || null);                                                                                       // 840
-    if (! view) {                                                                                                      // 841
-      if (range.parentRange)                                                                                           // 842
-        range = range.parentRange;                                                                                     // 843
-      else                                                                                                             // 844
-        range = Blaze._DOMRange.forElement(range.parentElement);                                                       // 845
-    }                                                                                                                  // 846
-  }                                                                                                                    // 847
-                                                                                                                       // 848
-  if (name) {                                                                                                          // 849
-    while (view && view.name !== name)                                                                                 // 850
-      view = view.parentView;                                                                                          // 851
-    return view || null;                                                                                               // 852
-  } else {                                                                                                             // 853
-    return view;                                                                                                       // 854
-  }                                                                                                                    // 855
-};                                                                                                                     // 856
-                                                                                                                       // 857
-Blaze._addEventMap = function (view, eventMap, thisInHandler) {                                                        // 858
-  thisInHandler = (thisInHandler || null);                                                                             // 859
-  var handles = [];                                                                                                    // 860
+Blaze._getElementView = function (elem, name) {                                                                        // 833
+  var range = Blaze._DOMRange.forElement(elem);                                                                        // 834
+  var view = null;                                                                                                     // 835
+  while (range && ! view) {                                                                                            // 836
+    view = (range.view || null);                                                                                       // 837
+    if (! view) {                                                                                                      // 838
+      if (range.parentRange)                                                                                           // 839
+        range = range.parentRange;                                                                                     // 840
+      else                                                                                                             // 841
+        range = Blaze._DOMRange.forElement(range.parentElement);                                                       // 842
+    }                                                                                                                  // 843
+  }                                                                                                                    // 844
+                                                                                                                       // 845
+  if (name) {                                                                                                          // 846
+    while (view && view.name !== name)                                                                                 // 847
+      view = view.parentView;                                                                                          // 848
+    return view || null;                                                                                               // 849
+  } else {                                                                                                             // 850
+    return view;                                                                                                       // 851
+  }                                                                                                                    // 852
+};                                                                                                                     // 853
+                                                                                                                       // 854
+Blaze._addEventMap = function (view, eventMap, thisInHandler) {                                                        // 855
+  thisInHandler = (thisInHandler || null);                                                                             // 856
+  var handles = [];                                                                                                    // 857
+                                                                                                                       // 858
+  if (! view._domrange)                                                                                                // 859
+    throw new Error("View must have a DOMRange");                                                                      // 860
                                                                                                                        // 861
-  if (! view._domrange)                                                                                                // 862
-    throw new Error("View must have a DOMRange");                                                                      // 863
-                                                                                                                       // 864
-  view._domrange.onAttached(function attached_eventMaps(range, element) {                                              // 865
-    _.each(eventMap, function (handler, spec) {                                                                        // 866
-      var clauses = spec.split(/,\s+/);                                                                                // 867
-      // iterate over clauses of spec, e.g. ['click .foo', 'click .bar']                                               // 868
-      _.each(clauses, function (clause) {                                                                              // 869
-        var parts = clause.split(/\s+/);                                                                               // 870
-        if (parts.length === 0)                                                                                        // 871
-          return;                                                                                                      // 872
-                                                                                                                       // 873
-        var newEvents = parts.shift();                                                                                 // 874
-        var selector = parts.join(' ');                                                                                // 875
-        handles.push(Blaze._EventSupport.listen(                                                                       // 876
-          element, newEvents, selector,                                                                                // 877
-          function (evt) {                                                                                             // 878
-            if (! range.containsElement(evt.currentTarget))                                                            // 879
-              return null;                                                                                             // 880
-            var handlerThis = thisInHandler || this;                                                                   // 881
-            var handlerArgs = arguments;                                                                               // 882
-            return Blaze._withCurrentView(view, function () {                                                          // 883
-              return handler.apply(handlerThis, handlerArgs);                                                          // 884
-            });                                                                                                        // 885
-          },                                                                                                           // 886
-          range, function (r) {                                                                                        // 887
-            return r.parentRange;                                                                                      // 888
-          }));                                                                                                         // 889
-      });                                                                                                              // 890
-    });                                                                                                                // 891
-  });                                                                                                                  // 892
-                                                                                                                       // 893
-  view.onViewDestroyed(function () {                                                                                   // 894
-    _.each(handles, function (h) {                                                                                     // 895
-      h.stop();                                                                                                        // 896
-    });                                                                                                                // 897
-    handles.length = 0;                                                                                                // 898
-  });                                                                                                                  // 899
-};                                                                                                                     // 900
-                                                                                                                       // 901
+  view._domrange.onAttached(function attached_eventMaps(range, element) {                                              // 862
+    _.each(eventMap, function (handler, spec) {                                                                        // 863
+      var clauses = spec.split(/,\s+/);                                                                                // 864
+      // iterate over clauses of spec, e.g. ['click .foo', 'click .bar']                                               // 865
+      _.each(clauses, function (clause) {                                                                              // 866
+        var parts = clause.split(/\s+/);                                                                               // 867
+        if (parts.length === 0)                                                                                        // 868
+          return;                                                                                                      // 869
+                                                                                                                       // 870
+        var newEvents = parts.shift();                                                                                 // 871
+        var selector = parts.join(' ');                                                                                // 872
+        handles.push(Blaze._EventSupport.listen(                                                                       // 873
+          element, newEvents, selector,                                                                                // 874
+          function (evt) {                                                                                             // 875
+            if (! range.containsElement(evt.currentTarget))                                                            // 876
+              return null;                                                                                             // 877
+            var handlerThis = thisInHandler || this;                                                                   // 878
+            var handlerArgs = arguments;                                                                               // 879
+            return Blaze._withCurrentView(view, function () {                                                          // 880
+              return handler.apply(handlerThis, handlerArgs);                                                          // 881
+            });                                                                                                        // 882
+          },                                                                                                           // 883
+          range, function (r) {                                                                                        // 884
+            return r.parentRange;                                                                                      // 885
+          }));                                                                                                         // 886
+      });                                                                                                              // 887
+    });                                                                                                                // 888
+  });                                                                                                                  // 889
+                                                                                                                       // 890
+  view.onViewDestroyed(function () {                                                                                   // 891
+    _.each(handles, function (h) {                                                                                     // 892
+      h.stop();                                                                                                        // 893
+    });                                                                                                                // 894
+    handles.length = 0;                                                                                                // 895
+  });                                                                                                                  // 896
+};                                                                                                                     // 897
+                                                                                                                       // 898
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }).call(this);
@@ -2975,12 +3016,12 @@ Blaze.registerHelper = function (name, func) {                                  
 // Also documented as Template.deregisterHelper                                                                        // 9
 Blaze.deregisterHelper = function(name) {                                                                              // 10
   delete Blaze._globalHelpers[name];                                                                                   // 11
-}                                                                                                                      // 12
+};                                                                                                                     // 12
                                                                                                                        // 13
 var bindIfIsFunction = function (x, target) {                                                                          // 14
   if (typeof x !== 'function')                                                                                         // 15
     return x;                                                                                                          // 16
-  return _.bind(x, target);                                                                                            // 17
+  return Blaze._bind(x, target);                                                                                       // 17
 };                                                                                                                     // 18
                                                                                                                        // 19
 // If `x` is a function, binds the value of `this` for that function                                                   // 20
@@ -3110,7 +3151,7 @@ Blaze.View.prototype.lookup = function (name, _options) {                       
   var foundTemplate;                                                                                                   // 144
                                                                                                                        // 145
   if (this.templateInstance) {                                                                                         // 146
-    boundTmplInstance = _.bind(this.templateInstance, this);                                                           // 147
+    boundTmplInstance = Blaze._bind(this.templateInstance, this);                                                      // 147
   }                                                                                                                    // 148
                                                                                                                        // 149
   // 0. looking up the parent data context with the special "../" syntax                                               // 150
@@ -3711,7 +3752,7 @@ Template.prototype.events = function (eventMap) {                               
         if (data == null)                                                                                              // 489
           data = {};                                                                                                   // 490
         var args = Array.prototype.slice.call(arguments);                                                              // 491
-        var tmplInstanceFunc = _.bind(view.templateInstance, view);                                                    // 492
+        var tmplInstanceFunc = Blaze._bind(view.templateInstance, view);                                               // 492
         args.splice(1, 0, tmplInstanceFunc());                                                                         // 493
                                                                                                                        // 494
         return Template._withTemplateInstanceFunc(tmplInstanceFunc, function () {                                      // 495

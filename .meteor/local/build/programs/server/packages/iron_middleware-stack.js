@@ -453,5 +453,3 @@ if (typeof Package === 'undefined') Package = {};
 });
 
 })();
-
-//# sourceMappingURL=iron_middleware-stack.js.map
