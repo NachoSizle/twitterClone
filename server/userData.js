@@ -17,7 +17,8 @@ Meteor.methods({
         userNameProfile : userData.userNameProfile,
         userName : userData.userName,
         userImg : userData.userImg,
-        userDescription : userData.userDescription
+        userDescription : userData.userDescription,
+        showWhatsTo: []
       });
     }
   },

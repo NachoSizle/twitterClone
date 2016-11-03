@@ -46,13 +46,14 @@ Template.userProfile.helpers({
 	  	return dataUser;
 	},
 	'userImgFound': function(){
-		if(dataUser.userImg){
+		if(dataUser.userImg != ""){
 			Meteor.call('findUserImg', dataUser.userImg, function(err, res) {
 				$('#imgCurrentUser').attr("src", res);
 		  	});
 		} else {
-			console.log("Imagen test");
-			$('#imgCurrentUser').attr("src", "/profileImgTest.png");
+			console.log("No Img Profile");
+			//$('#imgCurrentUser').attr("src", "/profileImgTest.png");
+			return "/profileImgTest.png";
 		}
 	},
 	'tweets': function(){

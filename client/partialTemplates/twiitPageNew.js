@@ -6,7 +6,10 @@ Template.twiitPageNew.onCreated(function() {
   Session.set('notificationsModeOn', true);
 });
 
-Template.twiitPageNew.helpers({  
+Template.twiitPageNew.helpers({
+  'requestWhatsApp' : function(){
+    
+  }, 
   'convertDateTime': function() {
   	var dateNew = new Date(this.twiitTimeStamp);
   	var dateCon = dateNew.toLocaleString();

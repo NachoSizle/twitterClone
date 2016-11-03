@@ -20,5 +20,18 @@ Meteor.methods({
       isOwnTwiit: isOwn
     });
     
+  },
+
+  'createWhatsAppNotification' : function(notif){
+
+    Notifications.insert({
+      recepNotif: notif.recepNotif,
+      actorNotif: notif.actorNotif,
+      timeStamp: notif.timestamp,
+      typeOfNotif: notif.typeOfNotif, 
+      read: false,
+      isOwnTwiit: false
+    });
+
   }
 });

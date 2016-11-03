@@ -136,6 +136,7 @@ textarea {
 
 #rightDivCurrentUser{
   padding-left: 15px;
+  padding-top: 10px;
 }
 
 #centerDivCurrentUser{
@@ -393,4 +394,25 @@ form input:focus:required:invalid{
 /*ELIMINAMOS LOS PADDING QUE HACEN QUE NO SE ADAPTE CORRECTAMENTE A LA PANTALLA*/
 #containerNavBar{
   margin: 0px;
+}
+
+/*EDITAMOS EL ICONO DE LAS NOTIFICACIONES DE PETICIONES WHATSAPP*/
+.whatsInbox{
+  color: #5cb85c;
+}
+
+.whatsBadge{
+  background-color: #5cb85c;
+}
+
+#sentYes{
+  font-size: 15px;
+  float: left;
+  margin-left: 25%; 
+}
+
+#sentNo{
+  font-size: 15px;
+  float: right;
+  margin-right: 25%;
 }

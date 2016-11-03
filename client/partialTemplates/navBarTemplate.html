@@ -15,6 +15,10 @@
       			{{#unless infoStateCollapseNavBar}}
 		      		<span class="badge badge-notify">{{notificationCount}}</span>
       			{{/unless}}
+      		{{else}}
+      			{{#unless infoStateCollapseNavBar}}
+		      		<span class="badge badge-notify whatsBadge">{{whatsNotifCount}}</span>
+      			{{/unless}}
 		    {{/if}}
     	  </button>
     	  <img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive navbar-brand">
@@ -27,11 +31,13 @@
 		<!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul id="dropDownMenu" class="nav navbar-nav navbar-right">
-	      	
-	      	<li class="dropdown">
-	            {{> notifications}}
+
+	      	{{#if whatsAppReq}}
+	      	<li id="whatsNotif">
+	            {{> whatsAppNotif}}
 	      	</li>
-	      	
+	      	{{/if}}
+
 	      	<li>
 	            {{> notificationsNew}}
 	      	</li>

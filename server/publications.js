@@ -31,6 +31,10 @@ Meteor.publish('allNotifications', function(notifId) {
   return Notifications.find({_id : notifId}, {read: false});
 });
 
+Meteor.publish('whatsAppNotifications', function(notifName) {
+  return Notifications.find({recepNotif : notifName, typeOfNotif: 'whatsAppNotif'}, {read: false});
+});
+
 Meteor.publish('favs', function() {
   return Favs.find();
 });

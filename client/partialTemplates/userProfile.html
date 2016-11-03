@@ -78,11 +78,22 @@
               </table>
               
               <div class="modal fade" id="dialog-showSocialNetwork">
-                {{> sentPeticion}}
+                {{> sendRequest}}
               </div>
 
               <div class="modal fade" id="dialog-removeProfile">
                 {{> removeProfile}}
+              </div>
+
+              <div class="modal fade" id="dialog-operationSuccess">
+                <div class="sentPet-container">
+                    <div class="panel panel-default col-sm-6 col-md-6 col-lg-6">
+                        <div class="panel-body">
+                        <!--<img src="/emoticonoSad.png" class="img-responsive">-->
+                            <p style="margin: 0px;">La petición se ha enviado a <strong>{{dataUserFound.userNameProfile}}</strong></p>
+                        </div>
+                    </div>
+                  </div>
               </div>
 
             </div>

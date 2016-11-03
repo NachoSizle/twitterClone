@@ -71,47 +71,61 @@ Router.route('/Notifications/:userName', {                                      
 		return data;                                                                                         // 36
 	}()                                                                                                   // 36
 });                                                                                                    // 34
-//Router.route('/Comments', {name: 'twiitCommentPage'});                                               // 42
-/*SE ACCEDE POR PATHFOR*/                                                                              // 43
-Router.route('/Comments/:_id', {                                                                       // 44
-	name: 'twiitCommentPage',                                                                             // 45
-	data: function () {                                                                                   // 46
-		function data() {                                                                                    // 46
-			var mode = Session.get('notificationsModeOn');                                                      // 47
-			var idTwiit = new Object();                                                                         // 48
-			idTwiit._id = this.params._id;                                                                      // 49
                                                                                                        //
-			if (mode) {                                                                                         // 51
-				idTwiit.mode = mode;                                                                               // 52
-			}                                                                                                   // 53
+Router.route('/RequestWhatsApp/:userName', {                                                           // 43
+	name: 'whatsAppRequestPage',                                                                          // 44
+	data: function () {                                                                                   // 45
+		function data() {                                                                                    // 45
+			var user = new Object();                                                                            // 46
+			user.name = this.params.userName;                                                                   // 47
+			return user;                                                                                        // 48
+		}                                                                                                    // 49
                                                                                                        //
-			return idTwiit;                                                                                     // 55
-		}                                                                                                    // 56
+		return data;                                                                                         // 45
+	}()                                                                                                   // 45
+});                                                                                                    // 43
                                                                                                        //
-		return data;                                                                                         // 46
-	}()                                                                                                   // 46
-});                                                                                                    // 44
-Router.route('/twiits/:_id', {                                                                         // 58
-	name: 'twiitPage',                                                                                    // 59
-	data: function () {                                                                                   // 60
-		function data() {                                                                                    // 60
-			return this.params;                                                                                 // 61
-		}                                                                                                    // 62
+//Router.route('/Comments', {name: 'twiitCommentPage'});                                               // 52
+/*SE ACCEDE POR PATHFOR*/                                                                              // 53
+Router.route('/Comments/:_id', {                                                                       // 54
+	name: 'twiitCommentPage',                                                                             // 55
+	data: function () {                                                                                   // 56
+		function data() {                                                                                    // 56
+			var mode = Session.get('notificationsModeOn');                                                      // 57
+			var idTwiit = new Object();                                                                         // 58
+			idTwiit._id = this.params._id;                                                                      // 59
                                                                                                        //
-		return data;                                                                                         // 60
-	}()                                                                                                   // 60
-});                                                                                                    // 58
+			if (mode) {                                                                                         // 61
+				idTwiit.mode = mode;                                                                               // 62
+			}                                                                                                   // 63
                                                                                                        //
-Router.route('/editProfile/:userName', {                                                               // 65
-	name: 'editProfile',                                                                                  // 66
-	data: function () {                                                                                   // 67
-		function data() {                                                                                    // 67
-			return this.params.userName;                                                                        // 68
-		}                                                                                                    // 69
+			return idTwiit;                                                                                     // 65
+		}                                                                                                    // 66
                                                                                                        //
-		return data;                                                                                         // 67
-	}()                                                                                                   // 67
-});                                                                                                    // 65
+		return data;                                                                                         // 56
+	}()                                                                                                   // 56
+});                                                                                                    // 54
+Router.route('/twiits/:_id', {                                                                         // 68
+	name: 'twiitPage',                                                                                    // 69
+	data: function () {                                                                                   // 70
+		function data() {                                                                                    // 70
+			return this.params;                                                                                 // 71
+		}                                                                                                    // 72
+                                                                                                       //
+		return data;                                                                                         // 70
+	}()                                                                                                   // 70
+});                                                                                                    // 68
+                                                                                                       //
+Router.route('/editProfile/:userName', {                                                               // 75
+	name: 'editProfile',                                                                                  // 76
+	data: function () {                                                                                   // 77
+		function data() {                                                                                    // 77
+			return this.params.userName;                                                                        // 78
+		}                                                                                                    // 79
+                                                                                                       //
+		return data;                                                                                         // 77
+	}()                                                                                                   // 77
+});                                                                                                    // 75
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -163,124 +177,128 @@ UserUtils.findOneNotification = function (username) {                           
 };                                                                                                     // 39
                                                                                                        //
 UserUtils.findNumberNotif = function (username) {                                                      // 41
-  return Notifications.find({ recepNotif: username, read: false, isOwnTwiit: false }).count();         // 42
+  return Notifications.find({ recepNotif: username, read: false, isOwnTwiit: false, $or: [{ typeOfNotif: 'twiit' }, { typeOfNotif: 'fav' }, { typeOfNotif: 'comment' }] }).count();
 };                                                                                                     // 43
                                                                                                        //
-UserUtils.findNumberFavPerTwiit = function (idTwiit) {                                                 // 45
-  var twiitNumFav = Twitts.findOne({ _id: idTwiit }).numFav;                                           // 46
-  return twiitNumFav;                                                                                  // 47
-};                                                                                                     // 48
+UserUtils.findWhatsAppNotifications = function (notifId) {                                             // 45
+  return Notifications.findOne({ _id: notifId });                                                      // 46
+};                                                                                                     // 47
                                                                                                        //
-UserUtils.findFavsForTwiit = function (id) {                                                           // 50
-  return Favs.findOne({ idTwiit: id });                                                                // 51
+UserUtils.findNumberFavPerTwiit = function (idTwiit) {                                                 // 49
+  var twiitNumFav = Twitts.findOne({ _id: idTwiit }).numFav;                                           // 50
+  return twiitNumFav;                                                                                  // 51
 };                                                                                                     // 52
                                                                                                        //
-UserUtils.addFavToTwiit = function (id, idUser) {                                                      // 54
-  var resultToUpdate = false;                                                                          // 55
+UserUtils.findFavsForTwiit = function (id) {                                                           // 54
+  return Favs.findOne({ idTwiit: id });                                                                // 55
+};                                                                                                     // 56
+                                                                                                       //
+UserUtils.addFavToTwiit = function (id, idUser) {                                                      // 58
+  var resultToUpdate = false;                                                                          // 59
   //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT
-  var favObject = UserUtils.findFavsForTwiit(id);                                                      // 57
+  var favObject = UserUtils.findFavsForTwiit(id);                                                      // 61
                                                                                                        //
-  if (!favObject) {                                                                                    // 59
-    //console.log("No tiene FAVS");                                                                    // 60
+  if (!favObject) {                                                                                    // 63
+    //console.log("No tiene FAVS");                                                                    // 64
                                                                                                        //
-  } else {                                                                                             // 62
-    var arrAux = favObject.idUserTapFav;                                                               // 63
-    var idFav = favObject._id;                                                                         // 64
+  } else {                                                                                             // 66
+    var arrAux = favObject.idUserTapFav;                                                               // 67
+    var idFav = favObject._id;                                                                         // 68
                                                                                                        //
-    arrAux.push(idUser);                                                                               // 66
-    var num = UserUtils.findNumberFavPerTwiit(id);                                                     // 67
-    num++;                                                                                             // 68
+    arrAux.push(idUser);                                                                               // 70
+    var num = UserUtils.findNumberFavPerTwiit(id);                                                     // 71
+    num++;                                                                                             // 72
                                                                                                        //
-    //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                          // 70
-    res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                      // 71
-    resT = Twitts.update(id, { $set: { numFav: num } });                                               // 72
+    //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                          // 74
+    res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                      // 75
+    resT = Twitts.update(id, { $set: { numFav: num } });                                               // 76
                                                                                                        //
-    //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                               // 74
-    if (res && resT) {                                                                                 // 75
-      resultToUpdate = true;                                                                           // 76
-    }                                                                                                  // 77
-  }                                                                                                    // 78
+    //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                               // 78
+    if (res && resT) {                                                                                 // 79
+      resultToUpdate = true;                                                                           // 80
+    }                                                                                                  // 81
+  }                                                                                                    // 82
                                                                                                        //
-  return resultToUpdate;                                                                               // 80
-};                                                                                                     // 81
+  return resultToUpdate;                                                                               // 84
+};                                                                                                     // 85
                                                                                                        //
-UserUtils.removeFavToTwiit = function (id, idUser) {                                                   // 83
-  var resultToUpdate = false;                                                                          // 84
+UserUtils.removeFavToTwiit = function (id, idUser) {                                                   // 87
+  var resultToUpdate = false;                                                                          // 88
   //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT
-  var favObject = UserUtils.findFavsForTwiit(id);                                                      // 86
-  var arrAux = favObject.idUserTapFav;                                                                 // 87
-  var idFav = favObject._id;                                                                           // 88
+  var favObject = UserUtils.findFavsForTwiit(id);                                                      // 90
+  var arrAux = favObject.idUserTapFav;                                                                 // 91
+  var idFav = favObject._id;                                                                           // 92
                                                                                                        //
-  //HAY QUE AVERIGUAR LA POSICION DEL idUser DENTRO DEL ARRAY DE LA BBDD                               // 90
-  var posIdUser = arrAux.indexOf(idUser);                                                              // 91
-  //AHORA ELIMINAMOS EL ELEMENTO ASOCIADO A ESA POSICION                                               // 92
-  delete arrAux[posIdUser];                                                                            // 93
+  //HAY QUE AVERIGUAR LA POSICION DEL idUser DENTRO DEL ARRAY DE LA BBDD                               // 94
+  var posIdUser = arrAux.indexOf(idUser);                                                              // 95
+  //AHORA ELIMINAMOS EL ELEMENTO ASOCIADO A ESA POSICION                                               // 96
+  delete arrAux[posIdUser];                                                                            // 97
                                                                                                        //
-  var num = UserUtils.findNumberFavPerTwiit(id);                                                       // 95
-  num--;                                                                                               // 96
+  var num = UserUtils.findNumberFavPerTwiit(id);                                                       // 99
+  num--;                                                                                               // 100
                                                                                                        //
-  //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                            // 98
-  res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                        // 99
-  resT = Twitts.update(id, { $set: { numFav: num } });                                                 // 100
+  //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                            // 102
+  res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                        // 103
+  resT = Twitts.update(id, { $set: { numFav: num } });                                                 // 104
                                                                                                        //
-  //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                 // 102
-  if (res && resT) {                                                                                   // 103
-    resultToUpdate = true;                                                                             // 104
-  }                                                                                                    // 105
+  //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                 // 106
+  if (res && resT) {                                                                                   // 107
+    resultToUpdate = true;                                                                             // 108
+  }                                                                                                    // 109
                                                                                                        //
-  return resultToUpdate;                                                                               // 107
-};                                                                                                     // 108
+  return resultToUpdate;                                                                               // 111
+};                                                                                                     // 112
                                                                                                        //
-UserUtils.findTwiitFromNotif = function (id) {                                                         // 110
-  var twiitId = Notifications.findOne(id).twiitId;                                                     // 111
-  return twiitId;                                                                                      // 112
-};                                                                                                     // 113
-                                                                                                       //
-UserUtils.findNumComment = function (idTweet) {                                                        // 115
-  return Twitts.findOne({ _id: idTweet }).numComment;                                                  // 116
+UserUtils.findTwiitFromNotif = function (id) {                                                         // 114
+  var twiitId = Notifications.findOne(id).twiitId;                                                     // 115
+  return twiitId;                                                                                      // 116
 };                                                                                                     // 117
                                                                                                        //
-//PARA MOSTRAR NOTIFICACIONES EN EL NAVEGADOR WEB                                                      // 119
-UserUtils.createNotifToBrowser = function (typeNotif, userName) {                                      // 120
-  if (Notification) {                                                                                  // 121
-    if (Notification.permission !== "granted") {                                                       // 122
-      Notification.requestPermission();                                                                // 123
-    }                                                                                                  // 124
-    var title = "TwiitClone";                                                                          // 125
-    var bodyNotif = "";                                                                                // 126
+UserUtils.findNumComment = function (idTweet) {                                                        // 119
+  return Twitts.findOne({ _id: idTweet }).numComment;                                                  // 120
+};                                                                                                     // 121
                                                                                                        //
-    if (typeNotif === "fav") {                                                                         // 128
-      bodyNotif = "El usuario " + userName + " ha dado fav a un twiit tuyo";                           // 129
-    } else if (typeNotif === "comment") {                                                              // 130
-      bodyNotif = "El usuario " + userName + " ha comentado un twiit tuyo";                            // 131
-    } else if (typeNotif === "twiit") {                                                                // 132
-      bodyNotif = "El usuario " + userName + " ha publicado a un twiit nuevo";                         // 133
-    } else if (typeNotif === "moreNotif") {                                                            // 134
-      bodyNotif = "Tienes muchas Notificaciones";                                                      // 135
-    }                                                                                                  // 136
+//PARA MOSTRAR NOTIFICACIONES EN EL NAVEGADOR WEB                                                      // 123
+UserUtils.createNotifToBrowser = function (typeNotif, userName) {                                      // 124
+  if (Notification) {                                                                                  // 125
+    if (Notification.permission !== "granted") {                                                       // 126
+      Notification.requestPermission();                                                                // 127
+    }                                                                                                  // 128
+    var title = "TwiitClone";                                                                          // 129
+    var bodyNotif = "";                                                                                // 130
                                                                                                        //
-    var extra = { body: bodyNotif };                                                                   // 138
+    if (typeNotif === "fav") {                                                                         // 132
+      bodyNotif = "El usuario " + userName + " ha dado fav a un twiit tuyo";                           // 133
+    } else if (typeNotif === "comment") {                                                              // 134
+      bodyNotif = "El usuario " + userName + " ha comentado un twiit tuyo";                            // 135
+    } else if (typeNotif === "twiit") {                                                                // 136
+      bodyNotif = "El usuario " + userName + " ha publicado a un twiit nuevo";                         // 137
+    } else if (typeNotif === "moreNotif") {                                                            // 138
+      bodyNotif = "Tienes muchas Notificaciones";                                                      // 139
+    }                                                                                                  // 140
                                                                                                        //
-    var noti = new Notification(title, extra);                                                         // 140
+    var extra = { body: bodyNotif };                                                                   // 142
                                                                                                        //
-    noti.onclick = function () {                                                                       // 142
-      // Al hacer click                                                                                // 143
-      window.location = "/Notifications/" + Meteor.user().username;                                    // 144
-    };                                                                                                 // 145
+    var noti = new Notification(title, extra);                                                         // 144
                                                                                                        //
-    noti.onclose = {                                                                                   // 147
-      // Al cerrar                                                                                     // 148
-    };                                                                                                 // 147
+    noti.onclick = function () {                                                                       // 146
+      // Al hacer click                                                                                // 147
+      window.location = "/Notifications/" + Meteor.user().username;                                    // 148
+    };                                                                                                 // 149
                                                                                                        //
-    setTimeout(function () {                                                                           // 151
-      noti.close();                                                                                    // 151
-    }, 5000);                                                                                          // 151
-  }                                                                                                    // 152
-};                                                                                                     // 153
+    noti.onclose = {                                                                                   // 151
+      // Al cerrar                                                                                     // 152
+    };                                                                                                 // 151
                                                                                                        //
-UserUtils.findUserFromTwiit = function (twiitId) {                                                     // 155
-  return Twitts.findOne({ _id: twiitId }).user;                                                        // 156
+    setTimeout(function () {                                                                           // 155
+      noti.close();                                                                                    // 155
+    }, 5000);                                                                                          // 155
+  }                                                                                                    // 156
 };                                                                                                     // 157
+                                                                                                       //
+UserUtils.findUserFromTwiit = function (twiitId) {                                                     // 159
+  return Twitts.findOne({ _id: twiitId }).user;                                                        // 160
+};                                                                                                     // 161
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"server":{"followUsers.js":function(){
@@ -370,7 +388,23 @@ Meteor.methods({                                                                
     }                                                                                                  // 23
                                                                                                        //
     return createTwiitNotification;                                                                    // 2
-  }()                                                                                                  // 2
+  }(),                                                                                                 // 2
+                                                                                                       //
+  'createWhatsAppNotification': function () {                                                          // 25
+    function createWhatsAppNotification(notif) {                                                       // 25
+                                                                                                       //
+      Notifications.insert({                                                                           // 27
+        recepNotif: notif.recepNotif,                                                                  // 28
+        actorNotif: notif.actorNotif,                                                                  // 29
+        timeStamp: notif.timestamp,                                                                    // 30
+        typeOfNotif: notif.typeOfNotif,                                                                // 31
+        read: false,                                                                                   // 32
+        isOwnTwiit: false                                                                              // 33
+      });                                                                                              // 27
+    }                                                                                                  // 36
+                                                                                                       //
+    return createWhatsAppNotification;                                                                 // 25
+  }()                                                                                                  // 25
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -415,18 +449,22 @@ Meteor.publish('allNotifications', function (notifId) {                         
   return Notifications.find({ _id: notifId }, { read: false });                                        // 31
 });                                                                                                    // 32
                                                                                                        //
-Meteor.publish('favs', function () {                                                                   // 34
-  return Favs.find();                                                                                  // 35
+Meteor.publish('whatsAppNotifications', function (notifName) {                                         // 34
+  return Notifications.find({ recepNotif: notifName, typeOfNotif: 'whatsAppNotif' }, { read: false });
 });                                                                                                    // 36
                                                                                                        //
-Meteor.publish('dataUser', function () {                                                               // 38
-  return DataUser.find();                                                                              // 39
+Meteor.publish('favs', function () {                                                                   // 38
+  return Favs.find();                                                                                  // 39
 });                                                                                                    // 40
                                                                                                        //
-Meteor.publish('images', function () {                                                                 // 42
-  return Images.find();                                                                                // 43
+Meteor.publish('dataUser', function () {                                                               // 42
+  return DataUser.find();                                                                              // 43
 });                                                                                                    // 44
-/*                                                                                                     // 45
+                                                                                                       //
+Meteor.publish('images', function () {                                                                 // 46
+  return Images.find();                                                                                // 47
+});                                                                                                    // 48
+/*                                                                                                     // 49
 Meteor.publishComposite('twitts', function(username) {                                                 //
   return {                                                                                             //
     find: function() {                                                                                 //
@@ -555,129 +593,130 @@ Meteor.methods({                                                                
           userNameProfile: userData.userNameProfile,                                                   // 17
           userName: userData.userName,                                                                 // 18
           userImg: userData.userImg,                                                                   // 19
-          userDescription: userData.userDescription                                                    // 20
+          userDescription: userData.userDescription,                                                   // 20
+          showWhatsTo: []                                                                              // 21
         });                                                                                            // 15
-      }                                                                                                // 22
-    }                                                                                                  // 23
+      }                                                                                                // 23
+    }                                                                                                  // 24
                                                                                                        //
     return insertDataUser;                                                                             // 7
   }(),                                                                                                 // 7
                                                                                                        //
-  'findUserData': function () {                                                                        // 25
-    function findUserData(userName) {                                                                  // 25
-      return DataUser.findOne({ userNameProfile: userName });                                          // 26
-    }                                                                                                  // 27
+  'findUserData': function () {                                                                        // 26
+    function findUserData(userName) {                                                                  // 26
+      return DataUser.findOne({ userNameProfile: userName });                                          // 27
+    }                                                                                                  // 28
                                                                                                        //
-    return findUserData;                                                                               // 25
-  }(),                                                                                                 // 25
+    return findUserData;                                                                               // 26
+  }(),                                                                                                 // 26
                                                                                                        //
-  'findUserImg': function () {                                                                         // 29
-    function findUserImg(userImg) {                                                                    // 29
-      return Images.findOne({ _id: userImg }).imgCode;                                                 // 30
-    }                                                                                                  // 31
+  'findUserImg': function () {                                                                         // 30
+    function findUserImg(userImg) {                                                                    // 30
+      return Images.findOne({ _id: userImg }).imgCode;                                                 // 31
+    }                                                                                                  // 32
                                                                                                        //
-    return findUserImg;                                                                                // 29
-  }(),                                                                                                 // 29
+    return findUserImg;                                                                                // 30
+  }(),                                                                                                 // 30
                                                                                                        //
-  'updUserData': function () {                                                                         // 33
-    function updUserData(newData) {                                                                    // 33
+  'updUserData': function () {                                                                         // 34
+    function updUserData(newData) {                                                                    // 34
       DataUser.update({ _id: newData.userId }, { $set: { userDescription: newData.description, userImg: newData.imgId } });
-    }                                                                                                  // 35
+    }                                                                                                  // 36
                                                                                                        //
-    return updUserData;                                                                                // 33
-  }(),                                                                                                 // 33
+    return updUserData;                                                                                // 34
+  }(),                                                                                                 // 34
                                                                                                        //
-  'updUserDataSocialNetworks': function () {                                                           // 37
-    function updUserDataSocialNetworks(newData) {                                                      // 37
-      if (newData.userFb != null && newData.userInsta != null && newData.userWhats != null) {          // 38
+  'updUserDataSocialNetworks': function () {                                                           // 38
+    function updUserDataSocialNetworks(newData) {                                                      // 38
+      if (newData.userFb != null && newData.userInsta != null && newData.userWhats != null) {          // 39
         DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb, userWhats: newData.userWhats, userInsta: newData.userInsta } });
-      } else {                                                                                         // 40
-        if (newData.userFb != null) {                                                                  // 41
-          DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb } });              // 42
-        }                                                                                              // 43
+      } else {                                                                                         // 41
+        if (newData.userFb != null) {                                                                  // 42
+          DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb } });              // 43
+        }                                                                                              // 44
                                                                                                        //
-        if (newData.userInsta != null) {                                                               // 45
-          DataUser.update({ _id: newData.userId }, { $set: { userInsta: newData.userInsta } });        // 46
-        }                                                                                              // 47
+        if (newData.userInsta != null) {                                                               // 46
+          DataUser.update({ _id: newData.userId }, { $set: { userInsta: newData.userInsta } });        // 47
+        }                                                                                              // 48
                                                                                                        //
-        if (newData.userWhats != null) {                                                               // 49
-          DataUser.update({ _id: newData.userId }, { $set: { userWhats: newData.userWhats } });        // 50
-        }                                                                                              // 51
-      }                                                                                                // 52
-    }                                                                                                  // 53
+        if (newData.userWhats != null) {                                                               // 50
+          DataUser.update({ _id: newData.userId }, { $set: { userWhats: newData.userWhats } });        // 51
+        }                                                                                              // 52
+      }                                                                                                // 53
+    }                                                                                                  // 54
                                                                                                        //
-    return updUserDataSocialNetworks;                                                                  // 37
-  }(),                                                                                                 // 37
+    return updUserDataSocialNetworks;                                                                  // 38
+  }(),                                                                                                 // 38
                                                                                                        //
-  'removeDataSocialNetworks': function () {                                                            // 55
-    function removeDataSocialNetworks(newData) {                                                       // 55
-      console.log(newData.userId + " " + newData.propertyToRem);                                       // 56
+  'removeDataSocialNetworks': function () {                                                            // 56
+    function removeDataSocialNetworks(newData) {                                                       // 56
+      console.log(newData.userId + " " + newData.propertyToRem);                                       // 57
                                                                                                        //
-      switch (newData.propertyToRem) {                                                                 // 58
-        case "WhatsApp":                                                                               // 59
-          {                                                                                            // 59
-            DataUser.update({ _id: newData.userId }, { $unset: { "userWhats": 1 } });                  // 60
-          };                                                                                           // 61
-          break;                                                                                       // 62
-        case "Instagram":                                                                              // 63
-          {                                                                                            // 63
-            DataUser.update({ _id: newData.userId }, { $unset: { "userInsta": 1 } });                  // 64
-          };                                                                                           // 65
-          break;                                                                                       // 66
-        case "Facebook":                                                                               // 67
-          {                                                                                            // 67
-            DataUser.update({ _id: newData.userId }, { $unset: { "userFb": 1 } });                     // 68
-          };                                                                                           // 69
-          break;                                                                                       // 70
-      }                                                                                                // 58
+      switch (newData.propertyToRem) {                                                                 // 59
+        case "WhatsApp":                                                                               // 60
+          {                                                                                            // 60
+            DataUser.update({ _id: newData.userId }, { $unset: { "userWhats": 1 } });                  // 61
+          };                                                                                           // 62
+          break;                                                                                       // 63
+        case "Instagram":                                                                              // 64
+          {                                                                                            // 64
+            DataUser.update({ _id: newData.userId }, { $unset: { "userInsta": 1 } });                  // 65
+          };                                                                                           // 66
+          break;                                                                                       // 67
+        case "Facebook":                                                                               // 68
+          {                                                                                            // 68
+            DataUser.update({ _id: newData.userId }, { $unset: { "userFb": 1 } });                     // 69
+          };                                                                                           // 70
+          break;                                                                                       // 71
+      }                                                                                                // 59
                                                                                                        //
-      //ESTE COMANDO ES EL QUE SE UTILIZA EN MONGO                                                     // 73
-      //db.dataUser.update({"_id": "rQTzzDMfr4ZkiR7S8"},  {"$unset":{"userWhats":1}});                 // 74
-    }                                                                                                  // 75
+      //ESTE COMANDO ES EL QUE SE UTILIZA EN MONGO                                                     // 74
+      //db.dataUser.update({"_id": "rQTzzDMfr4ZkiR7S8"},  {"$unset":{"userWhats":1}});                 // 75
+    }                                                                                                  // 76
                                                                                                        //
-    return removeDataSocialNetworks;                                                                   // 55
-  }(),                                                                                                 // 55
+    return removeDataSocialNetworks;                                                                   // 56
+  }(),                                                                                                 // 56
                                                                                                        //
-  'insertNewImage': function () {                                                                      // 77
-    function insertNewImage(code) {                                                                    // 77
-      return Images.insert({                                                                           // 78
-        imgCode: code                                                                                  // 79
-      });                                                                                              // 78
-    }                                                                                                  // 81
+  'insertNewImage': function () {                                                                      // 78
+    function insertNewImage(code) {                                                                    // 78
+      return Images.insert({                                                                           // 79
+        imgCode: code                                                                                  // 80
+      });                                                                                              // 79
+    }                                                                                                  // 82
                                                                                                        //
-    return insertNewImage;                                                                             // 77
-  }(),                                                                                                 // 77
+    return insertNewImage;                                                                             // 78
+  }(),                                                                                                 // 78
                                                                                                        //
-  'removeThisUser': function () {                                                                      // 83
-    function removeThisUser(userToRemove) {                                                            // 83
-      //HAY QUE ELIMINAR EL USUARIO DE dataUser Y DE users                                             // 84
-      var idImgUser = DataUser.findOne({ userId: userToRemove.id }).userImg;                           // 85
+  'removeThisUser': function () {                                                                      // 84
+    function removeThisUser(userToRemove) {                                                            // 84
+      //HAY QUE ELIMINAR EL USUARIO DE dataUser Y DE users                                             // 85
+      var idImgUser = DataUser.findOne({ userId: userToRemove.id }).userImg;                           // 86
                                                                                                        //
-      if (idImgUser) {                                                                                 // 87
-        Images.remove({ _id: idImgUser });                                                             // 88
-      }                                                                                                // 89
+      if (idImgUser) {                                                                                 // 88
+        Images.remove({ _id: idImgUser });                                                             // 89
+      }                                                                                                // 90
                                                                                                        //
-      Notifications.remove({ recepNotif: userToRemove.name });                                         // 91
-      Relationships.remove({ follower: userToRemove.name });                                           // 92
-      Relationships.remove({ following: userToRemove.name });                                          // 93
+      Notifications.remove({ recepNotif: userToRemove.name });                                         // 92
+      Relationships.remove({ follower: userToRemove.name });                                           // 93
+      Relationships.remove({ following: userToRemove.name });                                          // 94
                                                                                                        //
-      Favs.find({ idUserTapFav: userToRemove.id }).fetch().map(function (data) {                       // 95
-        if (data.idUserTapFav) {                                                                       // 96
-          var aux = data.idUserTapFav;                                                                 // 97
-          var pos = aux.indexOf(userToRemove.id);                                                      // 98
-          if (pos != -1) {                                                                             // 99
-            UserUtils.removeFavToTwiit(data.idTwiit, userToRemove.id);                                 // 100
-          }                                                                                            // 101
-        }                                                                                              // 102
-      });                                                                                              // 103
+      Favs.find({ idUserTapFav: userToRemove.id }).fetch().map(function (data) {                       // 96
+        if (data.idUserTapFav) {                                                                       // 97
+          var aux = data.idUserTapFav;                                                                 // 98
+          var pos = aux.indexOf(userToRemove.id);                                                      // 99
+          if (pos != -1) {                                                                             // 100
+            UserUtils.removeFavToTwiit(data.idTwiit, userToRemove.id);                                 // 101
+          }                                                                                            // 102
+        }                                                                                              // 103
+      });                                                                                              // 104
                                                                                                        //
-      Twitts.remove({ user: userToRemove.name });                                                      // 105
-      Meteor.users.remove({ _id: userToRemove.id });                                                   // 106
-      DataUser.remove({ userId: userToRemove.id });                                                    // 107
-    }                                                                                                  // 108
+      Twitts.remove({ user: userToRemove.name });                                                      // 106
+      Meteor.users.remove({ _id: userToRemove.id });                                                   // 107
+      DataUser.remove({ userId: userToRemove.id });                                                    // 108
+    }                                                                                                  // 109
                                                                                                        //
-    return removeThisUser;                                                                             // 83
-  }()                                                                                                  // 83
+    return removeThisUser;                                                                             // 84
+  }()                                                                                                  // 84
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
