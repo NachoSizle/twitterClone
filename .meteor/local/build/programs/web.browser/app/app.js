@@ -1655,52 +1655,53 @@ Template["whatsAppRequestPage"] = new Template("Template.whatsAppRequestPage", (
   return Blaze.If(function() {                                                                                         // 5
     return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
   }, function() {                                                                                                      // 7
-    return [ "\n    ", HTML.DIV({                                                                                      // 8
-      class: "tweetfeed-container"                                                                                     // 9
-    }, "\n      ", HTML.DIV({                                                                                          // 10
-      class: "panel panel-default tweetfeed"                                                                           // 11
-    }, "\n        ", HTML.DIV({                                                                                        // 12
-      class: "panel-body"                                                                                              // 13
-    }, "\n          ", HTML.Comment(" Texto para el contenido del Twitt "), "\n          ", Blaze.If(function() {      // 14
-      return Spacebars.call(view.lookup("countNotifTwiit"));                                                           // 15
-    }, function() {                                                                                                    // 16
-      return [ "\n            ", Blaze.Each(function() {                                                               // 17
-        return Spacebars.call(view.lookup("whatsNotif"));                                                              // 18
-      }, function() {                                                                                                  // 19
-        return [ "\n              ", HTML.DIV({                                                                        // 20
-          class: "panel panel-info"                                                                                    // 21
-        }, "\n                ", HTML.DIV({                                                                            // 22
-          class: "panel-heading"                                                                                       // 23
-        }, "\n                  ", HTML.H3({                                                                           // 24
-          class: "panel-title"                                                                                         // 25
-        }, "\n                  ", HTML.STRONG("Solicitud de WhatsApp de @", Blaze.View("lookup:..actorNotif", function() {
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                    // 27
-        })), "\n                  "), "\n                "), "\n                ", HTML.DIV({                          // 28
-          class: "panel-body"                                                                                          // 29
-        }, "\n                  ", HTML.P("¿Desea aceptar o rechazar la solicitud?"), "\n                "), "\n              "), "\n            " ];
-      }), "\n              ", HTML.BUTTON({                                                                            // 31
-        id: "sentYes",                                                                                                 // 32
-        type: "button",                                                                                                // 33
-        class: "btn btn-info"                                                                                          // 34
-      }, "\n                ", HTML.I({                                                                                // 35
-        class: "glyphicon glyphicon-ok-circle"                                                                         // 36
-      }), "\n              "), "\n              ", HTML.BUTTON({                                                       // 37
-        id: "sentNo",                                                                                                  // 38
-        type: "button",                                                                                                // 39
-        class: "btn btn-danger"                                                                                        // 40
-      }, "\n                ", HTML.I({                                                                                // 41
-        class: "glyphicon glyphicon-remove-circle"                                                                     // 42
-      }), "\n              "), "\n          " ];                                                                       // 43
-    }, function() {                                                                                                    // 44
-      return [ "\n            ", HTML.DIV({                                                                            // 45
-        class: "panel-info"                                                                                            // 46
-      }, "\n              ", HTML.P("Oooooooops"), "    \n            "), "\n          " ];                            // 47
-    }), "\n        "), "\n      "), "\n    "), "\n  " ];                                                               // 48
-  }, function() {                                                                                                      // 49
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 50
-  });                                                                                                                  // 51
-}));                                                                                                                   // 52
-                                                                                                                       // 53
+    return [ "\n    ", Blaze.If(function() {                                                                           // 8
+      return Spacebars.call(view.lookup("countNotifTwiit"));                                                           // 9
+    }, function() {                                                                                                    // 10
+      return [ "\n      ", Blaze.Each(function() {                                                                     // 11
+        return Spacebars.call(view.lookup("whatsNotif"));                                                              // 12
+      }, function() {                                                                                                  // 13
+        return [ "\n      ", HTML.DIV({                                                                                // 14
+          class: "tweetfeed-container",                                                                                // 15
+          id: ""                                                                                                       // 16
+        }, "\n        ", HTML.DIV({                                                                                    // 17
+          class: "panel panel-default tweetfeed"                                                                       // 18
+        }, "\n          ", HTML.DIV({                                                                                  // 19
+          class: "panel-body"                                                                                          // 20
+        }, "\n          ", HTML.Comment(" Texto para el contenido del Twitt "), "\n            ", HTML.DIV({           // 21
+          class: "panel panel-info"                                                                                    // 22
+        }, "\n              ", HTML.DIV({                                                                              // 23
+          class: "panel-heading"                                                                                       // 24
+        }, "\n                ", HTML.H3({                                                                             // 25
+          class: "panel-title"                                                                                         // 26
+        }, "\n                  Solicitud de WhatsApp de @", HTML.STRONG(Blaze.View("lookup:..actorNotif", function() {
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                    // 28
+        })), "\n                "), "\n              "), "\n              ", HTML.DIV({                                // 29
+          class: "panel-body"                                                                                          // 30
+        }, "\n                ", HTML.P("¿Desea aceptar o rechazar la solicitud?"), "\n              "), "\n            "), "\n            ", HTML.BUTTON({
+          id: "sentYes",                                                                                               // 32
+          type: "button",                                                                                              // 33
+          class: "btn btn-info"                                                                                        // 34
+        }, "\n              ", HTML.I({                                                                                // 35
+          class: "glyphicon glyphicon-ok-circle"                                                                       // 36
+        }), "\n            "), "\n            ", HTML.BUTTON({                                                         // 37
+          id: "sentNo",                                                                                                // 38
+          type: "button",                                                                                              // 39
+          class: "btn btn-danger"                                                                                      // 40
+        }, "\n              ", HTML.I({                                                                                // 41
+          class: "glyphicon glyphicon-remove-circle"                                                                   // 42
+        }), "\n            "), "\n          "), "\n        "), "\n      "), "\n    " ];                                // 43
+      }), "\n    " ];                                                                                                  // 44
+    }, function() {                                                                                                    // 45
+      return [ "\n      ", HTML.DIV({                                                                                  // 46
+        class: "panel-info"                                                                                            // 47
+      }, "\n        ", HTML.P("Oooooooops"), "    \n      "), "\n    " ];                                              // 48
+    }), "\n  " ];                                                                                                      // 49
+  }, function() {                                                                                                      // 50
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 51
+  });                                                                                                                  // 52
+}));                                                                                                                   // 53
+                                                                                                                       // 54
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editProfile.js":function(){
@@ -2005,78 +2006,75 @@ Template.navBarTemplate.events({                                                
 Template.navBarTemplate.helpers({                                                                                      // 52
 	'notificationCount': function () {                                                                                    // 53
 		function notificationCount() {                                                                                       // 53
-			console.log(Meteor.user().username);                                                                                // 54
-			console.log("NUMERO DE NOTIFICACIONES NORMALES");                                                                   // 55
-			var result = UserUtils.findNumberNotif(Meteor.user().username);                                                     // 56
-			console.log(result);                                                                                                // 57
-			return result;                                                                                                      // 58
-		}                                                                                                                    // 59
+			console.log("NUMERO DE NOTIFICACIONES NORMALES");                                                                   // 54
+			var result = UserUtils.findNumberNotif(Meteor.user().username);                                                     // 55
+			return result;                                                                                                      // 56
+		}                                                                                                                    // 57
                                                                                                                        //
 		return notificationCount;                                                                                            // 53
 	}(),                                                                                                                  // 53
-	'whatsNotifCount': function () {                                                                                      // 60
-		function whatsNotifCount() {                                                                                         // 60
-			result = Notifications.find({ recepNotif: Meteor.user().username, read: false, typeOfNotif: "whatsAppNotif" });     // 61
-			if (result.count() > 0) {                                                                                           // 62
-				return result.count();                                                                                             // 63
-			};                                                                                                                  // 64
-		}                                                                                                                    // 65
+	'whatsNotifCount': function () {                                                                                      // 58
+		function whatsNotifCount() {                                                                                         // 58
+			result = Notifications.find({ recepNotif: Meteor.user().username, read: false, typeOfNotif: "whatsAppNotif" });     // 59
+			if (result.count() > 0) {                                                                                           // 60
+				return result.count();                                                                                             // 61
+			};                                                                                                                  // 62
+		}                                                                                                                    // 63
                                                                                                                        //
-		return whatsNotifCount;                                                                                              // 60
-	}(),                                                                                                                  // 60
-	'whatsAppReq': function () {                                                                                          // 66
-		function whatsAppReq() {                                                                                             // 66
-			console.log("REQ");                                                                                                 // 67
+		return whatsNotifCount;                                                                                              // 58
+	}(),                                                                                                                  // 58
+	'whatsAppReq': function () {                                                                                          // 64
+		function whatsAppReq() {                                                                                             // 64
+			console.log("NUMERO DE NOTIFICACIONES DE PETICIONES DE WHATSAPP");                                                  // 65
                                                                                                                        //
-			var cont = 0;                                                                                                       // 69
-			var req = [];                                                                                                       // 70
+			var cont = 0;                                                                                                       // 67
+			var req = [];                                                                                                       // 68
                                                                                                                        //
-			result.forEach(function (item) {                                                                                    // 72
-				req.push(item._id);                                                                                                // 73
-				cont++;                                                                                                            // 74
-			});                                                                                                                 // 75
+			result.forEach(function (item) {                                                                                    // 70
+				req.push(item._id);                                                                                                // 71
+				cont++;                                                                                                            // 72
+			});                                                                                                                 // 73
                                                                                                                        //
-			if (cont > 0) {                                                                                                     // 77
-				Session.set('whatsAppRequest', true);                                                                              // 78
-				Session.set('requestWhats', req);                                                                                  // 79
-				return true;                                                                                                       // 80
-			} else {                                                                                                            // 81
-				Session.set('whatsAppRequest', false);                                                                             // 82
-				return false;                                                                                                      // 83
-			}                                                                                                                   // 84
-		}                                                                                                                    // 85
+			if (cont > 0) {                                                                                                     // 75
+				Session.set('whatsAppRequest', true);                                                                              // 76
+				Session.set('requestWhats', req);                                                                                  // 77
+				return true;                                                                                                       // 78
+			} else {                                                                                                            // 79
+				Session.set('whatsAppRequest', false);                                                                             // 80
+				return false;                                                                                                      // 81
+			}                                                                                                                   // 82
+		}                                                                                                                    // 83
                                                                                                                        //
-		return whatsAppReq;                                                                                                  // 66
-	}(),                                                                                                                  // 66
-	'infoStateCollapseNavBar': function () {                                                                              // 86
-		function infoStateCollapseNavBar() {                                                                                 // 86
-			return Session.get('navBarCollapse');                                                                               // 87
-		}                                                                                                                    // 88
+		return whatsAppReq;                                                                                                  // 64
+	}(),                                                                                                                  // 64
+	'infoStateCollapseNavBar': function () {                                                                              // 84
+		function infoStateCollapseNavBar() {                                                                                 // 84
+			return Session.get('navBarCollapse');                                                                               // 85
+		}                                                                                                                    // 86
                                                                                                                        //
-		return infoStateCollapseNavBar;                                                                                      // 86
-	}(),                                                                                                                  // 86
-	'userImgFound': function () {                                                                                         // 89
-		function userImgFound() {                                                                                            // 89
-			Meteor.call('findUserData', Meteor.user().username, function (err, res) {                                           // 90
-				console.log(res);                                                                                                  // 91
-				if (res.userImg) {                                                                                                 // 92
-					Meteor.call('findUserImg', res.userImg, function (err, res) {                                                     // 93
-						$('#imgProfile').attr("src", res);                                                                               // 94
-					});                                                                                                               // 95
-				} else {                                                                                                           // 96
-					$('#imgProfile').attr("src", "/profileImgTest.png");                                                              // 97
-				}                                                                                                                  // 98
-			});                                                                                                                 // 100
-		}                                                                                                                    // 101
+		return infoStateCollapseNavBar;                                                                                      // 84
+	}(),                                                                                                                  // 84
+	'userImgFound': function () {                                                                                         // 87
+		function userImgFound() {                                                                                            // 87
+			Meteor.call('findUserData', Meteor.user().username, function (err, res) {                                           // 88
+				if (res.userImg) {                                                                                                 // 89
+					Meteor.call('findUserImg', res.userImg, function (err, res) {                                                     // 90
+						$('#imgProfile').attr("src", res);                                                                               // 91
+					});                                                                                                               // 92
+				} else {                                                                                                           // 93
+					$('#imgProfile').attr("src", "/profileImgTest.png");                                                              // 94
+				}                                                                                                                  // 95
+			});                                                                                                                 // 97
+		}                                                                                                                    // 98
                                                                                                                        //
-		return userImgFound;                                                                                                 // 89
-	}()                                                                                                                   // 89
+		return userImgFound;                                                                                                 // 87
+	}()                                                                                                                   // 87
 });                                                                                                                    // 52
-//PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                    // 103
-$(window).resize(function () {                                                                                         // 104
-	console.log("Change");                                                                                                // 105
-	Session.set('sizeDisplay', $(window).width());                                                                        // 106
-});                                                                                                                    // 107
+//PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                    // 100
+$(window).resize(function () {                                                                                         // 101
+	console.log("Change Display Size");                                                                                   // 102
+	Session.set('sizeDisplay', $(window).width());                                                                        // 103
+});                                                                                                                    // 104
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"notifications.js":function(){
@@ -3730,45 +3728,94 @@ Template.whatsAppRequestPage.helpers({                                          
     function countNotifTwiit() {                                                                                       // 2
       arrWhatsAppNotif = Session.get('requestWhats');                                                                  // 3
       if (arrWhatsAppNotif) {                                                                                          // 4
-        if (arrWhatsAppNotif.length === 0) {                                                                           // 5
-          return false;                                                                                                // 6
-        } else {                                                                                                       // 7
-          return true;                                                                                                 // 8
-        }                                                                                                              // 9
-      };                                                                                                               // 10
-    }                                                                                                                  // 11
+        countNumWhatsAppNotif = arrWhatsAppNotif.length;                                                               // 5
+        if (countNumWhatsAppNotif === 0) {                                                                             // 6
+          return false;                                                                                                // 7
+        } else {                                                                                                       // 8
+          return true;                                                                                                 // 9
+        }                                                                                                              // 10
+      };                                                                                                               // 11
+    }                                                                                                                  // 12
                                                                                                                        //
     return countNotifTwiit;                                                                                            // 2
   }(),                                                                                                                 // 2
-  'whatsNotif': function () {                                                                                          // 12
-    function whatsNotif() {                                                                                            // 12
-      var arrAux = [];                                                                                                 // 13
-      arrWhatsAppNotif.forEach(function (item) {                                                                       // 14
-        console.log(item);                                                                                             // 15
-        var dataFound = UserUtils.findWhatsAppNotifications(item);                                                     // 16
-        console.log(dataFound);                                                                                        // 17
-        arrAux.push(dataFound);                                                                                        // 18
-      });                                                                                                              // 19
-      console.log(arrAux);                                                                                             // 20
-      return arrAux;                                                                                                   // 21
-    }                                                                                                                  // 22
+  'whatsNotif': function () {                                                                                          // 13
+    function whatsNotif() {                                                                                            // 13
+      var arrAux = [];                                                                                                 // 14
+      arrWhatsAppNotif.forEach(function (item) {                                                                       // 15
+        console.log(item);                                                                                             // 16
+        var dataFound = UserUtils.findWhatsAppNotifications(item);                                                     // 17
+        console.log(dataFound);                                                                                        // 18
+        arrAux.push(dataFound);                                                                                        // 19
+      });                                                                                                              // 20
+      console.log(arrAux);                                                                                             // 21
                                                                                                                        //
-    return whatsNotif;                                                                                                 // 12
-  }()                                                                                                                  // 12
+      return arrAux;                                                                                                   // 23
+    }                                                                                                                  // 24
+                                                                                                                       //
+    return whatsNotif;                                                                                                 // 13
+  }()                                                                                                                  // 13
 });                                                                                                                    // 1
                                                                                                                        //
-Template.whatsAppRequestPage.events({                                                                                  // 25
-  'click button': function () {                                                                                        // 26
-    function clickButton() {                                                                                           // 26
-      console.log(this._id);                                                                                           // 27
-      Notifications.update(this._id, { $set: { read: true } });                                                        // 28
-      console.log("Clean!");                                                                                           // 29
-      window.location = "/";                                                                                           // 30
-    }                                                                                                                  // 31
+Template.whatsAppRequestPage.events({                                                                                  // 27
+  //SE PRODUCE CUANDO EL USUARIO ACEPTA LA SOLICITUD                                                                   // 28
+  'click #sentYes': function () {                                                                                      // 29
+    function clickSentYes() {                                                                                          // 29
+      var idWhatsNotif = this._id;                                                                                     // 30
+      //HAY QUE REALIZAR UNA NOTIFICACION AL USUARIO QUE HA SOLICITADO EL WHATSAPP                                     // 31
+      //INFORMANDOLE QUE SE HA ACEPTADO DICHA SOLICITUD                                                                // 32
+      /*                                                                                                               // 33
+      var notif = new Object();                                                                                        //
                                                                                                                        //
-    return clickButton;                                                                                                // 26
-  }()                                                                                                                  // 26
-});                                                                                                                    // 25
+      notif.recepNotif = this.actorNotif; //EL USUARIO QUE VA A RECIBIR LA RESPUESTA DE LA PETICION                    //
+      notif.actorNotif = this.recepNotif; //EL USUARIO QUE CONFIRMA LA PETICION                                        //
+      notif.timestamp = new Date();                                                                                    //
+      notif.typeOfNotif = "responseWhatsAppNotif";                                                                     //
+        Meteor.call('createWhatsAppNotification', notif);                                                              //
+      */                                                                                                               //
+      //countNumWhatsAppNotif--;                                                                                       // 43
+    }                                                                                                                  // 44
+                                                                                                                       //
+    return clickSentYes;                                                                                               // 29
+  }(),                                                                                                                 // 29
+  //SE PRODUCE CUANDO EL USUARIO RECHAZA LA SOLICITUD                                                                  // 45
+  'click #sentNo': function () {                                                                                       // 46
+    function clickSentNo() {                                                                                           // 46
+      var idWhatsNotif = this._id;                                                                                     // 47
+      //HAY QUE REALIZAR UNA NOTIFICACION AL USUARIO QUE HA SOLICITADO EL WHATSAPP                                     // 48
+      //INFORMANDOLE QUE SE HA RECHAZADO DICHA SOLICITUD                                                               // 49
+      /*                                                                                                               // 50
+      var notif = new Object();                                                                                        //
+                                                                                                                       //
+      notif.recepNotif = Session.get('userToSentPet'); //EL USUARIO QUE VA A RECIBIR LA PETICION                       //
+      notif.actorNotif = Meteor.user().username; //EL USUARIO QUE REALIZA LA PETICION                                  //
+      notif.timestamp = new Date();                                                                                    //
+      notif.typeOfNotif = "whatsAppNotif";                                                                             //
+        Meteor.call('createWhatsAppNotification', notif);                                                              //
+      */                                                                                                               //
+      //countNumWhatsAppNotif--;                                                                                       // 60
+    }                                                                                                                  // 61
+                                                                                                                       //
+    return clickSentNo;                                                                                                // 46
+  }(),                                                                                                                 // 46
+  //PULSEMOS EL BTN QUE PULSEMOS SE HARAN DOS COSAS:                                                                   // 62
+  //1) REDIRECCION A LA PAGINA PPAL SI SE HAN ACABADO LAS NOTIFICACIONES                                               // 63
+  //2) PONER LA NOTIFICACION A LEIDA                                                                                   // 64
+  'click .btn': function () {                                                                                          // 65
+    function clickBtn() {                                                                                              // 65
+      var idNotifToClear = this._id;                                                                                   // 66
+      /*                                                                                                               // 67
+      Notifications.update(idNotifToClear, {$set: {read: true}});                                                      //
+      console.log("Clean!");                                                                                           //
+      if(countNumWhatsAppNotif === 0){                                                                                 //
+        window.location = "/";                                                                                         //
+      }                                                                                                                //
+      */                                                                                                               //
+    }                                                                                                                  // 74
+                                                                                                                       //
+    return clickBtn;                                                                                                   // 65
+  }()                                                                                                                  // 65
+});                                                                                                                    // 27
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"main.html":["./template.main.js",function(require,exports,module){
