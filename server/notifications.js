@@ -33,5 +33,20 @@ Meteor.methods({
       isOwnTwiit: false
     });
 
+  },
+
+  'createResponseWhatsAppNotification' : function(notif){
+
+    Notifications.insert({
+      recepNotif: notif.recepNotif,
+      actorNotif: notif.actorNotif,
+      timeStamp: notif.timestamp,
+      typeOfNotif: notif.typeOfNotif,
+      stateResponse: notif.stateResponse,
+      idNotifRequestWhatsApp: notif.idNotifRequestWhatsApp,
+      read: false,
+      isOwnTwiit: false
+    });
+
   }
 });

@@ -404,7 +404,25 @@ Meteor.methods({                                                                
     }                                                                                                  // 36
                                                                                                        //
     return createWhatsAppNotification;                                                                 // 25
-  }()                                                                                                  // 25
+  }(),                                                                                                 // 25
+                                                                                                       //
+  'createResponseWhatsAppNotification': function () {                                                  // 38
+    function createResponseWhatsAppNotification(notif) {                                               // 38
+                                                                                                       //
+      Notifications.insert({                                                                           // 40
+        recepNotif: notif.recepNotif,                                                                  // 41
+        actorNotif: notif.actorNotif,                                                                  // 42
+        timeStamp: notif.timestamp,                                                                    // 43
+        typeOfNotif: notif.typeOfNotif,                                                                // 44
+        stateResponse: notif.stateResponse,                                                            // 45
+        idNotifRequestWhatsApp: notif.idNotifRequestWhatsApp,                                          // 46
+        read: false,                                                                                   // 47
+        isOwnTwiit: false                                                                              // 48
+      });                                                                                              // 40
+    }                                                                                                  // 51
+                                                                                                       //
+    return createResponseWhatsAppNotification;                                                         // 38
+  }()                                                                                                  // 38
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -450,7 +468,7 @@ Meteor.publish('allNotifications', function (notifId) {                         
 });                                                                                                    // 32
                                                                                                        //
 Meteor.publish('whatsAppNotifications', function (notifName) {                                         // 34
-  return Notifications.find({ recepNotif: notifName, typeOfNotif: 'whatsAppNotif' }, { read: false });
+  return Notifications.find({ recepNotif: notifName }, { read: false });                               // 35
 });                                                                                                    // 36
                                                                                                        //
 Meteor.publish('favs', function () {                                                                   // 38

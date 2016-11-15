@@ -1,7 +1,7 @@
 <template name="whatsAppRequestPage">  
   {{#if Template.subscriptionsReady}}
-    {{# if countNotifTwiit}}
-      {{#each whatsNotif}}
+    {{# if countNotifRequest}}
+      {{#each whatsRequestNotif}}
       <div class="tweetfeed-container" id="">
         <div class="panel panel-default tweetfeed">
           <div class="panel-body">
@@ -26,10 +26,38 @@
         </div>
       </div>
     {{/each}}
-    {{else}}
-      <div class="panel-info">
-        <p>Oooooooops</p>    
+    {{/if}}
+
+    {{# if countNotifResponse}}
+      {{#each whatsResponseNotif}}
+      <div class="tweetfeed-container" id="">
+        <div class="panel panel-default tweetfeed">
+          <div class="panel-body">
+          <!-- Texto para el contenido del Twitt -->
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                  Respuesta de solicitud de WhatsApp de @<strong>{{this.actorNotif}}</strong>
+                </h3>
+              </div>
+              <div class="panel-body">
+                {{# if this.stateResponse}}
+                  <p>Ha sido aceptada!</p>
+                {{else}}
+                  <p>Ha sido rechazada =(</p>
+                {{/if}}
+              </div>
+            </div>
+            <button id="sentYes" type="button" class="btn btn-info">
+              <i class="glyphicon glyphicon-ok-circle"></i>
+            </button>
+            <button id="sentNo" type="button" class="btn btn-danger">
+              <i class="glyphicon glyphicon-remove-circle"></i>
+            </button>
+          </div>
+        </div>
       </div>
+    {{/each}}
     {{/if}}
   {{else}}
     {{> loading}}

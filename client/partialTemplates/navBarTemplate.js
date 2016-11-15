@@ -52,29 +52,57 @@ Template.navBarTemplate.events({
 Template.navBarTemplate.helpers({
 	'notificationCount': function() {
 		console.log("NUMERO DE NOTIFICACIONES NORMALES");
-	    var result = UserUtils.findNumberNotif(Meteor.user().username);
-	    return result;
+	    var resultNotif = UserUtils.findNumberNotif(Meteor.user().username);
+	    return resultNotif;
 	},
 	'whatsNotifCount' : function(){
-		result = Notifications.find({recepNotif: Meteor.user().username, read: false, typeOfNotif: "whatsAppNotif"});
-		if(result.count() > 0){
-			return result.count();
-		};
+		//OBTENEMOS EL NUMERO DE NOTIFICACIONES DE LAS PETICIONES DE WHATSAPP Y LAS 
+		//RESPUESTAS A LAS PETICIONES REALIZADAS POR EL USUARIO
+		resultNotifRequest = Notifications.find({recepNotif: Meteor.user().username, read: false, typeOfNotif: "whatsAppNotif"});
+		resultNotifResponse = Notifications.find({recepNotif: Meteor.user().username, read: false, typeOfNotif: "responseWhatsAppNotif"});
+		auxTotalCount = 0;
+
+		if(resultNotifRequest.count() > 0){
+			auxTotalCount = resultNotifRequest.count();
+			if(resultNotifResponse.count() > 0){
+				auxTotalCount += resultNotifResponse.count();
+			};
+		} else {
+			if(resultNotifResponse.count() > 0){
+				auxTotalCount = resultNotifResponse.count();
+			};
+		}
+		//NO SE ESTA OBTENIENDO CORRECTAMENTE ESTE TIPO DE NOTIF
+		//REVISAR publications.js
+		console.log(resultNotifResponse);
+		console.log(resultNotifResponse.count());
+
+		//DEVOLVEMOS LA SUMA TOTAL DE LAS NOTIFICACIONES
+		if(auxTotalCount > 0){
+			return auxTotalCount;
+		}
 	},
 	'whatsAppReq' : function(){
 		console.log("NUMERO DE NOTIFICACIONES DE PETICIONES DE WHATSAPP");
 		
 	    var cont = 0;
 	    var req = [];
+	    var res = [];
 
-	    result.forEach(function(item){
+	    resultNotifRequest.forEach(function(item){
 	       req.push(item._id);
+	       cont++;
+	    });
+
+	    resultNotifResponse.forEach(function(item){
+	       res.push(item._id);
 	       cont++;
 	    }); 
 
 	    if(cont > 0){      
 	      Session.set('whatsAppRequest', true);
 	      Session.set('requestWhats', req);
+	      Session.set('responseWhats', res);
 	      return true;
 	    } else {
 	    	Session.set('whatsAppRequest', false);
