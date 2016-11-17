@@ -106,5 +106,22 @@ Meteor.methods({
     Twitts.remove({user: userToRemove.name});
     Meteor.users.remove({_id: userToRemove.id});
     DataUser.remove({userId: userToRemove.id});
+  }, 
+
+  'updateArrayWhatsAppAuthorize': function(data){
+    var user = DataUser.findOne({userNameProfile: data.user});
+    var arrShowWhats = user.showWhatsTo;
+    console.log("Array: ");
+    console.log(arrShowWhats);
+
+    //BUSCAMOS EL USUARIO QUE VAMOS A AÑADIR AL ARRAY
+    var userToAdd = DataUser.findOne({userNameProfile: data.userToShow});
+    arrShowWhats.push(userToAdd.userId);
+
+    console.log(arrShowWhats);
+    console.log(user);
+
+    var a = DataUser.update({userId: user.userId}, {$set: {showWhatsTo : arrShowWhats}});
+    
   }
 });

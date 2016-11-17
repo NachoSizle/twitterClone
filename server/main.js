@@ -33,7 +33,11 @@ Meteor.startup(() => {
   DataUser.allow({
     insert: function(userId, disconnect){
       return true;
+    }, 
+    update: function(userId, doc) {
+      return true;
     }
+
   });
 
   Images.allow({

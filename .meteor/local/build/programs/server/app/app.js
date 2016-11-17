@@ -734,7 +734,27 @@ Meteor.methods({                                                                
     }                                                                                                  // 109
                                                                                                        //
     return removeThisUser;                                                                             // 84
-  }()                                                                                                  // 84
+  }(),                                                                                                 // 84
+                                                                                                       //
+  'updateArrayWhatsAppAuthorize': function () {                                                        // 111
+    function updateArrayWhatsAppAuthorize(data) {                                                      // 111
+      var user = DataUser.findOne({ userNameProfile: data.user });                                     // 112
+      var arrShowWhats = user.showWhatsTo;                                                             // 113
+      console.log("Array: ");                                                                          // 114
+      console.log(arrShowWhats);                                                                       // 115
+                                                                                                       //
+      //BUSCAMOS EL USUARIO QUE VAMOS A AÑADIR AL ARRAY                                                // 117
+      var userToAdd = DataUser.findOne({ userNameProfile: data.userToShow });                          // 118
+      arrShowWhats.push(userToAdd.userId);                                                             // 119
+                                                                                                       //
+      console.log(arrShowWhats);                                                                       // 121
+      console.log(user);                                                                               // 122
+                                                                                                       //
+      var a = DataUser.update({ userId: user.userId }, { $set: { showWhatsTo: arrShowWhats } });       // 124
+    }                                                                                                  // 126
+                                                                                                       //
+    return updateArrayWhatsAppAuthorize;                                                               // 111
+  }()                                                                                                  // 111
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -846,19 +866,27 @@ Meteor.startup(function () {                                                    
       }                                                                                                // 36
                                                                                                        //
       return insert;                                                                                   // 34
-    }()                                                                                                // 34
+    }(),                                                                                               // 34
+    update: function () {                                                                              // 37
+      function update(userId, doc) {                                                                   // 37
+        return true;                                                                                   // 38
+      }                                                                                                // 39
+                                                                                                       //
+      return update;                                                                                   // 37
+    }()                                                                                                // 37
+                                                                                                       //
   });                                                                                                  // 33
                                                                                                        //
-  Images.allow({                                                                                       // 39
-    insert: function () {                                                                              // 40
-      function insert(userId, disconnect) {                                                            // 40
-        return true;                                                                                   // 41
-      }                                                                                                // 42
+  Images.allow({                                                                                       // 43
+    insert: function () {                                                                              // 44
+      function insert(userId, disconnect) {                                                            // 44
+        return true;                                                                                   // 45
+      }                                                                                                // 46
                                                                                                        //
-      return insert;                                                                                   // 40
-    }()                                                                                                // 40
-  });                                                                                                  // 39
-});                                                                                                    // 44
+      return insert;                                                                                   // 44
+    }()                                                                                                // 44
+  });                                                                                                  // 43
+});                                                                                                    // 48
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }]}},{"extensions":[".js",".json"]});

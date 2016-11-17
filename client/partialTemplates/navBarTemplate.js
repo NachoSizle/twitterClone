@@ -74,8 +74,8 @@ Template.navBarTemplate.helpers({
 		}
 		//NO SE ESTA OBTENIENDO CORRECTAMENTE ESTE TIPO DE NOTIF
 		//REVISAR publications.js
-		console.log(resultNotifResponse);
-		console.log(resultNotifResponse.count());
+		//console.log(resultNotifResponse);
+		//console.log(resultNotifResponse.count());
 
 		//DEVOLVEMOS LA SUMA TOTAL DE LAS NOTIFICACIONES
 		if(auxTotalCount > 0){
@@ -84,7 +84,8 @@ Template.navBarTemplate.helpers({
 	},
 	'whatsAppReq' : function(){
 		console.log("NUMERO DE NOTIFICACIONES DE PETICIONES DE WHATSAPP");
-		
+		console.log("Req: " + resultNotifRequest.count());
+		console.log("Res: " + resultNotifResponse.count());
 	    var cont = 0;
 	    var req = [];
 	    var res = [];

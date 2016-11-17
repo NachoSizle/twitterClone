@@ -25,13 +25,32 @@ Template.userProfile.events({
 			//SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER
 			//SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.
 			Session.set('userToSentPet', currentUserName);
-			if(!Session.get('showProfileOtherUser')){
+			
+			//COMPARAMOS EL userId DEL USUARIO ACTUAL EN METEOR Y LO COMPARAMOS CON EL ARRAY
+			//showWhatsTo PARA VER SI PODEMOS MOSTRAR EL WHATSAPP
+
+			console.log(dataUser.userId);
+
+			var userActName = Meteor.user().username;
+			console.log(userActName);
+  			
+  			var userAct = Meteor.call('findUserData', userActName);
+  			var arrWhats = dataUser.showWhatsTo;
+			console.log(userAct);
+			/*
+  			if(arrWhats != []){
+  				if(arrWhats.indexOf(userAct.userId)){
+	  				//MOSTRAMOS EL WHATSAPP
+					$('[data-toggle="tooltip"]').tooltip('show'); 
+	  			}
+  			} else if(!Session.get('showProfileOtherUser')){
 				//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
 				$('#dialog-showSocialNetwork').modal('show');
 			} else {
 				//INICIALIZAMOS EL TOOLTIP
 				$('[data-toggle="tooltip"]').tooltip('show'); 
 			}
+*/
   		}
   	}
 });

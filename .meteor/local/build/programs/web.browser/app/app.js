@@ -1655,7 +1655,7 @@ Template["whatsAppRequestPage"] = new Template("Template.whatsAppRequestPage", (
   return Blaze.If(function() {                                                                                         // 5
     return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
   }, function() {                                                                                                      // 7
-    return [ "\n    ", Blaze.If(function() {                                                                           // 8
+    return [ "\n\n    ", Blaze.If(function() {                                                                         // 8
       return Spacebars.call(view.lookup("countNotifRequest"));                                                         // 9
     }, function() {                                                                                                    // 10
       return [ "\n      ", Blaze.Each(function() {                                                                     // 11
@@ -1692,55 +1692,63 @@ Template["whatsAppRequestPage"] = new Template("Template.whatsAppRequestPage", (
           class: "glyphicon glyphicon-remove-circle"                                                                   // 42
         }), "\n            "), "\n          "), "\n        "), "\n      "), "\n    " ];                                // 43
       }), "\n    " ];                                                                                                  // 44
-    }), "\n\n    ", Blaze.If(function() {                                                                              // 45
-      return Spacebars.call(view.lookup("countNotifResponse"));                                                        // 46
-    }, function() {                                                                                                    // 47
-      return [ "\n      ", Blaze.Each(function() {                                                                     // 48
-        return Spacebars.call(view.lookup("whatsResponseNotif"));                                                      // 49
-      }, function() {                                                                                                  // 50
-        return [ "\n      ", HTML.DIV({                                                                                // 51
-          class: "tweetfeed-container",                                                                                // 52
-          id: ""                                                                                                       // 53
-        }, "\n        ", HTML.DIV({                                                                                    // 54
-          class: "panel panel-default tweetfeed"                                                                       // 55
-        }, "\n          ", HTML.DIV({                                                                                  // 56
-          class: "panel-body"                                                                                          // 57
-        }, "\n          ", HTML.Comment(" Texto para el contenido del Twitt "), "\n            ", HTML.DIV({           // 58
-          class: "panel panel-info"                                                                                    // 59
-        }, "\n              ", HTML.DIV({                                                                              // 60
-          class: "panel-heading"                                                                                       // 61
-        }, "\n                ", HTML.H3({                                                                             // 62
-          class: "panel-title"                                                                                         // 63
+    }, function() {                                                                                                    // 45
+      return [ "\n      ", HTML.P("NO HAY MAS NOTIF"), "\n    " ];                                                     // 46
+    }), "\n\n    ", Blaze.If(function() {                                                                              // 47
+      return Spacebars.call(view.lookup("countNotifResponse"));                                                        // 48
+    }, function() {                                                                                                    // 49
+      return [ "\n    ", HTML.DIV({                                                                                    // 50
+        class: "tweetfeed-container"                                                                                   // 51
+      }, "\n      ", HTML.DIV({                                                                                        // 52
+        class: "panel panel-default tweetfeed"                                                                         // 53
+      }, "\n        ", HTML.DIV({                                                                                      // 54
+        class: "panel-body"                                                                                            // 55
+      }, "\n          ", Blaze.Each(function() {                                                                       // 56
+        return Spacebars.call(view.lookup("whatsResponseNotif"));                                                      // 57
+      }, function() {                                                                                                  // 58
+        return [ "\n            ", HTML.Comment(" Texto para el contenido del Twitt "), "\n            ", HTML.DIV({   // 59
+          class: "panel panel-info",                                                                                   // 60
+          id: function() {                                                                                             // 61
+            return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                  // 62
+          }                                                                                                            // 63
+        }, "\n              ", HTML.DIV({                                                                              // 64
+          class: "panel-heading"                                                                                       // 65
+        }, "\n                ", HTML.H3({                                                                             // 66
+          class: "panel-title"                                                                                         // 67
         }, "\n                  Respuesta de solicitud de WhatsApp de @", HTML.STRONG(Blaze.View("lookup:..actorNotif", function() {
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                    // 65
-        })), "\n                "), "\n              "), "\n              ", HTML.DIV({                                // 66
-          class: "panel-body"                                                                                          // 67
-        }, "\n                ", Blaze.If(function() {                                                                 // 68
-          return Spacebars.call(Spacebars.dot(view.lookup("."), "stateResponse"));                                     // 69
-        }, function() {                                                                                                // 70
-          return [ "\n                  ", HTML.P("Ha sido aceptada!"), "\n                " ];                        // 71
-        }, function() {                                                                                                // 72
-          return [ "\n                  ", HTML.P("Ha sido rechazada =("), "\n                " ];                     // 73
-        }), "\n              "), "\n            "), "\n            ", HTML.BUTTON({                                    // 74
-          id: "sentYes",                                                                                               // 75
-          type: "button",                                                                                              // 76
-          class: "btn btn-info"                                                                                        // 77
-        }, "\n              ", HTML.I({                                                                                // 78
-          class: "glyphicon glyphicon-ok-circle"                                                                       // 79
-        }), "\n            "), "\n            ", HTML.BUTTON({                                                         // 80
-          id: "sentNo",                                                                                                // 81
-          type: "button",                                                                                              // 82
-          class: "btn btn-danger"                                                                                      // 83
-        }, "\n              ", HTML.I({                                                                                // 84
-          class: "glyphicon glyphicon-remove-circle"                                                                   // 85
-        }), "\n            "), "\n          "), "\n        "), "\n      "), "\n    " ];                                // 86
-      }), "\n    " ];                                                                                                  // 87
-    }), "\n  " ];                                                                                                      // 88
-  }, function() {                                                                                                      // 89
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 90
-  });                                                                                                                  // 91
-}));                                                                                                                   // 92
-                                                                                                                       // 93
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                    // 69
+        })), "\n                "), "\n              "), "\n              ", HTML.DIV({                                // 70
+          class: "panel-body"                                                                                          // 71
+        }, "\n                ", Blaze.If(function() {                                                                 // 72
+          return Spacebars.call(Spacebars.dot(view.lookup("."), "stateResponse"));                                     // 73
+        }, function() {                                                                                                // 74
+          return [ "\n                  ", HTML.P("Ha sido aceptada!"), "\n                " ];                        // 75
+        }, function() {                                                                                                // 76
+          return [ "\n                  ", HTML.P("Ha sido rechazada =("), "\n                " ];                     // 77
+        }), "\n              "), "\n              ", HTML.DIV({                                                        // 78
+          class: "btn-group",                                                                                          // 79
+          role: "group",                                                                                               // 80
+          id: "btnGroupResWhatsNotif"                                                                                  // 81
+        }, "\n                ", HTML.A({                                                                              // 82
+          id: "goToProfile",                                                                                           // 83
+          class: "btn btn-secondary"                                                                                   // 84
+        }, "\n                  ", HTML.SPAN({                                                                         // 85
+          class: "glyphicon glyphicon-user"                                                                            // 86
+        }), "\n                "), "\n                ", HTML.A({                                                      // 87
+          class: "btn btn-secondary"                                                                                   // 88
+        }, "\n                  ", HTML.SPAN({                                                                         // 89
+          id: "clearNotif",                                                                                            // 90
+          class: "glyphicon glyphicon-remove"                                                                          // 91
+        }), "\n                "), "\n              "), "\n            "), "\n          " ];                           // 92
+      }), "\n        "), "\n      "), "\n    "), "\n    " ];                                                           // 93
+    }, function() {                                                                                                    // 94
+      return [ "\n      ", HTML.P("NO HAY MAS NOTIF"), "\n    " ];                                                     // 95
+    }), "\n  " ];                                                                                                      // 96
+  }, function() {                                                                                                      // 97
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 98
+  });                                                                                                                  // 99
+}));                                                                                                                   // 100
+                                                                                                                       // 101
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editProfile.js":function(){
@@ -2086,62 +2094,63 @@ Template.navBarTemplate.helpers({                                               
 	'whatsAppReq': function () {                                                                                          // 85
 		function whatsAppReq() {                                                                                             // 85
 			console.log("NUMERO DE NOTIFICACIONES DE PETICIONES DE WHATSAPP");                                                  // 86
+			console.log("Req: " + resultNotifRequest.count());                                                                  // 87
+			console.log("Res: " + resultNotifResponse.count());                                                                 // 88
+			var cont = 0;                                                                                                       // 89
+			var req = [];                                                                                                       // 90
+			var res = [];                                                                                                       // 91
                                                                                                                        //
-			var cont = 0;                                                                                                       // 88
-			var req = [];                                                                                                       // 89
-			var res = [];                                                                                                       // 90
+			resultNotifRequest.forEach(function (item) {                                                                        // 93
+				req.push(item._id);                                                                                                // 94
+				cont++;                                                                                                            // 95
+			});                                                                                                                 // 96
                                                                                                                        //
-			resultNotifRequest.forEach(function (item) {                                                                        // 92
-				req.push(item._id);                                                                                                // 93
-				cont++;                                                                                                            // 94
-			});                                                                                                                 // 95
+			resultNotifResponse.forEach(function (item) {                                                                       // 98
+				res.push(item._id);                                                                                                // 99
+				cont++;                                                                                                            // 100
+			});                                                                                                                 // 101
                                                                                                                        //
-			resultNotifResponse.forEach(function (item) {                                                                       // 97
-				res.push(item._id);                                                                                                // 98
-				cont++;                                                                                                            // 99
-			});                                                                                                                 // 100
-                                                                                                                       //
-			if (cont > 0) {                                                                                                     // 102
-				Session.set('whatsAppRequest', true);                                                                              // 103
-				Session.set('requestWhats', req);                                                                                  // 104
-				Session.set('responseWhats', res);                                                                                 // 105
-				return true;                                                                                                       // 106
-			} else {                                                                                                            // 107
-				Session.set('whatsAppRequest', false);                                                                             // 108
-				return false;                                                                                                      // 109
-			}                                                                                                                   // 110
-		}                                                                                                                    // 111
+			if (cont > 0) {                                                                                                     // 103
+				Session.set('whatsAppRequest', true);                                                                              // 104
+				Session.set('requestWhats', req);                                                                                  // 105
+				Session.set('responseWhats', res);                                                                                 // 106
+				return true;                                                                                                       // 107
+			} else {                                                                                                            // 108
+				Session.set('whatsAppRequest', false);                                                                             // 109
+				return false;                                                                                                      // 110
+			}                                                                                                                   // 111
+		}                                                                                                                    // 112
                                                                                                                        //
 		return whatsAppReq;                                                                                                  // 85
 	}(),                                                                                                                  // 85
-	'infoStateCollapseNavBar': function () {                                                                              // 112
-		function infoStateCollapseNavBar() {                                                                                 // 112
-			return Session.get('navBarCollapse');                                                                               // 113
-		}                                                                                                                    // 114
+	'infoStateCollapseNavBar': function () {                                                                              // 113
+		function infoStateCollapseNavBar() {                                                                                 // 113
+			return Session.get('navBarCollapse');                                                                               // 114
+		}                                                                                                                    // 115
                                                                                                                        //
-		return infoStateCollapseNavBar;                                                                                      // 112
-	}(),                                                                                                                  // 112
-	'userImgFound': function () {                                                                                         // 115
-		function userImgFound() {                                                                                            // 115
-			Meteor.call('findUserData', Meteor.user().username, function (err, res) {                                           // 116
-				if (res.userImg) {                                                                                                 // 117
-					Meteor.call('findUserImg', res.userImg, function (err, res) {                                                     // 118
-						$('#imgProfile').attr("src", res);                                                                               // 119
-					});                                                                                                               // 120
-				} else {                                                                                                           // 121
-					$('#imgProfile').attr("src", "/profileImgTest.png");                                                              // 122
-				}                                                                                                                  // 123
-			});                                                                                                                 // 125
-		}                                                                                                                    // 126
+		return infoStateCollapseNavBar;                                                                                      // 113
+	}(),                                                                                                                  // 113
+	'userImgFound': function () {                                                                                         // 116
+		function userImgFound() {                                                                                            // 116
+			Meteor.call('findUserData', Meteor.user().username, function (err, res) {                                           // 117
+				if (res.userImg) {                                                                                                 // 118
+					Meteor.call('findUserImg', res.userImg, function (err, res) {                                                     // 119
+						$('#imgProfile').attr("src", res);                                                                               // 120
+					});                                                                                                               // 121
+				} else {                                                                                                           // 122
+					$('#imgProfile').attr("src", "/profileImgTest.png");                                                              // 123
+				}                                                                                                                  // 124
+			});                                                                                                                 // 126
+		}                                                                                                                    // 127
                                                                                                                        //
-		return userImgFound;                                                                                                 // 115
-	}()                                                                                                                   // 115
+		return userImgFound;                                                                                                 // 116
+	}()                                                                                                                   // 116
 });                                                                                                                    // 52
-//PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                    // 128
-$(window).resize(function () {                                                                                         // 129
-	console.log("Change Display Size");                                                                                   // 130
-	Session.set('sizeDisplay', $(window).width());                                                                        // 131
-});                                                                                                                    // 132
+//PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                    // 129
+$(window).resize(function () {                                                                                         // 130
+	console.log("Change Display Size");                                                                                   // 131
+	Session.set('sizeDisplay', $(window).width());                                                                        // 132
+});                                                                                                                    // 133
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"notifications.js":function(){
@@ -3598,129 +3607,148 @@ Template.userProfile.events({                                                   
         //SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER               // 25
         //SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.                                     // 26
         Session.set('userToSentPet', currentUserName);                                                                 // 27
-        if (!Session.get('showProfileOtherUser')) {                                                                    // 28
-          //ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                             // 29
-          $('#dialog-showSocialNetwork').modal('show');                                                                // 30
-        } else {                                                                                                       // 31
-          //INICIALIZAMOS EL TOOLTIP                                                                                   // 32
-          $('[data-toggle="tooltip"]').tooltip('show');                                                                // 33
-        }                                                                                                              // 34
-      }                                                                                                                // 35
-    }                                                                                                                  // 36
+                                                                                                                       //
+        //COMPARAMOS EL userId DEL USUARIO ACTUAL EN METEOR Y LO COMPARAMOS CON EL ARRAY                               // 29
+        //showWhatsTo PARA VER SI PODEMOS MOSTRAR EL WHATSAPP                                                          // 30
+                                                                                                                       //
+        console.log(dataUser.userId);                                                                                  // 32
+                                                                                                                       //
+        var userActName = Meteor.user().username;                                                                      // 34
+        console.log(userActName);                                                                                      // 35
+                                                                                                                       //
+        var userAct = Meteor.call('findUserData', userActName);                                                        // 37
+        var arrWhats = dataUser.showWhatsTo;                                                                           // 38
+        console.log(userAct);                                                                                          // 39
+        /*                                                                                                             // 40
+        		if(arrWhats != []){                                                                                          //
+        			if(arrWhats.indexOf(userAct.userId)){                                                                       //
+        				//MOSTRAMOS EL WHATSAPP                                                                                    //
+        		$('[data-toggle="tooltip"]').tooltip('show');                                                                //
+        			}                                                                                                           //
+        		} else if(!Session.get('showProfileOtherUser')){                                                             //
+        	//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                              //
+        	$('#dialog-showSocialNetwork').modal('show');                                                                 //
+        } else {                                                                                                       //
+        	//INICIALIZAMOS EL TOOLTIP                                                                                    //
+        	$('[data-toggle="tooltip"]').tooltip('show');                                                                 //
+        }                                                                                                              //
+        */                                                                                                             //
+      }                                                                                                                // 54
+    }                                                                                                                  // 55
                                                                                                                        //
     return clickBtnShowSN;                                                                                             // 13
   }()                                                                                                                  // 13
 });                                                                                                                    // 5
                                                                                                                        //
-Template.userProfile.helpers({                                                                                         // 39
-  'dataUserFound': function () {                                                                                       // 40
-    function dataUserFound() {                                                                                         // 40
-      Meteor.call('findUserData', currentUserName, function (err, res) {                                               // 41
-        Session.set('dataUser', res);                                                                                  // 42
-      });                                                                                                              // 43
-                                                                                                                       //
-      dataUser = Session.get('dataUser');                                                                              // 45
-      return dataUser;                                                                                                 // 46
-    }                                                                                                                  // 47
-                                                                                                                       //
-    return dataUserFound;                                                                                              // 40
-  }(),                                                                                                                 // 40
-  'userImgFound': function () {                                                                                        // 48
-    function userImgFound() {                                                                                          // 48
-      if (dataUser.userImg != "") {                                                                                    // 49
-        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 50
-          $('#imgCurrentUser').attr("src", res);                                                                       // 51
-        });                                                                                                            // 52
-      } else {                                                                                                         // 53
-        console.log("No Img Profile");                                                                                 // 54
-        //$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                     // 55
-        return "/profileImgTest.png";                                                                                  // 56
-      }                                                                                                                // 57
-    }                                                                                                                  // 58
-                                                                                                                       //
-    return userImgFound;                                                                                               // 48
-  }(),                                                                                                                 // 48
-  'tweets': function () {                                                                                              // 59
-    function tweets() {                                                                                                // 59
-      Meteor.call('tweetsPublish', currentUserName, function (err, res) {                                              // 60
-        Session.set('numTweets', res);                                                                                 // 61
+Template.userProfile.helpers({                                                                                         // 58
+  'dataUserFound': function () {                                                                                       // 59
+    function dataUserFound() {                                                                                         // 59
+      Meteor.call('findUserData', currentUserName, function (err, res) {                                               // 60
+        Session.set('dataUser', res);                                                                                  // 61
       });                                                                                                              // 62
-      return Session.get('numTweets');                                                                                 // 63
-    }                                                                                                                  // 64
                                                                                                                        //
-    return tweets;                                                                                                     // 59
+      dataUser = Session.get('dataUser');                                                                              // 64
+      return dataUser;                                                                                                 // 65
+    }                                                                                                                  // 66
+                                                                                                                       //
+    return dataUserFound;                                                                                              // 59
   }(),                                                                                                                 // 59
-  'following': function () {                                                                                           // 65
-    function following() {                                                                                             // 65
-      Meteor.call('usersFollowings', currentUserName, function (err, res) {                                            // 66
-        Session.set('numFollowings', res);                                                                             // 67
-      });                                                                                                              // 68
-      return Session.get('numFollowings');                                                                             // 69
-    }                                                                                                                  // 70
+  'userImgFound': function () {                                                                                        // 67
+    function userImgFound() {                                                                                          // 67
+      if (dataUser.userImg != "") {                                                                                    // 68
+        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 69
+          $('#imgCurrentUser').attr("src", res);                                                                       // 70
+        });                                                                                                            // 71
+      } else {                                                                                                         // 72
+        console.log("No Img Profile");                                                                                 // 73
+        //$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                     // 74
+        return "/profileImgTest.png";                                                                                  // 75
+      }                                                                                                                // 76
+    }                                                                                                                  // 77
                                                                                                                        //
-    return following;                                                                                                  // 65
-  }(),                                                                                                                 // 65
-  'followers': function () {                                                                                           // 71
-    function followers() {                                                                                             // 71
-      Meteor.call('usersFollowers', currentUserName, function (err, res) {                                             // 72
-        Session.set('numFollowers', res);                                                                              // 73
-      });                                                                                                              // 74
-      return Session.get('numFollowers');                                                                              // 75
-    }                                                                                                                  // 76
+    return userImgFound;                                                                                               // 67
+  }(),                                                                                                                 // 67
+  'tweets': function () {                                                                                              // 78
+    function tweets() {                                                                                                // 78
+      Meteor.call('tweetsPublish', currentUserName, function (err, res) {                                              // 79
+        Session.set('numTweets', res);                                                                                 // 80
+      });                                                                                                              // 81
+      return Session.get('numTweets');                                                                                 // 82
+    }                                                                                                                  // 83
                                                                                                                        //
-    return followers;                                                                                                  // 71
-  }(),                                                                                                                 // 71
-  'existsSocialNetwork': function () {                                                                                 // 77
-    function existsSocialNetwork() {                                                                                   // 77
+    return tweets;                                                                                                     // 78
+  }(),                                                                                                                 // 78
+  'following': function () {                                                                                           // 84
+    function following() {                                                                                             // 84
+      Meteor.call('usersFollowings', currentUserName, function (err, res) {                                            // 85
+        Session.set('numFollowings', res);                                                                             // 86
+      });                                                                                                              // 87
+      return Session.get('numFollowings');                                                                             // 88
+    }                                                                                                                  // 89
                                                                                                                        //
-      var btnSocial = [];                                                                                              // 79
+    return following;                                                                                                  // 84
+  }(),                                                                                                                 // 84
+  'followers': function () {                                                                                           // 90
+    function followers() {                                                                                             // 90
+      Meteor.call('usersFollowers', currentUserName, function (err, res) {                                             // 91
+        Session.set('numFollowers', res);                                                                              // 92
+      });                                                                                                              // 93
+      return Session.get('numFollowers');                                                                              // 94
+    }                                                                                                                  // 95
                                                                                                                        //
-      if (dataUser.userFb) {                                                                                           // 81
-        var newData = new Object();                                                                                    // 82
-        newData.color = "primary";                                                                                     // 83
-        newData['class'] = "fa fa-facebook";                                                                           // 84
-        newData.id = "Facebook";                                                                                       // 85
-        btnSocial.push(newData);                                                                                       // 86
-      }                                                                                                                // 87
+    return followers;                                                                                                  // 90
+  }(),                                                                                                                 // 90
+  'existsSocialNetwork': function () {                                                                                 // 96
+    function existsSocialNetwork() {                                                                                   // 96
                                                                                                                        //
-      if (dataUser.userInsta) {                                                                                        // 89
-        var newData = new Object();                                                                                    // 90
-        newData.color = "warning";                                                                                     // 91
-        newData['class'] = "fa fa-instagram";                                                                          // 92
-        newData.id = "Instagram";                                                                                      // 93
-        btnSocial.push(newData);                                                                                       // 94
-      }                                                                                                                // 95
+      var btnSocial = [];                                                                                              // 98
                                                                                                                        //
-      if (dataUser.userWhats) {                                                                                        // 97
-        var newData = new Object();                                                                                    // 98
-        newData.color = "success";                                                                                     // 99
-        newData['class'] = "fa fa-whatsapp";                                                                           // 100
-        newData.id = "WhatsApp";                                                                                       // 101
-        btnSocial.push(newData);                                                                                       // 102
-      }                                                                                                                // 103
+      if (dataUser.userFb) {                                                                                           // 100
+        var newData = new Object();                                                                                    // 101
+        newData.color = "primary";                                                                                     // 102
+        newData['class'] = "fa fa-facebook";                                                                           // 103
+        newData.id = "Facebook";                                                                                       // 104
+        btnSocial.push(newData);                                                                                       // 105
+      }                                                                                                                // 106
                                                                                                                        //
-      return btnSocial;                                                                                                // 105
-    }                                                                                                                  // 106
+      if (dataUser.userInsta) {                                                                                        // 108
+        var newData = new Object();                                                                                    // 109
+        newData.color = "warning";                                                                                     // 110
+        newData['class'] = "fa fa-instagram";                                                                          // 111
+        newData.id = "Instagram";                                                                                      // 112
+        btnSocial.push(newData);                                                                                       // 113
+      }                                                                                                                // 114
                                                                                                                        //
-    return existsSocialNetwork;                                                                                        // 77
-  }(),                                                                                                                 // 77
-  'showProfileOtherUser': function () {                                                                                // 107
-    function showProfileOtherUser() {                                                                                  // 107
-      return Session.get('showProfileOtherUser');                                                                      // 108
-    }                                                                                                                  // 109
+      if (dataUser.userWhats) {                                                                                        // 116
+        var newData = new Object();                                                                                    // 117
+        newData.color = "success";                                                                                     // 118
+        newData['class'] = "fa fa-whatsapp";                                                                           // 119
+        newData.id = "WhatsApp";                                                                                       // 120
+        btnSocial.push(newData);                                                                                       // 121
+      }                                                                                                                // 122
                                                                                                                        //
-    return showProfileOtherUser;                                                                                       // 107
-  }(),                                                                                                                 // 107
-  'isWhatsapp': function () {                                                                                          // 110
-    function isWhatsapp() {                                                                                            // 110
-      if (this.id === "WhatsApp") {                                                                                    // 111
-        return true;                                                                                                   // 112
-      }                                                                                                                // 113
-    }                                                                                                                  // 114
+      return btnSocial;                                                                                                // 124
+    }                                                                                                                  // 125
                                                                                                                        //
-    return isWhatsapp;                                                                                                 // 110
-  }()                                                                                                                  // 110
-});                                                                                                                    // 39
+    return existsSocialNetwork;                                                                                        // 96
+  }(),                                                                                                                 // 96
+  'showProfileOtherUser': function () {                                                                                // 126
+    function showProfileOtherUser() {                                                                                  // 126
+      return Session.get('showProfileOtherUser');                                                                      // 127
+    }                                                                                                                  // 128
+                                                                                                                       //
+    return showProfileOtherUser;                                                                                       // 126
+  }(),                                                                                                                 // 126
+  'isWhatsapp': function () {                                                                                          // 129
+    function isWhatsapp() {                                                                                            // 129
+      if (this.id === "WhatsApp") {                                                                                    // 130
+        return true;                                                                                                   // 131
+      }                                                                                                                // 132
+    }                                                                                                                  // 133
+                                                                                                                       //
+    return isWhatsapp;                                                                                                 // 129
+  }()                                                                                                                  // 129
+});                                                                                                                    // 58
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"whatsAppNotif.js":function(){
@@ -3753,33 +3781,34 @@ Template.whatsAppNotif.helpers({                                                
   whatsNotifCount: function () {                                                                                       // 16
     function whatsNotifCount() {                                                                                       // 16
       numNotif = Session.get('requestWhats').length;                                                                   // 17
-      return numNotif;                                                                                                 // 18
-    }                                                                                                                  // 19
+      numNotif += Session.get('responseWhats').length;                                                                 // 18
+      return numNotif;                                                                                                 // 19
+    }                                                                                                                  // 20
                                                                                                                        //
     return whatsNotifCount;                                                                                            // 16
   }(),                                                                                                                 // 16
-  'infoStateCollapseNavBar': function () {                                                                             // 20
-    function infoStateCollapseNavBar() {                                                                               // 20
-      return Session.get('navBarCollapse');                                                                            // 21
-    }                                                                                                                  // 22
+  'infoStateCollapseNavBar': function () {                                                                             // 21
+    function infoStateCollapseNavBar() {                                                                               // 21
+      return Session.get('navBarCollapse');                                                                            // 22
+    }                                                                                                                  // 23
                                                                                                                        //
-    return infoStateCollapseNavBar;                                                                                    // 20
-  }()                                                                                                                  // 20
+    return infoStateCollapseNavBar;                                                                                    // 21
+  }()                                                                                                                  // 21
 });                                                                                                                    // 7
                                                                                                                        //
-Template.whatsAppNotif.events({                                                                                        // 25
+Template.whatsAppNotif.events({                                                                                        // 26
                                                                                                                        //
-  'click #linkToWhatsNotif': function () {                                                                             // 27
-    function clickLinkToWhatsNotif() {                                                                                 // 27
-      if (numNotif > 0) {                                                                                              // 28
-        window.location = "/RequestWhatsApp/" + Meteor.user().username;                                                // 29
-      }                                                                                                                // 30
-    }                                                                                                                  // 31
+  'click #linkToWhatsNotif': function () {                                                                             // 28
+    function clickLinkToWhatsNotif() {                                                                                 // 28
+      if (numNotif > 0) {                                                                                              // 29
+        window.location = "/RequestWhatsApp/" + Meteor.user().username;                                                // 30
+      }                                                                                                                // 31
+    }                                                                                                                  // 32
                                                                                                                        //
-    return clickLinkToWhatsNotif;                                                                                      // 27
-  }()                                                                                                                  // 27
+    return clickLinkToWhatsNotif;                                                                                      // 28
+  }()                                                                                                                  // 28
                                                                                                                        //
-});                                                                                                                    // 25
+});                                                                                                                    // 26
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"whatsAppRequestPage.js":function(){
@@ -3795,8 +3824,8 @@ Template.whatsAppRequestPage.helpers({                                          
     function countNotifRequest() {                                                                                     // 2
       arrWhatsAppReqNotif = Session.get('requestWhats');                                                               // 3
       if (arrWhatsAppReqNotif) {                                                                                       // 4
-        countNumWhatsAppNotif = arrWhatsAppReqNotif.length;                                                            // 5
-        if (countNumWhatsAppNotif === 0) {                                                                             // 6
+        countNumReqWhatsAppNotif = arrWhatsAppReqNotif.length;                                                         // 5
+        if (countNumReqWhatsAppNotif === 0) {                                                                          // 6
           return false;                                                                                                // 7
         } else {                                                                                                       // 8
           return true;                                                                                                 // 9
@@ -3810,8 +3839,8 @@ Template.whatsAppRequestPage.helpers({                                          
     function countNotifResponse() {                                                                                    // 13
       arrWhatsAppResNotif = Session.get('responseWhats');                                                              // 14
       if (arrWhatsAppResNotif) {                                                                                       // 15
-        countNumWhatsAppNotif = arrWhatsAppResNotif.length;                                                            // 16
-        if (countNumWhatsAppNotif === 0) {                                                                             // 17
+        countNumResWhatsAppNotif = arrWhatsAppResNotif.length;                                                         // 16
+        if (countNumResWhatsAppNotif === 0) {                                                                          // 17
           return false;                                                                                                // 18
         } else {                                                                                                       // 19
           return true;                                                                                                 // 20
@@ -3874,49 +3903,86 @@ Template.whatsAppRequestPage.events({                                           
                                                                                                                        //
       Meteor.call('createResponseWhatsAppNotification', notif);                                                        // 66
                                                                                                                        //
-      countNumWhatsAppNotif--;                                                                                         // 68
-    }                                                                                                                  // 69
+      countNumReqWhatsAppNotif--;                                                                                      // 68
+                                                                                                                       //
+      //ADEMAS HAY QUE AÑADIR A showWhatsTo[] A QUIEN ACABAMOS DE ACEPTAR                                              // 70
+      var update = new Object();                                                                                       // 71
+      update.user = this.recepNotif;                                                                                   // 72
+      update.userToShow = this.actorNotif;                                                                             // 73
+      Meteor.call('updateArrayWhatsAppAuthorize', update);                                                             // 74
+    }                                                                                                                  // 75
                                                                                                                        //
     return clickSentYes;                                                                                               // 52
   }(),                                                                                                                 // 52
-  //SE PRODUCE CUANDO EL USUARIO RECHAZA LA SOLICITUD                                                                  // 70
-  'click #sentNo': function () {                                                                                       // 71
-    function clickSentNo() {                                                                                           // 71
-      var idWhatsNotif = this._id;                                                                                     // 72
-      //HAY QUE REALIZAR UNA NOTIFICACION AL USUARIO QUE HA SOLICITADO EL WHATSAPP                                     // 73
-      //INFORMANDOLE QUE SE HA RECHAZADO DICHA SOLICITUD                                                               // 74
-      /*                                                                                                               // 75
-      var notif = new Object();                                                                                        //
+  //SE PRODUCE CUANDO EL USUARIO RECHAZA LA SOLICITUD                                                                  // 76
+  'click #sentNo': function () {                                                                                       // 77
+    function clickSentNo() {                                                                                           // 77
+      var idWhatsNotif = this._id;                                                                                     // 78
+      //HAY QUE REALIZAR UNA NOTIFICACION AL USUARIO QUE HA SOLICITADO EL WHATSAPP                                     // 79
+      //INFORMANDOLE QUE SE HA RECHAZADO DICHA SOLICITUD                                                               // 80
                                                                                                                        //
-      notif.recepNotif = Session.get('userToSentPet'); //EL USUARIO QUE VA A RECIBIR LA PETICION                       //
-      notif.actorNotif = Meteor.user().username; //EL USUARIO QUE REALIZA LA PETICION                                  //
-      notif.timestamp = new Date();                                                                                    //
-      notif.idNotifRequestWhatsApp = idWhatsNotif;                                                                     //
-      notif.typeOfNotif = "responseWhatsAppNotif";                                                                     //
-      notif.stateResponse = false;                                                                                     //
-        Meteor.call('createResponseWhatsAppNotification', notif);                                                      //
-      */                                                                                                               //
-      //countNumWhatsAppNotif--;                                                                                       // 87
-    }                                                                                                                  // 88
+      var notif = new Object();                                                                                        // 82
                                                                                                                        //
-    return clickSentNo;                                                                                                // 71
-  }(),                                                                                                                 // 71
-  //PULSEMOS EL BTN QUE PULSEMOS SE HARAN DOS COSAS:                                                                   // 89
-  //1) REDIRECCION A LA PAGINA PPAL SI SE HAN ACABADO LAS NOTIFICACIONES                                               // 90
-  //2) PONER LA NOTIFICACION A LEIDA                                                                                   // 91
-  'click .btn': function () {                                                                                          // 92
-    function clickBtn() {                                                                                              // 92
-      var idNotifToClear = this._id;                                                                                   // 93
+      notif.recepNotif = Session.get('userToSentPet'); //EL USUARIO QUE VA A RECIBIR LA PETICION                       // 84
+      notif.actorNotif = Meteor.user().username; //EL USUARIO QUE REALIZA LA PETICION                                  // 85
+      notif.timestamp = new Date();                                                                                    // 86
+      notif.idNotifRequestWhatsApp = idWhatsNotif;                                                                     // 87
+      notif.typeOfNotif = "responseWhatsAppNotif";                                                                     // 88
+      notif.stateResponse = false;                                                                                     // 89
                                                                                                                        //
-      Notifications.update(idNotifToClear, { $set: { read: true } });                                                  // 95
-      console.log("Clean!");                                                                                           // 96
-      if (countNumWhatsAppNotif === 0) {                                                                               // 97
-        window.location = "/";                                                                                         // 98
-      }                                                                                                                // 99
-    }                                                                                                                  // 101
+      Meteor.call('createResponseWhatsAppNotification', notif);                                                        // 91
                                                                                                                        //
-    return clickBtn;                                                                                                   // 92
-  }()                                                                                                                  // 92
+      countNumReqWhatsAppNotif--;                                                                                      // 93
+    }                                                                                                                  // 95
+                                                                                                                       //
+    return clickSentNo;                                                                                                // 77
+  }(),                                                                                                                 // 77
+  //PULSEMOS EL BTN QUE PULSEMOS SE HARAN DOS COSAS:                                                                   // 96
+  //1) REDIRECCION A LA PAGINA PPAL SI SE HAN ACABADO LAS NOTIFICACIONES                                               // 97
+  //2) PONER LA NOTIFICACION A LEIDA                                                                                   // 98
+  'click .btn': function () {                                                                                          // 99
+    function clickBtn() {                                                                                              // 99
+                                                                                                                       //
+      var idNotifToClear = this._id;                                                                                   // 101
+                                                                                                                       //
+      Notifications.update(idNotifToClear, { $set: { read: true } });                                                  // 103
+                                                                                                                       //
+      console.log("Clean!");                                                                                           // 105
+      console.log(countNumReqWhatsAppNotif + " " + countNumResWhatsAppNotif);                                          // 106
+                                                                                                                       //
+      if (countNumReqWhatsAppNotif === 0 && countNumResWhatsAppNotif === 0) {                                          // 108
+        window.location = "/";                                                                                         // 109
+      }                                                                                                                // 110
+    }                                                                                                                  // 112
+                                                                                                                       //
+    return clickBtn;                                                                                                   // 99
+  }(),                                                                                                                 // 99
+  'click #goToProfile': function () {                                                                                  // 113
+    function clickGoToProfile() {                                                                                      // 113
+      window.location = "/Profile/" + this.actorNotif;                                                                 // 114
+      countNumResWhatsAppNotif--;                                                                                      // 115
+    }                                                                                                                  // 116
+                                                                                                                       //
+    return clickGoToProfile;                                                                                           // 113
+  }(),                                                                                                                 // 113
+  'click #clearNotif': function () {                                                                                   // 117
+    function clickClearNotif() {                                                                                       // 117
+      var idNotifToClear = this._id;                                                                                   // 118
+                                                                                                                       //
+      countNumResWhatsAppNotif--;                                                                                      // 120
+      Notifications.update(idNotifToClear, { $set: { read: true } });                                                  // 121
+                                                                                                                       //
+      $('#' + this.actorNotif).remove();                                                                               // 123
+                                                                                                                       //
+      console.log(countNumReqWhatsAppNotif + " " + countNumResWhatsAppNotif);                                          // 125
+                                                                                                                       //
+      if (countNumReqWhatsAppNotif === 0 && countNumResWhatsAppNotif === 0) {                                          // 127
+        window.location = "/";                                                                                         // 128
+      }                                                                                                                // 129
+    }                                                                                                                  // 130
+                                                                                                                       //
+    return clickClearNotif;                                                                                            // 117
+  }()                                                                                                                  // 117
 });                                                                                                                    // 50
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

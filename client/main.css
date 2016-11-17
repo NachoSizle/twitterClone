@@ -416,3 +416,7 @@ form input:focus:required:invalid{
   float: right;
   margin-right: 25%;
 }
+
+#btnGroupResWhatsNotif{
+  margin-left: 40%;
+}

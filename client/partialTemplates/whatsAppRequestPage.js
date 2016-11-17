@@ -2,8 +2,8 @@ Template.whatsAppRequestPage.helpers({
   'countNotifRequest' : function(){
     arrWhatsAppReqNotif =  Session.get('requestWhats');
     if(arrWhatsAppReqNotif){
-      countNumWhatsAppNotif = arrWhatsAppReqNotif.length;
-      if(countNumWhatsAppNotif === 0){
+      countNumReqWhatsAppNotif = arrWhatsAppReqNotif.length;
+      if(countNumReqWhatsAppNotif === 0){
         return false;
       } else {
         return true;
@@ -13,8 +13,8 @@ Template.whatsAppRequestPage.helpers({
   'countNotifResponse' : function(){
     arrWhatsAppResNotif =  Session.get('responseWhats');
     if(arrWhatsAppResNotif){
-      countNumWhatsAppNotif = arrWhatsAppResNotif.length;
-      if(countNumWhatsAppNotif === 0){
+      countNumResWhatsAppNotif = arrWhatsAppResNotif.length;
+      if(countNumResWhatsAppNotif === 0){
         return false;
       } else {
         return true;
@@ -65,14 +65,20 @@ Template.whatsAppRequestPage.events({
 
     Meteor.call('createResponseWhatsAppNotification', notif);
     
-    countNumWhatsAppNotif--;
+    countNumReqWhatsAppNotif--;
+
+    //ADEMAS HAY QUE AÑADIR A showWhatsTo[] A QUIEN ACABAMOS DE ACEPTAR
+    var update = new Object();
+    update.user = this.recepNotif;
+    update.userToShow = this.actorNotif;
+    Meteor.call('updateArrayWhatsAppAuthorize', update);
   },
   //SE PRODUCE CUANDO EL USUARIO RECHAZA LA SOLICITUD
   'click #sentNo' : function(){
     var idWhatsNotif = this._id;
     //HAY QUE REALIZAR UNA NOTIFICACION AL USUARIO QUE HA SOLICITADO EL WHATSAPP
     //INFORMANDOLE QUE SE HA RECHAZADO DICHA SOLICITUD
-    /*
+    
     var notif = new Object();
       
     notif.recepNotif = Session.get('userToSentPet'); //EL USUARIO QUE VA A RECIBIR LA PETICION
@@ -83,20 +89,43 @@ Template.whatsAppRequestPage.events({
     notif.stateResponse = false;
 
     Meteor.call('createResponseWhatsAppNotification', notif);
-    */
-    //countNumWhatsAppNotif--;
+    
+    countNumReqWhatsAppNotif--;
+
   },
   //PULSEMOS EL BTN QUE PULSEMOS SE HARAN DOS COSAS:
   //1) REDIRECCION A LA PAGINA PPAL SI SE HAN ACABADO LAS NOTIFICACIONES
   //2) PONER LA NOTIFICACION A LEIDA
   'click .btn' : function(){
+    
     var idNotifToClear = this._id;
     
     Notifications.update(idNotifToClear, {$set: {read: true}});
+
     console.log("Clean!");
-    if(countNumWhatsAppNotif === 0){
+    console.log(countNumReqWhatsAppNotif + " " + countNumResWhatsAppNotif);
+
+    if(countNumReqWhatsAppNotif === 0 && countNumResWhatsAppNotif === 0){
       window.location = "/"; 
     }
     
+  },
+  'click #goToProfile': function(){
+    window.location = "/Profile/" + this.actorNotif;
+    countNumResWhatsAppNotif--;
+  },
+  'click #clearNotif': function(){
+    var idNotifToClear = this._id;
+    
+    countNumResWhatsAppNotif--;
+    Notifications.update(idNotifToClear, {$set: {read: true}});
+
+    $('#'+this.actorNotif).remove();
+
+    console.log(countNumReqWhatsAppNotif + " " + countNumResWhatsAppNotif);
+
+    if(countNumReqWhatsAppNotif === 0 && countNumResWhatsAppNotif === 0){
+      window.location = "/"; 
+    }
   }
 });

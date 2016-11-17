@@ -15,6 +15,7 @@ Template.whatsAppNotif.helpers({
   },
   whatsNotifCount: function(){
     numNotif = Session.get('requestWhats').length;
+    numNotif += Session.get('responseWhats').length;
     return numNotif;
   },
   'infoStateCollapseNavBar': function() {
