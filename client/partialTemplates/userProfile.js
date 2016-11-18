@@ -34,23 +34,26 @@ Template.userProfile.events({
 			var userActName = Meteor.user().username;
 			console.log(userActName);
   			
-  			var userAct = Meteor.call('findUserData', userActName);
   			var arrWhats = dataUser.showWhatsTo;
-			console.log(userAct);
-			/*
-  			if(arrWhats != []){
-  				if(arrWhats.indexOf(userAct.userId)){
-	  				//MOSTRAMOS EL WHATSAPP
+
+  			Meteor.call('findUserData', userActName, function(err,res){
+
+	  			if(arrWhats != []){
+	  				if(arrWhats.indexOf(res.userId) >= 0){
+		  				//MOSTRAMOS EL WHATSAPP
+		  				console.log($('[data-toggle="tooltip"]'));
+						$('[data-toggle="tooltip"]').tooltip('show'); 
+		  			}
+	  			} else if(!Session.get('showProfileOtherUser')){
+					//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
+					$('#dialog-showSocialNetwork').modal('show');
+				} else {
+					//INICIALIZAMOS EL TOOLTIP
 					$('[data-toggle="tooltip"]').tooltip('show'); 
-	  			}
-  			} else if(!Session.get('showProfileOtherUser')){
-				//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
-				$('#dialog-showSocialNetwork').modal('show');
-			} else {
-				//INICIALIZAMOS EL TOOLTIP
-				$('[data-toggle="tooltip"]').tooltip('show'); 
-			}
-*/
+				}
+
+  			});
+			
   		}
   	}
 });
