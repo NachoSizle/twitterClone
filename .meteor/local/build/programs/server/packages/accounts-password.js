@@ -59,35 +59,28 @@ Accounts.emailTemplates = {                                                     
                                                                                                                        //
       return subject;                                                                                                  // 26
     }(),                                                                                                               // 26
-    text: function () {                                                                                                // 29
-      function text(user, url) {                                                                                       // 29
-        var greeting = user.profile && user.profile.name ? "Hello " + user.profile.name + "," : "Hello,";              // 30
-        return greeting + "\n\nTo reset your password, simply click the link below.\n\n" + url + "\n\nThanks.\n";      // 32
+    text: greet("To reset your password")                                                                              // 29
+  },                                                                                                                   // 25
+  verifyEmail: {                                                                                                       // 31
+    subject: function () {                                                                                             // 32
+      function subject(user) {                                                                                         // 32
+        return "How to verify email address on " + Accounts.emailTemplates.siteName;                                   // 33
+      }                                                                                                                // 34
+                                                                                                                       //
+      return subject;                                                                                                  // 32
+    }(),                                                                                                               // 32
+    text: greet("To verify your account email")                                                                        // 35
+  },                                                                                                                   // 31
+  enrollAccount: {                                                                                                     // 37
+    subject: function () {                                                                                             // 38
+      function subject(user) {                                                                                         // 38
+        return "An account has been created for you on " + Accounts.emailTemplates.siteName;                           // 39
       }                                                                                                                // 40
                                                                                                                        //
-      return text;                                                                                                     // 29
-    }()                                                                                                                // 29
-  },                                                                                                                   // 25
-  verifyEmail: {                                                                                                       // 42
-    subject: function () {                                                                                             // 43
-      function subject(user) {                                                                                         // 43
-        return "How to verify email address on " + Accounts.emailTemplates.siteName;                                   // 44
-      }                                                                                                                // 45
-                                                                                                                       //
-      return subject;                                                                                                  // 43
-    }(),                                                                                                               // 43
-    text: greet("To verify your account email")                                                                        // 46
-  },                                                                                                                   // 42
-  enrollAccount: {                                                                                                     // 48
-    subject: function () {                                                                                             // 49
-      function subject(user) {                                                                                         // 49
-        return "An account has been created for you on " + Accounts.emailTemplates.siteName;                           // 50
-      }                                                                                                                // 51
-                                                                                                                       //
-      return subject;                                                                                                  // 49
-    }(),                                                                                                               // 49
-    text: greet("To start using the service")                                                                          // 52
-  }                                                                                                                    // 48
+      return subject;                                                                                                  // 38
+    }(),                                                                                                               // 38
+    text: greet("To start using the service")                                                                          // 41
+  }                                                                                                                    // 37
 };                                                                                                                     // 21
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

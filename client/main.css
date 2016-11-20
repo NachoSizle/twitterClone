@@ -420,3 +420,11 @@ form input:focus:required:invalid{
 #btnGroupResWhatsNotif{
   margin-left: 40%;
 }
+
+#remLicense{
+  margin-left: 25%;
+}
+
+.alignTextToCenter{
+  text-align: center;
+}

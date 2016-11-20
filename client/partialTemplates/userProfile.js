@@ -10,6 +10,9 @@ Template.userProfile.events({
   	'click #editProfile': function(){
   		window.location = "/editProfile/" + currentUserName;
   	},
+    'click #editWhatsLicenses': function(){
+      $('#dialog-editLicenses').modal('show');
+    },
   	'click .btnShowSN': function(event){
 
   		var idSN = event.target.id;
@@ -19,41 +22,39 @@ Template.userProfile.events({
   			window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");
   		} else if(idSN === "WhatsApp"){
   			//EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE
-			//AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)
-			//EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL
-			//EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?
-			//SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER
-			//SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.
-			Session.set('userToSentPet', currentUserName);
-			
-			//COMPARAMOS EL userId DEL USUARIO ACTUAL EN METEOR Y LO COMPARAMOS CON EL ARRAY
-			//showWhatsTo PARA VER SI PODEMOS MOSTRAR EL WHATSAPP
-
-			console.log(dataUser.userId);
-
-			var userActName = Meteor.user().username;
-			console.log(userActName);
+  			//AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)
+  			//EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL
+  			//EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?
+  			//SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER
+  			//SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.
+  			Session.set('userToSentPet', currentUserName);
   			
+  			//COMPARAMOS EL userId DEL USUARIO ACTUAL EN METEOR Y LO COMPARAMOS CON EL ARRAY
+  			//showWhatsTo PARA VER SI PODEMOS MOSTRAR EL WHATSAPP
+
+  			console.log(dataUser.userId);
+
+  			var userActName = Meteor.user().username;
+  			console.log(userActName);
+    			
   			var arrWhats = dataUser.showWhatsTo;
 
   			Meteor.call('findUserData', userActName, function(err,res){
-
-	  			if(arrWhats != []){
-	  				if(arrWhats.indexOf(res.userId) >= 0){
-		  				//MOSTRAMOS EL WHATSAPP
-		  				console.log($('[data-toggle="tooltip"]'));
-						$('[data-toggle="tooltip"]').tooltip('show'); 
-		  			}
-	  			} else if(!Session.get('showProfileOtherUser')){
-					//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
-					$('#dialog-showSocialNetwork').modal('show');
-				} else {
-					//INICIALIZAMOS EL TOOLTIP
-					$('[data-toggle="tooltip"]').tooltip('show'); 
-				}
-
+    			if(arrWhats.length > 0){
+    				if(arrWhats.indexOf(res.userId) >= 0){
+  	  				//MOSTRAMOS EL WHATSAPP
+  	  				console.log($('[data-toggle="tooltip"]'));
+              $('[data-toggle="tooltip"]').attr("title", dataUser.userWhats);
+    					$('[data-toggle="tooltip"]').tooltip('show'); 
+    	  			}
+      			} else if(!Session.get('showProfileOtherUser')){
+    					//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
+    					$('#dialog-showSocialNetwork').modal('show');
+    				} else {
+    					//INICIALIZAMOS EL TOOLTIP
+    					$('[data-toggle="tooltip"]').tooltip('show'); 
+    				}
   			});
-			
   		}
   	}
 });
@@ -61,11 +62,12 @@ Template.userProfile.events({
 Template.userProfile.helpers({
 	'dataUserFound': function(){
 		Meteor.call('findUserData', currentUserName, function(err, res) {
-	    	Session.set('dataUser',res);
-	  	});
+    	Session.set('dataUser',res);
+  	});
 
-	  	dataUser = Session.get('dataUser');
-	  	return dataUser;
+  	dataUser = Session.get('dataUser');
+
+  	return dataUser;
 	},
 	'userImgFound': function(){
 		if(dataUser.userImg != ""){

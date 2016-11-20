@@ -1,4 +1,59 @@
-var require = meteorInstall({"client":{"partialTemplates":{"template.editProfile.js":function(){
+var require = meteorInstall({"client":{"partialTemplates":{"template.editLicenses.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/template.editLicenses.js                                                                    //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+                                                                                                                       // 1
+Template.__checkName("editLicenses");                                                                                  // 2
+Template["editLicenses"] = new Template("Template.editLicenses", (function() {                                         // 3
+  var view = this;                                                                                                     // 4
+  return Blaze.If(function() {                                                                                         // 5
+    return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
+  }, function() {                                                                                                      // 7
+    return [ "\n  \t\t\n\t  \t\t", HTML.DIV({                                                                          // 8
+      class: "sentPet-container"                                                                                       // 9
+    }, "\n\t\t\t    ", HTML.DIV({                                                                                      // 10
+      class: "panel panel-default col-sm-6 col-md-6 col-lg-6"                                                          // 11
+    }, "\n\t\t      \t\t", HTML.DIV({                                                                                  // 12
+      class: "panel-body"                                                                                              // 13
+    }, "\n\t\t      \t\t\t", Blaze.If(function() {                                                                     // 14
+      return Spacebars.call(view.lookup("userWhatsCount"));                                                            // 15
+    }, function() {                                                                                                    // 16
+      return [ "\n\t\t\t      \t\t\t", HTML.P("Permisos concedidos"), "\n\n\t\t\t      \t\t\t", HTML.DIV({             // 17
+        id: "scrollSpy"                                                                                                // 18
+      }, "\n\t\t\t\t\t\t\t  \t", HTML.UL({                                                                             // 19
+        class: "list-group"                                                                                            // 20
+      }, "\n\t\t\t\t\t\t\t  \t", Blaze.Each(function() {                                                               // 21
+        return Spacebars.call(view.lookup("responseLicenses"));                                                        // 22
+      }, function() {                                                                                                  // 23
+        return [ "\n\t\t\t\t\t\t\t\t  ", HTML.A({                                                                      // 24
+          href: "#",                                                                                                   // 25
+          id: function() {                                                                                             // 26
+            return Spacebars.mustache(Spacebars.dot(view.lookup("."), "userId"));                                      // 27
+          },                                                                                                           // 28
+          class: "list-group-item alignTextToCenter"                                                                   // 29
+        }, Blaze.View("lookup:..name", function() {                                                                    // 30
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "name"));                                          // 31
+        })), "\n\t\t\t\t\t\t\t\t" ];                                                                                   // 32
+      }), "\n\t\t\t\t\t\t\t\t"), "\n\t\t\t\t\t\t\t"), "\n\n\t\t\t\t\t\t\t", HTML.BUTTON({                              // 33
+        id: "remLicense",                                                                                              // 34
+        type: "button",                                                                                                // 35
+        class: "btn btn-info"                                                                                          // 36
+      }, "Eliminar"), "\n\t\t\t\t      \t" ];                                                                          // 37
+    }, function() {                                                                                                    // 38
+      return [ "\n\t\t\t\t      \t\t", HTML.P("Todavía no has dado permiso a ningun usuario."), "\n\t\t\t\t\t\t" ];    // 39
+    }), "\n\t\t\t\t\t"), "\n\t\t    \t"), "\n\t\t  \t"), "\n\t\t\n\t" ];                                               // 40
+  }, function() {                                                                                                      // 41
+    return [ "\n\t  ", Spacebars.include(view.lookupTemplate("loading")), "\n\t" ];                                    // 42
+  });                                                                                                                  // 43
+}));                                                                                                                   // 44
+                                                                                                                       // 45
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.editProfile.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
@@ -422,6 +477,23 @@ Template["notificationsNew"] = new Template("Template.notificationsNew", (functi
   });                                                                                                                  // 48
 }));                                                                                                                   // 49
                                                                                                                        // 50
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.pageNotFound.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/template.pageNotFound.js                                                                    //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+                                                                                                                       // 1
+Template.__checkName("pageNotFound");                                                                                  // 2
+Template["pageNotFound"] = new Template("Template.pageNotFound", (function() {                                         // 3
+  var view = this;                                                                                                     // 4
+  return HTML.Raw("<h1>La página a la que se intenta acceder no existe</h1>");                                         // 5
+}));                                                                                                                   // 6
+                                                                                                                       // 7
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.removeProfile.js":function(){
@@ -1442,137 +1514,147 @@ Template["userProfile"] = new Template("Template.userProfile", (function() {    
             id: "editProfile"                                                                                          // 63
           }, "Editar Perfil")), "\n                      ", HTML.LI(HTML.A({                                           // 64
             href: "#",                                                                                                 // 65
-            id: "removeProfile",                                                                                       // 66
-            "data-toggle": "modal",                                                                                    // 67
-            "data-target": "#dialog-removeProfile"                                                                     // 68
-          }, "Eliminar Perfil")), "\n                      ", HTML.LI({                                                // 69
-            role: "separator",                                                                                         // 70
-            class: "divider"                                                                                           // 71
-          }), "\n                      ", HTML.LI(HTML.A({                                                             // 72
-            href: "#",                                                                                                 // 73
-            id: "logout"                                                                                               // 74
-          }, "Salir")), "\n                    "), "\n                  " ];                                           // 75
-        }), "\n                  ", HTML.DIV({                                                                         // 76
-          id: "optionsUserProfile"                                                                                     // 77
-        }, "\n                    ", Blaze.Each(function() {                                                           // 78
-          return Spacebars.call(view.lookup("existsSocialNetwork"));                                                   // 79
-        }, function() {                                                                                                // 80
-          return [ "  \n                      ", Blaze.If(function() {                                                 // 81
-            return Spacebars.call(view.lookup("showProfileOtherUser"));                                                // 82
-          }, function() {                                                                                              // 83
-            return [ "\n                        ", Blaze.If(function() {                                               // 84
-              return Spacebars.call(view.lookup("isWhatsapp"));                                                        // 85
-            }, function() {                                                                                            // 86
-              return [ "\n                          ", HTML.BUTTON({                                                   // 87
-                type: "button",                                                                                        // 88
-                id: function() {                                                                                       // 89
-                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                    // 90
-                },                                                                                                     // 91
-                class: function() {                                                                                    // 92
-                  return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile btnShowSN" ];
+            id: "editWhatsLicenses"                                                                                    // 66
+          }, "Editar Permisos de WhatsApp")), "\n                      ", HTML.LI(HTML.A({                             // 67
+            href: "#",                                                                                                 // 68
+            id: "removeProfile",                                                                                       // 69
+            "data-toggle": "modal",                                                                                    // 70
+            "data-target": "#dialog-removeProfile"                                                                     // 71
+          }, "Eliminar Perfil")), "\n                      ", HTML.LI({                                                // 72
+            role: "separator",                                                                                         // 73
+            class: "divider"                                                                                           // 74
+          }), "\n                      ", HTML.LI(HTML.A({                                                             // 75
+            href: "#",                                                                                                 // 76
+            id: "logout"                                                                                               // 77
+          }, "Salir")), "\n                    "), "\n                  " ];                                           // 78
+        }), "\n                  ", HTML.DIV({                                                                         // 79
+          id: "optionsUserProfile"                                                                                     // 80
+        }, "\n                    ", Blaze.Each(function() {                                                           // 81
+          return Spacebars.call(view.lookup("existsSocialNetwork"));                                                   // 82
+        }, function() {                                                                                                // 83
+          return [ "  \n                      ", Blaze.If(function() {                                                 // 84
+            return Spacebars.call(view.lookup("showProfileOtherUser"));                                                // 85
+          }, function() {                                                                                              // 86
+            return [ "\n                        ", Blaze.If(function() {                                               // 87
+              return Spacebars.call(view.lookup("isWhatsapp"));                                                        // 88
+            }, function() {                                                                                            // 89
+              return [ "\n                          ", HTML.BUTTON({                                                   // 90
+                type: "button",                                                                                        // 91
+                id: function() {                                                                                       // 92
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                    // 93
                 },                                                                                                     // 94
-                "data-toggle": "tooltip",                                                                              // 95
-                title: function() {                                                                                    // 96
-                  return Spacebars.mustache(Spacebars.dot(view.lookup("dataUserFound"), "userWhats"));                 // 97
-                },                                                                                                     // 98
-                "data-placement": "top"                                                                                // 99
-              }, "\n                            ", HTML.I({                                                            // 100
-                id: function() {                                                                                       // 101
-                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                    // 102
-                },                                                                                                     // 103
-                class: function() {                                                                                    // 104
-                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                 // 105
-                },                                                                                                     // 106
-                style: "font-size: 24px;"                                                                              // 107
-              }), "\n                          "), "\n                        " ];                                     // 108
-            }, function() {                                                                                            // 109
-              return [ "\n                          ", HTML.BUTTON({                                                   // 110
-                type: "button",                                                                                        // 111
-                id: function() {                                                                                       // 112
-                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                    // 113
-                },                                                                                                     // 114
-                class: function() {                                                                                    // 115
+                class: function() {                                                                                    // 95
                   return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile btnShowSN" ];
-                }                                                                                                      // 117
-              }, "\n                            ", HTML.I({                                                            // 118
-                id: function() {                                                                                       // 119
-                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                    // 120
-                },                                                                                                     // 121
-                class: function() {                                                                                    // 122
-                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                 // 123
+                },                                                                                                     // 97
+                "data-toggle": "tooltip",                                                                              // 98
+                title: function() {                                                                                    // 99
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("dataUserFound"), "userWhats"));                 // 100
+                },                                                                                                     // 101
+                "data-placement": "top"                                                                                // 102
+              }, "\n                            ", HTML.I({                                                            // 103
+                id: function() {                                                                                       // 104
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                    // 105
+                },                                                                                                     // 106
+                class: function() {                                                                                    // 107
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                 // 108
+                },                                                                                                     // 109
+                style: "font-size: 24px;"                                                                              // 110
+              }), "\n                          "), "\n                        " ];                                     // 111
+            }, function() {                                                                                            // 112
+              return [ "\n                          ", HTML.BUTTON({                                                   // 113
+                type: "button",                                                                                        // 114
+                id: function() {                                                                                       // 115
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                    // 116
+                },                                                                                                     // 117
+                class: function() {                                                                                    // 118
+                  return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile btnShowSN" ];
+                }                                                                                                      // 120
+              }, "\n                            ", HTML.I({                                                            // 121
+                id: function() {                                                                                       // 122
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                    // 123
                 },                                                                                                     // 124
-                style: "font-size: 24px;"                                                                              // 125
-              }), "\n                          "), "\n                        " ];                                     // 126
-            }), "\n                      " ];                                                                          // 127
-          }, function() {                                                                                              // 128
-            return [ "\n                        ", HTML.BUTTON({                                                       // 129
-              type: "button",                                                                                          // 130
-              id: function() {                                                                                         // 131
-                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                      // 132
-              },                                                                                                       // 133
-              class: function() {                                                                                      // 134
+                class: function() {                                                                                    // 125
+                  return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                 // 126
+                },                                                                                                     // 127
+                style: "font-size: 24px;"                                                                              // 128
+              }), "\n                          "), "\n                        " ];                                     // 129
+            }), "\n                      " ];                                                                          // 130
+          }, function() {                                                                                              // 131
+            return [ "\n                        ", HTML.BUTTON({                                                       // 132
+              type: "button",                                                                                          // 133
+              id: function() {                                                                                         // 134
+                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                      // 135
+              },                                                                                                       // 136
+              class: function() {                                                                                      // 137
                 return [ "btn btn-", Spacebars.mustache(Spacebars.dot(view.lookup("."), "color")), " btn-circle optionsUserProfile btnShowSN" ];
-              }                                                                                                        // 136
-            }, "\n                          ", HTML.I({                                                                // 137
-              id: function() {                                                                                         // 138
-                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                      // 139
-              },                                                                                                       // 140
-              class: function() {                                                                                      // 141
-                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                   // 142
-              },                                                                                                       // 143
-              style: "font-size: 24px;"                                                                                // 144
-            }), "\n                        "), "\n                      " ];                                           // 145
-          }), "\n                    " ];                                                                              // 146
+              },                                                                                                       // 139
+              "data-toggle": "tooltip",                                                                                // 140
+              title: ""                                                                                                // 141
+            }, "\n                          ", HTML.I({                                                                // 142
+              id: function() {                                                                                         // 143
+                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "id"));                                      // 144
+              },                                                                                                       // 145
+              class: function() {                                                                                      // 146
+                return Spacebars.mustache(Spacebars.dot(view.lookup("."), "class"));                                   // 147
+              },                                                                                                       // 148
+              style: "font-size: 24px;"                                                                                // 149
+            }), "\n                        "), "\n                      " ];                                           // 150
+          }), "\n                    " ];                                                                              // 151
         }), "\n                  "), "\n                "), "\n              "), "\n                \n              ", HTML.Comment('\n              <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>\n              <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>\n              '), "\n              ", HTML.TABLE({
-          class: "table"                                                                                               // 148
-        }, "  \n                ", HTML.TR("\n                  ", HTML.TD({                                           // 149
-          class: "tableHeader"                                                                                         // 150
-        }, "Twitts"), "\n                  ", HTML.TD({                                                                // 151
-          class: "tableHeader"                                                                                         // 152
-        }, "Siguiendo"), "\n                  ", HTML.TD({                                                             // 153
-          class: "tableHeader"                                                                                         // 154
-        }, "Seguidores"), "\n                "), "\n                ", HTML.TR("\n                  ", HTML.TD({       // 155
-          class: "tableContent"                                                                                        // 156
-        }, Blaze.View("lookup:tweets", function() {                                                                    // 157
-          return Spacebars.mustache(view.lookup("tweets"));                                                            // 158
-        })), "\n                  ", HTML.TD({                                                                         // 159
-          class: "tableContent"                                                                                        // 160
-        }, Blaze.View("lookup:following", function() {                                                                 // 161
-          return Spacebars.mustache(view.lookup("following"));                                                         // 162
-        })), "\n                  ", HTML.TD({                                                                         // 163
-          class: "tableContent"                                                                                        // 164
-        }, Blaze.View("lookup:followers", function() {                                                                 // 165
-          return Spacebars.mustache(view.lookup("followers"));                                                         // 166
-        })), "\n                "), "\n              "), "\n              \n              ", HTML.DIV({                // 167
-          class: "modal fade",                                                                                         // 168
-          id: "dialog-showSocialNetwork"                                                                               // 169
+          class: "table"                                                                                               // 153
+        }, "  \n                ", HTML.TR("\n                  ", HTML.TD({                                           // 154
+          class: "tableHeader"                                                                                         // 155
+        }, "Twitts"), "\n                  ", HTML.TD({                                                                // 156
+          class: "tableHeader"                                                                                         // 157
+        }, "Siguiendo"), "\n                  ", HTML.TD({                                                             // 158
+          class: "tableHeader"                                                                                         // 159
+        }, "Seguidores"), "\n                "), "\n                ", HTML.TR("\n                  ", HTML.TD({       // 160
+          class: "tableContent"                                                                                        // 161
+        }, Blaze.View("lookup:tweets", function() {                                                                    // 162
+          return Spacebars.mustache(view.lookup("tweets"));                                                            // 163
+        })), "\n                  ", HTML.TD({                                                                         // 164
+          class: "tableContent"                                                                                        // 165
+        }, Blaze.View("lookup:following", function() {                                                                 // 166
+          return Spacebars.mustache(view.lookup("following"));                                                         // 167
+        })), "\n                  ", HTML.TD({                                                                         // 168
+          class: "tableContent"                                                                                        // 169
+        }, Blaze.View("lookup:followers", function() {                                                                 // 170
+          return Spacebars.mustache(view.lookup("followers"));                                                         // 171
+        })), "\n                "), "\n              "), "\n              \n              ", HTML.DIV({                // 172
+          class: "modal fade",                                                                                         // 173
+          id: "dialog-showSocialNetwork"                                                                               // 174
         }, "\n                ", Spacebars.include(view.lookupTemplate("sendRequest")), "\n              "), "\n\n              ", HTML.DIV({
-          class: "modal fade",                                                                                         // 171
-          id: "dialog-removeProfile"                                                                                   // 172
+          class: "modal fade",                                                                                         // 176
+          id: "dialog-removeProfile"                                                                                   // 177
         }, "\n                ", Spacebars.include(view.lookupTemplate("removeProfile")), "\n              "), "\n\n              ", HTML.DIV({
-          class: "modal fade",                                                                                         // 174
-          id: "dialog-operationSuccess"                                                                                // 175
-        }, "\n                ", HTML.DIV({                                                                            // 176
-          class: "sentPet-container"                                                                                   // 177
-        }, "\n                    ", HTML.DIV({                                                                        // 178
-          class: "panel panel-default col-sm-6 col-md-6 col-lg-6"                                                      // 179
-        }, "\n                        ", HTML.DIV({                                                                    // 180
-          class: "panel-body"                                                                                          // 181
+          class: "modal fade",                                                                                         // 179
+          id: "dialog-editLicenses"                                                                                    // 180
+        }, "\n                ", Spacebars.include(view.lookupTemplate("editLicenses")), "\n              "), "\n\n              ", HTML.DIV({
+          class: "modal fade",                                                                                         // 182
+          id: "dialog-operationSuccess"                                                                                // 183
+        }, "\n                ", HTML.DIV({                                                                            // 184
+          class: "sentPet-container"                                                                                   // 185
+        }, "\n                    ", HTML.DIV({                                                                        // 186
+          class: "panel panel-default col-sm-6 col-md-6 col-lg-6"                                                      // 187
+        }, "\n                        ", HTML.DIV({                                                                    // 188
+          class: "panel-body"                                                                                          // 189
         }, "\n                        ", HTML.Comment('<img src="/emoticonoSad.png" class="img-responsive">'), "\n                            ", HTML.P({
-          style: "margin: 0px;"                                                                                        // 183
+          style: "margin: 0px;"                                                                                        // 191
         }, "La petición se ha enviado a ", HTML.STRONG(Blaze.View("lookup:dataUserFound.userNameProfile", function() {
-          return Spacebars.mustache(Spacebars.dot(view.lookup("dataUserFound"), "userNameProfile"));                   // 185
+          return Spacebars.mustache(Spacebars.dot(view.lookup("dataUserFound"), "userNameProfile"));                   // 193
         }))), "\n                        "), "\n                    "), "\n                  "), "\n              "), "\n\n            "), "\n          "), "\n        "), "\n        ", HTML.DIV({
-          id: "divTweetFeed",                                                                                          // 187
-          class: "col-md-8 col-sm-8"                                                                                   // 188
-        }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n      " ];                                  // 189
-      }), "\n    " ];                                                                                                  // 190
-    }), "\n  " ];                                                                                                      // 191
-  }, function() {                                                                                                      // 192
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 193
-  });                                                                                                                  // 194
-}));                                                                                                                   // 195
-                                                                                                                       // 196
+          id: "divTweetFeed",                                                                                          // 195
+          class: "col-md-8 col-sm-8"                                                                                   // 196
+        }, Spacebars.include(view.lookupTemplate("tweetFeedProfile"))), "\n      " ];                                  // 197
+      }, function() {                                                                                                  // 198
+        return [ "\n        ", Spacebars.include(view.lookupTemplate("pageNotFound")), "\n      " ];                   // 199
+      }), "\n    " ];                                                                                                  // 200
+    }), "\n  " ];                                                                                                      // 201
+  }, function() {                                                                                                      // 202
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 203
+  });                                                                                                                  // 204
+}));                                                                                                                   // 205
+                                                                                                                       // 206
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.whatsAppNotif.js":function(){
@@ -1692,63 +1774,130 @@ Template["whatsAppRequestPage"] = new Template("Template.whatsAppRequestPage", (
           class: "glyphicon glyphicon-remove-circle"                                                                   // 42
         }), "\n            "), "\n          "), "\n        "), "\n      "), "\n    " ];                                // 43
       }), "\n    " ];                                                                                                  // 44
-    }, function() {                                                                                                    // 45
-      return [ "\n      ", HTML.P("NO HAY MAS NOTIF"), "\n    " ];                                                     // 46
-    }), "\n\n    ", Blaze.If(function() {                                                                              // 47
-      return Spacebars.call(view.lookup("countNotifResponse"));                                                        // 48
-    }, function() {                                                                                                    // 49
-      return [ "\n    ", HTML.DIV({                                                                                    // 50
-        class: "tweetfeed-container"                                                                                   // 51
-      }, "\n      ", HTML.DIV({                                                                                        // 52
-        class: "panel panel-default tweetfeed"                                                                         // 53
-      }, "\n        ", HTML.DIV({                                                                                      // 54
-        class: "panel-body"                                                                                            // 55
-      }, "\n          ", Blaze.Each(function() {                                                                       // 56
-        return Spacebars.call(view.lookup("whatsResponseNotif"));                                                      // 57
-      }, function() {                                                                                                  // 58
-        return [ "\n            ", HTML.Comment(" Texto para el contenido del Twitt "), "\n            ", HTML.DIV({   // 59
-          class: "panel panel-info",                                                                                   // 60
-          id: function() {                                                                                             // 61
-            return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                  // 62
-          }                                                                                                            // 63
-        }, "\n              ", HTML.DIV({                                                                              // 64
-          class: "panel-heading"                                                                                       // 65
-        }, "\n                ", HTML.H3({                                                                             // 66
-          class: "panel-title"                                                                                         // 67
+    }), "\n\n    ", Blaze.If(function() {                                                                              // 45
+      return Spacebars.call(view.lookup("countNotifResponse"));                                                        // 46
+    }, function() {                                                                                                    // 47
+      return [ "\n    ", HTML.DIV({                                                                                    // 48
+        class: "tweetfeed-container"                                                                                   // 49
+      }, "\n      ", HTML.DIV({                                                                                        // 50
+        class: "panel panel-default tweetfeed"                                                                         // 51
+      }, "\n        ", HTML.DIV({                                                                                      // 52
+        class: "panel-body"                                                                                            // 53
+      }, "\n          ", Blaze.Each(function() {                                                                       // 54
+        return Spacebars.call(view.lookup("whatsResponseNotif"));                                                      // 55
+      }, function() {                                                                                                  // 56
+        return [ "\n            ", HTML.Comment(" Texto para el contenido del Twitt "), "\n            ", HTML.DIV({   // 57
+          class: "panel panel-info",                                                                                   // 58
+          id: function() {                                                                                             // 59
+            return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                  // 60
+          }                                                                                                            // 61
+        }, "\n              ", HTML.DIV({                                                                              // 62
+          class: "panel-heading"                                                                                       // 63
+        }, "\n                ", HTML.H3({                                                                             // 64
+          class: "panel-title"                                                                                         // 65
         }, "\n                  Respuesta de solicitud de WhatsApp de @", HTML.STRONG(Blaze.View("lookup:..actorNotif", function() {
-          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                    // 69
-        })), "\n                "), "\n              "), "\n              ", HTML.DIV({                                // 70
-          class: "panel-body"                                                                                          // 71
-        }, "\n                ", Blaze.If(function() {                                                                 // 72
-          return Spacebars.call(Spacebars.dot(view.lookup("."), "stateResponse"));                                     // 73
+          return Spacebars.mustache(Spacebars.dot(view.lookup("."), "actorNotif"));                                    // 67
+        })), "\n                "), "\n              "), "\n              ", HTML.DIV({                                // 68
+          class: "panel-body"                                                                                          // 69
+        }, "\n                ", Blaze.If(function() {                                                                 // 70
+          return Spacebars.call(Spacebars.dot(view.lookup("."), "stateResponse"));                                     // 71
+        }, function() {                                                                                                // 72
+          return [ "\n                  ", HTML.P("Ha sido aceptada!"), "\n                " ];                        // 73
         }, function() {                                                                                                // 74
-          return [ "\n                  ", HTML.P("Ha sido aceptada!"), "\n                " ];                        // 75
-        }, function() {                                                                                                // 76
-          return [ "\n                  ", HTML.P("Ha sido rechazada =("), "\n                " ];                     // 77
-        }), "\n              "), "\n              ", HTML.DIV({                                                        // 78
-          class: "btn-group",                                                                                          // 79
-          role: "group",                                                                                               // 80
-          id: "btnGroupResWhatsNotif"                                                                                  // 81
-        }, "\n                ", HTML.A({                                                                              // 82
-          id: "goToProfile",                                                                                           // 83
-          class: "btn btn-secondary"                                                                                   // 84
-        }, "\n                  ", HTML.SPAN({                                                                         // 85
-          class: "glyphicon glyphicon-user"                                                                            // 86
-        }), "\n                "), "\n                ", HTML.A({                                                      // 87
-          class: "btn btn-secondary"                                                                                   // 88
-        }, "\n                  ", HTML.SPAN({                                                                         // 89
-          id: "clearNotif",                                                                                            // 90
-          class: "glyphicon glyphicon-remove"                                                                          // 91
-        }), "\n                "), "\n              "), "\n            "), "\n          " ];                           // 92
-      }), "\n        "), "\n      "), "\n    "), "\n    " ];                                                           // 93
-    }, function() {                                                                                                    // 94
-      return [ "\n      ", HTML.P("NO HAY MAS NOTIF"), "\n    " ];                                                     // 95
-    }), "\n  " ];                                                                                                      // 96
-  }, function() {                                                                                                      // 97
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 98
-  });                                                                                                                  // 99
-}));                                                                                                                   // 100
-                                                                                                                       // 101
+          return [ "\n                  ", HTML.P("Ha sido rechazada =("), "\n                " ];                     // 75
+        }), "\n              "), "\n              ", HTML.DIV({                                                        // 76
+          class: "btn-group",                                                                                          // 77
+          role: "group",                                                                                               // 78
+          id: "btnGroupResWhatsNotif"                                                                                  // 79
+        }, "\n                ", HTML.A({                                                                              // 80
+          id: "goToProfile",                                                                                           // 81
+          class: "btn btn-secondary"                                                                                   // 82
+        }, "\n                  ", HTML.SPAN({                                                                         // 83
+          class: "glyphicon glyphicon-user"                                                                            // 84
+        }), "\n                "), "\n                ", HTML.A({                                                      // 85
+          class: "btn btn-secondary"                                                                                   // 86
+        }, "\n                  ", HTML.SPAN({                                                                         // 87
+          id: "clearNotif",                                                                                            // 88
+          class: "glyphicon glyphicon-remove"                                                                          // 89
+        }), "\n                "), "\n              "), "\n            "), "\n          " ];                           // 90
+      }), "\n        "), "\n      "), "\n    "), "\n    " ];                                                           // 91
+    }), "\n  " ];                                                                                                      // 92
+  }, function() {                                                                                                      // 93
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 94
+  });                                                                                                                  // 95
+}));                                                                                                                   // 96
+                                                                                                                       // 97
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"editLicenses.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/editLicenses.js                                                                             //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+Template.editLicenses.onCreated(function () {                                                                          // 1
+  currentUserName = this.data.name;                                                                                    // 2
+  currDataUser = Session.get('dataUser');                                                                              // 3
+  arrAux = currDataUser.showWhatsTo;                                                                                   // 4
+});                                                                                                                    // 5
+                                                                                                                       //
+Template.editLicenses.events({                                                                                         // 7
+  'click #scrollSpy a': function () {                                                                                  // 8
+    function clickScrollSpyA(event) {                                                                                  // 8
+      selectUser = event.target.id;                                                                                    // 9
+    }                                                                                                                  // 10
+                                                                                                                       //
+    return clickScrollSpyA;                                                                                            // 8
+  }(),                                                                                                                 // 8
+                                                                                                                       //
+  'click #remLicense': function () {                                                                                   // 12
+    function clickRemLicense(event) {                                                                                  // 12
+      var pos = arrAux.indexOf(selectUser);                                                                            // 13
+      arrAux.splice(pos, 1);                                                                                           // 14
+                                                                                                                       //
+      var data = new Object();                                                                                         // 16
+      data.userId = currDataUser.userId;                                                                               // 17
+      data.showWhats = arrAux;                                                                                         // 18
+                                                                                                                       //
+      //POR ULTIMO ACTUALIZAMOS EL VALOR DE ESTE ARRAY EN LA BBDD                                                      // 20
+      Meteor.call('updateShowWhatsTo', data);                                                                          // 21
+    }                                                                                                                  // 22
+                                                                                                                       //
+    return clickRemLicense;                                                                                            // 12
+  }()                                                                                                                  // 12
+});                                                                                                                    // 7
+                                                                                                                       //
+Template.editLicenses.helpers({                                                                                        // 25
+  'userWhatsCount': function () {                                                                                      // 26
+    function userWhatsCount() {                                                                                        // 26
+      if (arrAux.length > 0) {                                                                                         // 27
+        return true;                                                                                                   // 28
+      }                                                                                                                // 29
+    }                                                                                                                  // 30
+                                                                                                                       //
+    return userWhatsCount;                                                                                             // 26
+  }(),                                                                                                                 // 26
+                                                                                                                       //
+  'responseLicenses': function () {                                                                                    // 32
+    function responseLicenses() {                                                                                      // 32
+      var usersFound = new Array();                                                                                    // 33
+      for (var i in meteorBabelHelpers.sanitizeForInObject(arrAux)) {                                                  // 34
+        Meteor.call('findUserDataWithId', arrAux[i], function (err, res) {                                             // 35
+          var aux = new Object();                                                                                      // 36
+          aux.name = res.userNameProfile;                                                                              // 37
+          aux.userId = res.userId;                                                                                     // 38
+          usersFound.push(aux);                                                                                        // 39
+          Session.set('usersFound', usersFound);                                                                       // 40
+        });                                                                                                            // 41
+      };                                                                                                               // 42
+      return Session.get('usersFound');                                                                                // 43
+    }                                                                                                                  // 44
+                                                                                                                       //
+    return responseLicenses;                                                                                           // 32
+  }()                                                                                                                  // 32
+});                                                                                                                    // 25
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editProfile.js":function(){
@@ -3591,165 +3740,173 @@ Template.userProfile.events({                                                   
                                                                                                                        //
     return clickEditProfile;                                                                                           // 10
   }(),                                                                                                                 // 10
-  'click .btnShowSN': function () {                                                                                    // 13
-    function clickBtnShowSN(event) {                                                                                   // 13
+  'click #editWhatsLicenses': function () {                                                                            // 13
+    function clickEditWhatsLicenses() {                                                                                // 13
+      $('#dialog-editLicenses').modal('show');                                                                         // 14
+    }                                                                                                                  // 15
                                                                                                                        //
-      var idSN = event.target.id;                                                                                      // 15
-      if (idSN === "Facebook") {                                                                                       // 16
-        window.open("https://www.facebook.com/search/all/?q=" + Session.get('dataUser').userFb);                       // 17
-      } else if (idSN === "Instagram") {                                                                               // 18
-        window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");                           // 19
-      } else if (idSN === "WhatsApp") {                                                                                // 20
-        //EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE                 // 21
-        //AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)                                   // 22
-        //EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL               // 23
-        //EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?          // 24
-        //SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER               // 25
-        //SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.                                     // 26
-        Session.set('userToSentPet', currentUserName);                                                                 // 27
+    return clickEditWhatsLicenses;                                                                                     // 13
+  }(),                                                                                                                 // 13
+  'click .btnShowSN': function () {                                                                                    // 16
+    function clickBtnShowSN(event) {                                                                                   // 16
                                                                                                                        //
-        //COMPARAMOS EL userId DEL USUARIO ACTUAL EN METEOR Y LO COMPARAMOS CON EL ARRAY                               // 29
-        //showWhatsTo PARA VER SI PODEMOS MOSTRAR EL WHATSAPP                                                          // 30
+      var idSN = event.target.id;                                                                                      // 18
+      if (idSN === "Facebook") {                                                                                       // 19
+        window.open("https://www.facebook.com/search/all/?q=" + Session.get('dataUser').userFb);                       // 20
+      } else if (idSN === "Instagram") {                                                                               // 21
+        window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");                           // 22
+      } else if (idSN === "WhatsApp") {                                                                                // 23
+        //EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE                 // 24
+        //AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)                                   // 25
+        //EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL               // 26
+        //EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?          // 27
+        //SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER               // 28
+        //SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.                                     // 29
+        Session.set('userToSentPet', currentUserName);                                                                 // 30
                                                                                                                        //
-        console.log(dataUser.userId);                                                                                  // 32
+        //COMPARAMOS EL userId DEL USUARIO ACTUAL EN METEOR Y LO COMPARAMOS CON EL ARRAY                               // 32
+        //showWhatsTo PARA VER SI PODEMOS MOSTRAR EL WHATSAPP                                                          // 33
                                                                                                                        //
-        var userActName = Meteor.user().username;                                                                      // 34
-        console.log(userActName);                                                                                      // 35
+        console.log(dataUser.userId);                                                                                  // 35
                                                                                                                        //
-        var arrWhats = dataUser.showWhatsTo;                                                                           // 37
+        var userActName = Meteor.user().username;                                                                      // 37
+        console.log(userActName);                                                                                      // 38
                                                                                                                        //
-        Meteor.call('findUserData', userActName, function (err, res) {                                                 // 39
+        var arrWhats = dataUser.showWhatsTo;                                                                           // 40
                                                                                                                        //
-          if (arrWhats != []) {                                                                                        // 41
-            if (arrWhats.indexOf(res.userId) >= 0) {                                                                   // 42
-              //MOSTRAMOS EL WHATSAPP                                                                                  // 43
-              console.log($('[data-toggle="tooltip"]'));                                                               // 44
-              $('[data-toggle="tooltip"]').tooltip('show');                                                            // 45
-            }                                                                                                          // 46
-          } else if (!Session.get('showProfileOtherUser')) {                                                           // 47
-            //ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                           // 48
-            $('#dialog-showSocialNetwork').modal('show');                                                              // 49
-          } else {                                                                                                     // 50
-            //INICIALIZAMOS EL TOOLTIP                                                                                 // 51
-            $('[data-toggle="tooltip"]').tooltip('show');                                                              // 52
-          }                                                                                                            // 53
-        });                                                                                                            // 55
-      }                                                                                                                // 57
-    }                                                                                                                  // 58
+        Meteor.call('findUserData', userActName, function (err, res) {                                                 // 42
+          if (arrWhats.length > 0) {                                                                                   // 43
+            if (arrWhats.indexOf(res.userId) >= 0) {                                                                   // 44
+              //MOSTRAMOS EL WHATSAPP                                                                                  // 45
+              console.log($('[data-toggle="tooltip"]'));                                                               // 46
+              $('[data-toggle="tooltip"]').attr("title", dataUser.userWhats);                                          // 47
+              $('[data-toggle="tooltip"]').tooltip('show');                                                            // 48
+            }                                                                                                          // 49
+          } else if (!Session.get('showProfileOtherUser')) {                                                           // 50
+            //ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                           // 51
+            $('#dialog-showSocialNetwork').modal('show');                                                              // 52
+          } else {                                                                                                     // 53
+            //INICIALIZAMOS EL TOOLTIP                                                                                 // 54
+            $('[data-toggle="tooltip"]').tooltip('show');                                                              // 55
+          }                                                                                                            // 56
+        });                                                                                                            // 57
+      }                                                                                                                // 58
+    }                                                                                                                  // 59
                                                                                                                        //
-    return clickBtnShowSN;                                                                                             // 13
-  }()                                                                                                                  // 13
+    return clickBtnShowSN;                                                                                             // 16
+  }()                                                                                                                  // 16
 });                                                                                                                    // 5
                                                                                                                        //
-Template.userProfile.helpers({                                                                                         // 61
-  'dataUserFound': function () {                                                                                       // 62
-    function dataUserFound() {                                                                                         // 62
-      Meteor.call('findUserData', currentUserName, function (err, res) {                                               // 63
-        Session.set('dataUser', res);                                                                                  // 64
-      });                                                                                                              // 65
+Template.userProfile.helpers({                                                                                         // 62
+  'dataUserFound': function () {                                                                                       // 63
+    function dataUserFound() {                                                                                         // 63
+      Meteor.call('findUserData', currentUserName, function (err, res) {                                               // 64
+        Session.set('dataUser', res);                                                                                  // 65
+      });                                                                                                              // 66
                                                                                                                        //
-      dataUser = Session.get('dataUser');                                                                              // 67
-      return dataUser;                                                                                                 // 68
-    }                                                                                                                  // 69
+      dataUser = Session.get('dataUser');                                                                              // 68
                                                                                                                        //
-    return dataUserFound;                                                                                              // 62
-  }(),                                                                                                                 // 62
-  'userImgFound': function () {                                                                                        // 70
-    function userImgFound() {                                                                                          // 70
-      if (dataUser.userImg != "") {                                                                                    // 71
-        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 72
-          $('#imgCurrentUser').attr("src", res);                                                                       // 73
-        });                                                                                                            // 74
-      } else {                                                                                                         // 75
-        console.log("No Img Profile");                                                                                 // 76
-        //$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                     // 77
-        return "/profileImgTest.png";                                                                                  // 78
-      }                                                                                                                // 79
-    }                                                                                                                  // 80
+      return dataUser;                                                                                                 // 70
+    }                                                                                                                  // 71
                                                                                                                        //
-    return userImgFound;                                                                                               // 70
-  }(),                                                                                                                 // 70
-  'tweets': function () {                                                                                              // 81
-    function tweets() {                                                                                                // 81
-      Meteor.call('tweetsPublish', currentUserName, function (err, res) {                                              // 82
-        Session.set('numTweets', res);                                                                                 // 83
-      });                                                                                                              // 84
-      return Session.get('numTweets');                                                                                 // 85
-    }                                                                                                                  // 86
+    return dataUserFound;                                                                                              // 63
+  }(),                                                                                                                 // 63
+  'userImgFound': function () {                                                                                        // 72
+    function userImgFound() {                                                                                          // 72
+      if (dataUser.userImg != "") {                                                                                    // 73
+        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 74
+          $('#imgCurrentUser').attr("src", res);                                                                       // 75
+        });                                                                                                            // 76
+      } else {                                                                                                         // 77
+        console.log("No Img Profile");                                                                                 // 78
+        //$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                     // 79
+        return "/profileImgTest.png";                                                                                  // 80
+      }                                                                                                                // 81
+    }                                                                                                                  // 82
                                                                                                                        //
-    return tweets;                                                                                                     // 81
-  }(),                                                                                                                 // 81
-  'following': function () {                                                                                           // 87
-    function following() {                                                                                             // 87
-      Meteor.call('usersFollowings', currentUserName, function (err, res) {                                            // 88
-        Session.set('numFollowings', res);                                                                             // 89
-      });                                                                                                              // 90
-      return Session.get('numFollowings');                                                                             // 91
-    }                                                                                                                  // 92
+    return userImgFound;                                                                                               // 72
+  }(),                                                                                                                 // 72
+  'tweets': function () {                                                                                              // 83
+    function tweets() {                                                                                                // 83
+      Meteor.call('tweetsPublish', currentUserName, function (err, res) {                                              // 84
+        Session.set('numTweets', res);                                                                                 // 85
+      });                                                                                                              // 86
+      return Session.get('numTweets');                                                                                 // 87
+    }                                                                                                                  // 88
                                                                                                                        //
-    return following;                                                                                                  // 87
-  }(),                                                                                                                 // 87
-  'followers': function () {                                                                                           // 93
-    function followers() {                                                                                             // 93
-      Meteor.call('usersFollowers', currentUserName, function (err, res) {                                             // 94
-        Session.set('numFollowers', res);                                                                              // 95
-      });                                                                                                              // 96
-      return Session.get('numFollowers');                                                                              // 97
-    }                                                                                                                  // 98
+    return tweets;                                                                                                     // 83
+  }(),                                                                                                                 // 83
+  'following': function () {                                                                                           // 89
+    function following() {                                                                                             // 89
+      Meteor.call('usersFollowings', currentUserName, function (err, res) {                                            // 90
+        Session.set('numFollowings', res);                                                                             // 91
+      });                                                                                                              // 92
+      return Session.get('numFollowings');                                                                             // 93
+    }                                                                                                                  // 94
                                                                                                                        //
-    return followers;                                                                                                  // 93
-  }(),                                                                                                                 // 93
-  'existsSocialNetwork': function () {                                                                                 // 99
-    function existsSocialNetwork() {                                                                                   // 99
+    return following;                                                                                                  // 89
+  }(),                                                                                                                 // 89
+  'followers': function () {                                                                                           // 95
+    function followers() {                                                                                             // 95
+      Meteor.call('usersFollowers', currentUserName, function (err, res) {                                             // 96
+        Session.set('numFollowers', res);                                                                              // 97
+      });                                                                                                              // 98
+      return Session.get('numFollowers');                                                                              // 99
+    }                                                                                                                  // 100
                                                                                                                        //
-      var btnSocial = [];                                                                                              // 101
+    return followers;                                                                                                  // 95
+  }(),                                                                                                                 // 95
+  'existsSocialNetwork': function () {                                                                                 // 101
+    function existsSocialNetwork() {                                                                                   // 101
                                                                                                                        //
-      if (dataUser.userFb) {                                                                                           // 103
-        var newData = new Object();                                                                                    // 104
-        newData.color = "primary";                                                                                     // 105
-        newData['class'] = "fa fa-facebook";                                                                           // 106
-        newData.id = "Facebook";                                                                                       // 107
-        btnSocial.push(newData);                                                                                       // 108
-      }                                                                                                                // 109
+      var btnSocial = [];                                                                                              // 103
                                                                                                                        //
-      if (dataUser.userInsta) {                                                                                        // 111
-        var newData = new Object();                                                                                    // 112
-        newData.color = "warning";                                                                                     // 113
-        newData['class'] = "fa fa-instagram";                                                                          // 114
-        newData.id = "Instagram";                                                                                      // 115
-        btnSocial.push(newData);                                                                                       // 116
-      }                                                                                                                // 117
+      if (dataUser.userFb) {                                                                                           // 105
+        var newData = new Object();                                                                                    // 106
+        newData.color = "primary";                                                                                     // 107
+        newData['class'] = "fa fa-facebook";                                                                           // 108
+        newData.id = "Facebook";                                                                                       // 109
+        btnSocial.push(newData);                                                                                       // 110
+      }                                                                                                                // 111
                                                                                                                        //
-      if (dataUser.userWhats) {                                                                                        // 119
-        var newData = new Object();                                                                                    // 120
-        newData.color = "success";                                                                                     // 121
-        newData['class'] = "fa fa-whatsapp";                                                                           // 122
-        newData.id = "WhatsApp";                                                                                       // 123
-        btnSocial.push(newData);                                                                                       // 124
-      }                                                                                                                // 125
+      if (dataUser.userInsta) {                                                                                        // 113
+        var newData = new Object();                                                                                    // 114
+        newData.color = "warning";                                                                                     // 115
+        newData['class'] = "fa fa-instagram";                                                                          // 116
+        newData.id = "Instagram";                                                                                      // 117
+        btnSocial.push(newData);                                                                                       // 118
+      }                                                                                                                // 119
                                                                                                                        //
-      return btnSocial;                                                                                                // 127
-    }                                                                                                                  // 128
+      if (dataUser.userWhats) {                                                                                        // 121
+        var newData = new Object();                                                                                    // 122
+        newData.color = "success";                                                                                     // 123
+        newData['class'] = "fa fa-whatsapp";                                                                           // 124
+        newData.id = "WhatsApp";                                                                                       // 125
+        btnSocial.push(newData);                                                                                       // 126
+      }                                                                                                                // 127
                                                                                                                        //
-    return existsSocialNetwork;                                                                                        // 99
-  }(),                                                                                                                 // 99
-  'showProfileOtherUser': function () {                                                                                // 129
-    function showProfileOtherUser() {                                                                                  // 129
-      return Session.get('showProfileOtherUser');                                                                      // 130
-    }                                                                                                                  // 131
+      return btnSocial;                                                                                                // 129
+    }                                                                                                                  // 130
                                                                                                                        //
-    return showProfileOtherUser;                                                                                       // 129
-  }(),                                                                                                                 // 129
-  'isWhatsapp': function () {                                                                                          // 132
-    function isWhatsapp() {                                                                                            // 132
-      if (this.id === "WhatsApp") {                                                                                    // 133
-        return true;                                                                                                   // 134
-      }                                                                                                                // 135
-    }                                                                                                                  // 136
+    return existsSocialNetwork;                                                                                        // 101
+  }(),                                                                                                                 // 101
+  'showProfileOtherUser': function () {                                                                                // 131
+    function showProfileOtherUser() {                                                                                  // 131
+      return Session.get('showProfileOtherUser');                                                                      // 132
+    }                                                                                                                  // 133
                                                                                                                        //
-    return isWhatsapp;                                                                                                 // 132
-  }()                                                                                                                  // 132
-});                                                                                                                    // 61
+    return showProfileOtherUser;                                                                                       // 131
+  }(),                                                                                                                 // 131
+  'isWhatsapp': function () {                                                                                          // 134
+    function isWhatsapp() {                                                                                            // 134
+      if (this.id === "WhatsApp") {                                                                                    // 135
+        return true;                                                                                                   // 136
+      }                                                                                                                // 137
+    }                                                                                                                  // 138
+                                                                                                                       //
+    return isWhatsapp;                                                                                                 // 134
+  }()                                                                                                                  // 134
+});                                                                                                                    // 62
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"whatsAppNotif.js":function(){
@@ -4352,7 +4509,8 @@ UserUtils.findUserFromTwiit = function (twiitId) {                              
 };                                                                                                                     // 161
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}}},{"extensions":[".js",".json",".html",".scss",".css"]});
+}}},{"extensions":[".js",".json",".html",".css"]});
+require("./client/partialTemplates/template.editLicenses.js");
 require("./client/partialTemplates/template.editProfile.js");
 require("./client/partialTemplates/template.followUsers.js");
 require("./client/partialTemplates/template.loading.js");
@@ -4360,6 +4518,7 @@ require("./client/partialTemplates/template.navBarTemplate.js");
 require("./client/partialTemplates/template.not_found.js");
 require("./client/partialTemplates/template.notifications.js");
 require("./client/partialTemplates/template.notificationsNew.js");
+require("./client/partialTemplates/template.pageNotFound.js");
 require("./client/partialTemplates/template.removeProfile.js");
 require("./client/partialTemplates/template.sendRequest.js");
 require("./client/partialTemplates/template.showSocialNetwork.js");
@@ -4378,6 +4537,7 @@ require("./client/template.main.js");
 require("./lib/collections/collections.js");
 require("./lib/router.js");
 require("./lib/userUtils.js");
+require("./client/partialTemplates/editLicenses.js");
 require("./client/partialTemplates/editProfile.js");
 require("./client/partialTemplates/followUsers.js");
 require("./client/partialTemplates/navBarTemplate.js");

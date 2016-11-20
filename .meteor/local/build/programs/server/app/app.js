@@ -628,133 +628,150 @@ Meteor.methods({                                                                
     return findUserData;                                                                               // 26
   }(),                                                                                                 // 26
                                                                                                        //
-  'findUserImg': function () {                                                                         // 30
-    function findUserImg(userImg) {                                                                    // 30
-      return Images.findOne({ _id: userImg }).imgCode;                                                 // 31
+  'findUserDataWithId': function () {                                                                  // 30
+    function findUserDataWithId(userId) {                                                              // 30
+      return DataUser.findOne({ userId: userId });                                                     // 31
     }                                                                                                  // 32
                                                                                                        //
-    return findUserImg;                                                                                // 30
+    return findUserDataWithId;                                                                         // 30
   }(),                                                                                                 // 30
                                                                                                        //
-  'updUserData': function () {                                                                         // 34
-    function updUserData(newData) {                                                                    // 34
-      DataUser.update({ _id: newData.userId }, { $set: { userDescription: newData.description, userImg: newData.imgId } });
+  'findUserImg': function () {                                                                         // 34
+    function findUserImg(userImg) {                                                                    // 34
+      return Images.findOne({ _id: userImg }).imgCode;                                                 // 35
     }                                                                                                  // 36
                                                                                                        //
-    return updUserData;                                                                                // 34
+    return findUserImg;                                                                                // 34
   }(),                                                                                                 // 34
                                                                                                        //
-  'updUserDataSocialNetworks': function () {                                                           // 38
-    function updUserDataSocialNetworks(newData) {                                                      // 38
-      if (newData.userFb != null && newData.userInsta != null && newData.userWhats != null) {          // 39
-        DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb, userWhats: newData.userWhats, userInsta: newData.userInsta } });
-      } else {                                                                                         // 41
-        if (newData.userFb != null) {                                                                  // 42
-          DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb } });              // 43
-        }                                                                                              // 44
+  'updUserData': function () {                                                                         // 38
+    function updUserData(newData) {                                                                    // 38
+      DataUser.update({ _id: newData.userId }, { $set: { userDescription: newData.description, userImg: newData.imgId } });
+    }                                                                                                  // 40
                                                                                                        //
-        if (newData.userInsta != null) {                                                               // 46
-          DataUser.update({ _id: newData.userId }, { $set: { userInsta: newData.userInsta } });        // 47
-        }                                                                                              // 48
-                                                                                                       //
-        if (newData.userWhats != null) {                                                               // 50
-          DataUser.update({ _id: newData.userId }, { $set: { userWhats: newData.userWhats } });        // 51
-        }                                                                                              // 52
-      }                                                                                                // 53
-    }                                                                                                  // 54
-                                                                                                       //
-    return updUserDataSocialNetworks;                                                                  // 38
+    return updUserData;                                                                                // 38
   }(),                                                                                                 // 38
                                                                                                        //
-  'removeDataSocialNetworks': function () {                                                            // 56
-    function removeDataSocialNetworks(newData) {                                                       // 56
-      console.log(newData.userId + " " + newData.propertyToRem);                                       // 57
+  'updUserDataSocialNetworks': function () {                                                           // 42
+    function updUserDataSocialNetworks(newData) {                                                      // 42
+      if (newData.userFb != null && newData.userInsta != null && newData.userWhats != null) {          // 43
+        DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb, userWhats: newData.userWhats, userInsta: newData.userInsta } });
+      } else {                                                                                         // 45
+        if (newData.userFb != null) {                                                                  // 46
+          DataUser.update({ _id: newData.userId }, { $set: { userFb: newData.userFb } });              // 47
+        }                                                                                              // 48
                                                                                                        //
-      switch (newData.propertyToRem) {                                                                 // 59
-        case "WhatsApp":                                                                               // 60
-          {                                                                                            // 60
-            DataUser.update({ _id: newData.userId }, { $unset: { "userWhats": 1 } });                  // 61
-          };                                                                                           // 62
-          break;                                                                                       // 63
-        case "Instagram":                                                                              // 64
+        if (newData.userInsta != null) {                                                               // 50
+          DataUser.update({ _id: newData.userId }, { $set: { userInsta: newData.userInsta } });        // 51
+        }                                                                                              // 52
+                                                                                                       //
+        if (newData.userWhats != null) {                                                               // 54
+          DataUser.update({ _id: newData.userId }, { $set: { userWhats: newData.userWhats } });        // 55
+        }                                                                                              // 56
+      }                                                                                                // 57
+    }                                                                                                  // 58
+                                                                                                       //
+    return updUserDataSocialNetworks;                                                                  // 42
+  }(),                                                                                                 // 42
+                                                                                                       //
+  'removeDataSocialNetworks': function () {                                                            // 60
+    function removeDataSocialNetworks(newData) {                                                       // 60
+      console.log(newData.userId + " " + newData.propertyToRem);                                       // 61
+                                                                                                       //
+      switch (newData.propertyToRem) {                                                                 // 63
+        case "WhatsApp":                                                                               // 64
           {                                                                                            // 64
-            DataUser.update({ _id: newData.userId }, { $unset: { "userInsta": 1 } });                  // 65
+            DataUser.update({ _id: newData.userId }, { $unset: { "userWhats": 1 } });                  // 65
           };                                                                                           // 66
           break;                                                                                       // 67
-        case "Facebook":                                                                               // 68
+        case "Instagram":                                                                              // 68
           {                                                                                            // 68
-            DataUser.update({ _id: newData.userId }, { $unset: { "userFb": 1 } });                     // 69
+            DataUser.update({ _id: newData.userId }, { $unset: { "userInsta": 1 } });                  // 69
           };                                                                                           // 70
           break;                                                                                       // 71
-      }                                                                                                // 59
+        case "Facebook":                                                                               // 72
+          {                                                                                            // 72
+            DataUser.update({ _id: newData.userId }, { $unset: { "userFb": 1 } });                     // 73
+          };                                                                                           // 74
+          break;                                                                                       // 75
+      }                                                                                                // 63
                                                                                                        //
-      //ESTE COMANDO ES EL QUE SE UTILIZA EN MONGO                                                     // 74
-      //db.dataUser.update({"_id": "rQTzzDMfr4ZkiR7S8"},  {"$unset":{"userWhats":1}});                 // 75
-    }                                                                                                  // 76
+      //ESTE COMANDO ES EL QUE SE UTILIZA EN MONGO                                                     // 78
+      //db.dataUser.update({"_id": "rQTzzDMfr4ZkiR7S8"},  {"$unset":{"userWhats":1}});                 // 79
+    }                                                                                                  // 80
                                                                                                        //
-    return removeDataSocialNetworks;                                                                   // 56
-  }(),                                                                                                 // 56
+    return removeDataSocialNetworks;                                                                   // 60
+  }(),                                                                                                 // 60
                                                                                                        //
-  'insertNewImage': function () {                                                                      // 78
-    function insertNewImage(code) {                                                                    // 78
-      return Images.insert({                                                                           // 79
-        imgCode: code                                                                                  // 80
-      });                                                                                              // 79
-    }                                                                                                  // 82
+  'insertNewImage': function () {                                                                      // 82
+    function insertNewImage(code) {                                                                    // 82
+      return Images.insert({                                                                           // 83
+        imgCode: code                                                                                  // 84
+      });                                                                                              // 83
+    }                                                                                                  // 86
                                                                                                        //
-    return insertNewImage;                                                                             // 78
-  }(),                                                                                                 // 78
+    return insertNewImage;                                                                             // 82
+  }(),                                                                                                 // 82
                                                                                                        //
-  'removeThisUser': function () {                                                                      // 84
-    function removeThisUser(userToRemove) {                                                            // 84
-      //HAY QUE ELIMINAR EL USUARIO DE dataUser Y DE users                                             // 85
-      var idImgUser = DataUser.findOne({ userId: userToRemove.id }).userImg;                           // 86
+  'removeThisUser': function () {                                                                      // 88
+    function removeThisUser(userToRemove) {                                                            // 88
+      //HAY QUE ELIMINAR EL USUARIO DE dataUser Y DE users                                             // 89
+      var idImgUser = DataUser.findOne({ userId: userToRemove.id }).userImg;                           // 90
                                                                                                        //
-      if (idImgUser) {                                                                                 // 88
-        Images.remove({ _id: idImgUser });                                                             // 89
-      }                                                                                                // 90
+      if (idImgUser) {                                                                                 // 92
+        Images.remove({ _id: idImgUser });                                                             // 93
+      }                                                                                                // 94
                                                                                                        //
-      Notifications.remove({ recepNotif: userToRemove.name });                                         // 92
-      Relationships.remove({ follower: userToRemove.name });                                           // 93
-      Relationships.remove({ following: userToRemove.name });                                          // 94
+      Notifications.remove({ recepNotif: userToRemove.name });                                         // 96
+      Relationships.remove({ follower: userToRemove.name });                                           // 97
+      Relationships.remove({ following: userToRemove.name });                                          // 98
                                                                                                        //
-      Favs.find({ idUserTapFav: userToRemove.id }).fetch().map(function (data) {                       // 96
-        if (data.idUserTapFav) {                                                                       // 97
-          var aux = data.idUserTapFav;                                                                 // 98
-          var pos = aux.indexOf(userToRemove.id);                                                      // 99
-          if (pos != -1) {                                                                             // 100
-            UserUtils.removeFavToTwiit(data.idTwiit, userToRemove.id);                                 // 101
-          }                                                                                            // 102
-        }                                                                                              // 103
-      });                                                                                              // 104
+      Favs.find({ idUserTapFav: userToRemove.id }).fetch().map(function (data) {                       // 100
+        if (data.idUserTapFav) {                                                                       // 101
+          var aux = data.idUserTapFav;                                                                 // 102
+          var pos = aux.indexOf(userToRemove.id);                                                      // 103
+          if (pos != -1) {                                                                             // 104
+            UserUtils.removeFavToTwiit(data.idTwiit, userToRemove.id);                                 // 105
+          }                                                                                            // 106
+        }                                                                                              // 107
+      });                                                                                              // 108
                                                                                                        //
-      Twitts.remove({ user: userToRemove.name });                                                      // 106
-      Meteor.users.remove({ _id: userToRemove.id });                                                   // 107
-      DataUser.remove({ userId: userToRemove.id });                                                    // 108
-    }                                                                                                  // 109
+      Twitts.remove({ user: userToRemove.name });                                                      // 110
+      Meteor.users.remove({ _id: userToRemove.id });                                                   // 111
+      DataUser.remove({ userId: userToRemove.id });                                                    // 112
+    }                                                                                                  // 113
                                                                                                        //
-    return removeThisUser;                                                                             // 84
-  }(),                                                                                                 // 84
+    return removeThisUser;                                                                             // 88
+  }(),                                                                                                 // 88
                                                                                                        //
-  'updateArrayWhatsAppAuthorize': function () {                                                        // 111
-    function updateArrayWhatsAppAuthorize(data) {                                                      // 111
-      var user = DataUser.findOne({ userNameProfile: data.user });                                     // 112
-      var arrShowWhats = user.showWhatsTo;                                                             // 113
-      console.log("Array: ");                                                                          // 114
-      console.log(arrShowWhats);                                                                       // 115
+  'updateArrayWhatsAppAuthorize': function () {                                                        // 115
+    function updateArrayWhatsAppAuthorize(data) {                                                      // 115
+      var user = DataUser.findOne({ userNameProfile: data.user });                                     // 116
+      var arrShowWhats = user.showWhatsTo;                                                             // 117
+      console.log("Array: ");                                                                          // 118
+      console.log(arrShowWhats);                                                                       // 119
                                                                                                        //
-      //BUSCAMOS EL USUARIO QUE VAMOS A AÑADIR AL ARRAY                                                // 117
-      var userToAdd = DataUser.findOne({ userNameProfile: data.userToShow });                          // 118
-      arrShowWhats.push(userToAdd.userId);                                                             // 119
+      //BUSCAMOS EL USUARIO QUE VAMOS A AÑADIR AL ARRAY                                                // 121
+      var userToAdd = DataUser.findOne({ userNameProfile: data.userToShow });                          // 122
+      arrShowWhats.push(userToAdd.userId);                                                             // 123
                                                                                                        //
-      console.log(arrShowWhats);                                                                       // 121
-      console.log(user);                                                                               // 122
+      console.log(arrShowWhats);                                                                       // 125
+      console.log(user);                                                                               // 126
                                                                                                        //
-      var a = DataUser.update({ userId: user.userId }, { $set: { showWhatsTo: arrShowWhats } });       // 124
-    }                                                                                                  // 126
+      DataUser.update({ userId: user.userId }, { $set: { showWhatsTo: arrShowWhats } });               // 128
+    }                                                                                                  // 130
                                                                                                        //
-    return updateArrayWhatsAppAuthorize;                                                               // 111
-  }()                                                                                                  // 111
+    return updateArrayWhatsAppAuthorize;                                                               // 115
+  }(),                                                                                                 // 115
+                                                                                                       //
+  'updateShowWhatsTo': function () {                                                                   // 132
+    function updateShowWhatsTo(data) {                                                                 // 132
+      DataUser.update({ userId: data.userId }, { $set: { showWhatsTo: data.showWhats } });             // 133
+    }                                                                                                  // 134
+                                                                                                       //
+    return updateShowWhatsTo;                                                                          // 132
+  }()                                                                                                  // 132
+                                                                                                       //
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

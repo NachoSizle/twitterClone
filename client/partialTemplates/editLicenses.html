@@ -1,0 +1,29 @@
+<template name="editLicenses"> 
+  	{{#if Template.subscriptionsReady}}
+  		
+	  		<div class="sentPet-container">
+			    <div class="panel panel-default col-sm-6 col-md-6 col-lg-6">
+		      		<div class="panel-body">
+		      			{{#if userWhatsCount}}
+			      			<p>Permisos concedidos</p>
+
+			      			<div id="scrollSpy">
+							  	<ul class="list-group">
+							  	{{# each responseLicenses}}
+								  <a href="#" id="{{this.userId}}" class="list-group-item alignTextToCenter">{{this.name}}</a>
+								{{/each}}
+								</ul>
+							</div>
+
+							<button id="remLicense" type="button" class="btn btn-info">Eliminar</button>
+				      	{{else}}
+				      		<p>Todavía no has dado permiso a ningun usuario.</p>
+						{{/if}}
+					</div>
+		    	</div>
+		  	</div>
+		
+	{{else}}
+	  {{> loading}}
+	{{/if}}
+</template>

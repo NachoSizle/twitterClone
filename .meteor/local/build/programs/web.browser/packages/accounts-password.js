@@ -249,17 +249,22 @@ Accounts.forgotPassword = function (options, callback) {                        
   if (!options.email) {                                                                                       // 220
     return reportError(new Meteor.Error(400, "Must pass options.email"), callback);                           // 221
   }                                                                                                           // 222
-  Accounts.connection.call("forgotPassword", options, callback);                                              // 223
-};                                                                                                            // 224
                                                                                                               //
-// Resets a password based on a token originally created by                                                   // 226
-// Accounts.forgotPassword, and then logs in the matching user.                                               // 227
-//                                                                                                            // 228
-// @param token {String}                                                                                      // 229
-// @param newPassword {String}                                                                                // 230
-// @param callback (optional) {Function(error|undefined)}                                                     // 231
+  if (callback) {                                                                                             // 224
+    Accounts.connection.call("forgotPassword", options, callback);                                            // 225
+  } else {                                                                                                    // 226
+    Accounts.connection.call("forgotPassword", options);                                                      // 227
+  }                                                                                                           // 228
+};                                                                                                            // 229
                                                                                                               //
-/**                                                                                                           // 233
+// Resets a password based on a token originally created by                                                   // 231
+// Accounts.forgotPassword, and then logs in the matching user.                                               // 232
+//                                                                                                            // 233
+// @param token {String}                                                                                      // 234
+// @param newPassword {String}                                                                                // 235
+// @param callback (optional) {Function(error|undefined)}                                                     // 236
+                                                                                                              //
+/**                                                                                                           // 238
  * @summary Reset the password for a user using a token received in email. Logs the user in afterwards.       //
  * @locus Client                                                                                              //
  * @param {String} token The token retrieved from the reset password URL.                                     //
@@ -267,43 +272,43 @@ Accounts.forgotPassword = function (options, callback) {                        
  * @param {Function} [callback] Optional callback. Called with no arguments on success, or with a single `Error` argument on failure.
  * @importFromPackage accounts-base                                                                           //
  */                                                                                                           //
-Accounts.resetPassword = function (token, newPassword, callback) {                                            // 241
-  check(token, String);                                                                                       // 242
-  check(newPassword, String);                                                                                 // 243
+Accounts.resetPassword = function (token, newPassword, callback) {                                            // 246
+  check(token, String);                                                                                       // 247
+  check(newPassword, String);                                                                                 // 248
                                                                                                               //
-  if (!newPassword) {                                                                                         // 245
-    return reportError(new Meteor.Error(400, "Password may not be empty"), callback);                         // 246
-  }                                                                                                           // 247
+  if (!newPassword) {                                                                                         // 250
+    return reportError(new Meteor.Error(400, "Password may not be empty"), callback);                         // 251
+  }                                                                                                           // 252
                                                                                                               //
-  Accounts.callLoginMethod({                                                                                  // 249
-    methodName: 'resetPassword',                                                                              // 250
-    methodArguments: [token, Accounts._hashPassword(newPassword)],                                            // 251
-    userCallback: callback });                                                                                // 252
-};                                                                                                            // 253
+  Accounts.callLoginMethod({                                                                                  // 254
+    methodName: 'resetPassword',                                                                              // 255
+    methodArguments: [token, Accounts._hashPassword(newPassword)],                                            // 256
+    userCallback: callback });                                                                                // 257
+};                                                                                                            // 258
                                                                                                               //
-// Verifies a user's email address based on a token originally                                                // 255
-// created by Accounts.sendVerificationEmail                                                                  // 256
-//                                                                                                            // 257
-// @param token {String}                                                                                      // 258
-// @param callback (optional) {Function(error|undefined)}                                                     // 259
+// Verifies a user's email address based on a token originally                                                // 260
+// created by Accounts.sendVerificationEmail                                                                  // 261
+//                                                                                                            // 262
+// @param token {String}                                                                                      // 263
+// @param callback (optional) {Function(error|undefined)}                                                     // 264
                                                                                                               //
-/**                                                                                                           // 261
+/**                                                                                                           // 266
  * @summary Marks the user's email address as verified. Logs the user in afterwards.                          //
  * @locus Client                                                                                              //
  * @param {String} token The token retrieved from the verification URL.                                       //
  * @param {Function} [callback] Optional callback. Called with no arguments on success, or with a single `Error` argument on failure.
  * @importFromPackage accounts-base                                                                           //
  */                                                                                                           //
-Accounts.verifyEmail = function (token, callback) {                                                           // 268
-  if (!token) {                                                                                               // 269
-    return reportError(new Meteor.Error(400, "Need to pass token"), callback);                                // 270
-  }                                                                                                           // 271
+Accounts.verifyEmail = function (token, callback) {                                                           // 273
+  if (!token) {                                                                                               // 274
+    return reportError(new Meteor.Error(400, "Need to pass token"), callback);                                // 275
+  }                                                                                                           // 276
                                                                                                               //
-  Accounts.callLoginMethod({                                                                                  // 273
-    methodName: 'verifyEmail',                                                                                // 274
-    methodArguments: [token],                                                                                 // 275
-    userCallback: callback });                                                                                // 276
-};                                                                                                            // 277
+  Accounts.callLoginMethod({                                                                                  // 278
+    methodName: 'verifyEmail',                                                                                // 279
+    methodArguments: [token],                                                                                 // 280
+    userCallback: callback });                                                                                // 281
+};                                                                                                            // 282
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }}}}},{"extensions":[".js",".json"]});

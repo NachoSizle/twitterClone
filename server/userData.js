@@ -27,6 +27,10 @@ Meteor.methods({
     return DataUser.findOne({userNameProfile : userName});
   },
 
+  'findUserDataWithId': function(userId){
+    return DataUser.findOne({userId : userId});
+  },
+
   'findUserImg': function(userImg){
     return Images.findOne({_id : userImg}).imgCode;
   },
@@ -121,7 +125,12 @@ Meteor.methods({
     console.log(arrShowWhats);
     console.log(user);
 
-    var a = DataUser.update({userId: user.userId}, {$set: {showWhatsTo : arrShowWhats}});
+    DataUser.update({userId: user.userId}, {$set: {showWhatsTo : arrShowWhats}});
     
-  }
+  },
+
+  'updateShowWhatsTo' : function(data){
+    DataUser.update({userId: data.userId}, {$set: {showWhatsTo : data.showWhats}});
+  },
+
 });
