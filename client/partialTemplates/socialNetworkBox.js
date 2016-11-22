@@ -3,6 +3,7 @@ Template.socialNetworkBox.onRendered(function(){
   currentDataUser = Session.get('datauser');
   Session.set('inputNotEmpty', true);
   Session.set('removeDataSN', false);
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 Template.socialNetworkBox.events({
@@ -142,12 +143,11 @@ Template.socialNetworkBox.events({
 
         //RECORREMOS LOS INPUT QUE VIENEN DIRECTAMENTE DE MONGODB
         $('.inputSN').each(function() {
-          if($(this).val() === ""){
-            valuesInput.push($(this).attr('placeholder'));
-          } else {
+          if($(this).val() != ""){
             valuesInput.push($(this).val());
           }
         });
+
 
         //RECORREMOS LOS INPUT CREADOS CON EL BTN addNewSN
         $('.inputNewSN').each(function(){
@@ -159,6 +159,19 @@ Template.socialNetworkBox.events({
           }
           foundInputNewSN = true;
         });
+
+
+        if(valuesInput.length === 0){
+          //SI SE HA AÑADIDO UN INPUT EN EL QUE NO SE HA INTRODUCIDO NADA, 
+          //HAY QUE AVISAR AL USUARIO DE QUE TIENE QUE INTRODUCIR UN VALOR
+          $('.inputSN').each(function() {
+            if($(this).val() === ""){
+              console.log("NO hay val");
+              $(this).addClass("fieldEmpty");
+              $('.msgFieldEmpty').attr("hidden", false);
+            };
+          });
+        }
 
         if(foundInputNewSN){
           valuesInput.splice(valuesInput.length - 1, 1);
@@ -184,7 +197,6 @@ Template.socialNetworkBox.events({
         valuesButton.push($(this).text());
       });
 
-      //ESTA PARTE ESTA CORRECTA
       if(Session.get('inputNotEmpty')){
         //COMPROBAMOS QUE SE HA INTRODUCIDO ALGUN VALOR O SELECCIONADO ALGUNA RED SOCIAL PARA AÑADIRLA
         if(valuesInput && valuesButton){

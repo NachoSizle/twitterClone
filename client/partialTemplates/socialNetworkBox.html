@@ -13,7 +13,9 @@
 			          		<div class='input-group-btn'>
 			          			<button id="{{this.id}}" type='button' class='btn btn-default btnOptionsSN' aria-haspopup='true' aria-expanded='false'>{{this.valueBtn}}</button>
 			          		</div>
-			          		<input id='input{{this.id}}' type='text' class='form-control inputSN' aria-label='...' placeholder='{{this.placeholder}}'>
+
+			          		<input required id='input{{this.id}}' type='text' class='form-control inputSN' aria-label='...' placeholder='{{this.placeholder}}'>
+
 			          		<button id='clearDataUser{{this.id}}' type='button' class='btn btn-danger' aria-haspopup='true' aria-expanded='false'>
 			          			<span id='{{this.id}}' class="glyphicon glyphicon-remove"></span>
 			      			</button>
@@ -32,9 +34,13 @@
 				  		OTRA OPCION ES IMPLEMENTAR EL MENSAJE EMERGENTE: "Completa este campo" QUE HTML5
 				  		NOS OFRECE CON LA ETIQUETA required PARA PRESCINDIR DE LA PROPIEDAD SUBMIT DEL BOTON
 				  		-->
-			  		  	<button id="saveData" class="btn btn-primary" type="submit">
+			  		  	<button id="saveData" class="btn btn-primary" type="button">
 							<span class="glyphicon glyphicon-ok"></span>
 			  		  	</button>
+
+			  		  	<div class="msgFieldEmpty" hidden="true">
+			  		  		<span><i>Completa los campos vacíos</i></span>
+			  		  	</div>
 			  		</div>
 				</form>
 		      </div>

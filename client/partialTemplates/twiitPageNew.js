@@ -7,9 +7,13 @@ Template.twiitPageNew.onCreated(function() {
 });
 
 Template.twiitPageNew.helpers({
-  'requestWhatsApp' : function(){
-    
-  }, 
+  'setStyleNavBar': function(){
+    var widthNav = $(window).width();
+    //RESTAMOS DOS PIXELES POR LOS BORDES
+    widthNav -= 2; 
+    return widthNav/2 + "px";
+  },
+
   'convertDateTime': function() {
   	var dateNew = new Date(this.twiitTimeStamp);
   	var dateCon = dateNew.toLocaleString();
