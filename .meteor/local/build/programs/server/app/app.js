@@ -172,133 +172,137 @@ UserUtils.findNotifications = function (username) {                             
   return Notifications.find({ recepNotif: username, read: false, isOwnTwiit: false }, { sort: { twiitTimeStamp: -1 } });
 };                                                                                                     // 35
                                                                                                        //
-UserUtils.findOneNotification = function (username) {                                                  // 37
-  return Notifications.findOne({ recepNotif: username, read: false, isOwnTwiit: false }, { sort: { twiitTimeStamp: -1 } });
+UserUtils.findNotifForTypeNotif = function (username, type) {                                          // 37
+  return Notifications.find({ recepNotif: username, read: false, isOwnTwiit: false, typeOfNotif: type }, { sort: { twiitTimeStamp: -1 } });
 };                                                                                                     // 39
                                                                                                        //
-UserUtils.findNumberNotif = function (username) {                                                      // 41
-  return Notifications.find({ recepNotif: username, read: false, isOwnTwiit: false, $or: [{ typeOfNotif: 'twiit' }, { typeOfNotif: 'fav' }, { typeOfNotif: 'comment' }] }).count();
+UserUtils.findOneNotification = function (username) {                                                  // 41
+  return Notifications.findOne({ recepNotif: username, read: false, isOwnTwiit: false }, { sort: { twiitTimeStamp: -1 } });
 };                                                                                                     // 43
                                                                                                        //
-UserUtils.findWhatsAppNotifications = function (notifId) {                                             // 45
-  return Notifications.findOne({ _id: notifId });                                                      // 46
+UserUtils.findNumberNotif = function (username) {                                                      // 45
+  return Notifications.find({ recepNotif: username, read: false, isOwnTwiit: false, $or: [{ typeOfNotif: 'twiit' }, { typeOfNotif: 'fav' }, { typeOfNotif: 'comment' }] }).count();
 };                                                                                                     // 47
                                                                                                        //
-UserUtils.findNumberFavPerTwiit = function (idTwiit) {                                                 // 49
-  var twiitNumFav = Twitts.findOne({ _id: idTwiit }).numFav;                                           // 50
-  return twiitNumFav;                                                                                  // 51
-};                                                                                                     // 52
+UserUtils.findWhatsAppNotifications = function (notifId) {                                             // 49
+  return Notifications.findOne({ _id: notifId });                                                      // 50
+};                                                                                                     // 51
                                                                                                        //
-UserUtils.findFavsForTwiit = function (id) {                                                           // 54
-  return Favs.findOne({ idTwiit: id });                                                                // 55
+UserUtils.findNumberFavPerTwiit = function (idTwiit) {                                                 // 53
+  var twiitNumFav = Twitts.findOne({ _id: idTwiit }).numFav;                                           // 54
+  return twiitNumFav;                                                                                  // 55
 };                                                                                                     // 56
                                                                                                        //
-UserUtils.addFavToTwiit = function (id, idUser) {                                                      // 58
-  var resultToUpdate = false;                                                                          // 59
+UserUtils.findFavsForTwiit = function (id) {                                                           // 58
+  return Favs.findOne({ idTwiit: id });                                                                // 59
+};                                                                                                     // 60
+                                                                                                       //
+UserUtils.addFavToTwiit = function (id, idUser) {                                                      // 62
+  var resultToUpdate = false;                                                                          // 63
   //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT
-  var favObject = UserUtils.findFavsForTwiit(id);                                                      // 61
+  var favObject = UserUtils.findFavsForTwiit(id);                                                      // 65
                                                                                                        //
-  if (!favObject) {                                                                                    // 63
-    //console.log("No tiene FAVS");                                                                    // 64
+  if (!favObject) {                                                                                    // 67
+    //console.log("No tiene FAVS");                                                                    // 68
                                                                                                        //
-  } else {                                                                                             // 66
-    var arrAux = favObject.idUserTapFav;                                                               // 67
-    var idFav = favObject._id;                                                                         // 68
+  } else {                                                                                             // 70
+    var arrAux = favObject.idUserTapFav;                                                               // 71
+    var idFav = favObject._id;                                                                         // 72
                                                                                                        //
-    arrAux.push(idUser);                                                                               // 70
-    var num = UserUtils.findNumberFavPerTwiit(id);                                                     // 71
-    num++;                                                                                             // 72
+    arrAux.push(idUser);                                                                               // 74
+    var num = UserUtils.findNumberFavPerTwiit(id);                                                     // 75
+    num++;                                                                                             // 76
                                                                                                        //
-    //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                          // 74
-    res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                      // 75
-    resT = Twitts.update(id, { $set: { numFav: num } });                                               // 76
+    //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                          // 78
+    res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                      // 79
+    resT = Twitts.update(id, { $set: { numFav: num } });                                               // 80
                                                                                                        //
-    //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                               // 78
-    if (res && resT) {                                                                                 // 79
-      resultToUpdate = true;                                                                           // 80
-    }                                                                                                  // 81
-  }                                                                                                    // 82
+    //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                               // 82
+    if (res && resT) {                                                                                 // 83
+      resultToUpdate = true;                                                                           // 84
+    }                                                                                                  // 85
+  }                                                                                                    // 86
                                                                                                        //
-  return resultToUpdate;                                                                               // 84
-};                                                                                                     // 85
+  return resultToUpdate;                                                                               // 88
+};                                                                                                     // 89
                                                                                                        //
-UserUtils.removeFavToTwiit = function (id, idUser) {                                                   // 87
-  var resultToUpdate = false;                                                                          // 88
+UserUtils.removeFavToTwiit = function (id, idUser) {                                                   // 91
+  var resultToUpdate = false;                                                                          // 92
   //RECUPERAMOS EL ARRAY QUE USAREMOS PARA ALMACENAR TODOS LOS ID DE LOS USUARIOS QUE DEN FAV AL TWIIT
-  var favObject = UserUtils.findFavsForTwiit(id);                                                      // 90
-  var arrAux = favObject.idUserTapFav;                                                                 // 91
-  var idFav = favObject._id;                                                                           // 92
+  var favObject = UserUtils.findFavsForTwiit(id);                                                      // 94
+  var arrAux = favObject.idUserTapFav;                                                                 // 95
+  var idFav = favObject._id;                                                                           // 96
                                                                                                        //
-  //HAY QUE AVERIGUAR LA POSICION DEL idUser DENTRO DEL ARRAY DE LA BBDD                               // 94
-  var posIdUser = arrAux.indexOf(idUser);                                                              // 95
-  //AHORA ELIMINAMOS EL ELEMENTO ASOCIADO A ESA POSICION                                               // 96
-  delete arrAux[posIdUser];                                                                            // 97
+  //HAY QUE AVERIGUAR LA POSICION DEL idUser DENTRO DEL ARRAY DE LA BBDD                               // 98
+  var posIdUser = arrAux.indexOf(idUser);                                                              // 99
+  //AHORA ELIMINAMOS EL ELEMENTO ASOCIADO A ESA POSICION                                               // 100
+  delete arrAux[posIdUser];                                                                            // 101
                                                                                                        //
-  var num = UserUtils.findNumberFavPerTwiit(id);                                                       // 99
-  num--;                                                                                               // 100
+  var num = UserUtils.findNumberFavPerTwiit(id);                                                       // 103
+  num--;                                                                                               // 104
                                                                                                        //
-  //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                            // 102
-  res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                        // 103
-  resT = Twitts.update(id, { $set: { numFav: num } });                                                 // 104
+  //AHORA HACEMOS LAS OPERACIONES DE UPDATE                                                            // 106
+  res = Favs.update(idFav, { $set: { idUserTapFav: arrAux } });                                        // 107
+  resT = Twitts.update(id, { $set: { numFav: num } });                                                 // 108
                                                                                                        //
-  //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                 // 106
-  if (res && resT) {                                                                                   // 107
-    resultToUpdate = true;                                                                             // 108
-  }                                                                                                    // 109
+  //COMPROBAMOS EL RESULTADO DE LA OPERACION DE UPDATE                                                 // 110
+  if (res && resT) {                                                                                   // 111
+    resultToUpdate = true;                                                                             // 112
+  }                                                                                                    // 113
                                                                                                        //
-  return resultToUpdate;                                                                               // 111
-};                                                                                                     // 112
+  return resultToUpdate;                                                                               // 115
+};                                                                                                     // 116
                                                                                                        //
-UserUtils.findTwiitFromNotif = function (id) {                                                         // 114
-  var twiitId = Notifications.findOne(id).twiitId;                                                     // 115
-  return twiitId;                                                                                      // 116
-};                                                                                                     // 117
-                                                                                                       //
-UserUtils.findNumComment = function (idTweet) {                                                        // 119
-  return Twitts.findOne({ _id: idTweet }).numComment;                                                  // 120
+UserUtils.findTwiitFromNotif = function (id) {                                                         // 118
+  var twiitId = Notifications.findOne(id).twiitId;                                                     // 119
+  return twiitId;                                                                                      // 120
 };                                                                                                     // 121
                                                                                                        //
-//PARA MOSTRAR NOTIFICACIONES EN EL NAVEGADOR WEB                                                      // 123
-UserUtils.createNotifToBrowser = function (typeNotif, userName) {                                      // 124
-  if (Notification) {                                                                                  // 125
-    if (Notification.permission !== "granted") {                                                       // 126
-      Notification.requestPermission();                                                                // 127
-    }                                                                                                  // 128
-    var title = "TwiitClone";                                                                          // 129
-    var bodyNotif = "";                                                                                // 130
+UserUtils.findNumComment = function (idTweet) {                                                        // 123
+  return Twitts.findOne({ _id: idTweet }).numComment;                                                  // 124
+};                                                                                                     // 125
                                                                                                        //
-    if (typeNotif === "fav") {                                                                         // 132
-      bodyNotif = "El usuario " + userName + " ha dado fav a un twiit tuyo";                           // 133
-    } else if (typeNotif === "comment") {                                                              // 134
-      bodyNotif = "El usuario " + userName + " ha comentado un twiit tuyo";                            // 135
-    } else if (typeNotif === "twiit") {                                                                // 136
-      bodyNotif = "El usuario " + userName + " ha publicado a un twiit nuevo";                         // 137
-    } else if (typeNotif === "moreNotif") {                                                            // 138
-      bodyNotif = "Tienes muchas Notificaciones";                                                      // 139
-    }                                                                                                  // 140
+//PARA MOSTRAR NOTIFICACIONES EN EL NAVEGADOR WEB                                                      // 127
+UserUtils.createNotifToBrowser = function (typeNotif, userName) {                                      // 128
+  if (Notification) {                                                                                  // 129
+    if (Notification.permission !== "granted") {                                                       // 130
+      Notification.requestPermission();                                                                // 131
+    }                                                                                                  // 132
+    var title = "TwiitClone";                                                                          // 133
+    var bodyNotif = "";                                                                                // 134
                                                                                                        //
-    var extra = { body: bodyNotif };                                                                   // 142
+    if (typeNotif === "fav") {                                                                         // 136
+      bodyNotif = "El usuario " + userName + " ha dado fav a un twiit tuyo";                           // 137
+    } else if (typeNotif === "comment") {                                                              // 138
+      bodyNotif = "El usuario " + userName + " ha comentado un twiit tuyo";                            // 139
+    } else if (typeNotif === "twiit") {                                                                // 140
+      bodyNotif = "El usuario " + userName + " ha publicado a un twiit nuevo";                         // 141
+    } else if (typeNotif === "moreNotif") {                                                            // 142
+      bodyNotif = "Tienes muchas Notificaciones";                                                      // 143
+    }                                                                                                  // 144
                                                                                                        //
-    var noti = new Notification(title, extra);                                                         // 144
+    var extra = { body: bodyNotif };                                                                   // 146
                                                                                                        //
-    noti.onclick = function () {                                                                       // 146
-      // Al hacer click                                                                                // 147
-      window.location = "/Notifications/" + Meteor.user().username;                                    // 148
-    };                                                                                                 // 149
+    var noti = new Notification(title, extra);                                                         // 148
                                                                                                        //
-    noti.onclose = {                                                                                   // 151
-      // Al cerrar                                                                                     // 152
-    };                                                                                                 // 151
+    noti.onclick = function () {                                                                       // 150
+      // Al hacer click                                                                                // 151
+      window.location = "/Notifications/" + Meteor.user().username;                                    // 152
+    };                                                                                                 // 153
                                                                                                        //
-    setTimeout(function () {                                                                           // 155
-      noti.close();                                                                                    // 155
-    }, 5000);                                                                                          // 155
-  }                                                                                                    // 156
-};                                                                                                     // 157
+    noti.onclose = {                                                                                   // 155
+      // Al cerrar                                                                                     // 156
+    };                                                                                                 // 155
                                                                                                        //
-UserUtils.findUserFromTwiit = function (twiitId) {                                                     // 159
-  return Twitts.findOne({ _id: twiitId }).user;                                                        // 160
+    setTimeout(function () {                                                                           // 159
+      noti.close();                                                                                    // 159
+    }, 5000);                                                                                          // 159
+  }                                                                                                    // 160
 };                                                                                                     // 161
+                                                                                                       //
+UserUtils.findUserFromTwiit = function (twiitId) {                                                     // 163
+  return Twitts.findOne({ _id: twiitId }).user;                                                        // 164
+};                                                                                                     // 165
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }},"server":{"followUsers.js":function(){

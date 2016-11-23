@@ -9161,3 +9161,10 @@ form input:focus:required:invalid {
   border-radius: 0px;
   border: 1px solid #ddd;
 }
+
+.badge-notify-navbarFooter {
+  background: #e53935;
+  top: -5px !important;
+  left: 0px;
+  font-size: 15px;
+}

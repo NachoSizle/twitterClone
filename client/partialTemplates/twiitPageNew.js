@@ -3,6 +3,15 @@ Template.twiitPageNew.onCreated(function() {
   this.subscribe('favs');
   this.subscribe('allNotifications');
   arrWithId = [];
+  arrWithCommNotif = [];
+  arrWithFavsNotif = [];
+  countArrFavs = 0;
+  countArrComm = 0;
+
+  foundNotifComm = UserUtils.findNotifForTypeNotif(this.data.name, 'comment');
+  
+  foundNotifFavs = UserUtils.findNotifForTypeNotif(this.data.name, 'fav');
+
   Session.set('notificationsModeOn', true);
 });
 
@@ -20,8 +29,16 @@ Template.twiitPageNew.helpers({
     return dateCon;
   },
 
-  'tweetMessage': function() {
-    return UserUtils.findNotifications(this.name);
+  'showComments': function() {
+    countArrComm = foundNotifComm.count();
+    Session.set('lengthArrComm', countArrComm);
+    return foundNotifComm;
+  },
+
+  'showFavs': function() {
+    countArrFavs = foundNotifFavs.count();
+    Session.set('lengthArrFavs', countArrFavs);
+    return foundNotifFavs;
   },
 
   'countNotifTwiit' : function(){
@@ -35,6 +52,34 @@ Template.twiitPageNew.helpers({
 
   'saveIdInArr' : function(){
     arrWithId.push(this._id);
+    if(this.typeOfNotif === 'comment'){
+      if(arrWithCommNotif.length < countArrComm){
+        arrWithCommNotif.push(this._id);
+      }
+    } else if(this.typeOfNotif === 'fav'){
+      if(arrWithFavsNotif.length < countArrFavs){
+        arrWithFavsNotif.push(this._id);
+      }
+    } 
+  },
+
+  'selectTypeNotifToShow' : function(){
+
+    var lengthFavs = Session.get('lengthArrFavs');
+    var lengthComm = Session.get('lengthArrComm');
+
+    if(lengthFavs > lengthComm){
+      //SOLO MOSTRAMOS LAS NOTIF DE TIPO FAVS Y HAY QUE DEJAR SELECCIONADO
+      //EL BTN DE FAVS DE LA NAVBAR FOOTER
+      Session.set('btnShowCommIsPulse', false);
+    } else if(lengthFavs < lengthComm){
+      //SOLO MOSTRAMOS LAS NOTIF DE TIPO COMM Y HAY QUE DEJAR SELECCIONADO
+      //EL BTN DE COMM DE LA NAVBAR FOOTER
+      Session.set('btnShowCommIsPulse', true);
+    } else {
+      //SI TENEMOS EL MISMO NUMERO DE NOTIF, NO HACEMOS NADA. MOSTRAMOS TODAS.
+      console.log("OLI");
+    }
   },
 
   'numFavPerTwiit' : function(){
@@ -75,17 +120,61 @@ Template.twiitPageNew.helpers({
     var twiitId = UserUtils.findTwiitFromNotif(this._id);
     var num = UserUtils.findNumberFavPerTwiit(twiitId);
     return num;
+  },
+  'btnShowComm': function(){
+    return Session.get('btnShowCommIsPulse');
+  },
+  'noCommNotif': function(){
+    if(Session.get('lengthArrComm') === 0){
+      return true;
+    } else {
+      return false;
+    }
+  },
+  'noFavsNotif': function(){
+    if(Session.get('lengthArrFavs') === 0){
+      return true;
+    } else {
+      return false;
+    }
+  }, 
+  'notifCommCount': function(){
+    return Session.get('lengthArrComm');
+  },
+  'notifFavsCount': function(){
+    return Session.get('lengthArrFavs');
   }
 });
 
 Template.twiitPageNew.events({
-  'click #btnDismissNotif': function() {
+  'click .btnDismissNotif': function(event) {
+    console.log(arrWithCommNotif.length);
+    console.log(arrWithFavsNotif.length);
+
     console.log(arrWithId);
-    for (var aux in arrWithId){
-      var id = arrWithId[aux];
-      Notifications.update(id, {$set: {read: true}});
+
+    var idBtn = event.target.id;
+
+    if(idBtn === 'dismissCommNotif'){
+      for (var aux in arrWithCommNotif){
+        var id = arrWithCommNotif[aux];
+        Notifications.update(id, {$set: {read: true}});
+        arrWithCommNotif.splice(aux,1);
+      }
+    } else if(idBtn === 'dismissFavsNotif'){
+      for (var aux in arrWithFavsNotif){
+        var id = arrWithFavsNotif[aux];
+        Notifications.update(id, {$set: {read: true}});
+        arrWithFavsNotif.splice(aux,1);
+      }
     }
-    window.location = "/";
+
+    Session.set('lengthArrFavs', arrWithFavsNotif.length);
+    Session.set('lengthArrComm', arrWithCommNotif.length);
+
+    if(arrWithCommNotif.length === 0 && arrWithFavsNotif.length === 0){
+      window.location = "/";
+    }
   },
   'click #btnFav': function(){
     var currentUser = Session.get('currentUser');
@@ -130,5 +219,11 @@ Template.twiitPageNew.events({
         Session.set('commentMode', true);
         Session.set('idCurrentTwiit', UserUtils.findTwiitFromNotif(this._id));
     }
+  }, 
+  'click #btnShowFavsNotif' : function(){
+    Session.set('btnShowCommIsPulse', false);
+  },
+  'click #btnShowCommNotif' : function(){
+    Session.set('btnShowCommIsPulse', true);
   }
 });
