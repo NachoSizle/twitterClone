@@ -81,10 +81,7 @@ Template.userProfile.helpers({
 		}
 	},
 	'tweets': function(){
-	  	Meteor.call('tweetsPublish', currentUserName, function(err, res) {
-	    	Session.set('numTweets',res);
-	  	});
-	  	return Session.get('numTweets');
+		return UserUtils.findTweets(currentUserName).count();
 	},
   	'following': function(){
 		Meteor.call('usersFollowings', currentUserName, function(err, res) {

@@ -9,11 +9,8 @@ Meteor.publish('twitts', function() {
 
 Meteor.publish('twittsProfile', function(username) {  
   if (Meteor.userId) {
-    var username = Meteor.users.findOne({_id: this.userId}).username;
-    //var currentFollowings = UserUtils.findFollowings(username);
-
-    //return Twitts.find({user: { $in: currentFollowings }});
-    return Twitts.find({user: username});
+    console.log("TwittsProfile Publication");
+    return Twitts.find();
   }
 });
 

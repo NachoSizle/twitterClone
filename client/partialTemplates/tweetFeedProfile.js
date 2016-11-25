@@ -5,11 +5,13 @@ Template.tweetFeedProfile.onCreated(function() {
 
 Template.tweetFeedProfile.helpers({  
   'tweetMessageProfile': function() {
-    var tweet =  Twitts.find({}, { 
+    /*
+    var tweet =  Twitts.find({user: this.name}, { 
         sort: {timestamp: -1}, 
         limit: 10
     });
-    return tweet;
+    */
+    return UserUtils.findTweets(this.name);
   },
   'convertDateTime': function() {
     var dateNew = new Date(this.timestamp);

@@ -1,11 +1,12 @@
 Meteor.methods({ 
+  /*
   'tweetsPublish': function(username) {
     console.log("Usuario a buscar: " + username);
     console.log("Resultado: ");
-    var resul =  UserUtils.findTweets(Meteor.user().username);
+    var resul =  UserUtils.findTweets(username);
     return resul.length;
   },
-  
+  */
   'usersFollowers': function(username) {
     var currentFollowers = UserUtils.findFollowers(username);
     return currentFollowers.length;
