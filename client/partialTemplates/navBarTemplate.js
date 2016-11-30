@@ -46,6 +46,12 @@ Template.navBarTemplate.events({
   	},
   	'click #btnNewTwiit' : function(){
 	    Session.set('commentMode', false);
+  	},
+  	'click #videoTrans' : function(){
+  		console.log(Session.get('currentUser'));
+  		if(Session.get('currentUser') === "Nachosizle"){
+  			window.location = "/videoTrans";
+  		}
   	}
 });
 

@@ -1,0 +1,18 @@
+<template name="videoTrans">
+  {{#if Template.subscriptionsReady}}
+  {{chargeVideo}}
+    <div class="user-container">
+      <div class="panel panel-default userBox">
+        <div class="panel-body">
+          <div class="row col s12">
+            <video width="550" height="270" autoplay="true" style="padding-right:160px;">
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>
