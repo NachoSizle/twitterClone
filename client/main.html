@@ -5,14 +5,5 @@
 </head>
 
 <body id="bodyPpal"> 
-	<div class="row" id="containerNavBar">
-		{{#if Template.subscriptionsReady}}
-		    {{# if currentUser}}
-		    	{{> navBarTemplate}}
-		  	{{/if}}
-	  	{{else}}
-		    {{> loading}}
-	  	{{/if}}
-		<!--{{> btnFloating}}-->
-	</div>
+	{{> mainPage}}
 </body>

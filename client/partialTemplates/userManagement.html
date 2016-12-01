@@ -1,38 +1,70 @@
 <template name="userManagement">
   {{#if Template.subscriptionsReady}}
-    {{# if currentUser}}
-      <!-- LA CAJA DE PONER UN NUEVO TWIIT SE HA IMPLEMENTADO EN UN MODAL QUE SALTA 
-      CUANDO SE DA AL BOTON QUE SE ENCUENTRA EN LA BARRA DE NAVEGACIÓN
-      <div id="divTweetBox" class="col-md-8 col-sm-8">{{> tweetBox}}</div>
-      -->
-      
-      <div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
-    {{else}}
-      <div class="user-container">
-        <div class="panel panel-default userBox">
-          <div class="panel-body">
-            <!--módulo de acceso -->
-            <h4>¿Ya tienes una cuenta?</h4>
-            <div class="form-group">
-              <input class="form-control input-sm" id="login-nameProfile" placeholder="Nombre de Usuario">
-              <input class="form-control input-sm" id="login-password" placeholder="Contraseña" type="password">
-            </div>
-
-            <button type="button" class="btn btn-info fullbutton login" id="login">Acceder</button>
-
-            <!--módulo de registro-->
-            <h4>¿Nuevo por aquí?</h4>
-            <div class="form-group">
-              <input class="form-control input-sm" id="signup-username" placeholder="Nombre">
-              <input class="form-control input-sm" id="signup-nameProfile" placeholder="Nombre de Usuario">
-              <input class="form-control input-sm" id="signup-password" placeholder="Contraseña" type="password">
-            </div>
-            <button type="button" class="btn btn-info fullbutton" id="signup">Regístrate</button> 
-          </div>
-        </div>
-      </div>
-    {{/if}}
+    {{# unless currentUser}}
+      {{# if loginPage}}
+        {{> loginUser}}
+      {{else}}
+        {{> registerNew}}
+      {{/if}}
+    {{/unless}}
   {{else}}
     {{> loading}}
   {{/if}} 
+</template>
+
+<template name="loginUser">
+  <h1 class="text-center titleFormLogin">TNSClone</h1>
+
+  <div class="user-container formLogin">
+    <div class="panel panel-default userBox">
+      <div class="panel-body">
+        <div class="input-group form-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="nameProfile" class="form-control input input-login" id="loginNameProfile" placeholder="Nombre de Usuario" required>
+        </div>
+        <div class="input-group form-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+          <input name="passProfile" class="form-control input input-login" id="loginPassword" placeholder="Contraseña" type="password" required>
+        </div>
+
+        <button type="button" class="btn btn-info fullbutton login" id="login">Entrar</button>
+        <a class="text-center" id="goToRegisterPage">¿No tienes cuenta?</a>
+        <a class="text-center">¿Olvidó su contraseña?</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="registerNew">
+  <h1 class="text-center titleFormLogin">Bienvenido</h1>
+
+  <div class="user-container formRegisterNew">
+    <div class="panel panel-default userBox">
+      <div class="panel-body">
+        <div class="input-group form-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <input name="nameProfile" class="form-control input-login" id="signupUsername" placeholder="Nombre" required>
+        </div>
+        <div class="input-group form-group">
+          <span class="input-group-addon">@</span>
+          <input name="nameUserProfile" class="form-control input-login" id="signupNameProfile" placeholder="Usuario" required>
+        </div>
+        <div class="input-group form-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+          <input name="emailUser" class="form-control input-login" id="signupEmail" placeholder="Email" type="email" required>
+        </div>
+        <div class="input-group form-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+          <input name="password" class="form-control input-login" id="signupPassword" placeholder="Contraseña" type="password" required>
+        </div>
+        <div class="input-group form-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+          <input name="password" class="form-control input-login" id="signupPassword2" placeholder=" Repite la contraseña" type="password" required>
+        </div>
+        <button type="submit" class="btn btn-info fullbutton" id="signup">Regístrate</button> 
+
+        <a class="text-center" id="goToLogInPage">¿Ya tienes cuenta?</a>
+      </div>
+    </div>
+  </div>
 </template>

@@ -1,0 +1,15 @@
+<template name="mainPage">
+	<div class="row" id="containerNavBar">
+		{{#if Template.subscriptionsReady}}
+		    {{# if currentUser}}
+		    	{{> navBarTemplate}}
+		    	{{# if mainPage}}
+		    		<div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
+		    	{{/if}}
+		  	{{/if}}
+	  	{{else}}
+		    {{> loading}}
+	  	{{/if}}
+		<!--{{> btnFloating}}-->
+	</div>
+</template>

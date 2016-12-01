@@ -470,3 +470,23 @@ form input:focus:required:invalid{
   left: 0px;
   font-size: 15px;
 }
+
+.input-login{
+  width: 100% !important;
+}
+
+.formLogin{
+    text-align: center;
+    position: relative;
+    margin-top: 20%;
+}
+
+.formRegisterNew{
+    text-align: center;
+    position: relative;
+    margin-top: 20%;
+}
+
+.titleFormLogin{
+  margin-top: 30%;
+}
