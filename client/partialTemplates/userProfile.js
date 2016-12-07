@@ -51,7 +51,22 @@ Template.userProfile.events({
   	},
   	'click .showFollowers': function(){
   		window.location = "/followAnts/" + currentUserName;
-  	}
+  	},
+    'click #btnUnfollow': function(){
+      $('#dialog-stopFollowing').modal('show');
+    },
+    'click #stopFolBtn': function(){
+      Meteor.call('unfollowUser', currentUserName);
+      Session.set('userIsFollowMe', false);
+      $('#dialog-stopFollowing').modal('hide');
+    },
+    'click #noStopFolBtn': function(){
+      $('#dialog-stopFollowing').modal('hide');
+    },
+    'click #btnFollow': function(){
+      Session.set('userIsFollowMe', true);
+      Meteor.call('followUser', currentUserName);
+    }
 });
 
 Template.userProfile.helpers({
@@ -78,54 +93,68 @@ Template.userProfile.helpers({
 	'tweets': function(){
 		return UserUtils.findTweets(currentUserName).count();
 	},
-  	'following': function(){
-		Meteor.call('usersFollowings', currentUserName, function(err, res) {
-      		Session.set('numFollowings',res);
-    	});
-    	return Session.get('numFollowings');
-  	},
-  	'followers': function(){
-	    Meteor.call('usersFollowers', currentUserName, function(err, res) {
-	      	Session.set('numFollowers',res);
-	    });
-    	return Session.get('numFollowers');
-  	},
-  	'existsSocialNetwork': function(){
-  		
-  		var btnSocial = [];
+	'following': function(){
+	  Meteor.call('getFollowings', currentUserName, function(err, res) {
+  		Session.set('numFollowings',res.length);
+  	});
+  	return Session.get('numFollowings');
+	},
+	'followers': function(){
+    Meteor.call('getFollowers', currentUserName, function(err, res) {
+      Session.set('getFollowers',res);
+    	Session.set('numFollowers',res.length);
+    });
 
-  		if(dataUser.userFb){
-  			var newData = new Object();
-  			newData.color = "primary";
-  			newData.class = "fa fa-facebook";
-  			newData.id = "Facebook";
-  			btnSocial.push(newData);
-  		}
+    var currentFollowers = Session.get('getFollowers');
+    var posUser = currentFollowers.indexOf(Meteor.user().username);
 
-  		if(dataUser.userInsta){
-  			var newData = new Object();
-  			newData.color = "warning";
-  			newData.class = "fa fa-instagram";
-  			newData.id = "Instagram";
-  			btnSocial.push(newData);
-  		}
+    if(posUser != -1){
+      Session.set('userIsFollowMe', true);
+    } else {
+      Session.set('userIsFollowMe', false);
+    }
+    
+  	return Session.get('numFollowers');
+	},
+	'existsSocialNetwork': function(){
+		
+		var btnSocial = [];
 
-  		if(dataUser.userWhats){
-  			var newData = new Object();
-  			newData.color = "success";
-  			newData.class = "fa fa-whatsapp";
-  			newData.id = "WhatsApp";
-  			btnSocial.push(newData);
-  		}
+		if(dataUser.userFb){
+			var newData = new Object();
+			newData.color = "primary";
+			newData.class = "fa fa-facebook";
+			newData.id = "Facebook";
+			btnSocial.push(newData);
+		}
 
-  		return btnSocial;
-  	},
-  	'showProfileOtherUser' : function(){
-  		return Session.get('showProfileOtherUser');
-  	},
-  	'isWhatsapp' : function(){
-  		if(this.id === "WhatsApp"){
-  			return true;
-  		}
-  	}
+		if(dataUser.userInsta){
+			var newData = new Object();
+			newData.color = "warning";
+			newData.class = "fa fa-instagram";
+			newData.id = "Instagram";
+			btnSocial.push(newData);
+		}
+
+		if(dataUser.userWhats){
+			var newData = new Object();
+			newData.color = "success";
+			newData.class = "fa fa-whatsapp";
+			newData.id = "WhatsApp";
+			btnSocial.push(newData);
+		}
+
+		return btnSocial;
+	},
+	'showProfileOtherUser' : function(){
+		return Session.get('showProfileOtherUser');
+	},
+	'isWhatsapp' : function(){
+		if(this.id === "WhatsApp"){
+			return true;
+		}
+	},
+  'userIsFollowMe': function(){
+    return Session.get('userIsFollowMe');
+  }
 });

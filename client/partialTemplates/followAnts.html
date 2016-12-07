@@ -14,15 +14,16 @@
         <div class="panel-body">
           {{#if btnShowFollowers}}
             {{#each showFollowers}}
-              <!--PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,
-              DESCRIPCION Y DOS BTN: IR A PERFIL-->
-              {{#if orientationCard}}
-                <!--IMG IZQUIERDA-->
-                {{> userCardImgIzq}}
-              {{else}}
-                {{> userCardImgDer}}
-              {{/if}}
-              
+              {{#each getProfileData this}}
+                <!--PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,
+                DESCRIPCION Y DOS BTN: IR A PERFIL-->
+                {{#if orientationCard}}
+                  <!--IMG IZQUIERDA-->
+                  {{> userCardImgIzq}}
+                {{else}}
+                  {{> userCardImgDer}}
+                {{/if}}
+              {{/each}}
             {{/each}}
             {{#if noFollowers}}
               <p>No tienes seguidores</p>    
@@ -31,12 +32,14 @@
             {{#each showFollowings}}
               <!--PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,
               DESCRIPCION Y DOS BTN: IR A PERFIL-->
-              {{#if orientationCard}}
-                <!--IMG DERECHA-->
-                {{> userCardImgIzq}}
-              {{else}}
-                {{> userCardImgDer}}
-              {{/if}}
+              {{#each getProfileData this}}
+                {{#if orientationCard}}
+                  <!--IMG DERECHA-->
+                  {{> userCardImgIzq}}
+                {{else}}
+                  {{> userCardImgDer}}
+                {{/if}}
+              {{/each}}
             {{/each}}
             {{#if noFollowings}}
               <p>No estás siguiendo a nadie</p>
@@ -77,20 +80,18 @@
 DESCRIPCION Y DOS BTN: IR A PERFIL Y DEJAR DE SEGUIR-->
 <template name="userCardImgIzq">
   <div class="panel panel-info">
-
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
-          <img id="imgCurrentUser" src="/profileImgTest.png" class="img-responsive">
+          <img id="imgCurrentUser" src="{{this.imgFoundProf}}" class="img-responsive">
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
-          <p><strong>@{{this}}</strong></p>
-          <p>Esta es una descripcion a modo de ejemplo para una plantilla de 
-          usuario.</p>
+          <p><strong>@{{this.userNameProfile}}</strong></p>
+          <p>{{this.userDescription}}</p>
           <div class="btn-group" role="group" id="btnGroupInteractions">
-            <a href="{{pathFor 'userProfile' username=this}}" class="btn">
+            <a href="{{pathFor 'userProfile' username=this.userNameProfile}}" class="btn">
               <span class="glyphicon glyphicon-eye-open"></span>
-              Visitar perfil
+              Ver perfil
             </a>
           </div>
         </div>
@@ -101,22 +102,20 @@ DESCRIPCION Y DOS BTN: IR A PERFIL Y DEJAR DE SEGUIR-->
 
 <template name="userCardImgDer">
   <div class="panel panel-info">
-
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
-          <p><strong>@{{this}}</strong></p>
-          <p>Esta es una descripcion a modo de ejemplo para una plantilla de 
-          usuario.</p>
+          <p><strong>@{{this.userNameProfile}}</strong></p>
+          <p>{{this.userDescription}}</p>
           <div class="btn-group" role="group" id="btnGroupInteractions">
-            <a href="{{pathFor 'userProfile' username=this}}" class="btn">
+            <a href="{{pathFor 'userProfile' username=this.userNameProfile}}" class="btn">
               <span class="glyphicon glyphicon-eye-open"></span>
-              Visitar perfil
+              Ver perfil
             </a>
           </div>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
-          <img id="imgCurrentUserLeft" src="/profileImgTest.png" class="img-responsive">
+          <img id="imgCurrentUser" src="{{this.imgFoundProf}}" class="img-responsive">
         </div>
       </div>
     </div>

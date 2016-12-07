@@ -40,6 +40,13 @@
                     </ul>
                   {{/if}}
                   <div id="optionsUserProfile">
+                    {{# unless showProfileOtherUser}}
+                      {{# if userIsFollowMe}}
+                        <button class="btn btn-info pull-right btnOptFol" type="button" id="btnUnfollow">Olvidar</button>
+                      {{else}}
+                        <button class="btn btn-info pull-right btnOptFol" type="button" id="btnFollow">Seguir</button>
+                      {{/if}}
+                    {{/unless}}
                     {{# each existsSocialNetwork}}  
                       {{# if showProfileOtherUser}}
                         {{# if isWhatsapp}}
@@ -86,6 +93,10 @@
                 {{> removeProfile}}
               </div>
 
+              <div class="modal fade" id="dialog-stopFollowing">
+                {{> stopFollowing}}
+              </div>
+
               <div class="modal fade" id="dialog-editLicenses">
                 {{> editLicenses}}
               </div>
@@ -109,6 +120,27 @@
         {{> pageNotFound}}
       {{/if}}
     {{/if}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>
+
+<template name="stopFollowing">
+  {{#if Template.subscriptionsReady}}
+    <div class="removeProfile-container">
+      <div class="panel panel-default col-sm-6 col-md-6 col-lg-6">
+        <div class="panel-body">
+          <img src="/emoticonoSad.png" class="img-responsive">
+          <p>¿Dejar de seguir?</p>
+          <button id="stopFolBtn" type="button" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok-circle"></i>
+          </button>
+          <button id="noStopFolBtn" type="button" class="btn btn-danger">
+            <i class="glyphicon glyphicon-remove-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
   {{else}}
     {{> loading}}
   {{/if}}

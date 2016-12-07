@@ -14,6 +14,13 @@ Meteor.methods({
     });
   },
 
+  'unfollowUser': function(username){
+    Relationships.remove({
+      follower: Meteor.user().username,
+      following: username
+    });
+  },
+
   'recommendUsers': function() {
 	if (Meteor.user()) {
 	  var currentFollowings = UserUtils.findFollowings(Meteor.user().username);

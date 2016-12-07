@@ -56,9 +56,26 @@ Template.followAnts.helpers({
     return Session.get('showFollowers');
   },
 
+  'getProfileData': function(username){
+    listFoundFollower = [];
+    
+    Meteor.call('findUserData', username, function(err,response){
+      if(response){
+        imgFoundProf = "";
+        Meteor.call('findUserImg', response.userImg, function(err, res){
+          imgFoundProf = res;
+          response.imgFoundProf = imgFoundProf;
+          listFoundFollower.push(response);
+          Session.set('listFollAnts', listFoundFollower);
+        });
+      }
+    });
+    return Session.get('listFollAnts');
+  }, 
+
   'showFollowers': function(){
     return foundFollowers;
-  }, 
+  },
 
   'showFollowings': function(){
     return foundFollowings;
@@ -71,8 +88,7 @@ Template.followAnts.helpers({
     } else {
       return true;
     }
-    
-  }
+  },
 });
 
 Template.followAnts.events({

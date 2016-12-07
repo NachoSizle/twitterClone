@@ -126,11 +126,13 @@ textarea {
 #imgCurrentUser{
   border-right: 1px solid #d8d7d7;
   margin-right: 15px;
+  padding-right: 10px;
 }
 
 #imgCurrentUserLeft{
   border-left: 1px solid #d8d7d7;
   margin-left: 15px;
+  padding-left: 10px;
 }
 
 #imgProfile{
@@ -140,7 +142,6 @@ textarea {
 }
 
 #rightDivCurrentUser{
-  padding-left: 15px;
   padding-top: 10px;
 }
 
@@ -516,4 +517,9 @@ form input:focus:required:invalid{
 
 #searchBtn{
   width: 15%;
+}
+
+.btnOptFol{
+  margin-top: 20px;
+  margin-left: 10px;
 }

@@ -36,6 +36,8 @@ Template.followUsers.events({
               });
             }
           });
+        } else {
+          $('#barFound').append("<h5 class='text-center msgErrorReg'>No se ha encontrado ningún usuario</h5>");
         }
     });
     return false;
@@ -47,16 +49,18 @@ Template.followUsers.events({
   },
 
   'click #followRec': function() {
+    listRecomm = Session.get('recommendedUsers');
     Meteor.call('followUser', this.userNameProfile);
     //LOCALIZAMOS EL USUARIO QUE ACABAMOS DE SEGUIR Y LO ELIMINAMOS DE LA LISTA DE RECOMENDADOS
-    var posUser = recUsersList.indexOf(this.userNameProfile);
-    recUsersList.splice(posUser, 1);
-    Session.set('recommendedUsers', recUsersList);
+    var posUser = listRecomm.indexOf(this.userNameProfile);
+    listRecomm.splice(posUser, 1);
+    Session.set('recommendedUsers', listRecomm);
   },
 
   'change #searchUser': function(){
     if($('#searchUser').val().length === 0){
       Session.set('foundUser', '');
+      $('.msgErrorReg').remove();
     };
   }
 
@@ -86,7 +90,6 @@ Template.followUsers.helpers({
     }
   },
 
-  //REVISAR !!!!!
   'getImgProfile' : function(imgId){
     var imgFound = "imgPath";
     var imgFoundSession = Session.get('imgFound');
@@ -97,7 +100,10 @@ Template.followUsers.helpers({
     } else if(imgFoundSession){
       return imgFoundSession;
     } else {
-      return Meteor.call('findUserImg', imgId);
+      Meteor.call('findUserImg', imgId, function(err, res){
+        Session.set('imgFound', res);
+      });
+      return Session.get('imgFound');;
     }
   }
 });

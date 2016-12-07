@@ -1,9 +1,9 @@
 <template name="followUsers">
-	<div class="user-container">
+	<div class="user-container" id="barFound">
     	<div class="panel panel-default userBox">
       		<div class="panel-body">
 				<div class="input-group form-group formGroupSearchBar">
-				  <input type="text" class="form-control" placeholder="Search"  id="searchUser">
+				  <input type="text" class="form-control" placeholder="Search user" id="searchUser">
 				  <button class="btn btn-info" id="searchBtn"><i class="glyphicon glyphicon-search"></i></button>
 				</div>	
 			</div>
@@ -31,7 +31,7 @@
 				          <div class="btn-group" role="group" id="btnGroupInteractions">
 				            <a href="{{pathFor 'userProfile' username=foundUser.userNameProfile}}" class="btn btn-secondary">
 				              <span class="glyphicon glyphicon-eye-open"></span>
-				              Visitar perfil
+				              Ver perfil
 				            </a>
 				            {{# if mineUser foundUser.userNameProfile}}
 				            <a class="btn btn-secondary" id="followRec">
@@ -51,7 +51,7 @@
 		
 	{{#if recUsersLis}}
 	  	<div class="recommend-users"> 
-		  <h5>Who to follow:</h5>
+		  <h5 class="text-center">Who to follow:</h5>
 		  {{#each recommendedUsers}}	  	
 	  		<div class="tweetfeed-container">
 				<div class="panel panel-default tweetfeed">
@@ -68,7 +68,7 @@
 					          <div class="btn-group" role="group" id="btnGroupInteractions">
 					            <a href="{{pathFor 'userProfile' username=this}}" class="btn btn-secondary">
 					              <span class="glyphicon glyphicon-eye-open"></span>
-					              Visitar perfil
+					              Ver perfil
 					            </a>
 					            <a class="btn btn-secondary" id="followRec">
 					              <span class="glyphicon glyphicon-plus-sign"></span>
