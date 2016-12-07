@@ -26,9 +26,8 @@ Meteor.methods({
 	    fields: { 'username': 1 },
 	    limit: 5
 	  }).fetch();
+
 	  return recUsers;
 	}
    }
 });
-
-

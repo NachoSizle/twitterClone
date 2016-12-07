@@ -1,0 +1,126 @@
+<template name="followAnts">
+  {{#if Template.subscriptionsReady}}
+
+    {{getDataFollowAnts}}
+
+    {{#if getWhatShow}}
+      <h3 class="text-center">Seguidores</h3>
+    {{else}}
+      <h3 class="text-center">Siguiendo</h3>
+    {{/if}}
+
+    <div class="tweetfeed-container">
+      <div class="panel panel-default tweetfeed">
+        <div class="panel-body">
+          {{#if btnShowFollowers}}
+            {{#each showFollowers}}
+              <!--PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,
+              DESCRIPCION Y DOS BTN: IR A PERFIL-->
+              {{#if orientationCard}}
+                <!--IMG IZQUIERDA-->
+                {{> userCardImgIzq}}
+              {{else}}
+                {{> userCardImgDer}}
+              {{/if}}
+              
+            {{/each}}
+            {{#if noFollowers}}
+              <p>No tienes seguidores</p>    
+            {{/if}}
+          {{else}}
+            {{#each showFollowings}}
+              <!--PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,
+              DESCRIPCION Y DOS BTN: IR A PERFIL-->
+              {{#if orientationCard}}
+                <!--IMG DERECHA-->
+                {{> userCardImgIzq}}
+              {{else}}
+                {{> userCardImgDer}}
+              {{/if}}
+            {{/each}}
+            {{#if noFollowings}}
+              <p>No estás siguiendo a nadie</p>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+    <nav id="navBarBtnShowNotif" class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="btn-group" role="group">
+
+            <button style="width: {{setStyleNavBar}}" type="button" id="btnShowFollowers" class="btn btn-secondary btnGroupsShowNotif">
+              <span class="glyphicon glyphicon-user"></span>
+              <span class="glyphicon glyphicon-hand-left"></span>
+              <span class="badge badge-notify-navbarFooter">{{followersCount}}</span>
+            </button>
+
+            <button style="width: {{setStyleNavBar}}" type="button" id="btnShowFollowings" class="btn btn-secondary btnGroupsShowNotif">
+              <span class="glyphicon glyphicon-user"></span>
+              <span class="glyphicon glyphicon-hand-right"></span>
+              <span class="badge badge-notify-navbarFooter">{{followingsCount}}</span>
+            </button>
+            
+          </div>
+        </div>
+      </div>
+    </nav>
+
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>
+
+<!--PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,
+DESCRIPCION Y DOS BTN: IR A PERFIL Y DEJAR DE SEGUIR-->
+<template name="userCardImgIzq">
+  <div class="panel panel-info">
+
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
+          <img id="imgCurrentUser" src="/profileImgTest.png" class="img-responsive">
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
+          <p><strong>@{{this}}</strong></p>
+          <p>Esta es una descripcion a modo de ejemplo para una plantilla de 
+          usuario.</p>
+          <div class="btn-group" role="group" id="btnGroupInteractions">
+            <a href="{{pathFor 'userProfile' username=this}}" class="btn">
+              <span class="glyphicon glyphicon-eye-open"></span>
+              Visitar perfil
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="userCardImgDer">
+  <div class="panel panel-info">
+
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
+          <p><strong>@{{this}}</strong></p>
+          <p>Esta es una descripcion a modo de ejemplo para una plantilla de 
+          usuario.</p>
+          <div class="btn-group" role="group" id="btnGroupInteractions">
+            <a href="{{pathFor 'userProfile' username=this}}" class="btn">
+              <span class="glyphicon glyphicon-eye-open"></span>
+              Visitar perfil
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
+          <img id="imgCurrentUserLeft" src="/profileImgTest.png" class="img-responsive">
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+

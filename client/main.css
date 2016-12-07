@@ -128,6 +128,11 @@ textarea {
   margin-right: 15px;
 }
 
+#imgCurrentUserLeft{
+  border-left: 1px solid #d8d7d7;
+  margin-left: 15px;
+}
+
 #imgProfile{
   width: 30px;
   height: 30px;
@@ -489,4 +494,12 @@ form input:focus:required:invalid{
 
 .titleFormLogin{
   margin-top: 30%;
+}
+
+.msgErrorReg{
+  color: #e53935;
+}
+
+.invalidField{
+  border: 2px solid red;
 }

@@ -19,7 +19,6 @@ Meteor.startup(() => {
 	   	return true;
 	},
   	update: function(userId, doc) {
-  		console.log("Update Oper");
 	    return true;
   	}
   });

@@ -27,7 +27,9 @@ Template.navBarTemplate.onRendered(function() {
 */
 Template.navBarTemplate.events({
 	'click #recommendationsBtn' : function(){
-		//console.log("A quien seguir");
+		//Contraer el dropDownMenu 
+		$('#btnMenuNavBar').click()
+		Session.set('pathActualApp', '/whoToFollow');
 	},
 	'click #imgProfile' : function(){
 		window.location = "/Profile/" + Session.get('currentUser');

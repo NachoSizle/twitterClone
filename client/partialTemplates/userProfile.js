@@ -1,5 +1,6 @@
 Template.userProfile.onCreated(function(){
 	currentUserName = this.data.name;
+  Session.set('pathActualApp', window.location.pathname);
 });
 
 Template.userProfile.events({  
@@ -21,21 +22,9 @@ Template.userProfile.events({
   		} else if(idSN === "Instagram"){
   			window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");
   		} else if(idSN === "WhatsApp"){
-  			//EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE
-  			//AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)
-  			//EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL
-  			//EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?
-  			//SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER
-  			//SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.
   			Session.set('userToSentPet', currentUserName);
-  			
-  			//COMPARAMOS EL userId DEL USUARIO ACTUAL EN METEOR Y LO COMPARAMOS CON EL ARRAY
-  			//showWhatsTo PARA VER SI PODEMOS MOSTRAR EL WHATSAPP
-
-  			console.log(dataUser.userId);
 
   			var userActName = Meteor.user().username;
-  			console.log(userActName);
     			
   			var arrWhats = dataUser.showWhatsTo;
 
@@ -56,6 +45,12 @@ Template.userProfile.events({
     				}
   			});
   		}
+  	},
+  	'click .showFollowings': function(){
+  		window.location = "/followAnts/" + currentUserName;
+  	},
+  	'click .showFollowers': function(){
+  		window.location = "/followAnts/" + currentUserName;
   	}
 });
 

@@ -16,5 +16,22 @@ Meteor.methods({
 	  var currentFollowings = UserUtils.findFollowings(username);
     
     return currentFollowings.length;
+  },
+
+  'getFollowers': function(username) {
+    var currentFollowers = UserUtils.findFollowers(username);
+    console.log("currentFollowers");
+    console.log(currentFollowers);
+
+    return currentFollowers;
+  },
+
+  'getFollowings': function(username) {
+    var currentFollowings = UserUtils.findFollowings(username);
+    console.log("currentFollowings");
+    console.log(currentFollowings);
+
+    return currentFollowings;
   }
+
 });

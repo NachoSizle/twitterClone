@@ -52,9 +52,9 @@ if(Meteor.isClient){
 
 	  charClass: function() {
 	    if (Session.get('numChars') > 140) {
-	      return 'errCharCount';    // o el nombre que le disteis en el fichero css
+	      return 'errCharCount';
 	    } else {
-	      return 'charCount';       //o el nombre que le disteis en el fichero css
+	      return 'charCount';
 	    }
 	  },
 

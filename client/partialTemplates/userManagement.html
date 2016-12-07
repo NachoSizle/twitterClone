@@ -39,28 +39,31 @@
   <h1 class="text-center titleFormLogin">Bienvenido</h1>
 
   <div class="user-container formRegisterNew">
+    
     <div class="panel panel-default userBox">
       <div class="panel-body">
-        <div class="input-group form-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-          <input name="nameProfile" class="form-control input-login" id="signupUsername" placeholder="Nombre" required>
-        </div>
-        <div class="input-group form-group">
-          <span class="input-group-addon">@</span>
-          <input name="nameUserProfile" class="form-control input-login" id="signupNameProfile" placeholder="Usuario" required>
-        </div>
-        <div class="input-group form-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-          <input name="emailUser" class="form-control input-login" id="signupEmail" placeholder="Email" type="email" required>
-        </div>
-        <div class="input-group form-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-          <input name="password" class="form-control input-login" id="signupPassword" placeholder="Contraseña" type="password" required>
-        </div>
-        <div class="input-group form-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-          <input name="password" class="form-control input-login" id="signupPassword2" placeholder=" Repite la contraseña" type="password" required>
-        </div>
+        <form id="registerForm">
+          <div class="input-group form-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input name="nameProfile" class="form-control input-login required" id="signupUsername" placeholder="Nombre" required="true">
+          </div>
+          <div class="input-group form-group">
+            <span class="input-group-addon">@</span>
+            <input name="nameUserProfile" class="form-control input-login required" id="signupNameProfile" placeholder="Usuario" required="true">
+          </div>
+          <div class="input-group form-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input name="emailUser" class="form-control input-login required" id="signupEmail" placeholder="Email" type="email" required="true">
+          </div>
+          <div class="input-group form-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input name="password" class="form-control input-login" id="signupPassword" placeholder="Contraseña" type="password" required="true">
+          </div>
+          <div class="input-group form-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input name="password2" class="form-control input-login" id="signupPassword2" placeholder=" Repite la contraseña" type="password" required="true">
+          </div>
+        </form>
         <button type="submit" class="btn btn-info fullbutton" id="signup">Regístrate</button> 
 
         <a class="text-center" id="goToLogInPage">¿Ya tienes cuenta?</a>
