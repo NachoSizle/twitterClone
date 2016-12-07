@@ -9,6 +9,7 @@ Deps = Package.tracker.Deps;
 Session = Package.session.Session;
 Router = Package['iron:router'].Router;
 RouteController = Package['iron:router'].RouteController;
+ReactivePromise = Package['deanius:promise'].ReactivePromise;
 Meteor = Package.meteor.Meteor;
 global = Package.meteor.global;
 meteorEnv = Package.meteor.meteorEnv;

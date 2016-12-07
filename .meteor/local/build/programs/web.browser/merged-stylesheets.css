@@ -8821,6 +8821,11 @@ textarea {
   margin-right: 15px;
 }
 
+#imgCurrentUserLeft {
+  border-left: 1px solid #d8d7d7;
+  margin-left: 15px;
+}
+
 #imgProfile {
   width: 30px;
   height: 30px;
@@ -9167,4 +9172,46 @@ form input:focus:required:invalid {
   top: -5px !important;
   left: 0px;
   font-size: 15px;
+}
+
+.input-login {
+  width: 100% !important;
+}
+
+.formLogin {
+  text-align: center;
+  position: relative;
+  margin-top: 20%;
+}
+
+.formRegisterNew {
+  text-align: center;
+  position: relative;
+  margin-top: 20%;
+}
+
+.titleFormLogin {
+  margin-top: 30%;
+}
+
+.msgErrorReg {
+  color: #e53935;
+}
+
+.invalidField {
+  border: 2px solid red;
+}
+
+.formGroupSearchBar {
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+#searchUser {
+  width: 80%;
+  margin-right: 15px;
+}
+
+#searchBtn {
+  width: 15%;
 }

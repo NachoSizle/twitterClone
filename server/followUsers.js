@@ -18,6 +18,9 @@ Meteor.methods({
 	if (Meteor.user()) {
 	  var currentFollowings = UserUtils.findFollowings(Meteor.user().username);
 
+    console.log("currentFollowings");
+    console.log(currentFollowings);
+
 	  var recUsers = Meteor.users.find({
 	    username: {
 	      $nin: currentFollowings

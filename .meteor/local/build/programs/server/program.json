@@ -273,6 +273,22 @@
       "path": "packages/sacha_spin.js"
     },
     {
+      "path": "packages/url.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/http/node_modules",
+      "sourceMap": "packages/http.js.map",
+      "path": "packages/http.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/cosmos_browserify/node_modules",
+      "path": "packages/cosmos_browserify.js"
+    },
+    {
+      "node_modules": "npm/node_modules/meteor/deanius_promise/node_modules",
+      "path": "packages/deanius_promise.js"
+    },
+    {
       "path": "packages/livedata.js"
     },
     {

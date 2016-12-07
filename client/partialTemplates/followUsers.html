@@ -1,22 +1,70 @@
 <template name="followUsers">
-	<form class="form-inline"> 
-		<input type="text" class="form-control" id="searchUser" placeholder="Search for user">
-		<button type="submit" class="btn btn-info">Search</button>
+	<div class="user-container">
+    	<div class="panel panel-default userBox">
+      		<div class="panel-body">
+				<div class="input-group form-group formGroupSearchBar">
+				  <input type="text" class="form-control" placeholder="Search"  id="searchUser">
+				  <button class="btn btn-info" id="searchBtn"><i class="glyphicon glyphicon-search"></i></button>
+				</div>	
+			</div>
+		</div>
+	</div>
 
-		{{#if foundUser}}
-			<div class="tweetfeed-container">
+    <!--
+	<input type="text" class="form-control" id="searchUser" placeholder="Search for user">
+	<button type="submit" class="btn btn-info">Search</button>
+	-->
+
+	{{#if foundUser}}
+		<div class="tweetfeed-container">
+			<div class="panel panel-default tweetfeed">
+	    		<div class="panel-body">
+				  <div class="panel panel-info">
+				    <div class="panel-body">
+				      <div class="row">
+				        <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
+				          <img id="imgCurrentUser" src="{{getImgProfile foundUser.userImg}}" class="img-responsive">
+				        </div>
+				        <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
+				          <p><strong>@{{foundUser.userNameProfile}}</strong></p>
+				          <p>{{foundUser.userDescription}}</p>
+				          <div class="btn-group" role="group" id="btnGroupInteractions">
+				            <a href="{{pathFor 'userProfile' username=foundUser.userNameProfile}}" class="btn btn-secondary">
+				              <span class="glyphicon glyphicon-eye-open"></span>
+				              Visitar perfil
+				            </a>
+				            {{# if mineUser foundUser.userNameProfile}}
+				            <a class="btn btn-secondary" id="followRec">
+				              <span class="glyphicon glyphicon-plus-sign"></span>
+				              Seguir
+				            </a>
+				            {{/if}}
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
+		
+	{{#if recUsersLis}}
+	  	<div class="recommend-users"> 
+		  <h5>Who to follow:</h5>
+		  {{#each recommendedUsers}}	  	
+	  		<div class="tweetfeed-container">
 				<div class="panel panel-default tweetfeed">
-		    		<div class="panel-body">
+					<div class="panel-body">
 					  <div class="panel panel-info">
 					    <div class="panel-body">
 					      <div class="row">
 					        <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
-					          <img id="imgCurrentUser" src="/profileImgTest.png" class="img-responsive">
+					          <img id="imgCurrentUser" src="{{getImgProfile this.userImg}}" class="img-responsive">
 					        </div>
 					        <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
-					          <p><strong>@{{foundUser.username}}</strong></p>
-					          <p>Esta es una descripcion a modo de ejemplo para una plantilla de 
-					          usuario.</p>
+					          <p><strong>@{{this.userNameProfile}}</strong></p>
+					          <p>{{this.userDescription}}</p>
 					          <div class="btn-group" role="group" id="btnGroupInteractions">
 					            <a href="{{pathFor 'userProfile' username=this}}" class="btn btn-secondary">
 					              <span class="glyphicon glyphicon-eye-open"></span>
@@ -34,55 +82,15 @@
 					</div>
 				</div>
 			</div>
-		{{/if}}
-  		
-  		{{#if recUsersLis}}
-		  	<div class="recommend-users"> 
-			  <h5>Who to follow:</h5>
-			  {{#each recommendedUsers}}
-			  	{{> userCard}}
-			  	<!--
-			    <button type="button" class="btn btn-default" id="followRec">Follow @{{this.username}}</button>
-			    -->
-			  {{/each}}
-			</div>
-		{{/if}}
+		  {{/each}}
+		</div>
+	{{/if}}
 		
-	</form>
 </template> 
 
 <!--PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,
 DESCRIPCION Y DOS BTN: IR A PERFIL Y DEJAR DE SEGUIR-->
 
 <template name="userCard">
-	<div class="tweetfeed-container">
-		<div class="panel panel-default tweetfeed">
-    		<div class="panel-body">
-			  <div class="panel panel-info">
-			    <div class="panel-body">
-			      <div class="row">
-			        <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
-			          <img id="imgCurrentUser" src="/profileImgTest.png" class="img-responsive">
-			        </div>
-			        <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
-			          <p><strong>@{{this.username}}</strong></p>
-			          <p>Esta es una descripcion a modo de ejemplo para una plantilla de 
-			          usuario.</p>
-			          <div class="btn-group" role="group" id="btnGroupInteractions">
-			            <a href="{{pathFor 'userProfile' username=this}}" class="btn btn-secondary">
-			              <span class="glyphicon glyphicon-eye-open"></span>
-			              Visitar perfil
-			            </a>
-			            <a class="btn btn-secondary" id="followRec">
-			              <span class="glyphicon glyphicon-plus-sign"></span>
-			              Seguir
-			            </a>
-			          </div>
-			        </div>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-		</div>
-	</div>
+	
 </template>

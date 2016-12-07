@@ -51,9 +51,9 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/modules.js?hash=9d81bcefb72327663ed61645b6e9890587e27aea",
-      "size": 378306,
-      "hash": "9d81bcefb72327663ed61645b6e9890587e27aea"
+      "url": "/packages/modules.js?hash=87a4f374dca823cfa24b56e08f6539c3ea5f9ace",
+      "size": 378810,
+      "hash": "87a4f374dca823cfa24b56e08f6539c3ea5f9ace"
     },
     {
       "path": "packages/es5-shim.js",
@@ -653,6 +653,46 @@
       "hash": "ddf0981d5d15b5595b1d93642b2710ed3b1c7763"
     },
     {
+      "path": "packages/url.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/url.js?hash=7eb918ff381bb4bb1470d8fb1c3b9dcfe3dc97e4",
+      "size": 6287,
+      "hash": "7eb918ff381bb4bb1470d8fb1c3b9dcfe3dc97e4"
+    },
+    {
+      "path": "packages/http.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/http.js?hash=c5adc9c96baa2fe4d0b14eaee51d32ed0e4d4097",
+      "sourceMap": "packages/http.js.map",
+      "sourceMapUrl": "/packages/c5adc9c96baa2fe4d0b14eaee51d32ed0e4d4097.map",
+      "size": 38346,
+      "hash": "c5adc9c96baa2fe4d0b14eaee51d32ed0e4d4097"
+    },
+    {
+      "path": "packages/cosmos_browserify.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/cosmos_browserify.js?hash=b766dffc9b58b0a3bfd1d936af5ab594af75b7b3",
+      "size": 726,
+      "hash": "b766dffc9b58b0a3bfd1d936af5ab594af75b7b3"
+    },
+    {
+      "path": "packages/deanius_promise.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/packages/deanius_promise.js?hash=9ada083ba884c8727ee920436b2e1bcaaf6904af",
+      "sourceMap": "packages/deanius_promise.js.map",
+      "sourceMapUrl": "/packages/9ada083ba884c8727ee920436b2e1bcaaf6904af.map",
+      "size": 51786,
+      "hash": "9ada083ba884c8727ee920436b2e1bcaaf6904af"
+    },
+    {
       "path": "packages/webapp.js",
       "where": "client",
       "type": "js",
@@ -704,31 +744,31 @@
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/packages/global-imports.js?hash=6c1b83a4ff3561af6cf7813530639480c2fe9f87",
-      "size": 1314,
-      "hash": "6c1b83a4ff3561af6cf7813530639480c2fe9f87"
+      "url": "/packages/global-imports.js?hash=c12197b24b9b0a45be71762a4916ddae1c2a0328",
+      "size": 1376,
+      "hash": "c12197b24b9b0a45be71762a4916ddae1c2a0328"
     },
     {
       "path": "app/app.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/app/app.js?hash=cd2bb726e1414479237d242007fe8ff37178b41a",
+      "url": "/app/app.js?hash=caab5b7139f173c2b7d697c51847054d373146d8",
       "sourceMap": "app/app.js.map",
-      "sourceMapUrl": "/app/cd2bb726e1414479237d242007fe8ff37178b41a.map",
-      "size": 589263,
-      "hash": "cd2bb726e1414479237d242007fe8ff37178b41a"
+      "sourceMapUrl": "/app/caab5b7139f173c2b7d697c51847054d373146d8.map",
+      "size": 689155,
+      "hash": "caab5b7139f173c2b7d697c51847054d373146d8"
     },
     {
       "path": "merged-stylesheets.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/merged-stylesheets.css?hash=1a55fd05aac81c20e6617823a3e8b306a239ab65",
+      "url": "/merged-stylesheets.css?hash=e6e39075f2d8910dbccbd47f8632e204e81edb8f",
       "sourceMap": "merged-stylesheets.css.map",
-      "sourceMapUrl": "/1a55fd05aac81c20e6617823a3e8b306a239ab65.map",
-      "size": 162071,
-      "hash": "1a55fd05aac81c20e6617823a3e8b306a239ab65"
+      "sourceMapUrl": "/e6e39075f2d8910dbccbd47f8632e204e81edb8f.map",
+      "size": 162624,
+      "hash": "e6e39075f2d8910dbccbd47f8632e204e81edb8f"
     },
     {
       "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
@@ -824,7 +864,7 @@
       "path": "head.html",
       "where": "internal",
       "type": "head",
-      "hash": "aadda712ab654f21c2a0e21fce89aaddbd3afd84"
+      "hash": "5a659990e9c01e61a3d599fc34674eb74876442a"
     }
   ]
 }

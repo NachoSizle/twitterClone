@@ -1,8 +1,8 @@
-var require = meteorInstall({"lib":{"collections":{"collections.js":function(){
+var require = meteorInstall({"lib":{"collections.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                     //
-// lib/collections/collections.js                                                                      //
+// lib/collections.js                                                                                  //
 //                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                        //
@@ -14,7 +14,7 @@ Notifications = new Mongo.Collection('notifications');                          
 Images = new Mongo.Collection('images');                                                               // 6
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"router.js":function(){
+},"router.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                     //
@@ -53,79 +53,103 @@ Router.route('/Profile/:username', {                                            
 				}                                                                                                  // 28
 			}                                                                                                   // 29
                                                                                                        //
-			return user;                                                                                        // 31
-		}                                                                                                    // 32
+			Session.set('pathActualApp', "/Profile/" + this.params.username);                                   // 31
+                                                                                                       //
+			return user;                                                                                        // 33
+		}                                                                                                    // 34
                                                                                                        //
 		return data;                                                                                         // 11
 	}()                                                                                                   // 11
 });                                                                                                    // 9
-Router.route('/Notifications/:userName', {                                                             // 34
-	name: 'twiitPageNew',                                                                                 // 35
-	data: function () {                                                                                   // 36
-		function data() {                                                                                    // 36
-			var user = new Object();                                                                            // 37
-			user.name = this.params.userName;                                                                   // 38
-			return user;                                                                                        // 39
-		}                                                                                                    // 40
+Router.route('/Notifications/:userName', {                                                             // 36
+	name: 'twiitPageNew',                                                                                 // 37
+	data: function () {                                                                                   // 38
+		function data() {                                                                                    // 38
+			var user = new Object();                                                                            // 39
+			user.name = this.params.userName;                                                                   // 40
+			Session.set('pathActualApp', "/Notifications/" + this.params.username);                             // 41
+			return user;                                                                                        // 42
+		}                                                                                                    // 43
                                                                                                        //
-		return data;                                                                                         // 36
-	}()                                                                                                   // 36
-});                                                                                                    // 34
+		return data;                                                                                         // 38
+	}()                                                                                                   // 38
+});                                                                                                    // 36
                                                                                                        //
-Router.route('/RequestWhatsApp/:userName', {                                                           // 43
-	name: 'whatsAppRequestPage',                                                                          // 44
-	data: function () {                                                                                   // 45
-		function data() {                                                                                    // 45
-			var user = new Object();                                                                            // 46
-			user.name = this.params.userName;                                                                   // 47
-			return user;                                                                                        // 48
-		}                                                                                                    // 49
+Router.route('/RequestWhatsApp/:userName', {                                                           // 46
+	name: 'whatsAppRequestPage',                                                                          // 47
+	data: function () {                                                                                   // 48
+		function data() {                                                                                    // 48
+			var user = new Object();                                                                            // 49
+			user.name = this.params.userName;                                                                   // 50
+			Session.set('pathActualApp', "/RequestWhatsApp/" + this.params.username);                           // 51
+			return user;                                                                                        // 52
+		}                                                                                                    // 53
                                                                                                        //
-		return data;                                                                                         // 45
-	}()                                                                                                   // 45
-});                                                                                                    // 43
+		return data;                                                                                         // 48
+	}()                                                                                                   // 48
+});                                                                                                    // 46
                                                                                                        //
-//Router.route('/Comments', {name: 'twiitCommentPage'});                                               // 52
-/*SE ACCEDE POR PATHFOR*/                                                                              // 53
-Router.route('/Comments/:_id', {                                                                       // 54
-	name: 'twiitCommentPage',                                                                             // 55
-	data: function () {                                                                                   // 56
-		function data() {                                                                                    // 56
-			var mode = Session.get('notificationsModeOn');                                                      // 57
-			var idTwiit = new Object();                                                                         // 58
-			idTwiit._id = this.params._id;                                                                      // 59
+//Router.route('/Comments', {name: 'twiitCommentPage'});                                               // 56
+/*SE ACCEDE POR PATHFOR*/                                                                              // 57
+Router.route('/Comments/:_id', {                                                                       // 58
+	name: 'twiitCommentPage',                                                                             // 59
+	data: function () {                                                                                   // 60
+		function data() {                                                                                    // 60
+			var mode = Session.get('notificationsModeOn');                                                      // 61
+			var idTwiit = new Object();                                                                         // 62
+			idTwiit._id = this.params._id;                                                                      // 63
                                                                                                        //
-			if (mode) {                                                                                         // 61
-				idTwiit.mode = mode;                                                                               // 62
-			}                                                                                                   // 63
+			if (mode) {                                                                                         // 65
+				idTwiit.mode = mode;                                                                               // 66
+			}                                                                                                   // 67
                                                                                                        //
-			return idTwiit;                                                                                     // 65
-		}                                                                                                    // 66
+			Session.set('pathActualApp', "/Comments/" + this.params.username);                                  // 69
                                                                                                        //
-		return data;                                                                                         // 56
-	}()                                                                                                   // 56
-});                                                                                                    // 54
-Router.route('/twiits/:_id', {                                                                         // 68
-	name: 'twiitPage',                                                                                    // 69
-	data: function () {                                                                                   // 70
-		function data() {                                                                                    // 70
-			return this.params;                                                                                 // 71
+			return idTwiit;                                                                                     // 71
 		}                                                                                                    // 72
                                                                                                        //
-		return data;                                                                                         // 70
-	}()                                                                                                   // 70
-});                                                                                                    // 68
+		return data;                                                                                         // 60
+	}()                                                                                                   // 60
+});                                                                                                    // 58
+Router.route('/twiits/:_id', {                                                                         // 74
+	name: 'twiitPage',                                                                                    // 75
+	data: function () {                                                                                   // 76
+		function data() {                                                                                    // 76
+			return this.params;                                                                                 // 77
+		}                                                                                                    // 78
                                                                                                        //
-Router.route('/editProfile/:userName', {                                                               // 75
-	name: 'editProfile',                                                                                  // 76
-	data: function () {                                                                                   // 77
-		function data() {                                                                                    // 77
-			return this.params.userName;                                                                        // 78
-		}                                                                                                    // 79
+		return data;                                                                                         // 76
+	}()                                                                                                   // 76
+});                                                                                                    // 74
                                                                                                        //
-		return data;                                                                                         // 77
-	}()                                                                                                   // 77
-});                                                                                                    // 75
+Router.route('/editProfile/:userName', {                                                               // 81
+	name: 'editProfile',                                                                                  // 82
+	data: function () {                                                                                   // 83
+		function data() {                                                                                    // 83
+			Session.set('pathActualApp', "/editProfile/" + this.params.username);                               // 84
+			return this.params.userName;                                                                        // 85
+		}                                                                                                    // 86
+                                                                                                       //
+		return data;                                                                                         // 83
+	}()                                                                                                   // 83
+});                                                                                                    // 81
+                                                                                                       //
+Router.route('/followAnts/:userName', {                                                                // 89
+	name: 'followAnts',                                                                                   // 90
+	data: function () {                                                                                   // 91
+		function data() {                                                                                    // 91
+			var showData = new Object();                                                                        // 92
+			showData.user = this.params.userName;                                                               // 93
+			showData.mode = true;                                                                               // 94
+			Session.set('pathActualApp', "/followAnts/" + this.params.username);                                // 95
+			return showData;                                                                                    // 96
+		}                                                                                                    // 97
+                                                                                                       //
+		return data;                                                                                         // 91
+	}()                                                                                                   // 91
+});                                                                                                    // 89
+                                                                                                       //
+Router.route('/videoTrans', { name: 'videoTrans' });                                                   // 100
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -159,7 +183,7 @@ UserUtils.findFollowings = function (username) {                                
 //SEGUIDORES                                                                                           // 21
 UserUtils.findFollowers = function (username) {                                                        // 22
   var currentFollowers = Relationships.find({ following: username }).fetch().map(function (data) {     // 23
-    return data.following;                                                                             // 24
+    return data.follower;                                                                              // 24
   });                                                                                                  // 25
   //console.log("Seguidores: ");                                                                       // 26
   //console.log(currentFollowers);                                                                     // 27
@@ -341,17 +365,21 @@ Meteor.methods({                                                                
       if (Meteor.user()) {                                                                             // 18
         var currentFollowings = UserUtils.findFollowings(Meteor.user().username);                      // 19
                                                                                                        //
-        var recUsers = Meteor.users.find({                                                             // 21
-          username: {                                                                                  // 22
-            $nin: currentFollowings                                                                    // 23
-          }                                                                                            // 22
-        }, {                                                                                           // 21
-          fields: { 'username': 1 },                                                                   // 26
-          limit: 5                                                                                     // 27
-        }).fetch();                                                                                    // 25
-        return recUsers;                                                                               // 29
-      }                                                                                                // 30
-    }                                                                                                  // 31
+        console.log("currentFollowings");                                                              // 21
+        console.log(currentFollowings);                                                                // 22
+                                                                                                       //
+        var recUsers = Meteor.users.find({                                                             // 24
+          username: {                                                                                  // 25
+            $nin: currentFollowings                                                                    // 26
+          }                                                                                            // 25
+        }, {                                                                                           // 24
+          fields: { 'username': 1 },                                                                   // 29
+          limit: 5                                                                                     // 30
+        }).fetch();                                                                                    // 28
+                                                                                                       //
+        return recUsers;                                                                               // 33
+      }                                                                                                // 34
+    }                                                                                                  // 35
                                                                                                        //
     return recommendUsers;                                                                             // 17
   }()                                                                                                  // 17
@@ -809,7 +837,32 @@ Meteor.methods({                                                                
     }                                                                                                  // 19
                                                                                                        //
     return usersFollowings;                                                                            // 15
-  }()                                                                                                  // 15
+  }(),                                                                                                 // 15
+                                                                                                       //
+  'getFollowers': function () {                                                                        // 21
+    function getFollowers(username) {                                                                  // 21
+      var currentFollowers = UserUtils.findFollowers(username);                                        // 22
+      console.log("currentFollowers");                                                                 // 23
+      console.log(currentFollowers);                                                                   // 24
+                                                                                                       //
+      return currentFollowers;                                                                         // 26
+    }                                                                                                  // 27
+                                                                                                       //
+    return getFollowers;                                                                               // 21
+  }(),                                                                                                 // 21
+                                                                                                       //
+  'getFollowings': function () {                                                                       // 29
+    function getFollowings(username) {                                                                 // 29
+      var currentFollowings = UserUtils.findFollowings(username);                                      // 30
+      console.log("currentFollowings");                                                                // 31
+      console.log(currentFollowings);                                                                  // 32
+                                                                                                       //
+      return currentFollowings;                                                                        // 34
+    }                                                                                                  // 35
+                                                                                                       //
+    return getFollowings;                                                                              // 29
+  }()                                                                                                  // 29
+                                                                                                       //
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -855,56 +908,55 @@ Meteor.startup(function () {                                                    
     }(),                                                                                               // 18
     update: function () {                                                                              // 21
       function update(userId, doc) {                                                                   // 21
-        console.log("Update Oper");                                                                    // 22
-        return true;                                                                                   // 23
-      }                                                                                                // 24
+        return true;                                                                                   // 22
+      }                                                                                                // 23
                                                                                                        //
       return update;                                                                                   // 21
     }()                                                                                                // 21
   });                                                                                                  // 17
                                                                                                        //
-  Notifications.allow({                                                                                // 27
-    update: function () {                                                                              // 28
-      function update(userId, doc) {                                                                   // 28
-        return true;                                                                                   // 29
-      }                                                                                                // 30
+  Notifications.allow({                                                                                // 26
+    update: function () {                                                                              // 27
+      function update(userId, doc) {                                                                   // 27
+        return true;                                                                                   // 28
+      }                                                                                                // 29
                                                                                                        //
-      return update;                                                                                   // 28
-    }()                                                                                                // 28
-  });                                                                                                  // 27
+      return update;                                                                                   // 27
+    }()                                                                                                // 27
+  });                                                                                                  // 26
                                                                                                        //
-  DataUser.allow({                                                                                     // 33
-    insert: function () {                                                                              // 34
-      function insert(userId, disconnect) {                                                            // 34
-        return true;                                                                                   // 35
-      }                                                                                                // 36
+  DataUser.allow({                                                                                     // 32
+    insert: function () {                                                                              // 33
+      function insert(userId, disconnect) {                                                            // 33
+        return true;                                                                                   // 34
+      }                                                                                                // 35
                                                                                                        //
-      return insert;                                                                                   // 34
-    }(),                                                                                               // 34
-    update: function () {                                                                              // 37
-      function update(userId, doc) {                                                                   // 37
-        return true;                                                                                   // 38
-      }                                                                                                // 39
+      return insert;                                                                                   // 33
+    }(),                                                                                               // 33
+    update: function () {                                                                              // 36
+      function update(userId, doc) {                                                                   // 36
+        return true;                                                                                   // 37
+      }                                                                                                // 38
                                                                                                        //
-      return update;                                                                                   // 37
-    }()                                                                                                // 37
+      return update;                                                                                   // 36
+    }()                                                                                                // 36
                                                                                                        //
-  });                                                                                                  // 33
+  });                                                                                                  // 32
                                                                                                        //
-  Images.allow({                                                                                       // 43
-    insert: function () {                                                                              // 44
-      function insert(userId, disconnect) {                                                            // 44
-        return true;                                                                                   // 45
-      }                                                                                                // 46
+  Images.allow({                                                                                       // 42
+    insert: function () {                                                                              // 43
+      function insert(userId, disconnect) {                                                            // 43
+        return true;                                                                                   // 44
+      }                                                                                                // 45
                                                                                                        //
-      return insert;                                                                                   // 44
-    }()                                                                                                // 44
-  });                                                                                                  // 43
-});                                                                                                    // 48
+      return insert;                                                                                   // 43
+    }()                                                                                                // 43
+  });                                                                                                  // 42
+});                                                                                                    // 47
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }]}},{"extensions":[".js",".json"]});
-require("./lib/collections/collections.js");
+require("./lib/collections.js");
 require("./lib/router.js");
 require("./lib/userUtils.js");
 require("./server/followUsers.js");

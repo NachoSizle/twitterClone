@@ -194,12 +194,16 @@ install("iron:controller");                                                     
 install("iron:router");                                                                                                // 100
 install("fourseven:scss");                                                                                             // 101
 install("sacha:spin");                                                                                                 // 102
-install("webapp");                                                                                                     // 103
-install("livedata");                                                                                                   // 104
-install("hot-code-push");                                                                                              // 105
-install("launch-screen");                                                                                              // 106
-install("autoupdate");                                                                                                 // 107
-                                                                                                                       // 108
+install("url");                                                                                                        // 103
+install("http");                                                                                                       // 104
+install("cosmos:browserify");                                                                                          // 105
+install("deanius:promise");                                                                                            // 106
+install("webapp");                                                                                                     // 107
+install("livedata");                                                                                                   // 108
+install("hot-code-push");                                                                                              // 109
+install("launch-screen");                                                                                              // 110
+install("autoupdate");                                                                                                 // 111
+                                                                                                                       // 112
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"process.js":["process",function(require,exports,module){

@@ -1,17 +1,41 @@
+var arrDataProfile = [];
+var arrRecUsers = [];
+
 Template.followUsers.onRendered(function () { 
-  Meteor.call('recommendUsers', function(err, res) {
-    recUsersList = res;
-    Session.set('recommendedUsers', res);
-  });
+  (async function() {
+    recListUsers  = await Meteor.callPromise('recommendUsers');
+
+    for (var i = 0; i < recListUsers.length; i++) {
+      if(recListUsers[i].username != Session.get('currentUser')){
+        arrRecUsers.push(recListUsers[i]);
+      };
+    }
+
+    for (var i = 0; i < arrRecUsers.length; i++) {
+      dataUserFound = await Meteor.callPromise('findUserData', arrRecUsers[i].username);
+      arrDataProfile.push(dataUserFound);
+    }
+    
+    Session.set('recommendedUsers', recListUsers);
+    Session.set('userDataRecProfile', arrDataProfile);
+    
+  }());
 });
 
 Template.followUsers.events({ 
-  'submit form': function(event) {
-
-    var searchUser = event.target.searchUser.value;
+  'click #searchBtn': function(event) {
+    
+    var searchUser = $('#searchUser').val();
     var foundUser = Meteor.call('findUser', searchUser, function(err, res) {
         if (res) {
-          Session.set('foundUser', res);
+          Meteor.call('findUserData', res.username, function(err,res){
+            if(res){
+              Session.set('foundUser', res);
+              Meteor.call('findUserImg', res.userImg, function(err, res){
+                Session.set('imgFound', res);  
+              });
+            }
+          });
         }
     });
     return false;
@@ -22,10 +46,10 @@ Template.followUsers.events({
     Meteor.call('followUser', Session.get('foundUser').username);
   },
 
-  'click #followRec': function(event) {
-    Meteor.call('followUser', this.username);
+  'click #followRec': function() {
+    Meteor.call('followUser', this.userNameProfile);
     //LOCALIZAMOS EL USUARIO QUE ACABAMOS DE SEGUIR Y LO ELIMINAMOS DE LA LISTA DE RECOMENDADOS
-    var posUser = recUsersList.indexOf(this.username);
+    var posUser = recUsersList.indexOf(this.userNameProfile);
     recUsersList.splice(posUser, 1);
     Session.set('recommendedUsers', recUsersList);
   },
@@ -44,7 +68,7 @@ Template.followUsers.helpers({
   },
 
   'recommendedUsers': function() {
-    return Session.get('recommendedUsers');
+    return Session.get('userDataRecProfile');
   },
 
   'recUsersLis': function(){
@@ -53,5 +77,27 @@ Template.followUsers.helpers({
     } else {
       return false;
     }; 
+  },
+  'mineUser' : function(user){
+    if(user === Session.get('currentUser')){
+      return false;
+    } else {
+      return true;
+    }
+  },
+
+  //REVISAR !!!!!
+  'getImgProfile' : function(imgId){
+    var imgFound = "imgPath";
+    var imgFoundSession = Session.get('imgFound');
+    console.log(imgId);
+
+    if(imgId === ''){
+      return "/profileImgTest.png";
+    } else if(imgFoundSession){
+      return imgFoundSession;
+    } else {
+      return Meteor.call('findUserImg', imgId);
+    }
   }
 });

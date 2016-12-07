@@ -161,6 +161,177 @@ Template["editProfile"] = new Template("Template.editProfile", (function() {    
                                                                                                                        // 98
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"template.followAnts.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/template.followAnts.js                                                                      //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+                                                                                                                       // 1
+Template.__checkName("followAnts");                                                                                    // 2
+Template["followAnts"] = new Template("Template.followAnts", (function() {                                             // 3
+  var view = this;                                                                                                     // 4
+  return Blaze.If(function() {                                                                                         // 5
+    return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
+  }, function() {                                                                                                      // 7
+    return [ "\n\n    ", Blaze.View("lookup:getDataFollowAnts", function() {                                           // 8
+      return Spacebars.mustache(view.lookup("getDataFollowAnts"));                                                     // 9
+    }), "\n\n    ", Blaze.If(function() {                                                                              // 10
+      return Spacebars.call(view.lookup("getWhatShow"));                                                               // 11
+    }, function() {                                                                                                    // 12
+      return [ "\n      ", HTML.H3({                                                                                   // 13
+        class: "text-center"                                                                                           // 14
+      }, "Seguidores"), "\n    " ];                                                                                    // 15
+    }, function() {                                                                                                    // 16
+      return [ "\n      ", HTML.H3({                                                                                   // 17
+        class: "text-center"                                                                                           // 18
+      }, "Siguiendo"), "\n    " ];                                                                                     // 19
+    }), "\n\n    ", HTML.DIV({                                                                                         // 20
+      class: "tweetfeed-container"                                                                                     // 21
+    }, "\n      ", HTML.DIV({                                                                                          // 22
+      class: "panel panel-default tweetfeed"                                                                           // 23
+    }, "\n        ", HTML.DIV({                                                                                        // 24
+      class: "panel-body"                                                                                              // 25
+    }, "\n          ", Blaze.If(function() {                                                                           // 26
+      return Spacebars.call(view.lookup("btnShowFollowers"));                                                          // 27
+    }, function() {                                                                                                    // 28
+      return [ "\n            ", Blaze.Each(function() {                                                               // 29
+        return Spacebars.call(view.lookup("showFollowers"));                                                           // 30
+      }, function() {                                                                                                  // 31
+        return [ "\n              ", HTML.Comment("PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,\n              DESCRIPCION Y DOS BTN: IR A PERFIL"), "\n              ", Blaze.If(function() {
+          return Spacebars.call(view.lookup("orientationCard"));                                                       // 33
+        }, function() {                                                                                                // 34
+          return [ "\n                ", HTML.Comment("IMG IZQUIERDA"), "\n                ", Spacebars.include(view.lookupTemplate("userCardImgIzq")), "\n              " ];
+        }, function() {                                                                                                // 36
+          return [ "\n                ", Spacebars.include(view.lookupTemplate("userCardImgDer")), "\n              " ];
+        }), "\n              \n            " ];                                                                        // 38
+      }), "\n            ", Blaze.If(function() {                                                                      // 39
+        return Spacebars.call(view.lookup("noFollowers"));                                                             // 40
+      }, function() {                                                                                                  // 41
+        return [ "\n              ", HTML.P("No tienes seguidores"), "    \n            " ];                           // 42
+      }), "\n          " ];                                                                                            // 43
+    }, function() {                                                                                                    // 44
+      return [ "\n            ", Blaze.Each(function() {                                                               // 45
+        return Spacebars.call(view.lookup("showFollowings"));                                                          // 46
+      }, function() {                                                                                                  // 47
+        return [ "\n              ", HTML.Comment("PLANTILLA DE USUARIO, CON SU IMAGEN, NOMBRE DE USUARIO,\n              DESCRIPCION Y DOS BTN: IR A PERFIL"), "\n              ", Blaze.If(function() {
+          return Spacebars.call(view.lookup("orientationCard"));                                                       // 49
+        }, function() {                                                                                                // 50
+          return [ "\n                ", HTML.Comment("IMG DERECHA"), "\n                ", Spacebars.include(view.lookupTemplate("userCardImgIzq")), "\n              " ];
+        }, function() {                                                                                                // 52
+          return [ "\n                ", Spacebars.include(view.lookupTemplate("userCardImgDer")), "\n              " ];
+        }), "\n            " ];                                                                                        // 54
+      }), "\n            ", Blaze.If(function() {                                                                      // 55
+        return Spacebars.call(view.lookup("noFollowings"));                                                            // 56
+      }, function() {                                                                                                  // 57
+        return [ "\n              ", HTML.P("No estás siguiendo a nadie"), "\n            " ];                         // 58
+      }), "\n          " ];                                                                                            // 59
+    }), "\n        "), "\n      "), "\n    "), "\n\n    ", HTML.NAV({                                                  // 60
+      id: "navBarBtnShowNotif",                                                                                        // 61
+      class: "navbar navbar-default navbar-fixed-bottom"                                                               // 62
+    }, "\n      ", HTML.DIV({                                                                                          // 63
+      class: "container"                                                                                               // 64
+    }, "\n        ", HTML.DIV({                                                                                        // 65
+      class: "navbar-header"                                                                                           // 66
+    }, "\n          ", HTML.DIV({                                                                                      // 67
+      class: "btn-group",                                                                                              // 68
+      role: "group"                                                                                                    // 69
+    }, "\n\n            ", HTML.BUTTON({                                                                               // 70
+      style: function() {                                                                                              // 71
+        return [ "width: ", Spacebars.mustache(view.lookup("setStyleNavBar")) ];                                       // 72
+      },                                                                                                               // 73
+      type: "button",                                                                                                  // 74
+      id: "btnShowFollowers",                                                                                          // 75
+      class: "btn btn-secondary btnGroupsShowNotif"                                                                    // 76
+    }, "\n              ", HTML.SPAN({                                                                                 // 77
+      class: "glyphicon glyphicon-user"                                                                                // 78
+    }), "\n              ", HTML.SPAN({                                                                                // 79
+      class: "glyphicon glyphicon-hand-left"                                                                           // 80
+    }), "\n              ", HTML.SPAN({                                                                                // 81
+      class: "badge badge-notify-navbarFooter"                                                                         // 82
+    }, Blaze.View("lookup:followersCount", function() {                                                                // 83
+      return Spacebars.mustache(view.lookup("followersCount"));                                                        // 84
+    })), "\n            "), "\n\n            ", HTML.BUTTON({                                                          // 85
+      style: function() {                                                                                              // 86
+        return [ "width: ", Spacebars.mustache(view.lookup("setStyleNavBar")) ];                                       // 87
+      },                                                                                                               // 88
+      type: "button",                                                                                                  // 89
+      id: "btnShowFollowings",                                                                                         // 90
+      class: "btn btn-secondary btnGroupsShowNotif"                                                                    // 91
+    }, "\n              ", HTML.SPAN({                                                                                 // 92
+      class: "glyphicon glyphicon-user"                                                                                // 93
+    }), "\n              ", HTML.SPAN({                                                                                // 94
+      class: "glyphicon glyphicon-hand-right"                                                                          // 95
+    }), "\n              ", HTML.SPAN({                                                                                // 96
+      class: "badge badge-notify-navbarFooter"                                                                         // 97
+    }, Blaze.View("lookup:followingsCount", function() {                                                               // 98
+      return Spacebars.mustache(view.lookup("followingsCount"));                                                       // 99
+    })), "\n            "), "\n            \n          "), "\n        "), "\n      "), "\n    "), "\n\n  " ];          // 100
+  }, function() {                                                                                                      // 101
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 102
+  });                                                                                                                  // 103
+}));                                                                                                                   // 104
+                                                                                                                       // 105
+Template.__checkName("userCardImgIzq");                                                                                // 106
+Template["userCardImgIzq"] = new Template("Template.userCardImgIzq", (function() {                                     // 107
+  var view = this;                                                                                                     // 108
+  return HTML.DIV({                                                                                                    // 109
+    class: "panel panel-info"                                                                                          // 110
+  }, "\n\n    ", HTML.DIV({                                                                                            // 111
+    class: "panel-body"                                                                                                // 112
+  }, "\n      ", HTML.DIV({                                                                                            // 113
+    class: "row"                                                                                                       // 114
+  }, "\n        ", HTML.Raw('<div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">\n          <img id="imgCurrentUser" src="/profileImgTest.png" class="img-responsive">\n        </div>'), "\n        ", HTML.DIV({
+    class: "col-md-6 col-sm-6 col-xs-6",                                                                               // 116
+    id: "rightDivCurrentUser"                                                                                          // 117
+  }, "\n          ", HTML.P(HTML.STRONG("@", Blaze.View("lookup:.", function() {                                       // 118
+    return Spacebars.mustache(view.lookup("."));                                                                       // 119
+  }))), "\n          ", HTML.Raw("<p>Esta es una descripcion a modo de ejemplo para una plantilla de \n          usuario.</p>"), "\n          ", HTML.DIV({
+    class: "btn-group",                                                                                                // 121
+    role: "group",                                                                                                     // 122
+    id: "btnGroupInteractions"                                                                                         // 123
+  }, "\n            ", HTML.A({                                                                                        // 124
+    href: function() {                                                                                                 // 125
+      return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                                  // 126
+        username: view.lookup(".")                                                                                     // 127
+      }));                                                                                                             // 128
+    },                                                                                                                 // 129
+    class: "btn"                                                                                                       // 130
+  }, "\n              ", HTML.Raw('<span class="glyphicon glyphicon-eye-open"></span>'), "\n              Visitar perfil\n            "), "\n          "), "\n        "), "\n      "), "\n    "), "\n  ");
+}));                                                                                                                   // 132
+                                                                                                                       // 133
+Template.__checkName("userCardImgDer");                                                                                // 134
+Template["userCardImgDer"] = new Template("Template.userCardImgDer", (function() {                                     // 135
+  var view = this;                                                                                                     // 136
+  return HTML.DIV({                                                                                                    // 137
+    class: "panel panel-info"                                                                                          // 138
+  }, "\n\n    ", HTML.DIV({                                                                                            // 139
+    class: "panel-body"                                                                                                // 140
+  }, "\n      ", HTML.DIV({                                                                                            // 141
+    class: "row"                                                                                                       // 142
+  }, "\n        ", HTML.DIV({                                                                                          // 143
+    class: "col-md-6 col-sm-6 col-xs-6",                                                                               // 144
+    id: "leftDivCurrentUser"                                                                                           // 145
+  }, "\n          ", HTML.P(HTML.STRONG("@", Blaze.View("lookup:.", function() {                                       // 146
+    return Spacebars.mustache(view.lookup("."));                                                                       // 147
+  }))), "\n          ", HTML.Raw("<p>Esta es una descripcion a modo de ejemplo para una plantilla de \n          usuario.</p>"), "\n          ", HTML.DIV({
+    class: "btn-group",                                                                                                // 149
+    role: "group",                                                                                                     // 150
+    id: "btnGroupInteractions"                                                                                         // 151
+  }, "\n            ", HTML.A({                                                                                        // 152
+    href: function() {                                                                                                 // 153
+      return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                                  // 154
+        username: view.lookup(".")                                                                                     // 155
+      }));                                                                                                             // 156
+    },                                                                                                                 // 157
+    class: "btn"                                                                                                       // 158
+  }, "\n              ", HTML.Raw('<span class="glyphicon glyphicon-eye-open"></span>'), "\n              Visitar perfil\n            "), "\n          "), "\n        "), "\n        ", HTML.Raw('<div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">\n          <img id="imgCurrentUserLeft" src="/profileImgTest.png" class="img-responsive">\n        </div>'), "\n      "), "\n    "), "\n  ");
+}));                                                                                                                   // 160
+                                                                                                                       // 161
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"template.followUsers.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,35 +344,125 @@ Template["editProfile"] = new Template("Template.editProfile", (function() {    
 Template.__checkName("followUsers");                                                                                   // 2
 Template["followUsers"] = new Template("Template.followUsers", (function() {                                           // 3
   var view = this;                                                                                                     // 4
-  return HTML.FORM({                                                                                                   // 5
-    class: "form-inline"                                                                                               // 6
-  }, HTML.Raw(' \n\t\t<input type="text" class="form-control" id="searchUser" placeholder="Search for user">\n\t\t<button type="submit" class="btn btn-info">Search</button>\n\n\t\t'), Blaze.If(function() {
-    return Spacebars.call(view.lookup("foundUser"));                                                                   // 8
-  }, function() {                                                                                                      // 9
-    return [ "\n\t\t\t", HTML.DIV({                                                                                    // 10
-      class: "found-user"                                                                                              // 11
-    }, "\n\t\t\t\t", HTML.BUTTON({                                                                                     // 12
-      type: "button",                                                                                                  // 13
-      class: "btn btn-default",                                                                                        // 14
-      id: "follow"                                                                                                     // 15
-    }, "Follow @", Blaze.View("lookup:foundUser.username", function() {                                                // 16
-      return Spacebars.mustache(Spacebars.dot(view.lookup("foundUser"), "username"));                                  // 17
-    })), "\n\t\t\t"), "\n\t\t" ];                                                                                      // 18
-  }), "\n  \t\n\t  \t", HTML.DIV({                                                                                     // 19
-    class: "recommend-users"                                                                                           // 20
-  }, " \n\t\t  ", HTML.Raw("<h5>Who to follow:</h5>"), "\n\t\t  ", Blaze.Each(function() {                             // 21
-    return Spacebars.call(view.lookup("recommendedUsers"));                                                            // 22
-  }, function() {                                                                                                      // 23
-    return [ "\n\t\t    ", HTML.BUTTON({                                                                               // 24
-      type: "button",                                                                                                  // 25
-      class: "btn btn-default",                                                                                        // 26
-      id: "followRec"                                                                                                  // 27
-    }, "Follow @", Blaze.View("lookup:..username", function() {                                                        // 28
-      return Spacebars.mustache(Spacebars.dot(view.lookup("."), "username"));                                          // 29
-    })), "\n\t\t  " ];                                                                                                 // 30
-  }), "\n\t\t"), "\n\t\t\n\t");                                                                                        // 31
-}));                                                                                                                   // 32
-                                                                                                                       // 33
+  return [ HTML.Raw('<div class="user-container">\n    \t<div class="panel panel-default userBox">\n      \t\t<div class="panel-body">\n\t\t\t\t<div class="input-group form-group formGroupSearchBar">\n\t\t\t\t  <input type="text" class="form-control" placeholder="Search" id="searchUser">\n\t\t\t\t  <button class="btn btn-info" id="searchBtn"><i class="glyphicon glyphicon-search"></i></button>\n\t\t\t\t</div>\t\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\n    <!--\n\t<input type="text" class="form-control" id="searchUser" placeholder="Search for user">\n\t<button type="submit" class="btn btn-info">Search</button>\n\t-->\n\n\t'), Blaze.If(function() {
+    return Spacebars.call(view.lookup("foundUser"));                                                                   // 6
+  }, function() {                                                                                                      // 7
+    return [ "\n\t\t", HTML.DIV({                                                                                      // 8
+      class: "tweetfeed-container"                                                                                     // 9
+    }, "\n\t\t\t", HTML.DIV({                                                                                          // 10
+      class: "panel panel-default tweetfeed"                                                                           // 11
+    }, "\n\t    \t\t", HTML.DIV({                                                                                      // 12
+      class: "panel-body"                                                                                              // 13
+    }, "\n\t\t\t\t  ", HTML.DIV({                                                                                      // 14
+      class: "panel panel-info"                                                                                        // 15
+    }, "\n\t\t\t\t    ", HTML.DIV({                                                                                    // 16
+      class: "panel-body"                                                                                              // 17
+    }, "\n\t\t\t\t      ", HTML.DIV({                                                                                  // 18
+      class: "row"                                                                                                     // 19
+    }, "\n\t\t\t\t        ", HTML.DIV({                                                                                // 20
+      class: "col-md-6 col-sm-6 col-xs-6",                                                                             // 21
+      id: "leftDivCurrentUser"                                                                                         // 22
+    }, "\n\t\t\t\t          ", HTML.IMG({                                                                              // 23
+      id: "imgCurrentUser",                                                                                            // 24
+      src: function() {                                                                                                // 25
+        return Spacebars.mustache(view.lookup("getImgProfile"), Spacebars.dot(view.lookup("foundUser"), "userImg"));   // 26
+      },                                                                                                               // 27
+      class: "img-responsive"                                                                                          // 28
+    }), "\n\t\t\t\t        "), "\n\t\t\t\t        ", HTML.DIV({                                                        // 29
+      class: "col-md-6 col-sm-6 col-xs-6",                                                                             // 30
+      id: "rightDivCurrentUser"                                                                                        // 31
+    }, "\n\t\t\t\t          ", HTML.P(HTML.STRONG("@", Blaze.View("lookup:foundUser.userNameProfile", function() {     // 32
+      return Spacebars.mustache(Spacebars.dot(view.lookup("foundUser"), "userNameProfile"));                           // 33
+    }))), "\n\t\t\t\t          ", HTML.P(Blaze.View("lookup:foundUser.userDescription", function() {                   // 34
+      return Spacebars.mustache(Spacebars.dot(view.lookup("foundUser"), "userDescription"));                           // 35
+    })), "\n\t\t\t\t          ", HTML.DIV({                                                                            // 36
+      class: "btn-group",                                                                                              // 37
+      role: "group",                                                                                                   // 38
+      id: "btnGroupInteractions"                                                                                       // 39
+    }, "\n\t\t\t\t            ", HTML.A({                                                                              // 40
+      href: function() {                                                                                               // 41
+        return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                                // 42
+          username: Spacebars.dot(view.lookup("foundUser"), "userNameProfile")                                         // 43
+        }));                                                                                                           // 44
+      },                                                                                                               // 45
+      class: "btn btn-secondary"                                                                                       // 46
+    }, "\n\t\t\t\t              ", HTML.SPAN({                                                                         // 47
+      class: "glyphicon glyphicon-eye-open"                                                                            // 48
+    }), "\n\t\t\t\t              Visitar perfil\n\t\t\t\t            "), "\n\t\t\t\t            ", Blaze.If(function() {
+      return Spacebars.dataMustache(view.lookup("mineUser"), Spacebars.dot(view.lookup("foundUser"), "userNameProfile"));
+    }, function() {                                                                                                    // 51
+      return [ "\n\t\t\t\t            ", HTML.A({                                                                      // 52
+        class: "btn btn-secondary",                                                                                    // 53
+        id: "followRec"                                                                                                // 54
+      }, "\n\t\t\t\t              ", HTML.SPAN({                                                                       // 55
+        class: "glyphicon glyphicon-plus-sign"                                                                         // 56
+      }), "\n\t\t\t\t              Seguir\n\t\t\t\t            "), "\n\t\t\t\t            " ];                         // 57
+    }), "\n\t\t\t\t          "), "\n\t\t\t\t        "), "\n\t\t\t\t      "), "\n\t\t\t\t    "), "\n\t\t\t\t  "), "\n\t\t\t\t"), "\n\t\t\t"), "\n\t\t"), "\n\t" ];
+  }), "\n\t\t\n\t", Blaze.If(function() {                                                                              // 59
+    return Spacebars.call(view.lookup("recUsersLis"));                                                                 // 60
+  }, function() {                                                                                                      // 61
+    return [ "\n\t  \t", HTML.DIV({                                                                                    // 62
+      class: "recommend-users"                                                                                         // 63
+    }, " \n\t\t  ", HTML.H5("Who to follow:"), "\n\t\t  ", Blaze.Each(function() {                                     // 64
+      return Spacebars.call(view.lookup("recommendedUsers"));                                                          // 65
+    }, function() {                                                                                                    // 66
+      return [ "\t  \t\n\t  \t\t", HTML.DIV({                                                                          // 67
+        class: "tweetfeed-container"                                                                                   // 68
+      }, "\n\t\t\t\t", HTML.DIV({                                                                                      // 69
+        class: "panel panel-default tweetfeed"                                                                         // 70
+      }, "\n\t\t\t\t\t", HTML.DIV({                                                                                    // 71
+        class: "panel-body"                                                                                            // 72
+      }, "\n\t\t\t\t\t  ", HTML.DIV({                                                                                  // 73
+        class: "panel panel-info"                                                                                      // 74
+      }, "\n\t\t\t\t\t    ", HTML.DIV({                                                                                // 75
+        class: "panel-body"                                                                                            // 76
+      }, "\n\t\t\t\t\t      ", HTML.DIV({                                                                              // 77
+        class: "row"                                                                                                   // 78
+      }, "\n\t\t\t\t\t        ", HTML.DIV({                                                                            // 79
+        class: "col-md-6 col-sm-6 col-xs-6",                                                                           // 80
+        id: "leftDivCurrentUser"                                                                                       // 81
+      }, "\n\t\t\t\t\t          ", HTML.IMG({                                                                          // 82
+        id: "imgCurrentUser",                                                                                          // 83
+        src: function() {                                                                                              // 84
+          return Spacebars.mustache(view.lookup("getImgProfile"), Spacebars.dot(view.lookup("."), "userImg"));         // 85
+        },                                                                                                             // 86
+        class: "img-responsive"                                                                                        // 87
+      }), "\n\t\t\t\t\t        "), "\n\t\t\t\t\t        ", HTML.DIV({                                                  // 88
+        class: "col-md-6 col-sm-6 col-xs-6",                                                                           // 89
+        id: "rightDivCurrentUser"                                                                                      // 90
+      }, "\n\t\t\t\t\t          ", HTML.P(HTML.STRONG("@", Blaze.View("lookup:..userNameProfile", function() {         // 91
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "userNameProfile"));                                 // 92
+      }))), "\n\t\t\t\t\t          ", HTML.P(Blaze.View("lookup:..userDescription", function() {                       // 93
+        return Spacebars.mustache(Spacebars.dot(view.lookup("."), "userDescription"));                                 // 94
+      })), "\n\t\t\t\t\t          ", HTML.DIV({                                                                        // 95
+        class: "btn-group",                                                                                            // 96
+        role: "group",                                                                                                 // 97
+        id: "btnGroupInteractions"                                                                                     // 98
+      }, "\n\t\t\t\t\t            ", HTML.A({                                                                          // 99
+        href: function() {                                                                                             // 100
+          return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                              // 101
+            username: view.lookup(".")                                                                                 // 102
+          }));                                                                                                         // 103
+        },                                                                                                             // 104
+        class: "btn btn-secondary"                                                                                     // 105
+      }, "\n\t\t\t\t\t              ", HTML.SPAN({                                                                     // 106
+        class: "glyphicon glyphicon-eye-open"                                                                          // 107
+      }), "\n\t\t\t\t\t              Visitar perfil\n\t\t\t\t\t            "), "\n\t\t\t\t\t            ", HTML.A({    // 108
+        class: "btn btn-secondary",                                                                                    // 109
+        id: "followRec"                                                                                                // 110
+      }, "\n\t\t\t\t\t              ", HTML.SPAN({                                                                     // 111
+        class: "glyphicon glyphicon-plus-sign"                                                                         // 112
+      }), "\n\t\t\t\t\t              Seguir\n\t\t\t\t\t            "), "\n\t\t\t\t\t          "), "\n\t\t\t\t\t        "), "\n\t\t\t\t\t      "), "\n\t\t\t\t\t    "), "\n\t\t\t\t\t  "), "\n\t\t\t\t\t"), "\n\t\t\t\t"), "\n\t\t\t"), "\n\t\t  " ];
+    }), "\n\t\t"), "\n\t" ];                                                                                           // 114
+  }) ];                                                                                                                // 115
+}));                                                                                                                   // 116
+                                                                                                                       // 117
+Template.__checkName("userCard");                                                                                      // 118
+Template["userCard"] = new Template("Template.userCard", (function() {                                                 // 119
+  var view = this;                                                                                                     // 120
+  return "";                                                                                                           // 121
+}));                                                                                                                   // 122
+                                                                                                                       // 123
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.loading.js":function(){
@@ -219,6 +480,43 @@ Template["loading"] = new Template("Template.loading", (function() {            
   return Spacebars.include(view.lookupTemplate("spinner"));                                                            // 5
 }));                                                                                                                   // 6
                                                                                                                        // 7
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.mainPage.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/template.mainPage.js                                                                        //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+                                                                                                                       // 1
+Template.__checkName("mainPage");                                                                                      // 2
+Template["mainPage"] = new Template("Template.mainPage", (function() {                                                 // 3
+  var view = this;                                                                                                     // 4
+  return HTML.DIV({                                                                                                    // 5
+    class: "row",                                                                                                      // 6
+    id: "containerNavBar"                                                                                              // 7
+  }, "\n\t\t", Blaze.If(function() {                                                                                   // 8
+    return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 9
+  }, function() {                                                                                                      // 10
+    return [ "\n\t\t    ", Blaze.If(function() {                                                                       // 11
+      return Spacebars.call(view.lookup("currentUser"));                                                               // 12
+    }, function() {                                                                                                    // 13
+      return [ "\n\t\t    \t", Spacebars.include(view.lookupTemplate("navBarTemplate")), "\n\t\t    \t", Blaze.If(function() {
+        return Spacebars.call(view.lookup("mainPage"));                                                                // 15
+      }, function() {                                                                                                  // 16
+        return [ "\n\t\t    \t\t", HTML.DIV({                                                                          // 17
+          id: "divTweetFeed",                                                                                          // 18
+          class: "col-md-8 col-sm-8"                                                                                   // 19
+        }, Spacebars.include(view.lookupTemplate("tweetFeed"))), "\n\t\t    \t" ];                                     // 20
+      }), "\n\t\t  \t" ];                                                                                              // 21
+    }), "\n\t  \t" ];                                                                                                  // 22
+  }, function() {                                                                                                      // 23
+    return [ "\n\t\t    ", Spacebars.include(view.lookupTemplate("loading")), "\n\t  \t" ];                            // 24
+  }), HTML.Raw("\n\t\t<!--{{> btnFloating}}-->\n\t"));                                                                 // 25
+}));                                                                                                                   // 26
+                                                                                                                       // 27
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.navBarTemplate.js":function(){
@@ -283,7 +581,7 @@ Template["navBarTemplate"] = new Template("Template.navBarTemplate", (function()
           return Spacebars.mustache(view.lookup("whatsNotifCount"));                                                   // 52
         })), "\n      \t\t\t" ];                                                                                       // 53
       }), "\n\t\t    " ];                                                                                              // 54
-    }), "\n    \t  "), "\n    \t  ", HTML.IMG({                                                                        // 55
+    }), "\n\n    \t  "), "\n    \t  ", HTML.IMG({                                                                      // 55
       id: "imgLogTwiiterClone",                                                                                        // 56
       src: "/imgLogTwiiterClone.png",                                                                                  // 57
       class: "img-responsive navbar-brand"                                                                             // 58
@@ -320,16 +618,22 @@ Template["navBarTemplate"] = new Template("Template.navBarTemplate", (function()
       }, "\n\t\t\t        \t", HTML.SPAN({                                                                             // 89
         class: "glyphicon glyphicon-pencil"                                                                            // 90
       }), "\n\t\t\t      \t"), "\n\t\t\t  \t" ];                                                                       // 91
-    }), "\n\t        "), "\n\t        ", HTML.LI("\n              ", HTML.Comment("A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO"), "\n              ", HTML.IMG({
-      id: "imgProfile",                                                                                                // 93
-      src: function() {                                                                                                // 94
-        return Spacebars.mustache(view.lookup("userImgFound"));                                                        // 95
-      },                                                                                                               // 96
-      class: "img-responsive"                                                                                          // 97
-    }), "\n\t        "), "\n\t      "), "\n\t    "), "\n\t  "), "\n\t"), "\n\t" ];                                     // 98
-  });                                                                                                                  // 99
-}));                                                                                                                   // 100
-                                                                                                                       // 101
+    }), "\n\t        "), "\n\n\t        ", HTML.LI("\n\t        \t", HTML.A({                                          // 92
+      id: "videoTrans",                                                                                                // 93
+      type: "button",                                                                                                  // 94
+      class: "navbar-btn"                                                                                              // 95
+    }, "\n\t        \t\t", HTML.SPAN({                                                                                 // 96
+      class: "glyphicon glyphicon-camera"                                                                              // 97
+    }), "\n    \t\t\t"), "\n\t        "), "\n\t        ", HTML.LI("\n              ", HTML.Comment("A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO"), "\n              ", HTML.IMG({
+      id: "imgProfile",                                                                                                // 99
+      src: function() {                                                                                                // 100
+        return Spacebars.mustache(view.lookup("userImgFound"));                                                        // 101
+      },                                                                                                               // 102
+      class: "img-responsive"                                                                                          // 103
+    }), "\n\t        "), "\n\t      "), "\n\t    "), "\n\t  "), "\n\t"), "\n\t" ];                                     // 104
+  });                                                                                                                  // 105
+}));                                                                                                                   // 106
+                                                                                                                       // 107
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.not_found.js":function(){
@@ -491,7 +795,7 @@ Template["notificationsNew"] = new Template("Template.notificationsNew", (functi
 Template.__checkName("pageNotFound");                                                                                  // 2
 Template["pageNotFound"] = new Template("Template.pageNotFound", (function() {                                         // 3
   var view = this;                                                                                                     // 4
-  return HTML.Raw("<h1>La página a la que se intenta acceder no existe</h1>");                                         // 5
+  return HTML.Raw("<h5>La página a la que se intenta acceder no existe</h5>");                                         // 5
 }));                                                                                                                   // 6
                                                                                                                        // 7
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -776,7 +1080,7 @@ Template["tweetBox"] = new Template("Template.tweetBox", (function() {          
       "data-dismiss": "modal"                                                                                          // 30
     }, function() {                                                                                                    // 31
       return Spacebars.attrMustache(view.lookup("disableButton"));                                                     // 32
-    }), "Twittear\n              ", HTML.SPAN({                                                                        // 33
+    }), "Enviar\n              ", HTML.SPAN({                                                                          // 33
       class: "glyphicon glyphicon-send"                                                                                // 34
     }), "\n            "), "\n          " ];                                                                           // 35
   }, function() {                                                                                                      // 36
@@ -1535,61 +1839,34 @@ Template["userManagement"] = new Template("Template.userManagement", (function()
   return Blaze.If(function() {                                                                                         // 5
     return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
   }, function() {                                                                                                      // 7
-    return [ "\n    ", Blaze.If(function() {                                                                           // 8
+    return [ "\n    ", Blaze.Unless(function() {                                                                       // 8
       return Spacebars.call(view.lookup("currentUser"));                                                               // 9
     }, function() {                                                                                                    // 10
-      return [ "\n      ", HTML.Comment(' LA CAJA DE PONER UN NUEVO TWIIT SE HA IMPLEMENTADO EN UN MODAL QUE SALTA \n      CUANDO SE DA AL BOTON QUE SE ENCUENTRA EN LA BARRA DE NAVEGACIÓN\n      <div id="divTweetBox" class="col-md-8 col-sm-8">{{> tweetBox}}</div>\n      '), "\n      \n      ", HTML.DIV({
-        id: "divTweetFeed",                                                                                            // 12
-        class: "col-md-8 col-sm-8"                                                                                     // 13
-      }, Spacebars.include(view.lookupTemplate("tweetFeed"))), "\n    " ];                                             // 14
-    }, function() {                                                                                                    // 15
-      return [ "\n      ", HTML.DIV({                                                                                  // 16
-        class: "user-container"                                                                                        // 17
-      }, "\n        ", HTML.DIV({                                                                                      // 18
-        class: "panel panel-default userBox"                                                                           // 19
-      }, "\n          ", HTML.DIV({                                                                                    // 20
-        class: "panel-body"                                                                                            // 21
-      }, "\n            ", HTML.Comment("módulo de acceso "), "\n            ", HTML.H4("¿Ya tienes una cuenta?"), "\n            ", HTML.DIV({
-        class: "form-group"                                                                                            // 23
-      }, "\n              ", HTML.INPUT({                                                                              // 24
-        class: "form-control input-sm",                                                                                // 25
-        id: "login-nameProfile",                                                                                       // 26
-        placeholder: "Nombre de Usuario"                                                                               // 27
-      }), "\n              ", HTML.INPUT({                                                                             // 28
-        class: "form-control input-sm",                                                                                // 29
-        id: "login-password",                                                                                          // 30
-        placeholder: "Contraseña",                                                                                     // 31
-        type: "password"                                                                                               // 32
-      }), "\n            "), "\n\n            ", HTML.BUTTON({                                                         // 33
-        type: "button",                                                                                                // 34
-        class: "btn btn-info fullbutton login",                                                                        // 35
-        id: "login"                                                                                                    // 36
-      }, "Acceder"), "\n\n            ", HTML.Comment("módulo de registro"), "\n            ", HTML.H4("¿Nuevo por aquí?"), "\n            ", HTML.DIV({
-        class: "form-group"                                                                                            // 38
-      }, "\n              ", HTML.INPUT({                                                                              // 39
-        class: "form-control input-sm",                                                                                // 40
-        id: "signup-username",                                                                                         // 41
-        placeholder: "Nombre"                                                                                          // 42
-      }), "\n              ", HTML.INPUT({                                                                             // 43
-        class: "form-control input-sm",                                                                                // 44
-        id: "signup-nameProfile",                                                                                      // 45
-        placeholder: "Nombre de Usuario"                                                                               // 46
-      }), "\n              ", HTML.INPUT({                                                                             // 47
-        class: "form-control input-sm",                                                                                // 48
-        id: "signup-password",                                                                                         // 49
-        placeholder: "Contraseña",                                                                                     // 50
-        type: "password"                                                                                               // 51
-      }), "\n            "), "\n            ", HTML.BUTTON({                                                           // 52
-        type: "button",                                                                                                // 53
-        class: "btn btn-info fullbutton",                                                                              // 54
-        id: "signup"                                                                                                   // 55
-      }, "Regístrate"), " \n          "), "\n        "), "\n      "), "\n    " ];                                      // 56
-    }), "\n  " ];                                                                                                      // 57
-  }, function() {                                                                                                      // 58
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 59
-  });                                                                                                                  // 60
-}));                                                                                                                   // 61
-                                                                                                                       // 62
+      return [ "\n      ", Blaze.If(function() {                                                                       // 11
+        return Spacebars.call(view.lookup("loginPage"));                                                               // 12
+      }, function() {                                                                                                  // 13
+        return [ "\n        ", Spacebars.include(view.lookupTemplate("loginUser")), "\n      " ];                      // 14
+      }, function() {                                                                                                  // 15
+        return [ "\n        ", Spacebars.include(view.lookupTemplate("registerNew")), "\n      " ];                    // 16
+      }), "\n    " ];                                                                                                  // 17
+    }), "\n  " ];                                                                                                      // 18
+  }, function() {                                                                                                      // 19
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 20
+  });                                                                                                                  // 21
+}));                                                                                                                   // 22
+                                                                                                                       // 23
+Template.__checkName("loginUser");                                                                                     // 24
+Template["loginUser"] = new Template("Template.loginUser", (function() {                                               // 25
+  var view = this;                                                                                                     // 26
+  return HTML.Raw('<h1 class="text-center titleFormLogin">TNSClone</h1>\n\n  <div class="user-container formLogin">\n    <div class="panel panel-default userBox">\n      <div class="panel-body">\n        <div class="input-group form-group">\n          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>\n          <input name="nameProfile" class="form-control input input-login" id="loginNameProfile" placeholder="Nombre de Usuario" required="">\n        </div>\n        <div class="input-group form-group">\n          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>\n          <input name="passProfile" class="form-control input input-login" id="loginPassword" placeholder="Contraseña" type="password" required="">\n        </div>\n\n        <button type="button" class="btn btn-info fullbutton login" id="login">Entrar</button>\n        <a class="text-center" id="goToRegisterPage">¿No tienes cuenta?</a>\n        <a class="text-center">¿Olvidó su contraseña?</a>\n      </div>\n    </div>\n  </div>');
+}));                                                                                                                   // 28
+                                                                                                                       // 29
+Template.__checkName("registerNew");                                                                                   // 30
+Template["registerNew"] = new Template("Template.registerNew", (function() {                                           // 31
+  var view = this;                                                                                                     // 32
+  return HTML.Raw('<h1 class="text-center titleFormLogin">Bienvenido</h1>\n\n  <div class="user-container formRegisterNew">\n    \n    <div class="panel panel-default userBox">\n      <div class="panel-body">\n        <form id="registerForm">\n          <div class="input-group form-group">\n            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>\n            <input name="nameProfile" class="form-control input-login required" id="signupUsername" placeholder="Nombre" required="true">\n          </div>\n          <div class="input-group form-group">\n            <span class="input-group-addon">@</span>\n            <input name="nameUserProfile" class="form-control input-login required" id="signupNameProfile" placeholder="Usuario" required="true">\n          </div>\n          <div class="input-group form-group">\n            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>\n            <input name="emailUser" class="form-control input-login required" id="signupEmail" placeholder="Email" type="email" required="true">\n          </div>\n          <div class="input-group form-group">\n            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>\n            <input name="password" class="form-control input-login" id="signupPassword" placeholder="Contraseña" type="password" required="true">\n          </div>\n          <div class="input-group form-group">\n            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>\n            <input name="password2" class="form-control input-login" id="signupPassword2" placeholder=" Repite la contraseña" type="password" required="true">\n          </div>\n        </form>\n        <button type="submit" class="btn btn-info fullbutton" id="signup">Regístrate</button> \n\n        <a class="text-center" id="goToLogInPage">¿Ya tienes cuenta?</a>\n      </div>\n    </div>\n  </div>');
+}));                                                                                                                   // 34
+                                                                                                                       // 35
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.userProfile.js":function(){
@@ -1764,11 +2041,11 @@ Template["userProfile"] = new Template("Template.userProfile", (function() {    
         }, Blaze.View("lookup:tweets", function() {                                                                    // 162
           return Spacebars.mustache(view.lookup("tweets"));                                                            // 163
         })), "\n                  ", HTML.TD({                                                                         // 164
-          class: "tableContent"                                                                                        // 165
+          class: "tableContent showFollowings"                                                                         // 165
         }, Blaze.View("lookup:following", function() {                                                                 // 166
           return Spacebars.mustache(view.lookup("following"));                                                         // 167
         })), "\n                  ", HTML.TD({                                                                         // 168
-          class: "tableContent"                                                                                        // 169
+          class: "tableContent showFollowers"                                                                          // 169
         }, Blaze.View("lookup:followers", function() {                                                                 // 170
           return Spacebars.mustache(view.lookup("followers"));                                                         // 171
         })), "\n                "), "\n              "), "\n              \n              ", HTML.DIV({                // 172
@@ -1806,6 +2083,44 @@ Template["userProfile"] = new Template("Template.userProfile", (function() {    
   });                                                                                                                  // 204
 }));                                                                                                                   // 205
                                                                                                                        // 206
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.videoTrans.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/template.videoTrans.js                                                                      //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+                                                                                                                       // 1
+Template.__checkName("videoTrans");                                                                                    // 2
+Template["videoTrans"] = new Template("Template.videoTrans", (function() {                                             // 3
+  var view = this;                                                                                                     // 4
+  return Blaze.If(function() {                                                                                         // 5
+    return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
+  }, function() {                                                                                                      // 7
+    return [ "\n  ", Blaze.View("lookup:chargeVideo", function() {                                                     // 8
+      return Spacebars.mustache(view.lookup("chargeVideo"));                                                           // 9
+    }), "\n    ", HTML.DIV({                                                                                           // 10
+      class: "user-container"                                                                                          // 11
+    }, "\n      ", HTML.DIV({                                                                                          // 12
+      class: "panel panel-default userBox"                                                                             // 13
+    }, "\n        ", HTML.DIV({                                                                                        // 14
+      class: "panel-body"                                                                                              // 15
+    }, "\n          ", HTML.DIV({                                                                                      // 16
+      class: "row col s12"                                                                                             // 17
+    }, "\n            ", HTML.VIDEO({                                                                                  // 18
+      width: "550",                                                                                                    // 19
+      height: "270",                                                                                                   // 20
+      autoplay: "true",                                                                                                // 21
+      style: "padding-right:160px;"                                                                                    // 22
+    }, "\n              Your browser does not support HTML5 video.\n            "), "\n          "), "\n        "), "\n      "), "\n    "), "\n  " ];
+  }, function() {                                                                                                      // 24
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 25
+  });                                                                                                                  // 26
+}));                                                                                                                   // 27
+                                                                                                                       // 28
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.whatsAppNotif.js":function(){
@@ -2200,7 +2515,147 @@ Template.editProfile.helpers({                                                  
 });                                                                                                                    // 69
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"followUsers.js":function(){
+},"followAnts.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/followAnts.js                                                                               //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+Template.followAnts.onCreated(function () {                                                                            // 1
+  Session.set('notificationsModeOn', true);                                                                            // 2
+});                                                                                                                    // 3
+                                                                                                                       //
+Template.followAnts.helpers({                                                                                          // 5
+  'setStyleNavBar': function () {                                                                                      // 6
+    function setStyleNavBar() {                                                                                        // 6
+      var widthNav = $(window).width();                                                                                // 7
+      //RESTAMOS DOS PIXELES POR LOS BORDES                                                                            // 8
+      widthNav -= 2;                                                                                                   // 9
+      return widthNav / 2 + "px";                                                                                      // 10
+    }                                                                                                                  // 11
+                                                                                                                       //
+    return setStyleNavBar;                                                                                             // 6
+  }(),                                                                                                                 // 6
+                                                                                                                       //
+  'getDataFollowAnts': function () {                                                                                   // 13
+    function getDataFollowAnts() {                                                                                     // 13
+      Meteor.call('getFollowers', this.user, function (err, res) {                                                     // 14
+        Session.set('followers', res);                                                                                 // 15
+      });                                                                                                              // 16
+                                                                                                                       //
+      Meteor.call('getFollowings', this.user, function (err, res) {                                                    // 18
+        Session.set('followings', res);                                                                                // 19
+      });                                                                                                              // 20
+                                                                                                                       //
+      foundFollowers = Session.get('followers');                                                                       // 22
+      foundFollowings = Session.get('followings');                                                                     // 23
+                                                                                                                       //
+      if (foundFollowers.length === 0) {                                                                               // 25
+        Session.set('noFollowers', true);                                                                              // 26
+      } else {                                                                                                         // 27
+        Session.set('noFollowers', false);                                                                             // 28
+      }                                                                                                                // 29
+                                                                                                                       //
+      if (foundFollowings) {                                                                                           // 31
+        if (foundFollowings.length === 0) {                                                                            // 32
+          Session.set('noFollowings', true);                                                                           // 33
+        } else {                                                                                                       // 34
+          Session.set('noFollowings', false);                                                                          // 35
+        }                                                                                                              // 36
+      }                                                                                                                // 37
+                                                                                                                       //
+      Session.set('showFollowers', this.mode);                                                                         // 39
+      countOrientationCard = 0;                                                                                        // 40
+    }                                                                                                                  // 41
+                                                                                                                       //
+    return getDataFollowAnts;                                                                                          // 13
+  }(),                                                                                                                 // 13
+                                                                                                                       //
+  'getWhatShow': function () {                                                                                         // 43
+    function getWhatShow() {                                                                                           // 43
+      return Session.get('showFollowers');                                                                             // 44
+    }                                                                                                                  // 45
+                                                                                                                       //
+    return getWhatShow;                                                                                                // 43
+  }(),                                                                                                                 // 43
+                                                                                                                       //
+  'noFollowers': function () {                                                                                         // 47
+    function noFollowers() {                                                                                           // 47
+      return Session.get('noFollowers');                                                                               // 48
+    }                                                                                                                  // 49
+                                                                                                                       //
+    return noFollowers;                                                                                                // 47
+  }(),                                                                                                                 // 47
+                                                                                                                       //
+  'noFollowings': function () {                                                                                        // 51
+    function noFollowings() {                                                                                          // 51
+      return Session.get('noFollowings');                                                                              // 52
+    }                                                                                                                  // 53
+                                                                                                                       //
+    return noFollowings;                                                                                               // 51
+  }(),                                                                                                                 // 51
+                                                                                                                       //
+  'btnShowFollowers': function () {                                                                                    // 55
+    function btnShowFollowers() {                                                                                      // 55
+      return Session.get('showFollowers');                                                                             // 56
+    }                                                                                                                  // 57
+                                                                                                                       //
+    return btnShowFollowers;                                                                                           // 55
+  }(),                                                                                                                 // 55
+                                                                                                                       //
+  'showFollowers': function () {                                                                                       // 59
+    function showFollowers() {                                                                                         // 59
+      return foundFollowers;                                                                                           // 60
+    }                                                                                                                  // 61
+                                                                                                                       //
+    return showFollowers;                                                                                              // 59
+  }(),                                                                                                                 // 59
+                                                                                                                       //
+  'showFollowings': function () {                                                                                      // 63
+    function showFollowings() {                                                                                        // 63
+      return foundFollowings;                                                                                          // 64
+    }                                                                                                                  // 65
+                                                                                                                       //
+    return showFollowings;                                                                                             // 63
+  }(),                                                                                                                 // 63
+                                                                                                                       //
+  'orientationCard': function () {                                                                                     // 67
+    function orientationCard() {                                                                                       // 67
+      countOrientationCard++;                                                                                          // 68
+      if (countOrientationCard % 2 === 0) {                                                                            // 69
+        return false;                                                                                                  // 70
+      } else {                                                                                                         // 71
+        return true;                                                                                                   // 72
+      }                                                                                                                // 73
+    }                                                                                                                  // 75
+                                                                                                                       //
+    return orientationCard;                                                                                            // 67
+  }()                                                                                                                  // 67
+});                                                                                                                    // 5
+                                                                                                                       //
+Template.followAnts.events({                                                                                           // 78
+  'click #btnShowFollowings': function () {                                                                            // 79
+    function clickBtnShowFollowings() {                                                                                // 79
+      Session.set('showFollowers', false);                                                                             // 80
+      countOrientationCard = 0;                                                                                        // 81
+    }                                                                                                                  // 82
+                                                                                                                       //
+    return clickBtnShowFollowings;                                                                                     // 79
+  }(),                                                                                                                 // 79
+  'click #btnShowFollowers': function () {                                                                             // 83
+    function clickBtnShowFollowers() {                                                                                 // 83
+      Session.set('showFollowers', true);                                                                              // 84
+      countOrientationCard = 0;                                                                                        // 85
+    }                                                                                                                  // 86
+                                                                                                                       //
+    return clickBtnShowFollowers;                                                                                      // 83
+  }()                                                                                                                  // 83
+});                                                                                                                    // 78
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"followUsers.js":["babel-runtime/regenerator",function(require,exports,module){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
@@ -2208,60 +2663,213 @@ Template.editProfile.helpers({                                                  
 //                                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
-Template.followUsers.events({                                                                                          // 1
-  'submit form': function () {                                                                                         // 2
-    function submitForm(event) {                                                                                       // 2
+var _regeneratorRuntime;module.import('babel-runtime/regenerator',{"default":function(v){_regeneratorRuntime=v}});     //
+var arrDataProfile = [];                                                                                               // 1
+var arrRecUsers = [];                                                                                                  // 2
                                                                                                                        //
-      var searchUser = event.target.searchUser.value;                                                                  // 4
-      var foundUser = Meteor.call('findUser', searchUser, function (err, res) {                                        // 5
-        if (res) Session.set('foundUser', res);                                                                        // 6
-      });                                                                                                              // 7
-      return false;                                                                                                    // 8
-    }                                                                                                                  // 9
+Template.followUsers.onRendered(function () {                                                                          // 4
+  (function () {                                                                                                       // 5
+    function _callee() {                                                                                               // 5
+      var i;                                                                                                           // 5
+      return _regeneratorRuntime.async(function () {                                                                   // 5
+        function _callee$(_context) {                                                                                  // 5
+          while (1) {                                                                                                  // 5
+            switch (_context.prev = _context.next) {                                                                   // 5
+              case 0:                                                                                                  // 5
+                _context.next = 2;                                                                                     // 5
+                return _regeneratorRuntime.awrap(Meteor.callPromise('recommendUsers'));                                // 5
                                                                                                                        //
-    return submitForm;                                                                                                 // 2
-  }(),                                                                                                                 // 2
+              case 2:                                                                                                  // 5
+                recListUsers = _context.sent;                                                                          // 6
                                                                                                                        //
-  'click #follow': function () {                                                                                       // 11
-    function clickFollow() {                                                                                           // 11
-      Meteor.call('followUser', Session.get('foundUser').username);                                                    // 12
-    }                                                                                                                  // 13
                                                                                                                        //
-    return clickFollow;                                                                                                // 11
-  }(),                                                                                                                 // 11
+                for (i = 0; i < recListUsers.length; i++) {                                                            // 8
+                  if (recListUsers[i].username != Session.get('currentUser')) {                                        // 9
+                    arrRecUsers.push(recListUsers[i]);                                                                 // 10
+                  };                                                                                                   // 11
+                }                                                                                                      // 12
                                                                                                                        //
-  'click #followRec': function () {                                                                                    // 15
-    function clickFollowRec(event) {                                                                                   // 15
-      Meteor.call('followUser', this.username);                                                                        // 16
-    }                                                                                                                  // 17
+                i = 0;                                                                                                 // 14
                                                                                                                        //
-    return clickFollowRec;                                                                                             // 15
-  }()                                                                                                                  // 15
-});                                                                                                                    // 1
+              case 5:                                                                                                  // 5
+                if (!(i < arrRecUsers.length)) {                                                                       // 5
+                  _context.next = 13;                                                                                  // 5
+                  break;                                                                                               // 5
+                }                                                                                                      // 5
                                                                                                                        //
-Template.followUsers.helpers({                                                                                         // 20
-  'foundUser': function () {                                                                                           // 21
-    function foundUser() {                                                                                             // 21
-      return Session.get('foundUser');                                                                                 // 22
-    }                                                                                                                  // 23
+                _context.next = 8;                                                                                     // 5
+                return _regeneratorRuntime.awrap(Meteor.callPromise('findUserData', arrRecUsers[i].username));         // 5
                                                                                                                        //
-    return foundUser;                                                                                                  // 21
-  }(),                                                                                                                 // 21
+              case 8:                                                                                                  // 5
+                dataUserFound = _context.sent;                                                                         // 15
                                                                                                                        //
-  'recommendedUsers': function () {                                                                                    // 25
-    function recommendedUsers() {                                                                                      // 25
-      return Session.get('recommendedUsers');                                                                          // 26
-    }                                                                                                                  // 27
+                arrDataProfile.push(dataUserFound);                                                                    // 16
                                                                                                                        //
-    return recommendedUsers;                                                                                           // 25
-  }()                                                                                                                  // 25
-});                                                                                                                    // 20
+              case 10:                                                                                                 // 5
+                i++;                                                                                                   // 14
+                _context.next = 5;                                                                                     // 5
+                break;                                                                                                 // 5
                                                                                                                        //
-Template.followUsers.onRendered(function () {                                                                          // 31
-  Meteor.call('recommendUsers', function (err, res) {                                                                  // 32
-    Session.set('recommendedUsers', res);                                                                              // 33
-  });                                                                                                                  // 34
-});                                                                                                                    // 35
+              case 13:                                                                                                 // 5
+                                                                                                                       //
+                Session.set('recommendedUsers', recListUsers);                                                         // 19
+                Session.set('userDataRecProfile', arrDataProfile);                                                     // 20
+                                                                                                                       //
+              case 15:                                                                                                 // 5
+              case 'end':                                                                                              // 5
+                return _context.stop();                                                                                // 5
+            }                                                                                                          // 5
+          }                                                                                                            // 5
+        }                                                                                                              // 5
+                                                                                                                       //
+        return _callee$;                                                                                               // 5
+      }(), null, this);                                                                                                // 5
+    }                                                                                                                  // 5
+                                                                                                                       //
+    return _callee;                                                                                                    // 5
+  })()();                                                                                                              // 5
+});                                                                                                                    // 23
+                                                                                                                       //
+Template.followUsers.events({                                                                                          // 25
+  'click #searchBtn': function () {                                                                                    // 26
+    function clickSearchBtn(event) {                                                                                   // 26
+                                                                                                                       //
+      var searchUser = $('#searchUser').val();                                                                         // 28
+      var foundUser = Meteor.call('findUser', searchUser, function (err, res) {                                        // 29
+        if (res) {                                                                                                     // 30
+          Meteor.call('findUserData', res.username, function (err, res) {                                              // 31
+            if (res) {                                                                                                 // 32
+              Session.set('foundUser', res);                                                                           // 33
+              Meteor.call('findUserImg', res.userImg, function (err, res) {                                            // 34
+                Session.set('imgFound', res);                                                                          // 35
+              });                                                                                                      // 36
+            }                                                                                                          // 37
+          });                                                                                                          // 38
+        }                                                                                                              // 39
+      });                                                                                                              // 40
+      return false;                                                                                                    // 41
+    }                                                                                                                  // 42
+                                                                                                                       //
+    return clickSearchBtn;                                                                                             // 26
+  }(),                                                                                                                 // 26
+                                                                                                                       //
+  'click #follow': function () {                                                                                       // 44
+    function clickFollow() {                                                                                           // 44
+      //ANTES DE SEGUIR A DICHO USUARIO HAY QUE COMPROBAR SI YA LO ESTAMOS SIGUIENDO                                   // 45
+      Meteor.call('followUser', Session.get('foundUser').username);                                                    // 46
+    }                                                                                                                  // 47
+                                                                                                                       //
+    return clickFollow;                                                                                                // 44
+  }(),                                                                                                                 // 44
+                                                                                                                       //
+  'click #followRec': function () {                                                                                    // 49
+    function clickFollowRec() {                                                                                        // 49
+      Meteor.call('followUser', this.userNameProfile);                                                                 // 50
+      //LOCALIZAMOS EL USUARIO QUE ACABAMOS DE SEGUIR Y LO ELIMINAMOS DE LA LISTA DE RECOMENDADOS                      // 51
+      var posUser = recUsersList.indexOf(this.userNameProfile);                                                        // 52
+      recUsersList.splice(posUser, 1);                                                                                 // 53
+      Session.set('recommendedUsers', recUsersList);                                                                   // 54
+    }                                                                                                                  // 55
+                                                                                                                       //
+    return clickFollowRec;                                                                                             // 49
+  }(),                                                                                                                 // 49
+                                                                                                                       //
+  'change #searchUser': function () {                                                                                  // 57
+    function changeSearchUser() {                                                                                      // 57
+      if ($('#searchUser').val().length === 0) {                                                                       // 58
+        Session.set('foundUser', '');                                                                                  // 59
+      };                                                                                                               // 60
+    }                                                                                                                  // 61
+                                                                                                                       //
+    return changeSearchUser;                                                                                           // 57
+  }()                                                                                                                  // 57
+                                                                                                                       //
+});                                                                                                                    // 25
+                                                                                                                       //
+Template.followUsers.helpers({                                                                                         // 65
+  'foundUser': function () {                                                                                           // 66
+    function foundUser() {                                                                                             // 66
+      return Session.get('foundUser');                                                                                 // 67
+    }                                                                                                                  // 68
+                                                                                                                       //
+    return foundUser;                                                                                                  // 66
+  }(),                                                                                                                 // 66
+                                                                                                                       //
+  'recommendedUsers': function () {                                                                                    // 70
+    function recommendedUsers() {                                                                                      // 70
+      return Session.get('userDataRecProfile');                                                                        // 71
+    }                                                                                                                  // 72
+                                                                                                                       //
+    return recommendedUsers;                                                                                           // 70
+  }(),                                                                                                                 // 70
+                                                                                                                       //
+  'recUsersLis': function () {                                                                                         // 74
+    function recUsersLis() {                                                                                           // 74
+      if (Session.get('recommendedUsers').length > 0) {                                                                // 75
+        return true;                                                                                                   // 76
+      } else {                                                                                                         // 77
+        return false;                                                                                                  // 78
+      };                                                                                                               // 79
+    }                                                                                                                  // 80
+                                                                                                                       //
+    return recUsersLis;                                                                                                // 74
+  }(),                                                                                                                 // 74
+  'mineUser': function () {                                                                                            // 81
+    function mineUser(user) {                                                                                          // 81
+      if (user === Session.get('currentUser')) {                                                                       // 82
+        return false;                                                                                                  // 83
+      } else {                                                                                                         // 84
+        return true;                                                                                                   // 85
+      }                                                                                                                // 86
+    }                                                                                                                  // 87
+                                                                                                                       //
+    return mineUser;                                                                                                   // 81
+  }(),                                                                                                                 // 81
+                                                                                                                       //
+  //REVISAR !!!!!                                                                                                      // 89
+  'getImgProfile': function () {                                                                                       // 90
+    function getImgProfile(imgId) {                                                                                    // 90
+      var imgFound = "imgPath";                                                                                        // 91
+      var imgFoundSession = Session.get('imgFound');                                                                   // 92
+      console.log(imgId);                                                                                              // 93
+                                                                                                                       //
+      if (imgId === '') {                                                                                              // 95
+        return "/profileImgTest.png";                                                                                  // 96
+      } else if (imgFoundSession) {                                                                                    // 97
+        return imgFoundSession;                                                                                        // 98
+      } else {                                                                                                         // 99
+        return Meteor.call('findUserImg', imgId);                                                                      // 100
+      }                                                                                                                // 101
+    }                                                                                                                  // 102
+                                                                                                                       //
+    return getImgProfile;                                                                                              // 90
+  }()                                                                                                                  // 90
+});                                                                                                                    // 65
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}],"mainPage.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/mainPage.js                                                                                 //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+Template.mainPage.onCreated(function () {                                                                              // 1
+	Session.set('pathActualApp', window.location.pathname);                                                               // 2
+});                                                                                                                    // 3
+                                                                                                                       //
+Template.mainPage.helpers({                                                                                            // 5
+	'mainPage': function () {                                                                                             // 6
+		function mainPage() {                                                                                                // 6
+			if (Session.get('pathActualApp') === "/") {                                                                         // 7
+				return true;                                                                                                       // 8
+			}                                                                                                                   // 9
+		}                                                                                                                    // 10
+                                                                                                                       //
+		return mainPage;                                                                                                     // 6
+	}()                                                                                                                   // 6
+});                                                                                                                    // 5
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"navBarTemplate.js":function(){
@@ -2301,156 +2909,168 @@ Template.navBarTemplate.onRendered(function() {                                 
 Template.navBarTemplate.events({                                                                                       // 28
 	'click #recommendationsBtn': function () {                                                                            // 29
 		function clickRecommendationsBtn() {                                                                                 // 29
-			//console.log("A quien seguir");                                                                                    // 30
-		}                                                                                                                    // 31
+			//Contraer el dropDownMenu                                                                                          // 30
+			$('#btnMenuNavBar').click();                                                                                        // 31
+			Session.set('pathActualApp', '/whoToFollow');                                                                       // 32
+		}                                                                                                                    // 33
                                                                                                                        //
 		return clickRecommendationsBtn;                                                                                      // 29
 	}(),                                                                                                                  // 29
-	'click #imgProfile': function () {                                                                                    // 32
-		function clickImgProfile() {                                                                                         // 32
-			window.location = "/Profile/" + Session.get('currentUser');                                                         // 33
-		}                                                                                                                    // 34
+	'click #imgProfile': function () {                                                                                    // 34
+		function clickImgProfile() {                                                                                         // 34
+			window.location = "/Profile/" + Session.get('currentUser');                                                         // 35
+		}                                                                                                                    // 36
                                                                                                                        //
-		return clickImgProfile;                                                                                              // 32
-	}(),                                                                                                                  // 32
-	'click #imgLogTwiiterClone': function () {                                                                            // 35
-		function clickImgLogTwiiterClone() {                                                                                 // 35
-			window.location = "/";                                                                                              // 36
-		}                                                                                                                    // 37
+		return clickImgProfile;                                                                                              // 34
+	}(),                                                                                                                  // 34
+	'click #imgLogTwiiterClone': function () {                                                                            // 37
+		function clickImgLogTwiiterClone() {                                                                                 // 37
+			window.location = "/";                                                                                              // 38
+		}                                                                                                                    // 39
                                                                                                                        //
-		return clickImgLogTwiiterClone;                                                                                      // 35
-	}(),                                                                                                                  // 35
-	'show.bs.collapse': function () {                                                                                     // 38
-		function showBsCollapse() {                                                                                          // 38
-			Session.set('navBarCollapse', true);                                                                                // 39
-		}                                                                                                                    // 40
+		return clickImgLogTwiiterClone;                                                                                      // 37
+	}(),                                                                                                                  // 37
+	'show.bs.collapse': function () {                                                                                     // 40
+		function showBsCollapse() {                                                                                          // 40
+			Session.set('navBarCollapse', true);                                                                                // 41
+		}                                                                                                                    // 42
                                                                                                                        //
-		return showBsCollapse;                                                                                               // 38
-	}(),                                                                                                                  // 38
-	'hide.bs.collapse': function () {                                                                                     // 41
-		function hideBsCollapse() {                                                                                          // 41
-			Session.set('navBarCollapse', false);                                                                               // 42
-		}                                                                                                                    // 43
+		return showBsCollapse;                                                                                               // 40
+	}(),                                                                                                                  // 40
+	'hide.bs.collapse': function () {                                                                                     // 43
+		function hideBsCollapse() {                                                                                          // 43
+			Session.set('navBarCollapse', false);                                                                               // 44
+		}                                                                                                                    // 45
                                                                                                                        //
-		return hideBsCollapse;                                                                                               // 41
-	}(),                                                                                                                  // 41
-	'click #btnNewTweet': function () {                                                                                   // 44
-		function clickBtnNewTweet() {                                                                                        // 44
-			Session.set('commentMode', false);                                                                                  // 45
-		}                                                                                                                    // 46
+		return hideBsCollapse;                                                                                               // 43
+	}(),                                                                                                                  // 43
+	'click #btnNewTweet': function () {                                                                                   // 46
+		function clickBtnNewTweet() {                                                                                        // 46
+			Session.set('commentMode', false);                                                                                  // 47
+		}                                                                                                                    // 48
                                                                                                                        //
-		return clickBtnNewTweet;                                                                                             // 44
-	}(),                                                                                                                  // 44
-	'click #btnNewTwiit': function () {                                                                                   // 47
-		function clickBtnNewTwiit() {                                                                                        // 47
-			Session.set('commentMode', false);                                                                                  // 48
-		}                                                                                                                    // 49
+		return clickBtnNewTweet;                                                                                             // 46
+	}(),                                                                                                                  // 46
+	'click #btnNewTwiit': function () {                                                                                   // 49
+		function clickBtnNewTwiit() {                                                                                        // 49
+			Session.set('commentMode', false);                                                                                  // 50
+		}                                                                                                                    // 51
                                                                                                                        //
-		return clickBtnNewTwiit;                                                                                             // 47
-	}()                                                                                                                   // 47
-});                                                                                                                    // 28
-                                                                                                                       //
-Template.navBarTemplate.helpers({                                                                                      // 52
-	'notificationCount': function () {                                                                                    // 53
-		function notificationCount() {                                                                                       // 53
-			console.log("NUMERO DE NOTIFICACIONES NORMALES");                                                                   // 54
-			var resultNotif = UserUtils.findNumberNotif(Meteor.user().username);                                                // 55
-			return resultNotif;                                                                                                 // 56
+		return clickBtnNewTwiit;                                                                                             // 49
+	}(),                                                                                                                  // 49
+	'click #videoTrans': function () {                                                                                    // 52
+		function clickVideoTrans() {                                                                                         // 52
+			console.log(Session.get('currentUser'));                                                                            // 53
+			if (Session.get('currentUser') === "Nachosizle") {                                                                  // 54
+				window.location = "/videoTrans";                                                                                   // 55
+			}                                                                                                                   // 56
 		}                                                                                                                    // 57
                                                                                                                        //
-		return notificationCount;                                                                                            // 53
-	}(),                                                                                                                  // 53
-	'whatsNotifCount': function () {                                                                                      // 58
-		function whatsNotifCount() {                                                                                         // 58
-			//OBTENEMOS EL NUMERO DE NOTIFICACIONES DE LAS PETICIONES DE WHATSAPP Y LAS                                         // 59
-			//RESPUESTAS A LAS PETICIONES REALIZADAS POR EL USUARIO                                                             // 60
+		return clickVideoTrans;                                                                                              // 52
+	}()                                                                                                                   // 52
+});                                                                                                                    // 28
+                                                                                                                       //
+Template.navBarTemplate.helpers({                                                                                      // 60
+	'notificationCount': function () {                                                                                    // 61
+		function notificationCount() {                                                                                       // 61
+			console.log("NUMERO DE NOTIFICACIONES NORMALES");                                                                   // 62
+			var resultNotif = UserUtils.findNumberNotif(Meteor.user().username);                                                // 63
+			return resultNotif;                                                                                                 // 64
+		}                                                                                                                    // 65
+                                                                                                                       //
+		return notificationCount;                                                                                            // 61
+	}(),                                                                                                                  // 61
+	'whatsNotifCount': function () {                                                                                      // 66
+		function whatsNotifCount() {                                                                                         // 66
+			//OBTENEMOS EL NUMERO DE NOTIFICACIONES DE LAS PETICIONES DE WHATSAPP Y LAS                                         // 67
+			//RESPUESTAS A LAS PETICIONES REALIZADAS POR EL USUARIO                                                             // 68
 			resultNotifRequest = Notifications.find({ recepNotif: Meteor.user().username, read: false, typeOfNotif: "whatsAppNotif" });
 			resultNotifResponse = Notifications.find({ recepNotif: Meteor.user().username, read: false, typeOfNotif: "responseWhatsAppNotif" });
-			auxTotalCount = 0;                                                                                                  // 63
+			auxTotalCount = 0;                                                                                                  // 71
                                                                                                                        //
-			if (resultNotifRequest.count() > 0) {                                                                               // 65
-				auxTotalCount = resultNotifRequest.count();                                                                        // 66
-				if (resultNotifResponse.count() > 0) {                                                                             // 67
-					auxTotalCount += resultNotifResponse.count();                                                                     // 68
-				};                                                                                                                 // 69
-			} else {                                                                                                            // 70
-				if (resultNotifResponse.count() > 0) {                                                                             // 71
-					auxTotalCount = resultNotifResponse.count();                                                                      // 72
-				};                                                                                                                 // 73
-			}                                                                                                                   // 74
-			//NO SE ESTA OBTENIENDO CORRECTAMENTE ESTE TIPO DE NOTIF                                                            // 75
-			//REVISAR publications.js                                                                                           // 76
-			//console.log(resultNotifResponse);                                                                                 // 77
-			//console.log(resultNotifResponse.count());                                                                         // 78
+			if (resultNotifRequest.count() > 0) {                                                                               // 73
+				auxTotalCount = resultNotifRequest.count();                                                                        // 74
+				if (resultNotifResponse.count() > 0) {                                                                             // 75
+					auxTotalCount += resultNotifResponse.count();                                                                     // 76
+				};                                                                                                                 // 77
+			} else {                                                                                                            // 78
+				if (resultNotifResponse.count() > 0) {                                                                             // 79
+					auxTotalCount = resultNotifResponse.count();                                                                      // 80
+				};                                                                                                                 // 81
+			}                                                                                                                   // 82
+			//NO SE ESTA OBTENIENDO CORRECTAMENTE ESTE TIPO DE NOTIF                                                            // 83
+			//REVISAR publications.js                                                                                           // 84
+			//console.log(resultNotifResponse);                                                                                 // 85
+			//console.log(resultNotifResponse.count());                                                                         // 86
                                                                                                                        //
-			//DEVOLVEMOS LA SUMA TOTAL DE LAS NOTIFICACIONES                                                                    // 80
-			if (auxTotalCount > 0) {                                                                                            // 81
-				return auxTotalCount;                                                                                              // 82
-			}                                                                                                                   // 83
-		}                                                                                                                    // 84
+			//DEVOLVEMOS LA SUMA TOTAL DE LAS NOTIFICACIONES                                                                    // 88
+			if (auxTotalCount > 0) {                                                                                            // 89
+				return auxTotalCount;                                                                                              // 90
+			}                                                                                                                   // 91
+		}                                                                                                                    // 92
                                                                                                                        //
-		return whatsNotifCount;                                                                                              // 58
-	}(),                                                                                                                  // 58
-	'whatsAppReq': function () {                                                                                          // 85
-		function whatsAppReq() {                                                                                             // 85
-			console.log("NUMERO DE NOTIFICACIONES DE PETICIONES DE WHATSAPP");                                                  // 86
-			console.log("Req: " + resultNotifRequest.count());                                                                  // 87
-			console.log("Res: " + resultNotifResponse.count());                                                                 // 88
-			var cont = 0;                                                                                                       // 89
-			var req = [];                                                                                                       // 90
-			var res = [];                                                                                                       // 91
+		return whatsNotifCount;                                                                                              // 66
+	}(),                                                                                                                  // 66
+	'whatsAppReq': function () {                                                                                          // 93
+		function whatsAppReq() {                                                                                             // 93
+			console.log("NUMERO DE NOTIFICACIONES DE PETICIONES DE WHATSAPP");                                                  // 94
+			console.log("Req: " + resultNotifRequest.count());                                                                  // 95
+			console.log("Res: " + resultNotifResponse.count());                                                                 // 96
+			var cont = 0;                                                                                                       // 97
+			var req = [];                                                                                                       // 98
+			var res = [];                                                                                                       // 99
                                                                                                                        //
-			resultNotifRequest.forEach(function (item) {                                                                        // 93
-				req.push(item._id);                                                                                                // 94
-				cont++;                                                                                                            // 95
-			});                                                                                                                 // 96
+			resultNotifRequest.forEach(function (item) {                                                                        // 101
+				req.push(item._id);                                                                                                // 102
+				cont++;                                                                                                            // 103
+			});                                                                                                                 // 104
                                                                                                                        //
-			resultNotifResponse.forEach(function (item) {                                                                       // 98
-				res.push(item._id);                                                                                                // 99
-				cont++;                                                                                                            // 100
-			});                                                                                                                 // 101
+			resultNotifResponse.forEach(function (item) {                                                                       // 106
+				res.push(item._id);                                                                                                // 107
+				cont++;                                                                                                            // 108
+			});                                                                                                                 // 109
                                                                                                                        //
-			if (cont > 0) {                                                                                                     // 103
-				Session.set('whatsAppRequest', true);                                                                              // 104
-				Session.set('requestWhats', req);                                                                                  // 105
-				Session.set('responseWhats', res);                                                                                 // 106
-				return true;                                                                                                       // 107
-			} else {                                                                                                            // 108
-				Session.set('whatsAppRequest', false);                                                                             // 109
-				return false;                                                                                                      // 110
-			}                                                                                                                   // 111
-		}                                                                                                                    // 112
+			if (cont > 0) {                                                                                                     // 111
+				Session.set('whatsAppRequest', true);                                                                              // 112
+				Session.set('requestWhats', req);                                                                                  // 113
+				Session.set('responseWhats', res);                                                                                 // 114
+				return true;                                                                                                       // 115
+			} else {                                                                                                            // 116
+				Session.set('whatsAppRequest', false);                                                                             // 117
+				return false;                                                                                                      // 118
+			}                                                                                                                   // 119
+		}                                                                                                                    // 120
                                                                                                                        //
-		return whatsAppReq;                                                                                                  // 85
-	}(),                                                                                                                  // 85
-	'infoStateCollapseNavBar': function () {                                                                              // 113
-		function infoStateCollapseNavBar() {                                                                                 // 113
-			return Session.get('navBarCollapse');                                                                               // 114
-		}                                                                                                                    // 115
+		return whatsAppReq;                                                                                                  // 93
+	}(),                                                                                                                  // 93
+	'infoStateCollapseNavBar': function () {                                                                              // 121
+		function infoStateCollapseNavBar() {                                                                                 // 121
+			return Session.get('navBarCollapse');                                                                               // 122
+		}                                                                                                                    // 123
                                                                                                                        //
-		return infoStateCollapseNavBar;                                                                                      // 113
-	}(),                                                                                                                  // 113
-	'userImgFound': function () {                                                                                         // 116
-		function userImgFound() {                                                                                            // 116
-			Meteor.call('findUserData', Meteor.user().username, function (err, res) {                                           // 117
-				if (res.userImg) {                                                                                                 // 118
-					Meteor.call('findUserImg', res.userImg, function (err, res) {                                                     // 119
-						$('#imgProfile').attr("src", res);                                                                               // 120
-					});                                                                                                               // 121
-				} else {                                                                                                           // 122
-					$('#imgProfile').attr("src", "/profileImgTest.png");                                                              // 123
-				}                                                                                                                  // 124
-			});                                                                                                                 // 126
-		}                                                                                                                    // 127
+		return infoStateCollapseNavBar;                                                                                      // 121
+	}(),                                                                                                                  // 121
+	'userImgFound': function () {                                                                                         // 124
+		function userImgFound() {                                                                                            // 124
+			Meteor.call('findUserData', Meteor.user().username, function (err, res) {                                           // 125
+				if (res.userImg) {                                                                                                 // 126
+					Meteor.call('findUserImg', res.userImg, function (err, res) {                                                     // 127
+						$('#imgProfile').attr("src", res);                                                                               // 128
+					});                                                                                                               // 129
+				} else {                                                                                                           // 130
+					$('#imgProfile').attr("src", "/profileImgTest.png");                                                              // 131
+				}                                                                                                                  // 132
+			});                                                                                                                 // 134
+		}                                                                                                                    // 135
                                                                                                                        //
-		return userImgFound;                                                                                                 // 116
-	}()                                                                                                                   // 116
-});                                                                                                                    // 52
-//PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                    // 129
-$(window).resize(function () {                                                                                         // 130
-	console.log("Change Display Size");                                                                                   // 131
-	Session.set('sizeDisplay', $(window).width());                                                                        // 132
-});                                                                                                                    // 133
+		return userImgFound;                                                                                                 // 124
+	}()                                                                                                                   // 124
+});                                                                                                                    // 60
+//PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA                                                                    // 137
+$(window).resize(function () {                                                                                         // 138
+	console.log("Change Display Size");                                                                                   // 139
+	Session.set('sizeDisplay', $(window).width());                                                                        // 140
+});                                                                                                                    // 141
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"notifications.js":function(){
@@ -3157,9 +3777,9 @@ if (Meteor.isClient) {                                                          
 		charClass: function () {                                                                                             // 53
 			function charClass() {                                                                                              // 53
 				if (Session.get('numChars') > 140) {                                                                               // 54
-					return 'errCharCount'; // o el nombre que le disteis en el fichero css                                            // 55
+					return 'errCharCount';                                                                                            // 55
 				} else {                                                                                                           // 56
-					return 'charCount'; //o el nombre que le disteis en el fichero css                                                // 57
+					return 'charCount';                                                                                               // 57
 				}                                                                                                                  // 58
 			}                                                                                                                   // 59
                                                                                                                        //
@@ -3960,56 +4580,140 @@ Template.twiitPageNew.events({                                                  
 //                                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
-Template.userManagement.events({                                                                                       // 1
-  'click #signup': function () {                                                                                       // 2
-    function clickSignup() {                                                                                           // 2
-      var user = {                                                                                                     // 3
-        username: $('#signup-nameProfile').val(),                                                                      // 4
-        password: $('#signup-password').val(),                                                                         // 5
-        profile: {                                                                                                     // 6
-          fullname: $('#signup-username').val()                                                                        // 7
-        }                                                                                                              // 6
-      };                                                                                                               // 3
+Template.userManagement.onRendered(function () {                                                                       // 1
+  Session.set('pageToLoad', true);                                                                                     // 2
+});                                                                                                                    // 3
                                                                                                                        //
-      Accounts.createUser(user, function (error) {                                                                     // 11
-        if (error) alert(error);                                                                                       // 12
+Template.userManagement.events({                                                                                       // 5
+  'click #signup': function () {                                                                                       // 6
+    function clickSignup(event) {                                                                                      // 6
+      var passOk = false;                                                                                              // 7
+      var emailOk = false;                                                                                             // 8
+                                                                                                                       //
+      //LIMPIAMOS LOS MENSAJES DE ERROR QUE HABIA ANTES                                                                // 10
+      $('.msgErrorReg').each(function () {                                                                             // 11
+        $(this).remove();                                                                                              // 12
       });                                                                                                              // 13
+      $('.invalidField').each(function () {                                                                            // 14
+        $(this).removeClass('invalidField');                                                                           // 15
+      });                                                                                                              // 16
                                                                                                                        //
-      //Creamos el nuevo usuario en DataUser                                                                           // 15
-      var userData = new Object();                                                                                     // 16
-      userData.userName = user.profile.fullname;                                                                       // 17
-      userData.userNameProfile = user.username;                                                                        // 18
-      userData.userImg = "";                                                                                           // 19
-      userData.userDescription = "";                                                                                   // 20
+      var user = {                                                                                                     // 18
+        username: $('#signupNameProfile').val(),                                                                       // 19
+        password: $('#signupPassword').val(),                                                                          // 20
+        profile: {                                                                                                     // 21
+          fullname: $('#signupUsername').val(),                                                                        // 22
+          email: $('#signupEmail').val()                                                                               // 23
+        }                                                                                                              // 21
+      };                                                                                                               // 18
                                                                                                                        //
-      Meteor.call('insertDataUser', userData);                                                                         // 22
-    }                                                                                                                  // 23
+      //VALIDAMOS QUE EL CORREO ES VALIDO                                                                              // 27
+      if (user.profile.email.indexOf('@') === -1) {                                                                    // 28
+        $('.formRegisterNew').append("<h5 class='text-center msgErrorReg'>El email no es válido</h5>");                // 29
+        $('#signupEmail').addClass('invalidField');                                                                    // 30
+        emailOk = false;                                                                                               // 31
+      } else {                                                                                                         // 32
+        emailOk = true;                                                                                                // 33
+      };                                                                                                               // 34
                                                                                                                        //
-    return clickSignup;                                                                                                // 2
-  }(),                                                                                                                 // 2
+      //VALIDAMOS QUE LAS CONTRASEÑAS SEAN IGUALES                                                                     // 36
+      var pass2 = Session.get('valInputPass2');                                                                        // 37
                                                                                                                        //
-  'click #login': function () {                                                                                        // 25
-    function clickLogin() {                                                                                            // 25
-      var username = $('#login-nameProfile').val();                                                                    // 26
-      var password = $('#login-password').val();                                                                       // 27
+      if (user.password != pass2) {                                                                                    // 39
+        $('.formRegisterNew').append("<h5 class='text-center msgErrorReg'>Las contraseñas no coinciden</h5>");         // 40
+        $('#signupPassword').addClass('invalidField');                                                                 // 41
+        $('#signupPassword2').addClass('invalidField');                                                                // 42
+        passOk = false;                                                                                                // 43
+      } else {                                                                                                         // 44
+        passOk = true;                                                                                                 // 45
+      };                                                                                                               // 46
                                                                                                                        //
-      Meteor.loginWithPassword(username, password, function (error) {                                                  // 29
-        if (error) alert(error);                                                                                       // 30
-      });                                                                                                              // 31
-      loggingIn = true;                                                                                                // 32
-    }                                                                                                                  // 33
+      if (passOk && emailOk) {                                                                                         // 48
+        Accounts.createUser(user, function (err) {                                                                     // 49
+          //VALIDAMOS SI EL NOMRBE DE USUARIO username YA EXISTE                                                       // 50
+          if (err.reason === "Username already exists.") {                                                             // 51
+            $('#signupNameProfile').addClass('invalidField');                                                          // 52
+            $('.formRegisterNew').append("<h5 class='text-center msgErrorReg'>El nombre de usuario está en uso</h5>");
+          }                                                                                                            // 54
+        });                                                                                                            // 55
                                                                                                                        //
-    return clickLogin;                                                                                                 // 25
-  }(),                                                                                                                 // 25
+        //Creamos el nuevo usuario en DataUser                                                                         // 57
+        var userData = new Object();                                                                                   // 58
+        userData.userName = user.profile.fullname;                                                                     // 59
+        userData.userNameProfile = user.username;                                                                      // 60
+        userData.emailUser = user.email;                                                                               // 61
+        userData.userImg = "";                                                                                         // 62
+        userData.userDescription = "";                                                                                 // 63
                                                                                                                        //
-  'click #recommendationsBtn': function () {                                                                           // 35
-    function clickRecommendationsBtn() {                                                                               // 35
-      Session.set('recommendations', true);                                                                            // 36
-    }                                                                                                                  // 37
+        Meteor.call('insertDataUser', userData);                                                                       // 65
+      };                                                                                                               // 66
+    }                                                                                                                  // 67
                                                                                                                        //
-    return clickRecommendationsBtn;                                                                                    // 35
-  }()                                                                                                                  // 35
-});                                                                                                                    // 1
+    return clickSignup;                                                                                                // 6
+  }(),                                                                                                                 // 6
+                                                                                                                       //
+  'click #login': function () {                                                                                        // 69
+    function clickLogin(event) {                                                                                       // 69
+      event.preventDefault();                                                                                          // 70
+      var username = $('#loginNameProfile').val();                                                                     // 71
+      var password = $('#loginPassword').val();                                                                        // 72
+                                                                                                                       //
+      Meteor.loginWithPassword(username, password, function (err) {                                                    // 74
+        if (err.reason === "User not found") {                                                                         // 75
+          console.log(err.reason);                                                                                     // 76
+          alert(err.reason);                                                                                           // 77
+        } else {                                                                                                       // 78
+          console.log(err.reason);                                                                                     // 79
+          alert(err.reason);                                                                                           // 80
+        }                                                                                                              // 81
+      });                                                                                                              // 82
+      loggingIn = true;                                                                                                // 83
+    }                                                                                                                  // 84
+                                                                                                                       //
+    return clickLogin;                                                                                                 // 69
+  }(),                                                                                                                 // 69
+                                                                                                                       //
+  'click #recommendationsBtn': function () {                                                                           // 86
+    function clickRecommendationsBtn() {                                                                               // 86
+      Session.set('recommendations', true);                                                                            // 87
+    }                                                                                                                  // 88
+                                                                                                                       //
+    return clickRecommendationsBtn;                                                                                    // 86
+  }(),                                                                                                                 // 86
+                                                                                                                       //
+  'click #goToLogInPage': function () {                                                                                // 90
+    function clickGoToLogInPage() {                                                                                    // 90
+      Session.set('pageToLoad', true);                                                                                 // 91
+    }                                                                                                                  // 92
+                                                                                                                       //
+    return clickGoToLogInPage;                                                                                         // 90
+  }(),                                                                                                                 // 90
+                                                                                                                       //
+  'click #goToRegisterPage': function () {                                                                             // 94
+    function clickGoToRegisterPage() {                                                                                 // 94
+      Session.set('pageToLoad', false);                                                                                // 95
+    }                                                                                                                  // 96
+                                                                                                                       //
+    return clickGoToRegisterPage;                                                                                      // 94
+  }(),                                                                                                                 // 94
+  'change #signupPassword2': function () {                                                                             // 97
+    function changeSignupPassword2(event) {                                                                            // 97
+      Session.set('valInputPass2', $('#signupPassword2').val());                                                       // 98
+    }                                                                                                                  // 99
+                                                                                                                       //
+    return changeSignupPassword2;                                                                                      // 97
+  }()                                                                                                                  // 97
+});                                                                                                                    // 5
+                                                                                                                       //
+Template.userManagement.helpers({                                                                                      // 102
+  'loginPage': function () {                                                                                           // 103
+    function loginPage() {                                                                                             // 103
+      return Session.get('pageToLoad');                                                                                // 104
+    }                                                                                                                  // 105
+                                                                                                                       //
+    return loginPage;                                                                                                  // 103
+  }()                                                                                                                  // 103
+});                                                                                                                    // 102
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userProfile.js":function(){
@@ -4022,188 +4726,257 @@ Template.userManagement.events({                                                
                                                                                                                        //
 Template.userProfile.onCreated(function () {                                                                           // 1
   currentUserName = this.data.name;                                                                                    // 2
-});                                                                                                                    // 3
+  Session.set('pathActualApp', window.location.pathname);                                                              // 3
+});                                                                                                                    // 4
                                                                                                                        //
-Template.userProfile.events({                                                                                          // 5
-  'click #logout': function () {                                                                                       // 6
-    function clickLogout() {                                                                                           // 6
-      Meteor.logout();                                                                                                 // 7
-      window.location = "/";                                                                                           // 8
-    }                                                                                                                  // 9
+Template.userProfile.events({                                                                                          // 6
+  'click #logout': function () {                                                                                       // 7
+    function clickLogout() {                                                                                           // 7
+      Meteor.logout();                                                                                                 // 8
+      window.location = "/";                                                                                           // 9
+    }                                                                                                                  // 10
                                                                                                                        //
-    return clickLogout;                                                                                                // 6
-  }(),                                                                                                                 // 6
-  'click #editProfile': function () {                                                                                  // 10
-    function clickEditProfile() {                                                                                      // 10
-      window.location = "/editProfile/" + currentUserName;                                                             // 11
-    }                                                                                                                  // 12
+    return clickLogout;                                                                                                // 7
+  }(),                                                                                                                 // 7
+  'click #editProfile': function () {                                                                                  // 11
+    function clickEditProfile() {                                                                                      // 11
+      window.location = "/editProfile/" + currentUserName;                                                             // 12
+    }                                                                                                                  // 13
                                                                                                                        //
-    return clickEditProfile;                                                                                           // 10
-  }(),                                                                                                                 // 10
-  'click #editWhatsLicenses': function () {                                                                            // 13
-    function clickEditWhatsLicenses() {                                                                                // 13
-      $('#dialog-editLicenses').modal('show');                                                                         // 14
-    }                                                                                                                  // 15
+    return clickEditProfile;                                                                                           // 11
+  }(),                                                                                                                 // 11
+  'click #editWhatsLicenses': function () {                                                                            // 14
+    function clickEditWhatsLicenses() {                                                                                // 14
+      $('#dialog-editLicenses').modal('show');                                                                         // 15
+    }                                                                                                                  // 16
                                                                                                                        //
-    return clickEditWhatsLicenses;                                                                                     // 13
-  }(),                                                                                                                 // 13
-  'click .btnShowSN': function () {                                                                                    // 16
-    function clickBtnShowSN(event) {                                                                                   // 16
+    return clickEditWhatsLicenses;                                                                                     // 14
+  }(),                                                                                                                 // 14
+  'click .btnShowSN': function () {                                                                                    // 17
+    function clickBtnShowSN(event) {                                                                                   // 17
                                                                                                                        //
-      var idSN = event.target.id;                                                                                      // 18
-      if (idSN === "Facebook") {                                                                                       // 19
-        window.open("https://www.facebook.com/search/all/?q=" + Session.get('dataUser').userFb);                       // 20
-      } else if (idSN === "Instagram") {                                                                               // 21
-        window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");                           // 22
-      } else if (idSN === "WhatsApp") {                                                                                // 23
-        //EL CASO DE WHATSAPP ES MAS DIFERENTE. LO QUE HAREMOS SERÁ SOLICITAR AL USUARIO QUE SI QUIERE                 // 24
-        //AÑADIR EL NUMERO DE TELEFONO EN SU AGENDA (SOLO PARA DISPOSITIVOS MÓVILES)                                   // 25
-        //EN EL CASO DE QUE EL USUARIO ACCEDA A LA APP POR DISPOSITIVOS NO MÓVILES, SE MOSTRARÁ UN MODAL               // 26
-        //EN EL QUE INFORMARA AL USUARIO: ¿Quiere solicitar a {{currentUser.userName}} su numero de telefono?          // 27
-        //SI EL USUARIO SELECCIONA QUE SI, SE MANDARA UNA SOLICITUD AL USUARIO DEL QUE SE QUIERE CONOCER               // 28
-        //SU NUMERO DE MOVIL Y SI DIHCO USUARIO ACEPTA, SE LE REVELARA AL USUARIO.                                     // 29
-        Session.set('userToSentPet', currentUserName);                                                                 // 30
+      var idSN = event.target.id;                                                                                      // 19
+      if (idSN === "Facebook") {                                                                                       // 20
+        window.open("https://www.facebook.com/search/all/?q=" + Session.get('dataUser').userFb);                       // 21
+      } else if (idSN === "Instagram") {                                                                               // 22
+        window.open("https://www.instagram.com/" + Session.get('dataUser').userInsta + "/");                           // 23
+      } else if (idSN === "WhatsApp") {                                                                                // 24
+        Session.set('userToSentPet', currentUserName);                                                                 // 25
                                                                                                                        //
-        //COMPARAMOS EL userId DEL USUARIO ACTUAL EN METEOR Y LO COMPARAMOS CON EL ARRAY                               // 32
-        //showWhatsTo PARA VER SI PODEMOS MOSTRAR EL WHATSAPP                                                          // 33
+        var userActName = Meteor.user().username;                                                                      // 27
                                                                                                                        //
-        console.log(dataUser.userId);                                                                                  // 35
+        var arrWhats = dataUser.showWhatsTo;                                                                           // 29
                                                                                                                        //
-        var userActName = Meteor.user().username;                                                                      // 37
-        console.log(userActName);                                                                                      // 38
+        Meteor.call('findUserData', userActName, function (err, res) {                                                 // 31
+          if (arrWhats.length > 0) {                                                                                   // 32
+            if (arrWhats.indexOf(res.userId) >= 0) {                                                                   // 33
+              //MOSTRAMOS EL WHATSAPP                                                                                  // 34
+              console.log($('[data-toggle="tooltip"]'));                                                               // 35
+              $('[data-toggle="tooltip"]').attr("title", dataUser.userWhats);                                          // 36
+              $('[data-toggle="tooltip"]').tooltip('show');                                                            // 37
+            }                                                                                                          // 38
+          } else if (!Session.get('showProfileOtherUser')) {                                                           // 39
+            //ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                           // 40
+            $('#dialog-showSocialNetwork').modal('show');                                                              // 41
+          } else {                                                                                                     // 42
+            //INICIALIZAMOS EL TOOLTIP                                                                                 // 43
+            $('[data-toggle="tooltip"]').tooltip('show');                                                              // 44
+          }                                                                                                            // 45
+        });                                                                                                            // 46
+      }                                                                                                                // 47
+    }                                                                                                                  // 48
                                                                                                                        //
-        var arrWhats = dataUser.showWhatsTo;                                                                           // 40
+    return clickBtnShowSN;                                                                                             // 17
+  }(),                                                                                                                 // 17
+  'click .showFollowings': function () {                                                                               // 49
+    function clickShowFollowings() {                                                                                   // 49
+      window.location = "/followAnts/" + currentUserName;                                                              // 50
+    }                                                                                                                  // 51
                                                                                                                        //
-        Meteor.call('findUserData', userActName, function (err, res) {                                                 // 42
-          if (arrWhats.length > 0) {                                                                                   // 43
-            if (arrWhats.indexOf(res.userId) >= 0) {                                                                   // 44
-              //MOSTRAMOS EL WHATSAPP                                                                                  // 45
-              console.log($('[data-toggle="tooltip"]'));                                                               // 46
-              $('[data-toggle="tooltip"]').attr("title", dataUser.userWhats);                                          // 47
-              $('[data-toggle="tooltip"]').tooltip('show');                                                            // 48
-            }                                                                                                          // 49
-          } else if (!Session.get('showProfileOtherUser')) {                                                           // 50
-            //ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION                           // 51
-            $('#dialog-showSocialNetwork').modal('show');                                                              // 52
-          } else {                                                                                                     // 53
-            //INICIALIZAMOS EL TOOLTIP                                                                                 // 54
-            $('[data-toggle="tooltip"]').tooltip('show');                                                              // 55
-          }                                                                                                            // 56
-        });                                                                                                            // 57
-      }                                                                                                                // 58
-    }                                                                                                                  // 59
+    return clickShowFollowings;                                                                                        // 49
+  }(),                                                                                                                 // 49
+  'click .showFollowers': function () {                                                                                // 52
+    function clickShowFollowers() {                                                                                    // 52
+      window.location = "/followAnts/" + currentUserName;                                                              // 53
+    }                                                                                                                  // 54
                                                                                                                        //
-    return clickBtnShowSN;                                                                                             // 16
-  }()                                                                                                                  // 16
-});                                                                                                                    // 5
+    return clickShowFollowers;                                                                                         // 52
+  }()                                                                                                                  // 52
+});                                                                                                                    // 6
                                                                                                                        //
-Template.userProfile.helpers({                                                                                         // 62
-  'dataUserFound': function () {                                                                                       // 63
-    function dataUserFound() {                                                                                         // 63
-      Meteor.call('findUserData', currentUserName, function (err, res) {                                               // 64
-        Session.set('dataUser', res);                                                                                  // 65
-      });                                                                                                              // 66
+Template.userProfile.helpers({                                                                                         // 57
+  'dataUserFound': function () {                                                                                       // 58
+    function dataUserFound() {                                                                                         // 58
+      Meteor.call('findUserData', currentUserName, function (err, res) {                                               // 59
+        Session.set('dataUser', res);                                                                                  // 60
+      });                                                                                                              // 61
                                                                                                                        //
-      dataUser = Session.get('dataUser');                                                                              // 68
+      dataUser = Session.get('dataUser');                                                                              // 63
                                                                                                                        //
-      return dataUser;                                                                                                 // 70
-    }                                                                                                                  // 71
+      return dataUser;                                                                                                 // 65
+    }                                                                                                                  // 66
                                                                                                                        //
-    return dataUserFound;                                                                                              // 63
-  }(),                                                                                                                 // 63
-  'userImgFound': function () {                                                                                        // 72
-    function userImgFound() {                                                                                          // 72
-      if (dataUser.userImg != "") {                                                                                    // 73
-        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 74
-          $('#imgCurrentUser').attr("src", res);                                                                       // 75
-        });                                                                                                            // 76
-      } else {                                                                                                         // 77
-        console.log("No Img Profile");                                                                                 // 78
-        //$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                     // 79
-        return "/profileImgTest.png";                                                                                  // 80
-      }                                                                                                                // 81
-    }                                                                                                                  // 82
+    return dataUserFound;                                                                                              // 58
+  }(),                                                                                                                 // 58
+  'userImgFound': function () {                                                                                        // 67
+    function userImgFound() {                                                                                          // 67
+      if (dataUser.userImg != "") {                                                                                    // 68
+        Meteor.call('findUserImg', dataUser.userImg, function (err, res) {                                             // 69
+          $('#imgCurrentUser').attr("src", res);                                                                       // 70
+        });                                                                                                            // 71
+      } else {                                                                                                         // 72
+        console.log("No Img Profile");                                                                                 // 73
+        //$('#imgCurrentUser').attr("src", "/profileImgTest.png");                                                     // 74
+        return "/profileImgTest.png";                                                                                  // 75
+      }                                                                                                                // 76
+    }                                                                                                                  // 77
                                                                                                                        //
-    return userImgFound;                                                                                               // 72
-  }(),                                                                                                                 // 72
-  'tweets': function () {                                                                                              // 83
-    function tweets() {                                                                                                // 83
-      return UserUtils.findTweets(currentUserName).count();                                                            // 84
-    }                                                                                                                  // 85
+    return userImgFound;                                                                                               // 67
+  }(),                                                                                                                 // 67
+  'tweets': function () {                                                                                              // 78
+    function tweets() {                                                                                                // 78
+      return UserUtils.findTweets(currentUserName).count();                                                            // 79
+    }                                                                                                                  // 80
                                                                                                                        //
-    return tweets;                                                                                                     // 83
-  }(),                                                                                                                 // 83
-  'following': function () {                                                                                           // 86
-    function following() {                                                                                             // 86
-      Meteor.call('usersFollowings', currentUserName, function (err, res) {                                            // 87
-        Session.set('numFollowings', res);                                                                             // 88
-      });                                                                                                              // 89
-      return Session.get('numFollowings');                                                                             // 90
-    }                                                                                                                  // 91
+    return tweets;                                                                                                     // 78
+  }(),                                                                                                                 // 78
+  'following': function () {                                                                                           // 81
+    function following() {                                                                                             // 81
+      Meteor.call('usersFollowings', currentUserName, function (err, res) {                                            // 82
+        Session.set('numFollowings', res);                                                                             // 83
+      });                                                                                                              // 84
+      return Session.get('numFollowings');                                                                             // 85
+    }                                                                                                                  // 86
                                                                                                                        //
-    return following;                                                                                                  // 86
-  }(),                                                                                                                 // 86
-  'followers': function () {                                                                                           // 92
-    function followers() {                                                                                             // 92
-      Meteor.call('usersFollowers', currentUserName, function (err, res) {                                             // 93
-        Session.set('numFollowers', res);                                                                              // 94
-      });                                                                                                              // 95
-      return Session.get('numFollowers');                                                                              // 96
-    }                                                                                                                  // 97
+    return following;                                                                                                  // 81
+  }(),                                                                                                                 // 81
+  'followers': function () {                                                                                           // 87
+    function followers() {                                                                                             // 87
+      Meteor.call('usersFollowers', currentUserName, function (err, res) {                                             // 88
+        Session.set('numFollowers', res);                                                                              // 89
+      });                                                                                                              // 90
+      return Session.get('numFollowers');                                                                              // 91
+    }                                                                                                                  // 92
                                                                                                                        //
-    return followers;                                                                                                  // 92
-  }(),                                                                                                                 // 92
-  'existsSocialNetwork': function () {                                                                                 // 98
-    function existsSocialNetwork() {                                                                                   // 98
+    return followers;                                                                                                  // 87
+  }(),                                                                                                                 // 87
+  'existsSocialNetwork': function () {                                                                                 // 93
+    function existsSocialNetwork() {                                                                                   // 93
                                                                                                                        //
-      var btnSocial = [];                                                                                              // 100
+      var btnSocial = [];                                                                                              // 95
                                                                                                                        //
-      if (dataUser.userFb) {                                                                                           // 102
-        var newData = new Object();                                                                                    // 103
-        newData.color = "primary";                                                                                     // 104
-        newData['class'] = "fa fa-facebook";                                                                           // 105
-        newData.id = "Facebook";                                                                                       // 106
-        btnSocial.push(newData);                                                                                       // 107
-      }                                                                                                                // 108
+      if (dataUser.userFb) {                                                                                           // 97
+        var newData = new Object();                                                                                    // 98
+        newData.color = "primary";                                                                                     // 99
+        newData['class'] = "fa fa-facebook";                                                                           // 100
+        newData.id = "Facebook";                                                                                       // 101
+        btnSocial.push(newData);                                                                                       // 102
+      }                                                                                                                // 103
                                                                                                                        //
-      if (dataUser.userInsta) {                                                                                        // 110
-        var newData = new Object();                                                                                    // 111
-        newData.color = "warning";                                                                                     // 112
-        newData['class'] = "fa fa-instagram";                                                                          // 113
-        newData.id = "Instagram";                                                                                      // 114
-        btnSocial.push(newData);                                                                                       // 115
-      }                                                                                                                // 116
+      if (dataUser.userInsta) {                                                                                        // 105
+        var newData = new Object();                                                                                    // 106
+        newData.color = "warning";                                                                                     // 107
+        newData['class'] = "fa fa-instagram";                                                                          // 108
+        newData.id = "Instagram";                                                                                      // 109
+        btnSocial.push(newData);                                                                                       // 110
+      }                                                                                                                // 111
                                                                                                                        //
-      if (dataUser.userWhats) {                                                                                        // 118
-        var newData = new Object();                                                                                    // 119
-        newData.color = "success";                                                                                     // 120
-        newData['class'] = "fa fa-whatsapp";                                                                           // 121
-        newData.id = "WhatsApp";                                                                                       // 122
-        btnSocial.push(newData);                                                                                       // 123
-      }                                                                                                                // 124
+      if (dataUser.userWhats) {                                                                                        // 113
+        var newData = new Object();                                                                                    // 114
+        newData.color = "success";                                                                                     // 115
+        newData['class'] = "fa fa-whatsapp";                                                                           // 116
+        newData.id = "WhatsApp";                                                                                       // 117
+        btnSocial.push(newData);                                                                                       // 118
+      }                                                                                                                // 119
                                                                                                                        //
-      return btnSocial;                                                                                                // 126
-    }                                                                                                                  // 127
+      return btnSocial;                                                                                                // 121
+    }                                                                                                                  // 122
                                                                                                                        //
-    return existsSocialNetwork;                                                                                        // 98
-  }(),                                                                                                                 // 98
-  'showProfileOtherUser': function () {                                                                                // 128
-    function showProfileOtherUser() {                                                                                  // 128
-      return Session.get('showProfileOtherUser');                                                                      // 129
+    return existsSocialNetwork;                                                                                        // 93
+  }(),                                                                                                                 // 93
+  'showProfileOtherUser': function () {                                                                                // 123
+    function showProfileOtherUser() {                                                                                  // 123
+      return Session.get('showProfileOtherUser');                                                                      // 124
+    }                                                                                                                  // 125
+                                                                                                                       //
+    return showProfileOtherUser;                                                                                       // 123
+  }(),                                                                                                                 // 123
+  'isWhatsapp': function () {                                                                                          // 126
+    function isWhatsapp() {                                                                                            // 126
+      if (this.id === "WhatsApp") {                                                                                    // 127
+        return true;                                                                                                   // 128
+      }                                                                                                                // 129
     }                                                                                                                  // 130
                                                                                                                        //
-    return showProfileOtherUser;                                                                                       // 128
-  }(),                                                                                                                 // 128
-  'isWhatsapp': function () {                                                                                          // 131
-    function isWhatsapp() {                                                                                            // 131
-      if (this.id === "WhatsApp") {                                                                                    // 132
-        return true;                                                                                                   // 133
-      }                                                                                                                // 134
-    }                                                                                                                  // 135
+    return isWhatsapp;                                                                                                 // 126
+  }()                                                                                                                  // 126
+});                                                                                                                    // 57
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"videoTrans.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/videoTrans.js                                                                               //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
-    return isWhatsapp;                                                                                                 // 131
-  }()                                                                                                                  // 131
-});                                                                                                                    // 62
+Template.videoTrans.onCreated(function () {});                                                                         // 1
+                                                                                                                       //
+Template.videoTrans.events({});                                                                                        // 5
+                                                                                                                       //
+Template.videoTrans.helpers({                                                                                          // 9
+		'chargeVideo': function () {                                                                                         // 10
+				function chargeVideo() {                                                                                           // 10
+						console.log("Loading");                                                                                          // 11
+						navigator.getMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+                                                                                                                       //
+						window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;                                    // 17
+                                                                                                                       //
+						console.log(window.URL);                                                                                         // 22
+                                                                                                                       //
+						navigator.getMedia(                                                                                              // 24
+						// Restricciones (contraints) *Requerido                                                                         // 25
+						{                                                                                                                // 26
+								video: true                                                                                                    // 27
+						},                                                                                                               // 26
+                                                                                                                       //
+						// Funcion de finalizacion (Succes-Callback) *Requerido                                                          // 30
+						function (localMediaStream) {                                                                                    // 31
+								var video = document.querySelector('video');                                                                   // 32
+								video.src = window.URL.createObjectURL(localMediaStream);                                                      // 33
+                                                                                                                       //
+								/*                                                                                                             // 35
+        var playPromise = video.play();                                                                                //
+                                                                                                                       //
+        if (playPromise !== undefined) {                                                                               //
+        playPromise.then(function() {                                                                                  //
+        // Automatic playback started!                                                                                 //
+        }).catch(function(error) {                                                                                     //
+        console.log(error);                                                                                            //
+        // Automatic playback failed.                                                                                  //
+        // Show a UI element to let the user manually start playback.                                                  //
+        });                                                                                                            //
+        };                                                                                                             //
+        */                                                                                                             //
+								console.log(navigator);                                                                                        // 48
+								/*                                                                                                             // 49
+        video.onloadedmetadata = function(e) {                                                                         //
+          // Haz algo con el video aquí.                                                                               //
+        };                                                                                                             //
+        */                                                                                                             //
+						},                                                                                                               // 54
+                                                                                                                       //
+						// errorCallback *Opcional                                                                                       // 56
+						function (err) {                                                                                                 // 57
+								console.log("Ocurrió el siguiente error: ");                                                                   // 58
+								console.log(err);                                                                                              // 59
+						});                                                                                                              // 60
+				}                                                                                                                  // 63
+                                                                                                                       //
+				return chargeVideo;                                                                                                // 10
+		}()                                                                                                                  // 10
+});                                                                                                                    // 9
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"whatsAppNotif.js":function(){
@@ -4464,29 +5237,16 @@ module.exports = require("./template.main.js");                                 
                                                                                                                        // 1
 Template.body.addContent((function() {                                                                                 // 2
   var view = this;                                                                                                     // 3
-  return HTML.DIV({                                                                                                    // 4
-    class: "row",                                                                                                      // 5
-    id: "containerNavBar"                                                                                              // 6
-  }, "\n\t\t", Blaze.If(function() {                                                                                   // 7
-    return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 8
-  }, function() {                                                                                                      // 9
-    return [ "\n\t\t    ", Blaze.If(function() {                                                                       // 10
-      return Spacebars.call(view.lookup("currentUser"));                                                               // 11
-    }, function() {                                                                                                    // 12
-      return [ "\n\t\t    \t", Spacebars.include(view.lookupTemplate("navBarTemplate")), "\n\t\t  \t" ];               // 13
-    }), "\n\t  \t" ];                                                                                                  // 14
-  }, function() {                                                                                                      // 15
-    return [ "\n\t\t    ", Spacebars.include(view.lookupTemplate("loading")), "\n\t  \t" ];                            // 16
-  }), HTML.Raw("\n\t\t<!--{{> btnFloating}}-->\n\t"));                                                                 // 17
-}));                                                                                                                   // 18
-Meteor.startup(Template.body.renderToDocument);                                                                        // 19
-Meteor.startup(function() {                                                                                            // 20
-  var attrs = {"id":"bodyPpal"};                                                                                       // 21
-  for (var prop in attrs) {                                                                                            // 22
-    document.body.setAttribute(prop, attrs[prop]);                                                                     // 23
-  }                                                                                                                    // 24
-});                                                                                                                    // 25
-                                                                                                                       // 26
+  return Spacebars.include(view.lookupTemplate("mainPage"));                                                           // 4
+}));                                                                                                                   // 5
+Meteor.startup(Template.body.renderToDocument);                                                                        // 6
+Meteor.startup(function() {                                                                                            // 7
+  var attrs = {"id":"bodyPpal"};                                                                                       // 8
+  for (var prop in attrs) {                                                                                            // 9
+    document.body.setAttribute(prop, attrs[prop]);                                                                     // 10
+  }                                                                                                                    // 11
+});                                                                                                                    // 12
+                                                                                                                       // 13
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"main.js":["meteor/templating","meteor/reactive-var","./main.html",function(require,exports,module){
@@ -4503,11 +5263,11 @@ var Template;module.import('meteor/templating',{"Template":function(v){Template=
                                                                                                                        // 4
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}]},"lib":{"collections":{"collections.js":function(){
+}]},"lib":{"collections.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
-// lib/collections/collections.js                                                                                      //
+// lib/collections.js                                                                                                  //
 //                                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
@@ -4519,7 +5279,7 @@ Notifications = new Mongo.Collection('notifications');                          
 Images = new Mongo.Collection('images');                                                                               // 6
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"router.js":function(){
+},"router.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
@@ -4558,79 +5318,103 @@ Router.route('/Profile/:username', {                                            
 				}                                                                                                                  // 28
 			}                                                                                                                   // 29
                                                                                                                        //
-			return user;                                                                                                        // 31
-		}                                                                                                                    // 32
+			Session.set('pathActualApp', "/Profile/" + this.params.username);                                                   // 31
+                                                                                                                       //
+			return user;                                                                                                        // 33
+		}                                                                                                                    // 34
                                                                                                                        //
 		return data;                                                                                                         // 11
 	}()                                                                                                                   // 11
 });                                                                                                                    // 9
-Router.route('/Notifications/:userName', {                                                                             // 34
-	name: 'twiitPageNew',                                                                                                 // 35
-	data: function () {                                                                                                   // 36
-		function data() {                                                                                                    // 36
-			var user = new Object();                                                                                            // 37
-			user.name = this.params.userName;                                                                                   // 38
-			return user;                                                                                                        // 39
-		}                                                                                                                    // 40
+Router.route('/Notifications/:userName', {                                                                             // 36
+	name: 'twiitPageNew',                                                                                                 // 37
+	data: function () {                                                                                                   // 38
+		function data() {                                                                                                    // 38
+			var user = new Object();                                                                                            // 39
+			user.name = this.params.userName;                                                                                   // 40
+			Session.set('pathActualApp', "/Notifications/" + this.params.username);                                             // 41
+			return user;                                                                                                        // 42
+		}                                                                                                                    // 43
                                                                                                                        //
-		return data;                                                                                                         // 36
-	}()                                                                                                                   // 36
-});                                                                                                                    // 34
+		return data;                                                                                                         // 38
+	}()                                                                                                                   // 38
+});                                                                                                                    // 36
                                                                                                                        //
-Router.route('/RequestWhatsApp/:userName', {                                                                           // 43
-	name: 'whatsAppRequestPage',                                                                                          // 44
-	data: function () {                                                                                                   // 45
-		function data() {                                                                                                    // 45
-			var user = new Object();                                                                                            // 46
-			user.name = this.params.userName;                                                                                   // 47
-			return user;                                                                                                        // 48
-		}                                                                                                                    // 49
+Router.route('/RequestWhatsApp/:userName', {                                                                           // 46
+	name: 'whatsAppRequestPage',                                                                                          // 47
+	data: function () {                                                                                                   // 48
+		function data() {                                                                                                    // 48
+			var user = new Object();                                                                                            // 49
+			user.name = this.params.userName;                                                                                   // 50
+			Session.set('pathActualApp', "/RequestWhatsApp/" + this.params.username);                                           // 51
+			return user;                                                                                                        // 52
+		}                                                                                                                    // 53
                                                                                                                        //
-		return data;                                                                                                         // 45
-	}()                                                                                                                   // 45
-});                                                                                                                    // 43
+		return data;                                                                                                         // 48
+	}()                                                                                                                   // 48
+});                                                                                                                    // 46
                                                                                                                        //
-//Router.route('/Comments', {name: 'twiitCommentPage'});                                                               // 52
-/*SE ACCEDE POR PATHFOR*/                                                                                              // 53
-Router.route('/Comments/:_id', {                                                                                       // 54
-	name: 'twiitCommentPage',                                                                                             // 55
-	data: function () {                                                                                                   // 56
-		function data() {                                                                                                    // 56
-			var mode = Session.get('notificationsModeOn');                                                                      // 57
-			var idTwiit = new Object();                                                                                         // 58
-			idTwiit._id = this.params._id;                                                                                      // 59
+//Router.route('/Comments', {name: 'twiitCommentPage'});                                                               // 56
+/*SE ACCEDE POR PATHFOR*/                                                                                              // 57
+Router.route('/Comments/:_id', {                                                                                       // 58
+	name: 'twiitCommentPage',                                                                                             // 59
+	data: function () {                                                                                                   // 60
+		function data() {                                                                                                    // 60
+			var mode = Session.get('notificationsModeOn');                                                                      // 61
+			var idTwiit = new Object();                                                                                         // 62
+			idTwiit._id = this.params._id;                                                                                      // 63
                                                                                                                        //
-			if (mode) {                                                                                                         // 61
-				idTwiit.mode = mode;                                                                                               // 62
-			}                                                                                                                   // 63
+			if (mode) {                                                                                                         // 65
+				idTwiit.mode = mode;                                                                                               // 66
+			}                                                                                                                   // 67
                                                                                                                        //
-			return idTwiit;                                                                                                     // 65
-		}                                                                                                                    // 66
+			Session.set('pathActualApp', "/Comments/" + this.params.username);                                                  // 69
                                                                                                                        //
-		return data;                                                                                                         // 56
-	}()                                                                                                                   // 56
-});                                                                                                                    // 54
-Router.route('/twiits/:_id', {                                                                                         // 68
-	name: 'twiitPage',                                                                                                    // 69
-	data: function () {                                                                                                   // 70
-		function data() {                                                                                                    // 70
-			return this.params;                                                                                                 // 71
+			return idTwiit;                                                                                                     // 71
 		}                                                                                                                    // 72
                                                                                                                        //
-		return data;                                                                                                         // 70
-	}()                                                                                                                   // 70
-});                                                                                                                    // 68
+		return data;                                                                                                         // 60
+	}()                                                                                                                   // 60
+});                                                                                                                    // 58
+Router.route('/twiits/:_id', {                                                                                         // 74
+	name: 'twiitPage',                                                                                                    // 75
+	data: function () {                                                                                                   // 76
+		function data() {                                                                                                    // 76
+			return this.params;                                                                                                 // 77
+		}                                                                                                                    // 78
                                                                                                                        //
-Router.route('/editProfile/:userName', {                                                                               // 75
-	name: 'editProfile',                                                                                                  // 76
-	data: function () {                                                                                                   // 77
-		function data() {                                                                                                    // 77
-			return this.params.userName;                                                                                        // 78
-		}                                                                                                                    // 79
+		return data;                                                                                                         // 76
+	}()                                                                                                                   // 76
+});                                                                                                                    // 74
                                                                                                                        //
-		return data;                                                                                                         // 77
-	}()                                                                                                                   // 77
-});                                                                                                                    // 75
+Router.route('/editProfile/:userName', {                                                                               // 81
+	name: 'editProfile',                                                                                                  // 82
+	data: function () {                                                                                                   // 83
+		function data() {                                                                                                    // 83
+			Session.set('pathActualApp', "/editProfile/" + this.params.username);                                               // 84
+			return this.params.userName;                                                                                        // 85
+		}                                                                                                                    // 86
+                                                                                                                       //
+		return data;                                                                                                         // 83
+	}()                                                                                                                   // 83
+});                                                                                                                    // 81
+                                                                                                                       //
+Router.route('/followAnts/:userName', {                                                                                // 89
+	name: 'followAnts',                                                                                                   // 90
+	data: function () {                                                                                                   // 91
+		function data() {                                                                                                    // 91
+			var showData = new Object();                                                                                        // 92
+			showData.user = this.params.userName;                                                                               // 93
+			showData.mode = true;                                                                                               // 94
+			Session.set('pathActualApp', "/followAnts/" + this.params.username);                                                // 95
+			return showData;                                                                                                    // 96
+		}                                                                                                                    // 97
+                                                                                                                       //
+		return data;                                                                                                         // 91
+	}()                                                                                                                   // 91
+});                                                                                                                    // 89
+                                                                                                                       //
+Router.route('/videoTrans', { name: 'videoTrans' });                                                                   // 100
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -4664,7 +5448,7 @@ UserUtils.findFollowings = function (username) {                                
 //SEGUIDORES                                                                                                           // 21
 UserUtils.findFollowers = function (username) {                                                                        // 22
   var currentFollowers = Relationships.find({ following: username }).fetch().map(function (data) {                     // 23
-    return data.following;                                                                                             // 24
+    return data.follower;                                                                                              // 24
   });                                                                                                                  // 25
   //console.log("Seguidores: ");                                                                                       // 26
   //console.log(currentFollowers);                                                                                     // 27
@@ -4812,8 +5596,10 @@ UserUtils.findUserFromTwiit = function (twiitId) {                              
 }}},{"extensions":[".js",".json",".html",".css"]});
 require("./client/partialTemplates/template.editLicenses.js");
 require("./client/partialTemplates/template.editProfile.js");
+require("./client/partialTemplates/template.followAnts.js");
 require("./client/partialTemplates/template.followUsers.js");
 require("./client/partialTemplates/template.loading.js");
+require("./client/partialTemplates/template.mainPage.js");
 require("./client/partialTemplates/template.navBarTemplate.js");
 require("./client/partialTemplates/template.not_found.js");
 require("./client/partialTemplates/template.notifications.js");
@@ -4831,15 +5617,18 @@ require("./client/partialTemplates/template.twiitPage.js");
 require("./client/partialTemplates/template.twiitPageNew.js");
 require("./client/partialTemplates/template.userManagement.js");
 require("./client/partialTemplates/template.userProfile.js");
+require("./client/partialTemplates/template.videoTrans.js");
 require("./client/partialTemplates/template.whatsAppNotif.js");
 require("./client/partialTemplates/template.whatsAppRequestPage.js");
 require("./client/template.main.js");
-require("./lib/collections/collections.js");
+require("./lib/collections.js");
 require("./lib/router.js");
 require("./lib/userUtils.js");
 require("./client/partialTemplates/editLicenses.js");
 require("./client/partialTemplates/editProfile.js");
+require("./client/partialTemplates/followAnts.js");
 require("./client/partialTemplates/followUsers.js");
+require("./client/partialTemplates/mainPage.js");
 require("./client/partialTemplates/navBarTemplate.js");
 require("./client/partialTemplates/notifications.js");
 require("./client/partialTemplates/notificationsNew.js");
@@ -4855,6 +5644,7 @@ require("./client/partialTemplates/twiitPage.js");
 require("./client/partialTemplates/twiitPageNew.js");
 require("./client/partialTemplates/userManagement.js");
 require("./client/partialTemplates/userProfile.js");
+require("./client/partialTemplates/videoTrans.js");
 require("./client/partialTemplates/whatsAppNotif.js");
 require("./client/partialTemplates/whatsAppRequestPage.js");
 require("./client/main.js");

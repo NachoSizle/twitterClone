@@ -503,3 +503,17 @@ form input:focus:required:invalid{
 .invalidField{
   border: 2px solid red;
 }
+
+.formGroupSearchBar{
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+#searchUser{
+  width: 80%;
+  margin-right: 15px;
+}
+
+#searchBtn{
+  width: 15%;
+}
