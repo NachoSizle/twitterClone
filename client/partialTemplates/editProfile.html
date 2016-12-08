@@ -7,11 +7,11 @@
             <!--Mensaje para el usuario registrado-->
             <div class="row">
               <!--CONTENIDO DE LA PARTE IZQUIERDA DEL PERFIL DEL USUARIO-->
-              <div class="col-md-6 col-sm-6 col-xs-6" id="leftDivCurrentUser">
+              <div class="col-md-7 col-sm-7 col-xs-7" id="leftDivCurrentUser">
                 <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
                 <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
                 A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
-                <img id="imgCurrentUser" src="{{userImgFound}}" class="img-responsive">
+                <img id="imgCurrentUser" src="{{userImgFound}}" class="imgUserProfile">
 
                 <label id="btnCurrentUser" class="btn btn-default btn-lg btn-file iconToEditImg">
                     <span class="glyphicon glyphicon-camera"></span> 
@@ -20,8 +20,7 @@
 
               </div>
               <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
-              <div class="col-md-6 col-sm-6 col-xs-6" id="rightDivCurrentUser">
-                <!--ESTA DESCRIPCION ES GENERICA. HAY QUE CAMBIARLA POR LA QUE APAREZCA EN userData.description-->
+              <div class="col-md-5 col-sm-5 col-xs-5" id="rightDivCurrentUser">
                 <textarea class="form-control" rows="5" id="userDescription" placeholder="{{dataUserFound.userDescription}}"></textarea>
               </div>
             </div>

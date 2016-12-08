@@ -113,7 +113,7 @@ Template.userProfile.helpers({
     } else {
       Session.set('userIsFollowMe', false);
     }
-    
+
   	return Session.get('numFollowers');
 	},
 	'existsSocialNetwork': function(){
