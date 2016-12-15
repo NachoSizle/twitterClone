@@ -9,9 +9,13 @@
             <div class="panel panel-info"><!--Contenido de la cabecera + el mensaje del twiit-->
               <div class="panel-heading"><!--Cabecera del twiit-->
                 <h3 class="panel-title">
-                  <a href="{{pathFor 'userProfile' username=this.user}}">@{{this.user}}</a> 
-                  <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                  {{convertDateTime}}
+                  <a href="{{pathFor 'userProfile' username=this.user}}">
+                    <strong>@{{this.user}}</strong>
+                  </a>
+                  <div id="containerDateTime"> 
+                    <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
+                    {{convertDateTime}}
+                  </div>
                 </h3>
               </div><!--Cabecera del twiit-->
               <div class="panel-body"><!--Contenido del twiit-->

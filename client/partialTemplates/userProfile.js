@@ -106,14 +106,17 @@ Template.userProfile.helpers({
     });
 
     var currentFollowers = Session.get('getFollowers');
-    var posUser = currentFollowers.indexOf(Meteor.user().username);
+    
+    if(currentFollowers){
+      var posUser = currentFollowers.indexOf(Meteor.user().username);
 
-    if(posUser != -1){
-      Session.set('userIsFollowMe', true);
-    } else {
-      Session.set('userIsFollowMe', false);
+      if(posUser != -1){
+        Session.set('userIsFollowMe', true);
+      } else {
+        Session.set('userIsFollowMe', false);
+      }
     }
-
+    
   	return Session.get('numFollowers');
 	},
 	'existsSocialNetwork': function(){

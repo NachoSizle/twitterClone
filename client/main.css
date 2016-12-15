@@ -533,3 +533,7 @@ form input:focus:required:invalid{
 #rightDivCurrentUser{
   padding-left: 0px;
 }
+
+#containerDateTime{
+  float: right;
+}

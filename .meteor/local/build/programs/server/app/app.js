@@ -360,29 +360,40 @@ Meteor.methods({                                                                
     return followUser;                                                                                 // 10
   }(),                                                                                                 // 10
                                                                                                        //
-  'recommendUsers': function () {                                                                      // 17
-    function recommendUsers() {                                                                        // 17
-      if (Meteor.user()) {                                                                             // 18
-        var currentFollowings = UserUtils.findFollowings(Meteor.user().username);                      // 19
+  'unfollowUser': function () {                                                                        // 17
+    function unfollowUser(username) {                                                                  // 17
+      Relationships.remove({                                                                           // 18
+        follower: Meteor.user().username,                                                              // 19
+        following: username                                                                            // 20
+      });                                                                                              // 18
+    }                                                                                                  // 22
                                                                                                        //
-        console.log("currentFollowings");                                                              // 21
-        console.log(currentFollowings);                                                                // 22
+    return unfollowUser;                                                                               // 17
+  }(),                                                                                                 // 17
                                                                                                        //
-        var recUsers = Meteor.users.find({                                                             // 24
-          username: {                                                                                  // 25
-            $nin: currentFollowings                                                                    // 26
-          }                                                                                            // 25
-        }, {                                                                                           // 24
-          fields: { 'username': 1 },                                                                   // 29
-          limit: 5                                                                                     // 30
-        }).fetch();                                                                                    // 28
+  'recommendUsers': function () {                                                                      // 24
+    function recommendUsers() {                                                                        // 24
+      if (Meteor.user()) {                                                                             // 25
+        var currentFollowings = UserUtils.findFollowings(Meteor.user().username);                      // 26
                                                                                                        //
-        return recUsers;                                                                               // 33
-      }                                                                                                // 34
-    }                                                                                                  // 35
+        console.log("currentFollowings");                                                              // 28
+        console.log(currentFollowings);                                                                // 29
                                                                                                        //
-    return recommendUsers;                                                                             // 17
-  }()                                                                                                  // 17
+        var recUsers = Meteor.users.find({                                                             // 31
+          username: {                                                                                  // 32
+            $nin: currentFollowings                                                                    // 33
+          }                                                                                            // 32
+        }, {                                                                                           // 31
+          fields: { 'username': 1 },                                                                   // 36
+          limit: 5                                                                                     // 37
+        }).fetch();                                                                                    // 35
+                                                                                                       //
+        return recUsers;                                                                               // 40
+      }                                                                                                // 41
+    }                                                                                                  // 42
+                                                                                                       //
+    return recommendUsers;                                                                             // 24
+  }()                                                                                                  // 24
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -842,26 +853,22 @@ Meteor.methods({                                                                
   'getFollowers': function () {                                                                        // 21
     function getFollowers(username) {                                                                  // 21
       var currentFollowers = UserUtils.findFollowers(username);                                        // 22
-      console.log("currentFollowers");                                                                 // 23
-      console.log(currentFollowers);                                                                   // 24
                                                                                                        //
-      return currentFollowers;                                                                         // 26
-    }                                                                                                  // 27
+      return currentFollowers;                                                                         // 24
+    }                                                                                                  // 25
                                                                                                        //
     return getFollowers;                                                                               // 21
   }(),                                                                                                 // 21
                                                                                                        //
-  'getFollowings': function () {                                                                       // 29
-    function getFollowings(username) {                                                                 // 29
-      var currentFollowings = UserUtils.findFollowings(username);                                      // 30
-      console.log("currentFollowings");                                                                // 31
-      console.log(currentFollowings);                                                                  // 32
+  'getFollowings': function () {                                                                       // 27
+    function getFollowings(username) {                                                                 // 27
+      var currentFollowings = UserUtils.findFollowings(username);                                      // 28
                                                                                                        //
-      return currentFollowings;                                                                        // 34
-    }                                                                                                  // 35
+      return currentFollowings;                                                                        // 30
+    }                                                                                                  // 31
                                                                                                        //
-    return getFollowings;                                                                              // 29
-  }()                                                                                                  // 29
+    return getFollowings;                                                                              // 27
+  }()                                                                                                  // 27
                                                                                                        //
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

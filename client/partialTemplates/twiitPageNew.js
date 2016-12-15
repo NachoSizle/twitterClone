@@ -24,9 +24,12 @@ Template.twiitPageNew.helpers({
   },
 
   'convertDateTime': function() {
-  	var dateNew = new Date(this.twiitTimeStamp);
-  	var dateCon = dateNew.toLocaleString();
-    return dateCon;
+    var dateNew = new Date(this.timestamp);
+    var dateCon = dateNew.toLocaleString();
+
+    var elem = dateCon.split(' ');
+
+    return elem[0];
   },
 
   'showComments': function() {

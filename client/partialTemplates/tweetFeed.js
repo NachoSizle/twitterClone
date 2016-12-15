@@ -11,7 +11,10 @@ Template.tweetFeed.helpers({
   'convertDateTime': function() {
     var dateNew = new Date(this.timestamp);
     var dateCon = dateNew.toLocaleString();
-    return dateCon;
+
+    var elem = dateCon.split(' ');
+
+    return elem[0];
   },
   'numComment': function(){
     var num = UserUtils.findNumComment(this._id);

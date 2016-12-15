@@ -7,9 +7,12 @@
           {{#each tweetMessageProfile}}
             <div class="panel panel-info"><!--Contenido de la cabecera + el mensaje del twiit-->
               <div class="panel-heading"><!--Cabecera del twiit-->
-                <h3 class="panel-title userNameProfile" id="{{this.user}}">@{{this.user}}
-                  <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
-                  {{convertDateTime}}
+                <h3 class="panel-title userNameProfile" id="{{this.user}}">
+                  <strong>@{{this.user}}</strong>
+                  <div id="containerDateTime"> 
+                    <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
+                    {{convertDateTime}}
+                  </div>
                 </h3>
               </div><!--Cabecera del twiit-->
               <div class="panel-body"><!--Contenido del twiit-->

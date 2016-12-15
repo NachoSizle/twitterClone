@@ -8819,22 +8819,19 @@ textarea {
 #imgCurrentUser {
   border-right: 1px solid #d8d7d7;
   margin-right: 15px;
+  padding-right: 10px;
 }
 
 #imgCurrentUserLeft {
   border-left: 1px solid #d8d7d7;
   margin-left: 15px;
+  padding-left: 10px;
 }
 
 #imgProfile {
   width: 30px;
   height: 30px;
   margin-left: 5px;
-}
-
-#rightDivCurrentUser {
-  padding-left: 15px;
-  padding-top: 10px;
 }
 
 #centerDivCurrentUser {
@@ -8963,8 +8960,8 @@ textarea {
 
 .iconToEditImg {
   position: absolute;
-  top: 40%;
-  left: 40%;
+  top: 30%;
+  left: 35%;
   border: none;
   color: #1666ce;
   background-color: transparent;
@@ -9214,4 +9211,27 @@ form input:focus:required:invalid {
 
 #searchBtn {
   width: 15%;
+}
+
+.btnOptFol {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.imgUserProfile {
+  width: 100%;
+  height: 100%;
+}
+
+#userDescription {
+  font-size: 15px;
+  margin-top: 3px;
+}
+
+#rightDivCurrentUser {
+  padding-left: 0px;
+}
+
+#containerDateTime {
+  float: right;
 }
