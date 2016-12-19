@@ -27,129 +27,138 @@ Router.configure({                                                              
 	notFoundTemplate: 'notFound'                                                                          // 3
 });                                                                                                    // 1
                                                                                                        //
-Router.route('/', { name: 'userManagement' });                                                         // 6
-/*SE ACCEDE POR WINDOW.LOCATION*/                                                                      // 7
-Router.route('/whoToFollow', { name: 'followUsers' });                                                 // 8
-Router.route('/Profile/:username', {                                                                   // 9
-	name: 'userProfile',                                                                                  // 10
-	data: function () {                                                                                   // 11
-		function data() {                                                                                    // 11
-			var user = new Object();                                                                            // 12
-			user.name = this.params.username;                                                                   // 13
+Router.route('/', {                                                                                    // 6
+	name: 'userManagement',                                                                               // 7
+	data: function () {                                                                                   // 8
+		function data() {                                                                                    // 8
+			Session.set('pathActualApp', '/');                                                                  // 9
+		}                                                                                                    // 10
                                                                                                        //
-			var currentUser = Session.get('currentUser');                                                       // 15
+		return data;                                                                                         // 8
+	}()                                                                                                   // 8
+});                                                                                                    // 6
+/*SE ACCEDE POR WINDOW.LOCATION*/                                                                      // 12
+Router.route('/whoToFollow', { name: 'followUsers' });                                                 // 13
+Router.route('/Profile/:username', {                                                                   // 14
+	name: 'userProfile',                                                                                  // 15
+	data: function () {                                                                                   // 16
+		function data() {                                                                                    // 16
+			var user = new Object();                                                                            // 17
+			user.name = this.params.username;                                                                   // 18
                                                                                                        //
-			Meteor.call('findUserData', user.name, function (err, res) {                                        // 17
-				Session.set('dataUserShowProfile', res);                                                           // 18
-			});                                                                                                 // 19
+			var currentUser = Session.get('currentUser');                                                       // 20
                                                                                                        //
-			dataUserShowProfile = Session.get('dataUserShowProfile');                                           // 21
+			Meteor.call('findUserData', user.name, function (err, res) {                                        // 22
+				Session.set('dataUserShowProfile', res);                                                           // 23
+			});                                                                                                 // 24
                                                                                                        //
-			if (dataUserShowProfile) {                                                                          // 23
-				if (dataUserShowProfile.userNameProfile != currentUser) {                                          // 24
-					Session.set('showProfileOtherUser', false);                                                       // 25
-				} else {                                                                                           // 26
-					Session.set('showProfileOtherUser', true);                                                        // 27
-				}                                                                                                  // 28
-			}                                                                                                   // 29
+			dataUserShowProfile = Session.get('dataUserShowProfile');                                           // 26
                                                                                                        //
-			Session.set('pathActualApp', "/Profile/" + this.params.username);                                   // 31
+			if (dataUserShowProfile) {                                                                          // 28
+				if (dataUserShowProfile.userNameProfile != currentUser) {                                          // 29
+					Session.set('showProfileOtherUser', false);                                                       // 30
+				} else {                                                                                           // 31
+					Session.set('showProfileOtherUser', true);                                                        // 32
+				}                                                                                                  // 33
+			}                                                                                                   // 34
                                                                                                        //
-			return user;                                                                                        // 33
-		}                                                                                                    // 34
+			Session.set('pathActualApp', "/Profile/" + this.params.username);                                   // 36
                                                                                                        //
-		return data;                                                                                         // 11
-	}()                                                                                                   // 11
-});                                                                                                    // 9
-Router.route('/Notifications/:userName', {                                                             // 36
-	name: 'twiitPageNew',                                                                                 // 37
-	data: function () {                                                                                   // 38
-		function data() {                                                                                    // 38
-			var user = new Object();                                                                            // 39
-			user.name = this.params.userName;                                                                   // 40
-			Session.set('pathActualApp', "/Notifications/" + this.params.username);                             // 41
-			return user;                                                                                        // 42
-		}                                                                                                    // 43
+			return user;                                                                                        // 38
+		}                                                                                                    // 39
                                                                                                        //
-		return data;                                                                                         // 38
-	}()                                                                                                   // 38
-});                                                                                                    // 36
+		return data;                                                                                         // 16
+	}()                                                                                                   // 16
+});                                                                                                    // 14
+Router.route('/Notifications/:userName', {                                                             // 41
+	name: 'twiitPageNew',                                                                                 // 42
+	data: function () {                                                                                   // 43
+		function data() {                                                                                    // 43
+			var user = new Object();                                                                            // 44
+			user.name = this.params.userName;                                                                   // 45
+			Session.set('pathActualApp', "/Notifications/" + this.params.username);                             // 46
+			return user;                                                                                        // 47
+		}                                                                                                    // 48
                                                                                                        //
-Router.route('/RequestWhatsApp/:userName', {                                                           // 46
-	name: 'whatsAppRequestPage',                                                                          // 47
-	data: function () {                                                                                   // 48
-		function data() {                                                                                    // 48
-			var user = new Object();                                                                            // 49
-			user.name = this.params.userName;                                                                   // 50
-			Session.set('pathActualApp', "/RequestWhatsApp/" + this.params.username);                           // 51
-			return user;                                                                                        // 52
-		}                                                                                                    // 53
+		return data;                                                                                         // 43
+	}()                                                                                                   // 43
+});                                                                                                    // 41
                                                                                                        //
-		return data;                                                                                         // 48
-	}()                                                                                                   // 48
-});                                                                                                    // 46
+Router.route('/RequestWhatsApp/:userName', {                                                           // 51
+	name: 'whatsAppRequestPage',                                                                          // 52
+	data: function () {                                                                                   // 53
+		function data() {                                                                                    // 53
+			var user = new Object();                                                                            // 54
+			user.name = this.params.userName;                                                                   // 55
+			Session.set('pathActualApp', "/RequestWhatsApp/" + this.params.username);                           // 56
+			return user;                                                                                        // 57
+		}                                                                                                    // 58
                                                                                                        //
-//Router.route('/Comments', {name: 'twiitCommentPage'});                                               // 56
-/*SE ACCEDE POR PATHFOR*/                                                                              // 57
-Router.route('/Comments/:_id', {                                                                       // 58
-	name: 'twiitCommentPage',                                                                             // 59
-	data: function () {                                                                                   // 60
-		function data() {                                                                                    // 60
-			var mode = Session.get('notificationsModeOn');                                                      // 61
-			var idTwiit = new Object();                                                                         // 62
-			idTwiit._id = this.params._id;                                                                      // 63
+		return data;                                                                                         // 53
+	}()                                                                                                   // 53
+});                                                                                                    // 51
                                                                                                        //
-			if (mode) {                                                                                         // 65
-				idTwiit.mode = mode;                                                                               // 66
-			}                                                                                                   // 67
+//Router.route('/Comments', {name: 'twiitCommentPage'});                                               // 61
+/*SE ACCEDE POR PATHFOR*/                                                                              // 62
+Router.route('/Comments/:_id', {                                                                       // 63
+	name: 'twiitCommentPage',                                                                             // 64
+	data: function () {                                                                                   // 65
+		function data() {                                                                                    // 65
+			var mode = Session.get('notificationsModeOn');                                                      // 66
+			var idTwiit = new Object();                                                                         // 67
+			idTwiit._id = this.params._id;                                                                      // 68
                                                                                                        //
-			Session.set('pathActualApp', "/Comments/" + this.params.username);                                  // 69
+			if (mode) {                                                                                         // 70
+				idTwiit.mode = mode;                                                                               // 71
+			}                                                                                                   // 72
                                                                                                        //
-			return idTwiit;                                                                                     // 71
-		}                                                                                                    // 72
+			Session.set('pathActualApp', "/Comments/" + this.params.username);                                  // 74
                                                                                                        //
-		return data;                                                                                         // 60
-	}()                                                                                                   // 60
-});                                                                                                    // 58
-Router.route('/twiits/:_id', {                                                                         // 74
-	name: 'twiitPage',                                                                                    // 75
-	data: function () {                                                                                   // 76
-		function data() {                                                                                    // 76
-			return this.params;                                                                                 // 77
-		}                                                                                                    // 78
+			return idTwiit;                                                                                     // 76
+		}                                                                                                    // 77
                                                                                                        //
-		return data;                                                                                         // 76
-	}()                                                                                                   // 76
-});                                                                                                    // 74
+		return data;                                                                                         // 65
+	}()                                                                                                   // 65
+});                                                                                                    // 63
+Router.route('/twiits/:_id', {                                                                         // 79
+	name: 'twiitPage',                                                                                    // 80
+	data: function () {                                                                                   // 81
+		function data() {                                                                                    // 81
+			return this.params;                                                                                 // 82
+		}                                                                                                    // 83
                                                                                                        //
-Router.route('/editProfile/:userName', {                                                               // 81
-	name: 'editProfile',                                                                                  // 82
-	data: function () {                                                                                   // 83
-		function data() {                                                                                    // 83
-			Session.set('pathActualApp', "/editProfile/" + this.params.username);                               // 84
-			return this.params.userName;                                                                        // 85
-		}                                                                                                    // 86
+		return data;                                                                                         // 81
+	}()                                                                                                   // 81
+});                                                                                                    // 79
                                                                                                        //
-		return data;                                                                                         // 83
-	}()                                                                                                   // 83
-});                                                                                                    // 81
+Router.route('/editProfile/:userName', {                                                               // 86
+	name: 'editProfile',                                                                                  // 87
+	data: function () {                                                                                   // 88
+		function data() {                                                                                    // 88
+			Session.set('pathActualApp', "/editProfile/" + this.params.username);                               // 89
+			return this.params.userName;                                                                        // 90
+		}                                                                                                    // 91
                                                                                                        //
-Router.route('/followAnts/:userName', {                                                                // 89
-	name: 'followAnts',                                                                                   // 90
-	data: function () {                                                                                   // 91
-		function data() {                                                                                    // 91
-			var showData = new Object();                                                                        // 92
-			showData.user = this.params.userName;                                                               // 93
-			showData.mode = true;                                                                               // 94
-			Session.set('pathActualApp', "/followAnts/" + this.params.username);                                // 95
-			return showData;                                                                                    // 96
-		}                                                                                                    // 97
+		return data;                                                                                         // 88
+	}()                                                                                                   // 88
+});                                                                                                    // 86
                                                                                                        //
-		return data;                                                                                         // 91
-	}()                                                                                                   // 91
-});                                                                                                    // 89
+Router.route('/followAnts/:userName', {                                                                // 94
+	name: 'followAnts',                                                                                   // 95
+	data: function () {                                                                                   // 96
+		function data() {                                                                                    // 96
+			var showData = new Object();                                                                        // 97
+			showData.user = this.params.userName;                                                               // 98
+			showData.mode = true;                                                                               // 99
+			Session.set('pathActualApp', "/followAnts/" + this.params.username);                                // 100
+			return showData;                                                                                    // 101
+		}                                                                                                    // 102
                                                                                                        //
-Router.route('/videoTrans', { name: 'videoTrans' });                                                   // 100
+		return data;                                                                                         // 96
+	}()                                                                                                   // 96
+});                                                                                                    // 94
+                                                                                                       //
+Router.route('/videoTrans', { name: 'videoTrans' });                                                   // 105
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){

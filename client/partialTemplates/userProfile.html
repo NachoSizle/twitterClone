@@ -12,7 +12,7 @@
                   <!--EN LA ETIQUETA DE SRC, SE PONDRA EL NOMBRE DEL USUARIO ACTUAL
                   <img id="imgCurrentUser" src="/{{currentUser.username}}.png" class="img-responsive">
                   A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
-                  <img id="imgCurrentUser" src="{{userImgFound}}" class="imgUserProfile">
+                  <img id="imgCurrentUser" src="{{userImgFound}}" class="imgUserProfile" alt="Profile Image {{dataUserFound.userNameProfile}}">
                 </div>
                 <!--CONTENIDO DE LA PARTE DERECHA DEL PERFIL DEL USUARIO-->
                 <div class="col-md-5 col-sm-5 col-xs-5" id="rightDivCurrentUser">
@@ -32,7 +32,9 @@
                       <span class="glyphicon glyphicon-option-vertical"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownOptionsUser">
-                      <li><a href="#" id="editProfile">Editar Perfil</a></li>
+                      {{#if currentUser}}
+                        <li><a href="{{pathFor 'editProfile' userName=currentUser}}" id="editProfile">Editar Perfil</a></li>
+                      {{/if}}
                       <li><a href="#" id="editWhatsLicenses">Editar Permisos de WhatsApp</a></li>
                       <li><a href="#" id="removeProfile" data-toggle="modal" data-target="#dialog-removeProfile">Eliminar Perfil</a></li>
                       <li role="separator" class="divider"></li>
@@ -59,9 +61,15 @@
                           </button>
                         {{/if}}
                       {{else}}
-                        <button type='button' id="{{this.id}}" class='btn btn-{{this.color}} btn-circle optionsUserProfile btnShowSN' data-toggle="tooltip" title="">
-                          <i id='{{this.id}}' class='{{this.class}}' style='font-size: 24px;'></i>
-                        </button>
+                        {{# if isWhatsapp}}
+                          <button type='button' id="{{this.id}}" class='btn btn-{{this.color}} btn-circle optionsUserProfile btnShowSN' data-toggle="tooltip" title="{{dataUserFound.userWhats}}" data-placement="top">
+                            <i id='{{this.id}}' class='{{this.class}}' style='font-size: 24px;'></i>
+                          </button>
+                        {{else}}
+                          <button type='button' id="{{this.id}}" class='btn btn-{{this.color}} btn-circle optionsUserProfile btnShowSN'>
+                            <i id='{{this.id}}' class='{{this.class}}' style='font-size: 24px;'></i>
+                          </button>
+                        {{/if}}
                       {{/if}}
                     {{/each}}
                   </div>
@@ -99,6 +107,12 @@
 
               <div class="modal fade" id="dialog-editLicenses">
                 {{> editLicenses}}
+              </div>
+
+              <div class="modal fade" id="dialog-showImageProfile">
+                <img id="img{{dataUserFound.userNameProfile}}" src="" class="imgUserProfile">
+                <span id="btnCloseModalImgProfile" class="close">&times;</span>
+                <p id="titleImgUserProfile" align="center"><b>@{{dataUserFound.userNameProfile}}</b></p>
               </div>
 
               <div class="modal fade" id="dialog-operationSuccess">

@@ -68,17 +68,22 @@ Template.userManagement.events({
 
   'click #login': function(event) {
     event.preventDefault();
+    $('#errorContent').text("");
     var username = $('#loginNameProfile').val();
     var password = $('#loginPassword').val();
 
     Meteor.loginWithPassword(username, password, function(err) {
-      if(err.reason === "User not found"){
-        console.log(err.reason);
-        alert(err.reason);
-      } else {
-        console.log(err.reason);
-        alert(err.reason);
-      }
+      if(err){
+        if(err.reason === "User not found"){
+          $('#loginNameProfile').addClass('invalidField');
+          $('#errorContent').append("Usuario no encontrado");
+        } else {
+          $('#loginPassword').addClass('invalidField');
+          $('#errorContent').append("Usuario/Contraseña incorrecta");      
+        }
+        $('#dialog-errorLogin').modal('show');
+      };
+
     });
     loggingIn = true;
   },
@@ -96,6 +101,12 @@ Template.userManagement.events({
   }, 
   'change #signupPassword2': function(event){
     Session.set('valInputPass2', $('#signupPassword2').val());
+  },
+  'change #loginNameProfile' : function(event){
+    $('#loginNameProfile').removeClass('invalidField');
+  },
+  'change #loginPassword' : function(event){
+    $('#loginPassword').removeClass('invalidField');
   }
 });
 

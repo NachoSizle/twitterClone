@@ -1,7 +1,24 @@
 Template.editLicenses.onCreated(function(){
 	currentUserName = this.data.name;
   currDataUser = Session.get('dataUser');
+
   arrAux = currDataUser.showWhatsTo;
+  var usersFound = new Array();
+  for(var i in arrAux){
+    Meteor.call('findUserDataWithId', arrAux[i], function(err, res) {
+      var aux = new Object();
+      aux.name = res.userNameProfile;
+      aux.userId = res.userId;
+      usersFound.push(aux);
+      Session.set('usersFound', usersFound);
+    });
+  };
+
+  if(arrAux.length > 0){
+    Session.set('countUsersFound', true);
+  } else {
+    Session.set('countUsersFound', false);
+  }
 });
 
 Template.editLicenses.events({  
@@ -17,6 +34,14 @@ Template.editLicenses.events({
     data.userId = currDataUser.userId;
     data.showWhats = arrAux;
 
+    Session.set('usersFound', arrAux);
+    
+    if(arrAux.length > 0){
+      Session.set('countUsersFound', true);
+    } else {
+      Session.set('countUsersFound', false);
+    }
+
     //POR ULTIMO ACTUALIZAMOS EL VALOR DE ESTE ARRAY EN LA BBDD
     Meteor.call('updateShowWhatsTo', data);
   }
@@ -24,22 +49,10 @@ Template.editLicenses.events({
 
 Template.editLicenses.helpers({
   'userWhatsCount': function(){
-    if(arrAux.length > 0){
-      return true;
-    }
+    return Session.get('countUsersFound');
   },
 
   'responseLicenses' : function(){
-    var usersFound = new Array();
-    for(var i in arrAux){
-      Meteor.call('findUserDataWithId', arrAux[i], function(err, res) {
-        var aux = new Object();
-        aux.name = res.userNameProfile;
-        aux.userId = res.userId;
-        usersFound.push(aux);
-        Session.set('usersFound', usersFound);
-      });
-    };
     return Session.get('usersFound');
   },
 });

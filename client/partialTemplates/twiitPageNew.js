@@ -24,11 +24,10 @@ Template.twiitPageNew.helpers({
   },
 
   'convertDateTime': function() {
-    var dateNew = new Date(this.timestamp);
+    var dateNew = new Date(this.twiitTimeStamp);
     var dateCon = dateNew.toLocaleString();
 
     var elem = dateCon.split(' ');
-
     return elem[0];
   },
 
@@ -79,9 +78,9 @@ Template.twiitPageNew.helpers({
       //SOLO MOSTRAMOS LAS NOTIF DE TIPO COMM Y HAY QUE DEJAR SELECCIONADO
       //EL BTN DE COMM DE LA NAVBAR FOOTER
       Session.set('btnShowCommIsPulse', true);
-    } else {
+    } else if(lengthFavs === lengthComm){
       //SI TENEMOS EL MISMO NUMERO DE NOTIF, NO HACEMOS NADA. MOSTRAMOS TODAS.
-      console.log("OLI");
+      Session.set('btnShowCommIsPulse', false);
     }
   },
 

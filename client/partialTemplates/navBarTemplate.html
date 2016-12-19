@@ -22,7 +22,7 @@
 		    {{/if}}
 
     	  </button>
-    	  <img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive navbar-brand">
+    	  <a href="/"><img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive navbar-brand"></a>
 	    </div>
 
 	    <div class="modal fade" id="dialog-NewTwiit">
@@ -62,8 +62,9 @@
     			</a>
 	        </li>
 	        <li>
-              <!--A MODO DE EJEMPLO, VAMOS A UTILIZAR UNO GENERICO PARA QUE CARGUE EN CUALQUIER USUARIO-->
-              <img id="imgProfile" src="{{userImgFound}}" class="img-responsive">
+	        {{# if currentUser}}
+              	<a href="{{pathFor 'userProfile' username=currentUser.name}}" class="imgProfileNavBar"><img id="imgProfile" src="{{userImgFound}}" class="img-responsive"></a>
+            {{/if}}
 	        </li>
 	      </ul>
 	    </div>

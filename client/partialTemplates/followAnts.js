@@ -21,11 +21,12 @@ Template.followAnts.helpers({
 
     foundFollowers = Session.get('followers');
     foundFollowings = Session.get('followings');
-
-    if(foundFollowers.length === 0){
-      Session.set('noFollowers', true);
-    } else {
-      Session.set('noFollowers', false);
+    if(foundFollowers){
+      if(foundFollowers.length === 0){
+        Session.set('noFollowers', true);
+      } else {
+        Session.set('noFollowers', false);
+      }
     }
           
     if(foundFollowings){

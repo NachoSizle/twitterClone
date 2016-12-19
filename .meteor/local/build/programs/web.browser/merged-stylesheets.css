@@ -9225,7 +9225,7 @@ form input:focus:required:invalid {
 
 #userDescription {
   font-size: 15px;
-  margin-top: 3px;
+  margin-top: 35px;
 }
 
 #rightDivCurrentUser {
@@ -9234,4 +9234,33 @@ form input:focus:required:invalid {
 
 #containerDateTime {
   float: right;
+}
+
+.imgProfileNavBar {
+  padding-top: 0px !important;
+  padding-left: 5px !important;
+}
+
+#dialog-showImageProfile {
+  top: 15%;
+  height: 50%;
+  background-color: #e6f7ff;
+}
+
+#btnCloseModalImgProfile {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  font-size: 45px;
+  background-color: #e6f7ff;
+  border-radius: 20px;
+  padding-left: 8px;
+  width: 43px;
+  opacity: 1;
+  color: #757575;
+}
+
+#titleImgUserProfile {
+  position: relative;
+  top: -20px;
 }

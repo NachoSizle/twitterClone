@@ -15,27 +15,11 @@ Template.navBarTemplate.onCreated( function() {
 
 });
 
-//ESTA ES OTRA FORMA DE HACER APARECER EL SPINNER CUANDO NO SE HA CARGADO LA TEMPLATE
-/*
-	Session.set("onRender", true);
-});
-
-Template.navBarTemplate.onRendered(function() {
-	Session.set("onRender", false);
-    return Session.get("onRender");
-});
-*/
 Template.navBarTemplate.events({
 	'click #recommendationsBtn' : function(){
 		//Contraer el dropDownMenu 
-		$('#btnMenuNavBar').click()
+		$('#btnMenuNavBar').click();
 		Session.set('pathActualApp', '/whoToFollow');
-	},
-	'click #imgProfile' : function(){
-		window.location = "/Profile/" + Session.get('currentUser');
-	},
-	'click #imgLogTwiiterClone' : function(){
-		window.location = "/";
 	},
 	'show.bs.collapse' : function(){
 		Session.set('navBarCollapse', true);
@@ -51,15 +35,18 @@ Template.navBarTemplate.events({
   	},
   	'click #videoTrans' : function(){
   		console.log(Session.get('currentUser'));
-  		if(Session.get('currentUser') === "Nachosizle"){
+  		if(Session.get('currentUser') === "nachosizle"){
   			window.location = "/videoTrans";
   		}
+  	},
+  	'click .imgProfileNavBar': function(){
+  		$('#btnMenuNavBar').click();
+  		Session.set('pathActualApp', '/Profile/' + Meteor.user().username);
   	}
 });
 
 Template.navBarTemplate.helpers({
 	'notificationCount': function() {
-		console.log("NUMERO DE NOTIFICACIONES NORMALES");
 	    var resultNotif = UserUtils.findNumberNotif(Meteor.user().username);
 	    return resultNotif;
 	},
@@ -91,9 +78,6 @@ Template.navBarTemplate.helpers({
 		}
 	},
 	'whatsAppReq' : function(){
-		console.log("NUMERO DE NOTIFICACIONES DE PETICIONES DE WHATSAPP");
-		console.log("Req: " + resultNotifRequest.count());
-		console.log("Res: " + resultNotifResponse.count());
 	    var cont = 0;
 	    var req = [];
 	    var res = [];
@@ -132,6 +116,11 @@ Template.navBarTemplate.helpers({
 			}
 			
 	  	});
+	},
+	'currentUser': function(){
+		var user = new Object();
+		user.name = Session.get('currentUser');
+		return user;
 	}
 });
 //PARA CONTROLAR SI SE CAMBIA EL TAMAÑO DE PANTALLA

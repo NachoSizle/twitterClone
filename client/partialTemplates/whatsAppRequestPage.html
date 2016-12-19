@@ -10,7 +10,10 @@
             <div class="panel panel-info">
               <div class="panel-heading">
                 <h3 class="panel-title">
-                  Solicitud de WhatsApp de @<strong>{{this.actorNotif}}</strong>
+                  Solicitud de WhatsApp de 
+                  <a href="{{pathFor 'userProfile' username=this.actorNotif}}">
+                    <strong>@{{this.actorNotif}}</strong>
+                  </a>
                 </h3>
               </div>
               <div class="panel-body">
@@ -38,7 +41,10 @@
             <div class="panel panel-info" id="{{this.actorNotif}}">
               <div class="panel-heading">
                 <h3 class="panel-title">
-                  Respuesta de solicitud de WhatsApp de @<strong>{{this.actorNotif}}</strong>
+                  Respuesta de solicitud de WhatsApp de 
+                  <a href="{{pathFor 'userProfile' username=this.actorNotif}}">
+                    <strong>@{{this.actorNotif}}</strong>
+                  </a>
                 </h3>
               </div>
               <div class="panel-body">

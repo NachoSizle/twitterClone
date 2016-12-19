@@ -1,15 +1,12 @@
 Template.userProfile.onCreated(function(){
 	currentUserName = this.data.name;
-  Session.set('pathActualApp', window.location.pathname);
+  Session.set('pathActualApp', '/Profile/'+currentUserName);
 });
 
 Template.userProfile.events({  
 	'click #logout': function() {  
     	Meteor.logout();
     	window.location = "/";
-  	},
-  	'click #editProfile': function(){
-  		window.location = "/editProfile/" + currentUserName;
   	},
     'click #editWhatsLicenses': function(){
       $('#dialog-editLicenses').modal('show');
@@ -27,22 +24,22 @@ Template.userProfile.events({
   			var userActName = Meteor.user().username;
     			
   			var arrWhats = dataUser.showWhatsTo;
-
   			Meteor.call('findUserData', userActName, function(err,res){
     			if(arrWhats.length > 0){
-    				if(arrWhats.indexOf(res.userId) >= 0){
-  	  				//MOSTRAMOS EL WHATSAPP
-  	  				console.log($('[data-toggle="tooltip"]'));
-              $('[data-toggle="tooltip"]').attr("title", dataUser.userWhats);
-    					$('[data-toggle="tooltip"]').tooltip('show'); 
-    	  			}
-      			} else if(!Session.get('showProfileOtherUser')){
-    					//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
-    					$('#dialog-showSocialNetwork').modal('show');
-    				} else {
-    					//INICIALIZAMOS EL TOOLTIP
-    					$('[data-toggle="tooltip"]').tooltip('show'); 
-    				}
+      				if(arrWhats.indexOf(res.userId) >= 0){
+                console.log("TOOLTIP");
+    	  				//MOSTRAMOS EL WHATSAPP
+                $('[data-toggle="tooltip"]').attr("title", dataUser.userWhats);
+      					$('[data-toggle="tooltip"]').tooltip('show'); 
+      	  			} else {
+                  $('[data-toggle="tooltip"]').tooltip('show'); 
+                }
+        			} else if(!Session.get('showProfileOtherUser')){
+      					//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
+      					$('#dialog-showSocialNetwork').modal('show');
+      				} else {
+                $('[data-toggle="tooltip"]').tooltip('show'); 
+              }
   			});
   		}
   	},
@@ -66,6 +63,15 @@ Template.userProfile.events({
     'click #btnFollow': function(){
       Session.set('userIsFollowMe', true);
       Meteor.call('followUser', currentUserName);
+    },
+    'click #imgCurrentUser': function(){
+      var imgUserProfile = $('#imgCurrentUser').attr('src');
+      $('#img' + currentUserName).attr('src', imgUserProfile);
+      $('#dialog-showImageProfile').modal('show');
+      $('.modal-backdrop').css('opacity', 0.9);
+    },
+    'click #btnCloseModalImgProfile': function(){
+      $('#dialog-showImageProfile').modal('hide');
     }
 });
 
@@ -106,9 +112,10 @@ Template.userProfile.helpers({
     });
 
     var currentFollowers = Session.get('getFollowers');
-    
+    var currentUser = Session.get('currentUser');
+
     if(currentFollowers){
-      var posUser = currentFollowers.indexOf(Meteor.user().username);
+      var posUser = currentFollowers.indexOf(currentUser);
 
       if(posUser != -1){
         Session.set('userIsFollowMe', true);
@@ -159,5 +166,8 @@ Template.userProfile.helpers({
 	},
   'userIsFollowMe': function(){
     return Session.get('userIsFollowMe');
+  }, 
+  'currentUser': function(){
+    return currentUserName;
   }
 });
