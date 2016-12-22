@@ -534,6 +534,11 @@ form input:focus:required:invalid{
   padding-left: 0px;
 }
 
+#centerDivCurrentUser{
+  padding-left: 20px;
+  margin-left: 0px;
+}
+
 #containerDateTime{
   float: right;
 }
@@ -565,4 +570,29 @@ form input:focus:required:invalid{
 #titleImgUserProfile{
   position: relative;
   top: -20px;
+}
+
+.contactsHeader{
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
+
+#imgUserCardContact{
+  width: 55px;
+  height: 55px;
+  padding: 2px;
+  border: 1px solid #bce8f1;
+}
+
+.lastMessage{
+  margin-bottom: 0px;
+}
+
+.panel-body-messaging{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.panel-info-messaging{
+  margin-bottom: 2px !important; 
 }

@@ -32,16 +32,20 @@ Template.navBarTemplate.events({
   	},
   	'click #btnNewTwiit' : function(){
 	    Session.set('commentMode', false);
-  	},
+  	},/*
   	'click #videoTrans' : function(){
   		console.log(Session.get('currentUser'));
   		if(Session.get('currentUser') === "nachosizle"){
   			window.location = "/videoTrans";
   		}
-  	},
+  	},*/
   	'click .imgProfileNavBar': function(){
   		$('#btnMenuNavBar').click();
   		Session.set('pathActualApp', '/Profile/' + Meteor.user().username);
+  	},
+  	'click #btnShowConver': function(){
+  		$('#btnMenuNavBar').click();
+  		Session.set('pathActualApp', '/Conversations/' + Meteor.user().username);
   	}
 });
 

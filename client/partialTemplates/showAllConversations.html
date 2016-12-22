@@ -1,0 +1,96 @@
+<template name="showAllConversations">
+  {{#if Template.subscriptionsReady}}
+
+    {{#if btnShowMessages}}
+      <div class="tweetfeed-container">
+        <div class="panel panel-default tweetfeed">
+          <div class="panel-body">
+            
+          </div>
+        </div>
+      </div>
+    {{else}}
+      <div class="tweetfeed-container">
+        <div class="panel panel-default tweetfeed">
+          <h3 class="text-center contactsHeader">Contactos</h3>
+          <div class="panel-body">
+            {{> userCardContact}}
+          </div>
+        </div>
+      </div>
+    {{/if}}
+
+    <nav id="navBarBtnShowNotif" class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="btn-group" role="group">
+
+            <button style="width: {{setStyleNavBar}}" type="button" id="btnShowContacts" class="btn btn-secondary btnGroupsShowNotif">
+              <span class="glyphicon glyphicon-user"></span>
+            </button>
+
+            <button style="width: {{setStyleNavBar}}" type="button" id="btnShowMessages" class="btn btn-secondary btnGroupsShowNotif">
+              <span class="glyphicon glyphicon-align-justify"></span>
+            </button>
+            
+          </div>
+        </div>
+      </div>
+    </nav>
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>
+
+<template name="userCardContact">
+
+  <div class="panel panel-info panel-info-messaging">
+    <div class="panel-body panel-body-messaging">
+      <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">
+          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">
+          <p><strong>@NachoSizle</strong></p>
+          <p class="lastMessage">Texto de ejemplo de mensaje...</p>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2" id="rightDivCurrentUser">
+          19:35
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-info panel-info-messaging">
+    <div class="panel-body panel-body-messaging">
+      <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">
+          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">
+          <p><strong>@NachoSizle</strong></p>
+          <p class="lastMessage">Texto de ejemplo de mensaje...</p>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2" id="rightDivCurrentUser">
+          19:35
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-info panel-info-messaging">
+    <div class="panel-body panel-body-messaging">
+      <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">
+          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">
+          <p><strong>@NachoSizle</strong></p>
+          <p class="lastMessage">Texto de ejemplo de mensaje...</p>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2" id="rightDivCurrentUser">
+          19:35
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</template>
