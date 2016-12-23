@@ -160,19 +160,23 @@ Router.route('/followAnts/:userName', {                                         
                                                                                                        //
 Router.route('/videoTrans', { name: 'videoTrans' });                                                   // 105
                                                                                                        //
-Router.route('/Conversations/:username', {                                                             // 107
-	name: 'showAllConversations',                                                                         // 108
-	data: function () {                                                                                   // 109
-		function data() {                                                                                    // 109
-			var user = new Object();                                                                            // 110
-			user.name = this.params.username;                                                                   // 111
-                                                                                                       //
-			return user;                                                                                        // 113
-		}                                                                                                    // 114
-                                                                                                       //
-		return data;                                                                                         // 109
-	}()                                                                                                   // 109
+Router.route('/Chats/', {                                                                              // 107
+	name: 'conversationsMenu'                                                                             // 108
 });                                                                                                    // 107
+                                                                                                       //
+Router.route('/Conversation/:username', {                                                              // 111
+	name: 'showConver',                                                                                   // 112
+	data: function () {                                                                                   // 113
+		function data() {                                                                                    // 113
+			var user = new Object();                                                                            // 114
+			user.name = this.params.username;                                                                   // 115
+                                                                                                       //
+			return user;                                                                                        // 117
+		}                                                                                                    // 118
+                                                                                                       //
+		return data;                                                                                         // 113
+	}()                                                                                                   // 113
+});                                                                                                    // 111
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){

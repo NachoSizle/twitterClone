@@ -572,12 +572,12 @@ form input:focus:required:invalid{
   top: -20px;
 }
 
-.contactsHeader{
+.headerConversationsSection{
   margin-top: 15px;
   margin-bottom: 0px;
 }
 
-#imgUserCardContact{
+#imgUserCardConversation{
   width: 55px;
   height: 55px;
   padding: 2px;
@@ -595,4 +595,46 @@ form input:focus:required:invalid{
 
 .panel-info-messaging{
   margin-bottom: 2px !important; 
+}
+
+.goToConversation{
+  padding-left: 20px;
+}
+
+.containerContact{
+  padding-top: 13px; 
+}
+
+#imgUserCardContact{
+  width: 45px;
+  height: 45px;
+  padding: 2px;
+  border: 1px solid #bce8f1;
+}
+
+#inputMessage{
+  margin-right: 0px;
+  height: 100%;
+  width: 97%;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+#btnSendMessage{
+  padding-right: 13px;
+}
+
+.headerChat-container{
+  margin-left: 0px;
+  margin-top: -10px;
+  margin-right: 0px;
+}
+
+.headerChat-panel-body{
+  padding-bottom: 5px;
+}
+
+.containerHeaderChat{
+  padding-top: 13px; 
+  padding-left: 0px !important;
 }

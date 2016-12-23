@@ -1,8 +1,8 @@
-Template.showAllConversations.onCreated(function() {  
+Template.conversationsMenu.onCreated(function() {  
   Session.set('showMessages', true);
 });
 
-Template.showAllConversations.helpers({
+Template.conversationsMenu.helpers({
   'setStyleNavBar': function(){
     var widthNav = $(window).width();
     //RESTAMOS DOS PIXELES POR LOS BORDES
@@ -15,7 +15,7 @@ Template.showAllConversations.helpers({
   },
 });
 
-Template.showAllConversations.events({
+Template.conversationsMenu.events({
   'click #btnShowContacts' : function(){
     Session.set('showMessages', false);
   },

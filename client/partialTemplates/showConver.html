@@ -1,0 +1,48 @@
+<template name="showConver">
+  {{#if Template.subscriptionsReady}}
+
+    <div class="headerChat-container">
+      <div class="panel panel-default">
+        <div class="panel-body headerChat-panel-body">
+          <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2 containerHeaderChat" id="rightDivCurrentUser">
+              <a href="{{pathFor 'conversationsMenu'}}" class="goToConversation"><strong><span class="glyphicon glyphicon-menu-left"></span></strong></a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">
+              <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">
+            </div>
+            <div class="col-md-8 col-sm-8 col-xs-8 containerHeaderChat" id="centerDivCurrentUser">
+              <a href="{{pathFor 'userProfile' username='{{recepUserChat}}'}}"><strong>{{recepUserChat}}</strong></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    {{# each messagesInChat}}
+
+    {{/each}}
+
+    <nav id="navBarBtnShowNotif" class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="input-group">
+                <input id="inputMessage" type="text" class="form-control" placeholder="Message...">
+                <span class="input-group-btn">
+                  <button type="button" id="btnSendMessage" class="btn btn-secondary btnGroupsShowNotif" disabled="{{btnDisabled}}">
+                    <span class="glyphicon glyphicon-send"></span>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>

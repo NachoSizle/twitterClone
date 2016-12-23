@@ -1,4 +1,140 @@
-var require = meteorInstall({"client":{"partialTemplates":{"template.editLicenses.js":function(){
+var require = meteorInstall({"client":{"partialTemplates":{"template.conversationsMenu.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/template.conversationsMenu.js                                                               //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+                                                                                                                       // 1
+Template.__checkName("conversationsMenu");                                                                             // 2
+Template["conversationsMenu"] = new Template("Template.conversationsMenu", (function() {                               // 3
+  var view = this;                                                                                                     // 4
+  return Blaze.If(function() {                                                                                         // 5
+    return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
+  }, function() {                                                                                                      // 7
+    return [ "\n\n    ", Blaze.If(function() {                                                                         // 8
+      return Spacebars.call(view.lookup("btnShowMessages"));                                                           // 9
+    }, function() {                                                                                                    // 10
+      return [ "\n      ", HTML.DIV({                                                                                  // 11
+        class: "tweetfeed-container"                                                                                   // 12
+      }, "\n        ", HTML.DIV({                                                                                      // 13
+        class: "panel panel-default tweetfeed"                                                                         // 14
+      }, "\n          ", HTML.H3({                                                                                     // 15
+        class: "text-center headerConversationsSection"                                                                // 16
+      }, "Chats"), "\n          ", HTML.DIV({                                                                          // 17
+        class: "panel-body"                                                                                            // 18
+      }, "\n            ", Spacebars.include(view.lookupTemplate("userCardConversation")), "\n          "), "\n        "), "\n      "), "\n    " ];
+    }, function() {                                                                                                    // 20
+      return [ "\n      ", HTML.DIV({                                                                                  // 21
+        class: "tweetfeed-container"                                                                                   // 22
+      }, "\n        ", HTML.DIV({                                                                                      // 23
+        class: "panel panel-default tweetfeed"                                                                         // 24
+      }, "\n          ", HTML.H3({                                                                                     // 25
+        class: "text-center headerConversationsSection"                                                                // 26
+      }, "Contactos"), "\n          ", HTML.DIV({                                                                      // 27
+        class: "panel-body"                                                                                            // 28
+      }, "\n            ", Spacebars.include(view.lookupTemplate("userCardContact")), "\n          "), "\n        "), "\n      "), "\n    " ];
+    }), "\n\n    ", HTML.NAV({                                                                                         // 30
+      id: "navBarBtnShowNotif",                                                                                        // 31
+      class: "navbar navbar-default navbar-fixed-bottom"                                                               // 32
+    }, "\n      ", HTML.DIV({                                                                                          // 33
+      class: "container"                                                                                               // 34
+    }, "\n        ", HTML.DIV({                                                                                        // 35
+      class: "navbar-header"                                                                                           // 36
+    }, "\n          ", HTML.DIV({                                                                                      // 37
+      class: "btn-group",                                                                                              // 38
+      role: "group"                                                                                                    // 39
+    }, "\n\n            ", HTML.BUTTON({                                                                               // 40
+      style: function() {                                                                                              // 41
+        return [ "width: ", Spacebars.mustache(view.lookup("setStyleNavBar")) ];                                       // 42
+      },                                                                                                               // 43
+      type: "button",                                                                                                  // 44
+      id: "btnShowContacts",                                                                                           // 45
+      class: "btn btn-secondary btnGroupsShowNotif"                                                                    // 46
+    }, "\n              ", HTML.SPAN({                                                                                 // 47
+      class: "glyphicon glyphicon-user"                                                                                // 48
+    }), "\n            "), "\n\n            ", HTML.BUTTON({                                                           // 49
+      style: function() {                                                                                              // 50
+        return [ "width: ", Spacebars.mustache(view.lookup("setStyleNavBar")) ];                                       // 51
+      },                                                                                                               // 52
+      type: "button",                                                                                                  // 53
+      id: "btnShowMessages",                                                                                           // 54
+      class: "btn btn-secondary btnGroupsShowNotif"                                                                    // 55
+    }, "\n              ", HTML.SPAN({                                                                                 // 56
+      class: "glyphicon glyphicon-align-justify"                                                                       // 57
+    }), "\n            "), "\n            \n          "), "\n        "), "\n      "), "\n    "), "\n  " ];             // 58
+  }, function() {                                                                                                      // 59
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 60
+  });                                                                                                                  // 61
+}));                                                                                                                   // 62
+                                                                                                                       // 63
+Template.__checkName("userCardConversation");                                                                          // 64
+Template["userCardConversation"] = new Template("Template.userCardConversation", (function() {                         // 65
+  var view = this;                                                                                                     // 66
+  return HTML.DIV({                                                                                                    // 67
+    class: "panel panel-info panel-info-messaging"                                                                     // 68
+  }, "\n    ", HTML.DIV({                                                                                              // 69
+    class: "panel-body panel-body-messaging"                                                                           // 70
+  }, "\n      ", HTML.DIV({                                                                                            // 71
+    class: "row"                                                                                                       // 72
+  }, "\n        ", HTML.Raw('<div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">\n          <img id="imgUserCardConversation" src="/profileImgTest.png" class="img-circle">\n        </div>'), "\n        ", HTML.Raw('<div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">\n          <p><strong>NachoSizle</strong></p>\n          <p class="lastMessage">Texto de ejemplo de mensaje...</p>\n        </div>'), "\n        ", HTML.DIV({
+    class: "col-md-2 col-sm-2 col-xs-2",                                                                               // 74
+    id: "rightDivCurrentUser"                                                                                          // 75
+  }, "\n          ", HTML.Raw("<p>19:35</p>"), "\n          ", HTML.A({                                                // 76
+    href: function() {                                                                                                 // 77
+      return Spacebars.mustache(view.lookup("pathFor"), "showConver", Spacebars.kw({                                   // 78
+        username: "NachoSizle"                                                                                         // 79
+      }));                                                                                                             // 80
+    },                                                                                                                 // 81
+    id: "divConversation",                                                                                             // 82
+    class: "goToConversation"                                                                                          // 83
+  }, HTML.Raw('<span class="glyphicon glyphicon-menu-right"></span>')), "\n        "), "\n      "), "\n    "), "\n  ");
+}));                                                                                                                   // 85
+                                                                                                                       // 86
+Template.__checkName("userCardContact");                                                                               // 87
+Template["userCardContact"] = new Template("Template.userCardContact", (function() {                                   // 88
+  var view = this;                                                                                                     // 89
+  return [ HTML.DIV({                                                                                                  // 90
+    class: "panel panel-info panel-info-messaging"                                                                     // 91
+  }, "\n    ", HTML.DIV({                                                                                              // 92
+    class: "panel-body panel-body-messaging"                                                                           // 93
+  }, "\n      ", HTML.DIV({                                                                                            // 94
+    class: "row"                                                                                                       // 95
+  }, "\n        ", HTML.Raw('<div class="col-md-2 col-sm- 2 col-xs-2" id="leftDivCurrentUser">\n          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">\n        </div>'), "\n        ", HTML.Raw('<div class="col-md-8 col-sm-8 col-xs-8 containerContact" id="centerDivCurrentUser">\n          <p><strong>NachoSizle</strong></p>\n        </div>'), "\n        ", HTML.DIV({
+    class: "col-md-2 col-sm-2 col-xs-2 containerContact",                                                              // 97
+    id: "rightDivCurrentUser"                                                                                          // 98
+  }, "\n          ", HTML.A({                                                                                          // 99
+    href: function() {                                                                                                 // 100
+      return Spacebars.mustache(view.lookup("pathFor"), "showConver", Spacebars.kw({                                   // 101
+        username: "NachoSizle"                                                                                         // 102
+      }));                                                                                                             // 103
+    },                                                                                                                 // 104
+    id: "divConversation",                                                                                             // 105
+    class: "goToConversation"                                                                                          // 106
+  }, HTML.Raw('<span class="glyphicon glyphicon-menu-right"></span>')), "\n        "), "\n      "), "\n    "), "\n  "), "\n  ", HTML.DIV({
+    class: "panel panel-info panel-info-messaging"                                                                     // 108
+  }, "\n    ", HTML.DIV({                                                                                              // 109
+    class: "panel-body panel-body-messaging"                                                                           // 110
+  }, "\n      ", HTML.DIV({                                                                                            // 111
+    class: "row"                                                                                                       // 112
+  }, "\n        ", HTML.Raw('<div class="col-md-2 col-sm- 2 col-xs-2" id="leftDivCurrentUser">\n          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">\n        </div>'), "\n        ", HTML.Raw('<div class="col-md-8 col-sm-8 col-xs-8 containerContact" id="centerDivCurrentUser">\n          <p><strong>Test1</strong></p>\n        </div>'), "\n        ", HTML.DIV({
+    class: "col-md-2 col-sm-2 col-xs-2 containerContact",                                                              // 114
+    id: "rightDivCurrentUser"                                                                                          // 115
+  }, "\n          ", HTML.A({                                                                                          // 116
+    href: function() {                                                                                                 // 117
+      return Spacebars.mustache(view.lookup("pathFor"), "showConver", Spacebars.kw({                                   // 118
+        username: "Test1"                                                                                              // 119
+      }));                                                                                                             // 120
+    },                                                                                                                 // 121
+    id: "divConversation",                                                                                             // 122
+    class: "goToConversation"                                                                                          // 123
+  }, HTML.Raw('<span class="glyphicon glyphicon-menu-right"></span>')), "\n        "), "\n      "), "\n    "), "\n  ") ];
+}));                                                                                                                   // 125
+                                                                                                                       // 126
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"template.editLicenses.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
@@ -657,33 +793,31 @@ Template["navBarTemplate"] = new Template("Template.navBarTemplate", (function()
         }), "\n\t\t\t\t\t      \t"), "\n\t\t\t\t\t  \t" ];                                                             // 96
       }), "\n\t\t\t        "), "\n\t\t\t        ", HTML.Comment('\n\t\t\t        <li>\n\t\t\t        \t<a id="videoTrans" type="button" class="navbar-btn">\n\t\t\t        \t\t<span class="glyphicon glyphicon-camera"></span>\n\t\t    \t\t\t</a>\n\t\t\t        </li>\n\t\t\t        '), "\n\t\t\t        ", HTML.LI("\n\t\t\t        \t", HTML.A({
         href: function() {                                                                                             // 98
-          return Spacebars.mustache(view.lookup("pathFor"), "showAllConversations", Spacebars.kw({                     // 99
-            username: Spacebars.dot(view.lookup("currentUser"), "name")                                                // 100
-          }));                                                                                                         // 101
-        },                                                                                                             // 102
-        id: "btnShowConver",                                                                                           // 103
-        type: "button",                                                                                                // 104
-        class: "navbar-btn"                                                                                            // 105
-      }, "\n\t\t\t        \t\t", HTML.SPAN({                                                                           // 106
-        class: "glyphicon glyphicon-envelope"                                                                          // 107
-      }), "\n\t\t    \t\t\t"), "\n\t\t\t        "), "\n\t\t\t        ", HTML.LI("\n\t\t              \t", HTML.A({     // 108
-        href: function() {                                                                                             // 109
-          return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                              // 110
-            username: Spacebars.dot(view.lookup("currentUser"), "name")                                                // 111
-          }));                                                                                                         // 112
-        },                                                                                                             // 113
-        class: "imgProfileNavBar"                                                                                      // 114
-      }, HTML.IMG({                                                                                                    // 115
-        id: "imgProfile",                                                                                              // 116
-        src: function() {                                                                                              // 117
-          return Spacebars.mustache(view.lookup("userImgFound"));                                                      // 118
-        },                                                                                                             // 119
-        class: "img-responsive"                                                                                        // 120
-      })), "\n\t\t\t        "), "\n\t\t      \t"), "\n          \t" ];                                                 // 121
-    }), "\n\t    "), "\n\t  "), "\n\t"), "\n\t" ];                                                                     // 122
-  });                                                                                                                  // 123
-}));                                                                                                                   // 124
-                                                                                                                       // 125
+          return Spacebars.mustache(view.lookup("pathFor"), "conversationsMenu");                                      // 99
+        },                                                                                                             // 100
+        id: "btnShowConver",                                                                                           // 101
+        type: "button",                                                                                                // 102
+        class: "navbar-btn"                                                                                            // 103
+      }, "\n\t\t\t        \t\t", HTML.SPAN({                                                                           // 104
+        class: "glyphicon glyphicon-envelope"                                                                          // 105
+      }), "\n\t\t    \t\t\t"), "\n\t\t\t        "), "\n\t\t\t        ", HTML.LI("\n\t\t              \t", HTML.A({     // 106
+        href: function() {                                                                                             // 107
+          return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                              // 108
+            username: Spacebars.dot(view.lookup("currentUser"), "name")                                                // 109
+          }));                                                                                                         // 110
+        },                                                                                                             // 111
+        class: "imgProfileNavBar"                                                                                      // 112
+      }, HTML.IMG({                                                                                                    // 113
+        id: "imgProfile",                                                                                              // 114
+        src: function() {                                                                                              // 115
+          return Spacebars.mustache(view.lookup("userImgFound"));                                                      // 116
+        },                                                                                                             // 117
+        class: "img-responsive"                                                                                        // 118
+      })), "\n\t\t\t        "), "\n\t\t      \t"), "\n          \t" ];                                                 // 119
+    }), "\n\t    "), "\n\t  "), "\n\t"), "\n\t" ];                                                                     // 120
+  });                                                                                                                  // 121
+}));                                                                                                                   // 122
+                                                                                                                       // 123
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.not_found.js":function(){
@@ -937,81 +1071,96 @@ Template["sendRequest"] = new Template("Template.sendRequest", (function() {    
                                                                                                                        // 33
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"template.showAllConversations.js":function(){
+},"template.showConver.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
-// client/partialTemplates/template.showAllConversations.js                                                            //
+// client/partialTemplates/template.showConver.js                                                                      //
 //                                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
                                                                                                                        // 1
-Template.__checkName("showAllConversations");                                                                          // 2
-Template["showAllConversations"] = new Template("Template.showAllConversations", (function() {                         // 3
+Template.__checkName("showConver");                                                                                    // 2
+Template["showConver"] = new Template("Template.showConver", (function() {                                             // 3
   var view = this;                                                                                                     // 4
   return Blaze.If(function() {                                                                                         // 5
     return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
   }, function() {                                                                                                      // 7
-    return [ "\n\n    ", Blaze.If(function() {                                                                         // 8
-      return Spacebars.call(view.lookup("btnShowMessages"));                                                           // 9
-    }, function() {                                                                                                    // 10
-      return [ "\n      ", HTML.DIV({                                                                                  // 11
-        class: "tweetfeed-container"                                                                                   // 12
-      }, "\n        ", HTML.DIV({                                                                                      // 13
-        class: "panel panel-default tweetfeed"                                                                         // 14
-      }, "\n          ", HTML.DIV({                                                                                    // 15
-        class: "panel-body"                                                                                            // 16
-      }, "\n            \n          "), "\n        "), "\n      "), "\n    " ];                                        // 17
-    }, function() {                                                                                                    // 18
-      return [ "\n      ", HTML.DIV({                                                                                  // 19
-        class: "tweetfeed-container"                                                                                   // 20
-      }, "\n        ", HTML.DIV({                                                                                      // 21
-        class: "panel panel-default tweetfeed"                                                                         // 22
-      }, "\n          ", HTML.H3({                                                                                     // 23
-        class: "text-center contactsHeader"                                                                            // 24
-      }, "Contactos"), "\n          ", HTML.DIV({                                                                      // 25
-        class: "panel-body"                                                                                            // 26
-      }, "\n            ", Spacebars.include(view.lookupTemplate("userCardContact")), "\n          "), "\n        "), "\n      "), "\n    " ];
-    }), "\n\n    ", HTML.NAV({                                                                                         // 28
-      id: "navBarBtnShowNotif",                                                                                        // 29
-      class: "navbar navbar-default navbar-fixed-bottom"                                                               // 30
-    }, "\n      ", HTML.DIV({                                                                                          // 31
-      class: "container"                                                                                               // 32
-    }, "\n        ", HTML.DIV({                                                                                        // 33
-      class: "navbar-header"                                                                                           // 34
-    }, "\n          ", HTML.DIV({                                                                                      // 35
-      class: "btn-group",                                                                                              // 36
-      role: "group"                                                                                                    // 37
-    }, "\n\n            ", HTML.BUTTON({                                                                               // 38
-      style: function() {                                                                                              // 39
-        return [ "width: ", Spacebars.mustache(view.lookup("setStyleNavBar")) ];                                       // 40
-      },                                                                                                               // 41
-      type: "button",                                                                                                  // 42
-      id: "btnShowContacts",                                                                                           // 43
-      class: "btn btn-secondary btnGroupsShowNotif"                                                                    // 44
-    }, "\n              ", HTML.SPAN({                                                                                 // 45
-      class: "glyphicon glyphicon-user"                                                                                // 46
-    }), "\n            "), "\n\n            ", HTML.BUTTON({                                                           // 47
-      style: function() {                                                                                              // 48
-        return [ "width: ", Spacebars.mustache(view.lookup("setStyleNavBar")) ];                                       // 49
-      },                                                                                                               // 50
-      type: "button",                                                                                                  // 51
-      id: "btnShowMessages",                                                                                           // 52
-      class: "btn btn-secondary btnGroupsShowNotif"                                                                    // 53
-    }, "\n              ", HTML.SPAN({                                                                                 // 54
-      class: "glyphicon glyphicon-align-justify"                                                                       // 55
-    }), "\n            "), "\n            \n          "), "\n        "), "\n      "), "\n    "), "\n  " ];             // 56
-  }, function() {                                                                                                      // 57
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 58
-  });                                                                                                                  // 59
-}));                                                                                                                   // 60
-                                                                                                                       // 61
-Template.__checkName("userCardContact");                                                                               // 62
-Template["userCardContact"] = new Template("Template.userCardContact", (function() {                                   // 63
-  var view = this;                                                                                                     // 64
-  return HTML.Raw('<div class="panel panel-info panel-info-messaging">\n    <div class="panel-body panel-body-messaging">\n      <div class="row">\n        <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">\n          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">\n        </div>\n        <div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">\n          <p><strong>@NachoSizle</strong></p>\n          <p class="lastMessage">Texto de ejemplo de mensaje...</p>\n        </div>\n        <div class="col-md-2 col-sm-2 col-xs-2" id="rightDivCurrentUser">\n          19:35\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class="panel panel-info panel-info-messaging">\n    <div class="panel-body panel-body-messaging">\n      <div class="row">\n        <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">\n          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">\n        </div>\n        <div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">\n          <p><strong>@NachoSizle</strong></p>\n          <p class="lastMessage">Texto de ejemplo de mensaje...</p>\n        </div>\n        <div class="col-md-2 col-sm-2 col-xs-2" id="rightDivCurrentUser">\n          19:35\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class="panel panel-info panel-info-messaging">\n    <div class="panel-body panel-body-messaging">\n      <div class="row">\n        <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">\n          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">\n        </div>\n        <div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">\n          <p><strong>@NachoSizle</strong></p>\n          <p class="lastMessage">Texto de ejemplo de mensaje...</p>\n        </div>\n        <div class="col-md-2 col-sm-2 col-xs-2" id="rightDivCurrentUser">\n          19:35\n        </div>\n      </div>\n    </div>\n  </div>');
-}));                                                                                                                   // 66
-                                                                                                                       // 67
+    return [ "\n\n    ", HTML.DIV({                                                                                    // 8
+      class: "headerChat-container"                                                                                    // 9
+    }, "\n      ", HTML.DIV({                                                                                          // 10
+      class: "panel panel-default"                                                                                     // 11
+    }, "\n        ", HTML.DIV({                                                                                        // 12
+      class: "panel-body headerChat-panel-body"                                                                        // 13
+    }, "\n          ", HTML.DIV({                                                                                      // 14
+      class: "row"                                                                                                     // 15
+    }, "\n            ", HTML.DIV({                                                                                    // 16
+      class: "col-md-2 col-sm-2 col-xs-2 containerHeaderChat",                                                         // 17
+      id: "rightDivCurrentUser"                                                                                        // 18
+    }, "\n              ", HTML.A({                                                                                    // 19
+      href: function() {                                                                                               // 20
+        return Spacebars.mustache(view.lookup("pathFor"), "conversationsMenu");                                        // 21
+      },                                                                                                               // 22
+      class: "goToConversation"                                                                                        // 23
+    }, HTML.STRONG(HTML.SPAN({                                                                                         // 24
+      class: "glyphicon glyphicon-menu-left"                                                                           // 25
+    }))), "\n            "), "\n            ", HTML.DIV({                                                              // 26
+      class: "col-md-2 col-sm-2 col-xs-2",                                                                             // 27
+      id: "leftDivCurrentUser"                                                                                         // 28
+    }, "\n              ", HTML.IMG({                                                                                  // 29
+      id: "imgUserCardContact",                                                                                        // 30
+      src: "/profileImgTest.png",                                                                                      // 31
+      class: "img-circle"                                                                                              // 32
+    }), "\n            "), "\n            ", HTML.DIV({                                                                // 33
+      class: "col-md-8 col-sm-8 col-xs-8 containerHeaderChat",                                                         // 34
+      id: "centerDivCurrentUser"                                                                                       // 35
+    }, "\n              ", HTML.A({                                                                                    // 36
+      href: function() {                                                                                               // 37
+        return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                                // 38
+          username: "{{recepUserChat}}"                                                                                // 39
+        }));                                                                                                           // 40
+      }                                                                                                                // 41
+    }, HTML.STRONG(Blaze.View("lookup:recepUserChat", function() {                                                     // 42
+      return Spacebars.mustache(view.lookup("recepUserChat"));                                                         // 43
+    }))), "\n            "), "\n          "), "\n        "), "\n      "), "\n    "), "  \n\n    ", Blaze.Each(function() {
+      return Spacebars.call(view.lookup("messagesInChat"));                                                            // 45
+    }, function() {                                                                                                    // 46
+      return "\n\n    ";                                                                                               // 47
+    }), "\n\n    ", HTML.NAV({                                                                                         // 48
+      id: "navBarBtnShowNotif",                                                                                        // 49
+      class: "navbar navbar-default navbar-fixed-bottom"                                                               // 50
+    }, "\n      ", HTML.DIV({                                                                                          // 51
+      class: "container"                                                                                               // 52
+    }, "\n        ", HTML.DIV({                                                                                        // 53
+      class: "navbar-header"                                                                                           // 54
+    }, "\n          ", HTML.DIV({                                                                                      // 55
+      class: "row"                                                                                                     // 56
+    }, "\n            ", HTML.DIV({                                                                                    // 57
+      class: "col-md-12 col-sm-12 col-xs-12"                                                                           // 58
+    }, "\n              ", HTML.DIV({                                                                                  // 59
+      class: "input-group"                                                                                             // 60
+    }, "\n                ", HTML.INPUT({                                                                              // 61
+      id: "inputMessage",                                                                                              // 62
+      type: "text",                                                                                                    // 63
+      class: "form-control",                                                                                           // 64
+      placeholder: "Message..."                                                                                        // 65
+    }), "\n                ", HTML.SPAN({                                                                              // 66
+      class: "input-group-btn"                                                                                         // 67
+    }, "\n                  ", HTML.BUTTON({                                                                           // 68
+      type: "button",                                                                                                  // 69
+      id: "btnSendMessage",                                                                                            // 70
+      class: "btn btn-secondary btnGroupsShowNotif",                                                                   // 71
+      disabled: function() {                                                                                           // 72
+        return Spacebars.mustache(view.lookup("btnDisabled"));                                                         // 73
+      }                                                                                                                // 74
+    }, "\n                    ", HTML.SPAN({                                                                           // 75
+      class: "glyphicon glyphicon-send"                                                                                // 76
+    }), "\n                  "), "\n                "), "\n              "), "\n            "), "\n          "), "\n        "), "\n      "), "\n    "), "\n\n  " ];
+  }, function() {                                                                                                      // 78
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 79
+  });                                                                                                                  // 80
+}));                                                                                                                   // 81
+                                                                                                                       // 82
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.showSocialNetwork.js":function(){
@@ -2562,6 +2711,57 @@ Template["whatsAppRequestPage"] = new Template("Template.whatsAppRequestPage", (
                                                                                                                        // 109
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+},"conversationsMenu.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                     //
+// client/partialTemplates/conversationsMenu.js                                                                        //
+//                                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                       //
+Template.conversationsMenu.onCreated(function () {                                                                     // 1
+  Session.set('showMessages', true);                                                                                   // 2
+});                                                                                                                    // 3
+                                                                                                                       //
+Template.conversationsMenu.helpers({                                                                                   // 5
+  'setStyleNavBar': function () {                                                                                      // 6
+    function setStyleNavBar() {                                                                                        // 6
+      var widthNav = $(window).width();                                                                                // 7
+      //RESTAMOS DOS PIXELES POR LOS BORDES                                                                            // 8
+      widthNav -= 2;                                                                                                   // 9
+      return widthNav / 2 + "px";                                                                                      // 10
+    }                                                                                                                  // 11
+                                                                                                                       //
+    return setStyleNavBar;                                                                                             // 6
+  }(),                                                                                                                 // 6
+                                                                                                                       //
+  'btnShowMessages': function () {                                                                                     // 13
+    function btnShowMessages() {                                                                                       // 13
+      return Session.get('showMessages');                                                                              // 14
+    }                                                                                                                  // 15
+                                                                                                                       //
+    return btnShowMessages;                                                                                            // 13
+  }()                                                                                                                  // 13
+});                                                                                                                    // 5
+                                                                                                                       //
+Template.conversationsMenu.events({                                                                                    // 18
+  'click #btnShowContacts': function () {                                                                              // 19
+    function clickBtnShowContacts() {                                                                                  // 19
+      Session.set('showMessages', false);                                                                              // 20
+    }                                                                                                                  // 21
+                                                                                                                       //
+    return clickBtnShowContacts;                                                                                       // 19
+  }(),                                                                                                                 // 19
+  'click #btnShowMessages': function () {                                                                              // 22
+    function clickBtnShowMessages() {                                                                                  // 22
+      Session.set('showMessages', true);                                                                               // 23
+    }                                                                                                                  // 24
+                                                                                                                       //
+    return clickBtnShowMessages;                                                                                       // 22
+  }()                                                                                                                  // 22
+});                                                                                                                    // 18
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 },"editLicenses.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3639,54 +3839,62 @@ Template.sendRequest.helpers({                                                  
 });                                                                                                                    // 26
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-},"showAllConversations.js":function(){
+},"showConver.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                     //
-// client/partialTemplates/showAllConversations.js                                                                     //
+// client/partialTemplates/showConver.js                                                                               //
 //                                                                                                                     //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                        //
-Template.showAllConversations.onCreated(function () {                                                                  // 1
-  Session.set('showMessages', true);                                                                                   // 2
-});                                                                                                                    // 3
+Template.showConver.onCreated(function () {                                                                            // 1
+  Session.set('messageInputEmpty', true);                                                                              // 2
+  Session.set('recepUsernameChat', this.data.name);                                                                    // 3
+});                                                                                                                    // 4
                                                                                                                        //
-Template.showAllConversations.helpers({                                                                                // 5
-  'setStyleNavBar': function () {                                                                                      // 6
-    function setStyleNavBar() {                                                                                        // 6
-      var widthNav = $(window).width();                                                                                // 7
-      //RESTAMOS DOS PIXELES POR LOS BORDES                                                                            // 8
-      widthNav -= 2;                                                                                                   // 9
-      return widthNav / 2 + "px";                                                                                      // 10
-    }                                                                                                                  // 11
+Template.showConver.helpers({                                                                                          // 6
+  'messagesInChat': function () {                                                                                      // 7
+    function messagesInChat() {}                                                                                       // 7
                                                                                                                        //
-    return setStyleNavBar;                                                                                             // 6
-  }(),                                                                                                                 // 6
+    return messagesInChat;                                                                                             // 7
+  }(),                                                                                                                 // 7
+  'btnDisabled': function () {                                                                                         // 10
+    function btnDisabled() {                                                                                           // 10
+      return Session.get('messageInputEmpty');                                                                         // 11
+    }                                                                                                                  // 12
                                                                                                                        //
-  'btnShowMessages': function () {                                                                                     // 13
-    function btnShowMessages() {                                                                                       // 13
-      return Session.get('showMessages');                                                                              // 14
+    return btnDisabled;                                                                                                // 10
+  }(),                                                                                                                 // 10
+  'recepUserChat': function () {                                                                                       // 13
+    function recepUserChat() {                                                                                         // 13
+      return Session.get('recepUsernameChat');                                                                         // 14
     }                                                                                                                  // 15
                                                                                                                        //
-    return btnShowMessages;                                                                                            // 13
+    return recepUserChat;                                                                                              // 13
   }()                                                                                                                  // 13
-});                                                                                                                    // 5
+});                                                                                                                    // 6
                                                                                                                        //
-Template.showAllConversations.events({                                                                                 // 18
-  'click #btnShowContacts': function () {                                                                              // 19
-    function clickBtnShowContacts() {                                                                                  // 19
-      Session.set('showMessages', false);                                                                              // 20
-    }                                                                                                                  // 21
+Template.showConver.events({                                                                                           // 18
+  'click #btnSendMessage': function () {                                                                               // 19
+    function clickBtnSendMessage() {                                                                                   // 19
+      /*CREAMOS UN MENSAJE Y ACTUALIZAMOS LA SESSION VAR CON ESE MENSAJE*/                                             // 20
+      console.log("CLICK");                                                                                            // 21
+    }                                                                                                                  // 22
                                                                                                                        //
-    return clickBtnShowContacts;                                                                                       // 19
+    return clickBtnSendMessage;                                                                                        // 19
   }(),                                                                                                                 // 19
-  'click #btnShowMessages': function () {                                                                              // 22
-    function clickBtnShowMessages() {                                                                                  // 22
-      Session.set('showMessages', true);                                                                               // 23
-    }                                                                                                                  // 24
+  'input #inputMessage': function () {                                                                                 // 23
+    function inputInputMessage() {                                                                                     // 23
+      var lengthMessage = $('#inputMessage').val().length;                                                             // 24
+      if (lengthMessage > 0) {                                                                                         // 25
+        Session.set('messageInputEmpty', false);                                                                       // 26
+      } else if (lengthMessage === 0) {                                                                                // 27
+        Session.set('messageInputEmpty', true);                                                                        // 28
+      }                                                                                                                // 29
+    }                                                                                                                  // 30
                                                                                                                        //
-    return clickBtnShowMessages;                                                                                       // 22
-  }()                                                                                                                  // 22
+    return inputInputMessage;                                                                                          // 23
+  }()                                                                                                                  // 23
 });                                                                                                                    // 18
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -5719,6 +5927,26 @@ var Template;module.import('meteor/templating',{"Template":function(v){Template=
                                                                                                                        // 2
                                                                                                                        //
                                                                                                                        // 4
+                                                                                                                       //
+/*****************************************************************/                                                    // 6
+/****************CONTROLAMOS EL ZOOM EN LA PAGINA*****************/                                                    // 7
+/*****************************************************************/                                                    // 8
+$(document).ready(function () {                                                                                        // 9
+	$(document).keydown(function (event) {                                                                                // 10
+		if (event.ctrlKey == true && (event.which == '61' || event.which == '107' || event.which == '173' || event.which == '109' || event.which == '187' || event.which == '189')) {
+			event.preventDefault();                                                                                             // 12
+		};                                                                                                                   // 13
+	});                                                                                                                   // 14
+                                                                                                                       //
+	$(window).bind('mousewheel DOMMouseScroll', function (event) {                                                        // 16
+		if (event.ctrlKey == true) {                                                                                         // 17
+			event.preventDefault();                                                                                             // 18
+		};                                                                                                                   // 19
+	});                                                                                                                   // 20
+});                                                                                                                    // 21
+/*****************************************************************/                                                    // 22
+/*****************************************************************/                                                    // 23
+/*****************************************************************/                                                    // 24
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }]},"lib":{"collections.js":function(){
@@ -5883,19 +6111,23 @@ Router.route('/followAnts/:userName', {                                         
                                                                                                                        //
 Router.route('/videoTrans', { name: 'videoTrans' });                                                                   // 105
                                                                                                                        //
-Router.route('/Conversations/:username', {                                                                             // 107
-	name: 'showAllConversations',                                                                                         // 108
-	data: function () {                                                                                                   // 109
-		function data() {                                                                                                    // 109
-			var user = new Object();                                                                                            // 110
-			user.name = this.params.username;                                                                                   // 111
-                                                                                                                       //
-			return user;                                                                                                        // 113
-		}                                                                                                                    // 114
-                                                                                                                       //
-		return data;                                                                                                         // 109
-	}()                                                                                                                   // 109
+Router.route('/Chats/', {                                                                                              // 107
+	name: 'conversationsMenu'                                                                                             // 108
 });                                                                                                                    // 107
+                                                                                                                       //
+Router.route('/Conversation/:username', {                                                                              // 111
+	name: 'showConver',                                                                                                   // 112
+	data: function () {                                                                                                   // 113
+		function data() {                                                                                                    // 113
+			var user = new Object();                                                                                            // 114
+			user.name = this.params.username;                                                                                   // 115
+                                                                                                                       //
+			return user;                                                                                                        // 117
+		}                                                                                                                    // 118
+                                                                                                                       //
+		return data;                                                                                                         // 113
+	}()                                                                                                                   // 113
+});                                                                                                                    // 111
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -6075,6 +6307,7 @@ UserUtils.findUserFromTwiit = function (twiitId) {                              
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }}},{"extensions":[".js",".json",".html",".css"]});
+require("./client/partialTemplates/template.conversationsMenu.js");
 require("./client/partialTemplates/template.editLicenses.js");
 require("./client/partialTemplates/template.editProfile.js");
 require("./client/partialTemplates/template.followAnts.js");
@@ -6088,7 +6321,7 @@ require("./client/partialTemplates/template.notificationsNew.js");
 require("./client/partialTemplates/template.pageNotFound.js");
 require("./client/partialTemplates/template.removeProfile.js");
 require("./client/partialTemplates/template.sendRequest.js");
-require("./client/partialTemplates/template.showAllConversations.js");
+require("./client/partialTemplates/template.showConver.js");
 require("./client/partialTemplates/template.showSocialNetwork.js");
 require("./client/partialTemplates/template.socialNetworkBox.js");
 require("./client/partialTemplates/template.tweetBox.js");
@@ -6106,6 +6339,7 @@ require("./client/template.main.js");
 require("./lib/collections.js");
 require("./lib/router.js");
 require("./lib/userUtils.js");
+require("./client/partialTemplates/conversationsMenu.js");
 require("./client/partialTemplates/editLicenses.js");
 require("./client/partialTemplates/editProfile.js");
 require("./client/partialTemplates/followAnts.js");
@@ -6116,7 +6350,7 @@ require("./client/partialTemplates/notifications.js");
 require("./client/partialTemplates/notificationsNew.js");
 require("./client/partialTemplates/removeProfile.js");
 require("./client/partialTemplates/sendRequest.js");
-require("./client/partialTemplates/showAllConversations.js");
+require("./client/partialTemplates/showConver.js");
 require("./client/partialTemplates/showSocialNetwork.js");
 require("./client/partialTemplates/socialNetworkBox.js");
 require("./client/partialTemplates/tweetBox.js");
