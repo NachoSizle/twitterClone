@@ -84,7 +84,7 @@ Template["userCardConversation"] = new Template("Template.userCardConversation",
   }, "\n          ", HTML.Raw("<p>19:35</p>"), "\n          ", HTML.A({                                                // 76
     href: function() {                                                                                                 // 77
       return Spacebars.mustache(view.lookup("pathFor"), "showConver", Spacebars.kw({                                   // 78
-        username: "NachoSizle"                                                                                         // 79
+        username: "nachosizle"                                                                                         // 79
       }));                                                                                                             // 80
     },                                                                                                                 // 81
     id: "divConversation",                                                                                             // 82
@@ -124,7 +124,7 @@ Template["userCardContact"] = new Template("Template.userCardContact", (function
   }, "\n          ", HTML.A({                                                                                          // 116
     href: function() {                                                                                                 // 117
       return Spacebars.mustache(view.lookup("pathFor"), "showConver", Spacebars.kw({                                   // 118
-        username: "Test1"                                                                                              // 119
+        username: "test1"                                                                                              // 119
       }));                                                                                                             // 120
     },                                                                                                                 // 121
     id: "divConversation",                                                                                             // 122
@@ -1086,81 +1086,85 @@ Template["showConver"] = new Template("Template.showConver", (function() {      
   return Blaze.If(function() {                                                                                         // 5
     return Spacebars.call(view.templateInstance().subscriptionsReady());                                               // 6
   }, function() {                                                                                                      // 7
-    return [ "\n\n    ", HTML.DIV({                                                                                    // 8
-      class: "headerChat-container"                                                                                    // 9
-    }, "\n      ", HTML.DIV({                                                                                          // 10
-      class: "panel panel-default"                                                                                     // 11
-    }, "\n        ", HTML.DIV({                                                                                        // 12
-      class: "panel-body headerChat-panel-body"                                                                        // 13
-    }, "\n          ", HTML.DIV({                                                                                      // 14
-      class: "row"                                                                                                     // 15
-    }, "\n            ", HTML.DIV({                                                                                    // 16
-      class: "col-md-2 col-sm-2 col-xs-2 containerHeaderChat",                                                         // 17
-      id: "rightDivCurrentUser"                                                                                        // 18
-    }, "\n              ", HTML.A({                                                                                    // 19
-      href: function() {                                                                                               // 20
-        return Spacebars.mustache(view.lookup("pathFor"), "conversationsMenu");                                        // 21
-      },                                                                                                               // 22
-      class: "goToConversation"                                                                                        // 23
-    }, HTML.STRONG(HTML.SPAN({                                                                                         // 24
-      class: "glyphicon glyphicon-menu-left"                                                                           // 25
-    }))), "\n            "), "\n            ", HTML.DIV({                                                              // 26
-      class: "col-md-2 col-sm-2 col-xs-2",                                                                             // 27
-      id: "leftDivCurrentUser"                                                                                         // 28
-    }, "\n              ", HTML.IMG({                                                                                  // 29
-      id: "imgUserCardContact",                                                                                        // 30
-      src: "/profileImgTest.png",                                                                                      // 31
-      class: "img-circle"                                                                                              // 32
-    }), "\n            "), "\n            ", HTML.DIV({                                                                // 33
-      class: "col-md-8 col-sm-8 col-xs-8 containerHeaderChat",                                                         // 34
-      id: "centerDivCurrentUser"                                                                                       // 35
-    }, "\n              ", HTML.A({                                                                                    // 36
-      href: function() {                                                                                               // 37
-        return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                                // 38
-          username: "{{recepUserChat}}"                                                                                // 39
-        }));                                                                                                           // 40
-      }                                                                                                                // 41
-    }, HTML.STRONG(Blaze.View("lookup:recepUserChat", function() {                                                     // 42
-      return Spacebars.mustache(view.lookup("recepUserChat"));                                                         // 43
-    }))), "\n            "), "\n          "), "\n        "), "\n      "), "\n    "), "  \n\n    ", Blaze.Each(function() {
-      return Spacebars.call(view.lookup("messagesInChat"));                                                            // 45
-    }, function() {                                                                                                    // 46
-      return "\n\n    ";                                                                                               // 47
-    }), "\n\n    ", HTML.NAV({                                                                                         // 48
-      id: "navBarBtnShowNotif",                                                                                        // 49
-      class: "navbar navbar-default navbar-fixed-bottom"                                                               // 50
-    }, "\n      ", HTML.DIV({                                                                                          // 51
-      class: "container"                                                                                               // 52
-    }, "\n        ", HTML.DIV({                                                                                        // 53
-      class: "navbar-header"                                                                                           // 54
-    }, "\n          ", HTML.DIV({                                                                                      // 55
-      class: "row"                                                                                                     // 56
-    }, "\n            ", HTML.DIV({                                                                                    // 57
-      class: "col-md-12 col-sm-12 col-xs-12"                                                                           // 58
-    }, "\n              ", HTML.DIV({                                                                                  // 59
-      class: "input-group"                                                                                             // 60
-    }, "\n                ", HTML.INPUT({                                                                              // 61
-      id: "inputMessage",                                                                                              // 62
-      type: "text",                                                                                                    // 63
-      class: "form-control",                                                                                           // 64
-      placeholder: "Message..."                                                                                        // 65
-    }), "\n                ", HTML.SPAN({                                                                              // 66
-      class: "input-group-btn"                                                                                         // 67
-    }, "\n                  ", HTML.BUTTON({                                                                           // 68
-      type: "button",                                                                                                  // 69
-      id: "btnSendMessage",                                                                                            // 70
-      class: "btn btn-secondary btnGroupsShowNotif",                                                                   // 71
-      disabled: function() {                                                                                           // 72
-        return Spacebars.mustache(view.lookup("btnDisabled"));                                                         // 73
-      }                                                                                                                // 74
-    }, "\n                    ", HTML.SPAN({                                                                           // 75
-      class: "glyphicon glyphicon-send"                                                                                // 76
+    return [ "\n\n    ", Blaze.If(function() {                                                                         // 8
+      return Spacebars.call(view.lookup("recepUserChat"));                                                             // 9
+    }, function() {                                                                                                    // 10
+      return [ "\n      ", HTML.DIV({                                                                                  // 11
+        class: "headerChat-container"                                                                                  // 12
+      }, "\n        ", HTML.DIV({                                                                                      // 13
+        class: "panel panel-default"                                                                                   // 14
+      }, "\n          ", HTML.DIV({                                                                                    // 15
+        class: "panel-body headerChat-panel-body"                                                                      // 16
+      }, "\n            ", HTML.DIV({                                                                                  // 17
+        class: "row"                                                                                                   // 18
+      }, "\n              ", HTML.DIV({                                                                                // 19
+        class: "col-md-2 col-sm-2 col-xs-2 containerHeaderChat",                                                       // 20
+        id: "rightDivCurrentUser"                                                                                      // 21
+      }, "\n                ", HTML.A({                                                                                // 22
+        href: function() {                                                                                             // 23
+          return Spacebars.mustache(view.lookup("pathFor"), "conversationsMenu");                                      // 24
+        },                                                                                                             // 25
+        class: "goToConversation"                                                                                      // 26
+      }, HTML.STRONG(HTML.SPAN({                                                                                       // 27
+        class: "glyphicon glyphicon-menu-left"                                                                         // 28
+      }))), "\n              "), "\n              ", HTML.DIV({                                                        // 29
+        class: "col-md-2 col-sm-2 col-xs-2",                                                                           // 30
+        id: "leftDivCurrentUser"                                                                                       // 31
+      }, "\n                ", HTML.IMG({                                                                              // 32
+        id: "imgUserCardContact",                                                                                      // 33
+        src: "/profileImgTest.png",                                                                                    // 34
+        class: "img-circle"                                                                                            // 35
+      }), "\n              "), "\n              ", HTML.DIV({                                                          // 36
+        class: "col-md-8 col-sm-8 col-xs-8 containerHeaderChat",                                                       // 37
+        id: "centerDivCurrentUser"                                                                                     // 38
+      }, "\n                ", HTML.A({                                                                                // 39
+        href: function() {                                                                                             // 40
+          return Spacebars.mustache(view.lookup("pathFor"), "userProfile", Spacebars.kw({                              // 41
+            username: Spacebars.dot(view.lookup("recepUserChat"), "name")                                              // 42
+          }));                                                                                                         // 43
+        }                                                                                                              // 44
+      }, HTML.STRONG(Blaze.View("lookup:recepUserChat.name", function() {                                              // 45
+        return Spacebars.mustache(Spacebars.dot(view.lookup("recepUserChat"), "name"));                                // 46
+      }))), "\n              "), "\n            "), "\n          "), "\n        "), "\n      "), "  \n    " ];         // 47
+    }), "\n\n    ", Blaze.Each(function() {                                                                            // 48
+      return Spacebars.call(view.lookup("messagesInChat"));                                                            // 49
+    }, function() {                                                                                                    // 50
+      return "\n\n    ";                                                                                               // 51
+    }), "\n\n    ", HTML.NAV({                                                                                         // 52
+      id: "navBarBtnShowNotif",                                                                                        // 53
+      class: "navbar navbar-default navbar-fixed-bottom"                                                               // 54
+    }, "\n      ", HTML.DIV({                                                                                          // 55
+      class: "container"                                                                                               // 56
+    }, "\n        ", HTML.DIV({                                                                                        // 57
+      class: "navbar-header"                                                                                           // 58
+    }, "\n          ", HTML.DIV({                                                                                      // 59
+      class: "row"                                                                                                     // 60
+    }, "\n            ", HTML.DIV({                                                                                    // 61
+      class: "col-md-12 col-sm-12 col-xs-12"                                                                           // 62
+    }, "\n              ", HTML.DIV({                                                                                  // 63
+      class: "input-group"                                                                                             // 64
+    }, "\n                ", HTML.INPUT({                                                                              // 65
+      id: "inputMessage",                                                                                              // 66
+      type: "text",                                                                                                    // 67
+      class: "form-control",                                                                                           // 68
+      placeholder: "Message..."                                                                                        // 69
+    }), "\n                ", HTML.SPAN({                                                                              // 70
+      class: "input-group-btn"                                                                                         // 71
+    }, "\n                  ", HTML.BUTTON({                                                                           // 72
+      type: "button",                                                                                                  // 73
+      id: "btnSendMessage",                                                                                            // 74
+      class: "btn btn-secondary btnGroupsShowNotif",                                                                   // 75
+      disabled: function() {                                                                                           // 76
+        return Spacebars.mustache(view.lookup("btnDisabled"));                                                         // 77
+      }                                                                                                                // 78
+    }, "\n                    ", HTML.SPAN({                                                                           // 79
+      class: "glyphicon glyphicon-send"                                                                                // 80
     }), "\n                  "), "\n                "), "\n              "), "\n            "), "\n          "), "\n        "), "\n      "), "\n    "), "\n\n  " ];
-  }, function() {                                                                                                      // 78
-    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 79
-  });                                                                                                                  // 80
-}));                                                                                                                   // 81
-                                                                                                                       // 82
+  }, function() {                                                                                                      // 82
+    return [ "\n    ", Spacebars.include(view.lookupTemplate("loading")), "\n  " ];                                    // 83
+  });                                                                                                                  // 84
+}));                                                                                                                   // 85
+                                                                                                                       // 86
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"template.showSocialNetwork.js":function(){
@@ -3867,35 +3871,37 @@ Template.showConver.helpers({                                                   
   }(),                                                                                                                 // 10
   'recepUserChat': function () {                                                                                       // 13
     function recepUserChat() {                                                                                         // 13
-      return Session.get('recepUsernameChat');                                                                         // 14
-    }                                                                                                                  // 15
+      var user = new Object();                                                                                         // 14
+      user.name = Session.get('recepUsernameChat');                                                                    // 15
+      return user;                                                                                                     // 16
+    }                                                                                                                  // 17
                                                                                                                        //
     return recepUserChat;                                                                                              // 13
   }()                                                                                                                  // 13
 });                                                                                                                    // 6
                                                                                                                        //
-Template.showConver.events({                                                                                           // 18
-  'click #btnSendMessage': function () {                                                                               // 19
-    function clickBtnSendMessage() {                                                                                   // 19
-      /*CREAMOS UN MENSAJE Y ACTUALIZAMOS LA SESSION VAR CON ESE MENSAJE*/                                             // 20
-      console.log("CLICK");                                                                                            // 21
-    }                                                                                                                  // 22
+Template.showConver.events({                                                                                           // 20
+  'click #btnSendMessage': function () {                                                                               // 21
+    function clickBtnSendMessage() {                                                                                   // 21
+      /*CREAMOS UN MENSAJE Y ACTUALIZAMOS LA SESSION VAR CON ESE MENSAJE*/                                             // 22
+      console.log("CLICK");                                                                                            // 23
+    }                                                                                                                  // 24
                                                                                                                        //
-    return clickBtnSendMessage;                                                                                        // 19
-  }(),                                                                                                                 // 19
-  'input #inputMessage': function () {                                                                                 // 23
-    function inputInputMessage() {                                                                                     // 23
-      var lengthMessage = $('#inputMessage').val().length;                                                             // 24
-      if (lengthMessage > 0) {                                                                                         // 25
-        Session.set('messageInputEmpty', false);                                                                       // 26
-      } else if (lengthMessage === 0) {                                                                                // 27
-        Session.set('messageInputEmpty', true);                                                                        // 28
-      }                                                                                                                // 29
-    }                                                                                                                  // 30
+    return clickBtnSendMessage;                                                                                        // 21
+  }(),                                                                                                                 // 21
+  'input #inputMessage': function () {                                                                                 // 25
+    function inputInputMessage() {                                                                                     // 25
+      var lengthMessage = $('#inputMessage').val().length;                                                             // 26
+      if (lengthMessage > 0) {                                                                                         // 27
+        Session.set('messageInputEmpty', false);                                                                       // 28
+      } else if (lengthMessage === 0) {                                                                                // 29
+        Session.set('messageInputEmpty', true);                                                                        // 30
+      }                                                                                                                // 31
+    }                                                                                                                  // 32
                                                                                                                        //
-    return inputInputMessage;                                                                                          // 23
-  }()                                                                                                                  // 23
-});                                                                                                                    // 18
+    return inputInputMessage;                                                                                          // 25
+  }()                                                                                                                  // 25
+});                                                                                                                    // 20
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"showSocialNetwork.js":function(){

@@ -11,7 +11,9 @@ Template.showConver.helpers({
     return Session.get('messageInputEmpty');
   },
   'recepUserChat' : function(){
-    return Session.get('recepUsernameChat');
+    var user = new Object();
+    user.name = Session.get('recepUsernameChat');
+    return user;
   }
 });
 
