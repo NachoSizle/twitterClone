@@ -1,25 +1,21 @@
 <template name="conversationsMenu">
   {{#if Template.subscriptionsReady}}
 
-    {{#if btnShowMessages}}
-      <div class="tweetfeed-container">
-        <div class="panel panel-default tweetfeed">
+    <div class="tweetfeed-container ampliacionMarginTopAllViews">
+      <div class="panel panel-default tweetfeed">
+        {{#if btnShowMessages}}
           <h3 class="text-center headerConversationsSection">Chats</h3>
           <div class="panel-body">
             {{> userCardConversation}}
           </div>
-        </div>
-      </div>
-    {{else}}
-      <div class="tweetfeed-container">
-        <div class="panel panel-default tweetfeed">
+        {{else}}
           <h3 class="text-center headerConversationsSection">Contactos</h3>
           <div class="panel-body">
             {{> userCardContact}}
           </div>
-        </div>
+        {{/if}}
       </div>
-    {{/if}}
+    </div>
 
     <nav id="navBarBtnShowNotif" class="navbar navbar-default navbar-fixed-bottom">
       <div class="container">

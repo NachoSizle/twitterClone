@@ -6,6 +6,10 @@
 		    	{{# if mainPage}}
 		    		<div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
 		    	{{/if}}
+
+		    	<div class="modal fade" id="dialog-NewTwiit">
+			    	{{> tweetBox}}
+			    </div>
 		  	{{/if}}
 	  	{{else}}
 		    {{> loading}}

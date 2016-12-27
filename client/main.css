@@ -626,15 +626,82 @@ form input:focus:required:invalid{
 
 .headerChat-container{
   margin-left: 0px;
-  margin-top: -10px;
+  margin-top: 50px;
   margin-right: 0px;
+  border-top: 0px !important;
 }
 
 .headerChat-panel-body{
   padding-bottom: 5px;
+  padding-top: 0px;
 }
 
 .containerHeaderChat{
   padding-top: 13px; 
   padding-left: 0px !important;
+}
+
+.messageInChat-container{
+  margin: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  display: inline-block;
+}
+
+.panel-messageInChat{
+  background-color: rgb(240, 247, 254);
+  margin-bottom: 0px;
+}
+
+.messageInChat{
+  padding-bottom: 5px;
+}
+
+.contentMessage{
+  margin-bottom: 0px;
+}
+
+.messageIsMine{
+  float: right;
+}
+
+.messageNotMine{
+  float: left;
+}
+
+.headerMessage{
+  color: #337ab7;
+  margin-bottom: 5px;
+}
+
+#dropdownOptionsConver{
+  padding-left: 0px;
+  padding-top: 0px;
+  background-color: #fff;
+  color: #337ab7;
+}
+
+.footerMessage{
+  margin-bottom: 0px;
+  font-size: 10px;
+  float: right;
+  color: #337ab7;
+}
+
+.panel-headerChat{
+  margin-bottom: 0px;
+  border: 0px; 
+}
+
+.containerMessageInThatConver{
+  margin-top: 24%;
+}
+
+.ampliacionMarginTopAllViews{
+  margin-top: 16%;
+}
+
+.spinner{
+  top: 150% !important;
 }

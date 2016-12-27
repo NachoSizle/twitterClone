@@ -1,6 +1,6 @@
 <template name="navBarTemplate">
 {{# unless noRender}}
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
 	    <div class="navbar-header">
@@ -23,10 +23,6 @@
 
     	  </button>
     	  <a href="/"><img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive navbar-brand"></a>
-	    </div>
-
-	    <div class="modal fade" id="dialog-NewTwiit">
-	    	{{> tweetBox}}
 	    </div>
 
 		<!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->

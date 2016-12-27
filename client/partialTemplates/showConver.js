@@ -5,7 +5,7 @@ Template.showConver.onCreated(function() {
 
 Template.showConver.helpers({
   'messagesInChat' : function(){
-
+    
   },
   'btnDisabled' : function() {
     return Session.get('messageInputEmpty');
@@ -14,6 +14,14 @@ Template.showConver.helpers({
     var user = new Object();
     user.name = Session.get('recepUsernameChat');
     return user;
+  },
+  'messageIsMine' : function(isMine){
+    if(isMine){
+      return "messageIsMine";
+    } else {
+      return "messageNotMine";
+    }
+    
   }
 });
 
