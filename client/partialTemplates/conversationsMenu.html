@@ -6,12 +6,46 @@
         {{#if btnShowMessages}}
           <h3 class="text-center headerConversationsSection">Chats</h3>
           <div class="panel-body">
-            {{> userCardConversation}}
+            {{#each showChatsForThisUser}}
+              <div class="panel panel-info panel-info-messaging">
+                <div class="panel-body panel-body-messaging">
+                  <div class="row">
+                    <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">
+                      <img id="imgUserCardConversation" src="/profileImgTest.png" class="img-circle">
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">
+                      <p><strong>{{chatName this.nameChat}}</strong></p>
+                      <p class="lastMessage">Texto de ejemplo de mensaje...</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2" id="rightDivCurrentUser">
+                      <p>19:35</p>
+                      <a href="{{pathFor 'showConver' username='{{chatName this.nameChat}}'}}"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{/each}}
           </div>
         {{else}}
           <h3 class="text-center headerConversationsSection">Contactos</h3>
           <div class="panel-body">
-            {{> userCardContact}}
+            <!--{{#each userCardContact}}-->
+              <div class="panel panel-info panel-info-messaging">
+                <div class="panel-body panel-body-messaging">
+                  <div class="row">
+                    <div class="col-md-2 col-sm- 2 col-xs-2" id="leftDivCurrentUser">
+                      <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8 containerContact" id="centerDivCurrentUser">
+                      <p><strong>Test1</strong></p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2 containerContact" id="rightDivCurrentUser">
+                      <a href="{{pathFor 'showConver' username='test1'}}" id="test1" class="goToConversation"><span class="glyphicon glyphicon-menu-right"></span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!--{{/each}}-->
           </div>
         {{/if}}
       </div>
@@ -37,57 +71,4 @@
   {{else}}
     {{> loading}}
   {{/if}}
-</template>
-
-<template name="userCardConversation">
-  <div class="panel panel-info panel-info-messaging">
-    <div class="panel-body panel-body-messaging">
-      <div class="row">
-        <div class="col-md-2 col-sm-2 col-xs-2" id="leftDivCurrentUser">
-          <img id="imgUserCardConversation" src="/profileImgTest.png" class="img-circle">
-        </div>
-        <div class="col-md-8 col-sm-8 col-xs-8" id="centerDivCurrentUser">
-          <p><strong>NachoSizle</strong></p>
-          <p class="lastMessage">Texto de ejemplo de mensaje...</p>
-        </div>
-        <div class="col-md-2 col-sm-2 col-xs-2" id="rightDivCurrentUser">
-          <p>19:35</p>
-          <a href="{{pathFor 'showConver' username='nachosizle'}}" id="divConversation" class="goToConversation"><span class="glyphicon glyphicon-menu-right"></span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<template name="userCardContact">
-  <div class="panel panel-info panel-info-messaging">
-    <div class="panel-body panel-body-messaging">
-      <div class="row">
-        <div class="col-md-2 col-sm- 2 col-xs-2" id="leftDivCurrentUser">
-          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">
-        </div>
-        <div class="col-md-8 col-sm-8 col-xs-8 containerContact" id="centerDivCurrentUser">
-          <p><strong>NachoSizle</strong></p>
-        </div>
-        <div class="col-md-2 col-sm-2 col-xs-2 containerContact" id="rightDivCurrentUser">
-          <a href="{{pathFor 'showConver' username='NachoSizle'}}" id="divConversation" class="goToConversation"><span class="glyphicon glyphicon-menu-right"></span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-info panel-info-messaging">
-    <div class="panel-body panel-body-messaging">
-      <div class="row">
-        <div class="col-md-2 col-sm- 2 col-xs-2" id="leftDivCurrentUser">
-          <img id="imgUserCardContact" src="/profileImgTest.png" class="img-circle">
-        </div>
-        <div class="col-md-8 col-sm-8 col-xs-8 containerContact" id="centerDivCurrentUser">
-          <p><strong>Test1</strong></p>
-        </div>
-        <div class="col-md-2 col-sm-2 col-xs-2 containerContact" id="rightDivCurrentUser">
-          <a href="{{pathFor 'showConver' username='test1'}}" id="divConversation" class="goToConversation"><span class="glyphicon glyphicon-menu-right"></span></a>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>

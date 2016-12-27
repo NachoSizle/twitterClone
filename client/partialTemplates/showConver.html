@@ -29,95 +29,20 @@
       </div>  
     {{/if}}
 
-    {{# each messagesInChat}}
-
-    {{/each}}
-
     <div class="containerMessageInThatConver">
-      <div class="messageInChat-container {{messageIsMine true}}">
-        <div class="panel panel-default panel-messageInChat">
-          <div class="panel-body messageInChat">
-            <p class="headerMessage"><strong>NachoSizle</strong></p>
-            <p class="contentMessage">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            <p class="footerMessage">19:30</p>
+      {{# each messagesInChat}}
+        <div class="container restoreValue">
+          <div class="messageInChat-container {{messageIsMine this.userNameSentMsg}}">
+            <div class="panel panel-default panel-messageInChat">
+              <div class="panel-body messageInChat">
+                <p class="headerMessage"><strong>{{this.userNameSentMsg}}</strong></p>
+                <p class="contentMessage">{{this.contentMsg}}</p>
+                <p class="footerMessage">{{convertDateTime this.messageTimestamp}}</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="messageInChat-container {{messageIsMine false}}">
-        <div class="panel panel-default panel-messageInChat">
-          <div class="panel-body messageInChat">
-            <p class="headerMessage"><strong>Test1</strong></p>
-            <p class="contentMessage">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p class="footerMessage">19:30</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="messageInChat-container {{messageIsMine false}}">
-        <div class="panel panel-default panel-messageInChat">
-          <div class="panel-body messageInChat">
-            <p class="contentMessage">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.</p>
-            <p class="footerMessage">19:30</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="messageInChat-container {{messageIsMine false}}">
-        <div class="panel panel-default panel-messageInChat">
-          <div class="panel-body messageInChat">
-            <p class="headerMessage"><strong>Test1</strong></p>
-            <p class="contentMessage">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p class="footerMessage">19:30</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="messageInChat-container {{messageIsMine false}}">
-        <div class="panel panel-default panel-messageInChat">
-          <div class="panel-body messageInChat">
-            <p class="contentMessage">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.</p>
-            <p class="footerMessage">19:30</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="messageInChat-container {{messageIsMine false}}">
-        <div class="panel panel-default panel-messageInChat">
-          <div class="panel-body messageInChat">
-            <p class="headerMessage"><strong>Test1</strong></p>
-            <p class="contentMessage">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p class="footerMessage">19:30</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="messageInChat-container {{messageIsMine false}}">
-        <div class="panel panel-default panel-messageInChat">
-          <div class="panel-body messageInChat">
-            <p class="contentMessage">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.</p>
-            <p class="footerMessage">19:30</p>
-          </div>
-        </div>
-      </div>
+      {{/each}}
     </div>
 
     <nav id="navBarBtnShowNotif" class="navbar navbar-default navbar-fixed-bottom">

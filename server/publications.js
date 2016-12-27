@@ -9,7 +9,6 @@ Meteor.publish('twitts', function() {
 
 Meteor.publish('twittsProfile', function(username) {  
   if (Meteor.userId) {
-    console.log("TwittsProfile Publication");
     return Twitts.find();
   }
 });
@@ -43,6 +42,19 @@ Meteor.publish('dataUser', function() {
 Meteor.publish('images', function() {
   return Images.find();
 });
+
+Meteor.publish('chatsMsg', function() {
+  if (Meteor.userId) {
+    return ChatsMsg.find({userIdRecepMsg : this.userId});
+  }
+});
+
+Meteor.publish('chats', function() {
+  if (Meteor.userId) {
+    return Chats.find({userIdRecepMsg : this.userId});
+  }
+});
+
 /*
 Meteor.publishComposite('twitts', function(username) {  
   return {

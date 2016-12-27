@@ -12,6 +12,8 @@ DataUser = new Meteor.Collection('dataUser');                                   
 Favs = new Meteor.Collection('favs');                                                                  // 4
 Notifications = new Mongo.Collection('notifications');                                                 // 5
 Images = new Mongo.Collection('images');                                                               // 6
+ChatsMsg = new Mongo.Collection('chatsMsg');                                                           // 7
+Chats = new Mongo.Collection('chats');                                                                 // 8
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"router.js":function(){
@@ -355,7 +357,104 @@ UserUtils.findUserFromTwiit = function (twiitId) {                              
 };                                                                                                     // 164
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}},"server":{"followUsers.js":function(){
+}},"server":{"chatsData.js":function(){
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                     //
+// server/chatsData.js                                                                                 //
+//                                                                                                     //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                                                                                       //
+Meteor.methods({                                                                                       // 1
+                                                                                                       //
+  'findChatsAvailable': function () {                                                                  // 3
+    function findChatsAvailable() {                                                                    // 3
+      return Chats.find({});                                                                           // 4
+    }                                                                                                  // 5
+                                                                                                       //
+    return findChatsAvailable;                                                                         // 3
+  }(),                                                                                                 // 3
+                                                                                                       //
+  'findChatFromUser': function () {                                                                    // 7
+    function findChatFromUser(username) {                                                              // 7
+      var nameChat = username + "_" + Meteor.user().username;                                          // 8
+      var msgFound = ChatsMsg.find({ "nameChat": nameChat }).fetch();                                  // 9
+      if (msgFound.length === 0) {                                                                     // 10
+        console.log(msgFound);                                                                         // 11
+        nameChat = Meteor.user().username + "_" + username;                                            // 12
+        msgFound = ChatsMsg.find({ "nameChat": nameChat }).fetch();                                    // 13
+      }                                                                                                // 14
+      return msgFound;                                                                                 // 15
+    }                                                                                                  // 16
+                                                                                                       //
+    return findChatFromUser;                                                                           // 7
+  }(),                                                                                                 // 7
+                                                                                                       //
+  'insertMsgChat': function () {                                                                       // 18
+    function insertMsgChat(messageData) {                                                              // 18
+      var userToSentMsg = Meteor.call('findUserFromDB', messageData.userRecepMsg);                     // 19
+                                                                                                       //
+      if (Meteor.user()) {                                                                             // 21
+        ChatsMsg.insert({                                                                              // 22
+          userIdSentMsg: Meteor.user()._id,                                                            // 23
+          userNameSentMsg: Meteor.user().username,                                                     // 24
+          userRecepMsg: messageData.userRecepMsg,                                                      // 25
+          userIdRecepMsg: userToSentMsg._id,                                                           // 26
+          nameChat: messageData.userRecepMsg + "_" + Meteor.user().username,                           // 27
+          contentMsg: messageData.contentMessage,                                                      // 28
+          messageTimestamp: new Date()                                                                 // 29
+        });                                                                                            // 22
+      }                                                                                                // 31
+    }                                                                                                  // 32
+                                                                                                       //
+    return insertMsgChat;                                                                              // 18
+  }(),                                                                                                 // 18
+                                                                                                       //
+  'insertMsg': function () {                                                                           // 34
+    function insertMsg(messageData) {                                                                  // 34
+      var userToSentMsg = Meteor.call('findUserFromDB', messageData.userRecepMsg);                     // 35
+                                                                                                       //
+      if (Meteor.user()) {                                                                             // 37
+        ChatsMsg.insert({                                                                              // 38
+          userIdSentMsg: Meteor.user()._id,                                                            // 39
+          userNameSentMsg: Meteor.user().username,                                                     // 40
+          userRecepMsg: messageData.userRecepMsg,                                                      // 41
+          userIdRecepMsg: userToSentMsg._id,                                                           // 42
+          nameChat: messageData.nameChat,                                                              // 43
+          contentMsg: messageData.contentMessage,                                                      // 44
+          messageTimestamp: new Date()                                                                 // 45
+        });                                                                                            // 38
+      }                                                                                                // 47
+    }                                                                                                  // 48
+                                                                                                       //
+    return insertMsg;                                                                                  // 34
+  }(),                                                                                                 // 34
+                                                                                                       //
+  'createChat': function () {                                                                          // 50
+    function createChat(userNameToCreateChat) {                                                        // 50
+      Chats.insert({                                                                                   // 51
+        userCreatedChat: Meteor.user().username,                                                       // 52
+        userToChat: userNameToCreateChat,                                                              // 53
+        nameChat: userNameToCreateChat + "_" + Meteor.user().username                                  // 54
+      });                                                                                              // 51
+    }                                                                                                  // 56
+                                                                                                       //
+    return createChat;                                                                                 // 50
+  }(),                                                                                                 // 50
+                                                                                                       //
+  'removeChat': function () {                                                                          // 58
+    function removeChat(nameChat) {                                                                    // 58
+      ChatsMsg.remove({ "nameChat": nameChat });                                                       // 59
+      Chats.remove({ "nameChat": nameChat });                                                          // 60
+    }                                                                                                  // 61
+                                                                                                       //
+    return removeChat;                                                                                 // 58
+  }()                                                                                                  // 58
+                                                                                                       //
+});                                                                                                    // 1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+},"followUsers.js":function(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                     //
@@ -514,41 +613,53 @@ Meteor.publish('twitts', function () {                                          
                                                                                                        //
 Meteor.publish('twittsProfile', function (username) {                                                  // 10
   if (Meteor.userId) {                                                                                 // 11
-    console.log("TwittsProfile Publication");                                                          // 12
-    return Twitts.find();                                                                              // 13
-  }                                                                                                    // 14
-});                                                                                                    // 15
+    return Twitts.find();                                                                              // 12
+  }                                                                                                    // 13
+});                                                                                                    // 14
                                                                                                        //
-Meteor.publish('twittsWithComment', function (idTweet) {                                               // 17
-  if (Meteor.userId) {                                                                                 // 18
-    return Twitts.find();                                                                              // 19
-  }                                                                                                    // 20
-});                                                                                                    // 21
+Meteor.publish('twittsWithComment', function (idTweet) {                                               // 16
+  if (Meteor.userId) {                                                                                 // 17
+    return Twitts.find();                                                                              // 18
+  }                                                                                                    // 19
+});                                                                                                    // 20
                                                                                                        //
-Meteor.publish('notifications', function () {                                                          // 23
-  return Notifications.find();                                                                         // 24
-});                                                                                                    // 25
+Meteor.publish('notifications', function () {                                                          // 22
+  return Notifications.find();                                                                         // 23
+});                                                                                                    // 24
                                                                                                        //
-Meteor.publish('allNotifications', function (notifId) {                                                // 27
-  return Notifications.find({ _id: notifId }, { read: false });                                        // 28
-});                                                                                                    // 29
+Meteor.publish('allNotifications', function (notifId) {                                                // 26
+  return Notifications.find({ _id: notifId }, { read: false });                                        // 27
+});                                                                                                    // 28
                                                                                                        //
-Meteor.publish('whatsAppNotifications', function (notifName) {                                         // 31
-  return Notifications.find({ recepNotif: notifName }, { read: false });                               // 32
-});                                                                                                    // 33
+Meteor.publish('whatsAppNotifications', function (notifName) {                                         // 30
+  return Notifications.find({ recepNotif: notifName }, { read: false });                               // 31
+});                                                                                                    // 32
                                                                                                        //
-Meteor.publish('favs', function () {                                                                   // 35
-  return Favs.find();                                                                                  // 36
-});                                                                                                    // 37
+Meteor.publish('favs', function () {                                                                   // 34
+  return Favs.find();                                                                                  // 35
+});                                                                                                    // 36
                                                                                                        //
-Meteor.publish('dataUser', function () {                                                               // 39
-  return DataUser.find();                                                                              // 40
-});                                                                                                    // 41
+Meteor.publish('dataUser', function () {                                                               // 38
+  return DataUser.find();                                                                              // 39
+});                                                                                                    // 40
                                                                                                        //
-Meteor.publish('images', function () {                                                                 // 43
-  return Images.find();                                                                                // 44
-});                                                                                                    // 45
-/*                                                                                                     // 46
+Meteor.publish('images', function () {                                                                 // 42
+  return Images.find();                                                                                // 43
+});                                                                                                    // 44
+                                                                                                       //
+Meteor.publish('chatsMsg', function () {                                                               // 46
+  if (Meteor.userId) {                                                                                 // 47
+    return ChatsMsg.find({ userIdRecepMsg: this.userId });                                             // 48
+  }                                                                                                    // 49
+});                                                                                                    // 50
+                                                                                                       //
+Meteor.publish('chats', function () {                                                                  // 52
+  if (Meteor.userId) {                                                                                 // 53
+    return Chats.find({ userIdRecepMsg: this.userId });                                                // 54
+  }                                                                                                    // 55
+});                                                                                                    // 56
+                                                                                                       //
+/*                                                                                                     // 58
 Meteor.publishComposite('twitts', function(username) {                                                 //
   return {                                                                                             //
     find: function() {                                                                                 //
@@ -986,13 +1097,32 @@ Meteor.startup(function () {                                                    
       return insert;                                                                                   // 43
     }()                                                                                                // 43
   });                                                                                                  // 42
-});                                                                                                    // 47
+                                                                                                       //
+  Chats.allow({                                                                                        // 48
+    insert: function () {                                                                              // 49
+      function insert(userId, disconnect) {                                                            // 49
+        return true;                                                                                   // 50
+      }                                                                                                // 51
+                                                                                                       //
+      return insert;                                                                                   // 49
+    }(),                                                                                               // 49
+    update: function () {                                                                              // 52
+      function update(userId, doc) {                                                                   // 52
+        return true;                                                                                   // 53
+      }                                                                                                // 54
+                                                                                                       //
+      return update;                                                                                   // 52
+    }()                                                                                                // 52
+                                                                                                       //
+  });                                                                                                  // 48
+});                                                                                                    // 57
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }]}},{"extensions":[".js",".json"]});
 require("./lib/collections.js");
 require("./lib/router.js");
 require("./lib/userUtils.js");
+require("./server/chatsData.js");
 require("./server/followUsers.js");
 require("./server/notifications.js");
 require("./server/publications.js");

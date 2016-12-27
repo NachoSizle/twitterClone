@@ -458,6 +458,7 @@ form input:focus:required:invalid{
 }
 
 #navBarBtnShowNotif{
+
   border-left: 0px;
   border-right: 0px;
   border-radius: 0px;
@@ -643,8 +644,7 @@ form input:focus:required:invalid{
 
 .messageInChat-container{
   margin: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  
   margin-bottom: 0px;
   display: inline-block;
 }
@@ -696,6 +696,7 @@ form input:focus:required:invalid{
 
 .containerMessageInThatConver{
   margin-top: 24%;
+  margin-bottom: 14%;
 }
 
 .ampliacionMarginTopAllViews{
@@ -704,4 +705,9 @@ form input:focus:required:invalid{
 
 .spinner{
   top: 150% !important;
+}
+
+.restoreValue{
+  padding: 0px;
+  margin: 0px;
 }

@@ -13,6 +13,16 @@ Template.conversationsMenu.helpers({
   'btnShowMessages': function(){
     return Session.get('showMessages');
   },
+
+  'showChatsForThisUser' : function(){
+    return Meteor.call('findChatsAvailable');
+  },
+
+  'chatName' : function(nameChat){
+    var usersInChat = nameChat.split('_');
+    var chatUserName = usersInChat[usersInChat.indexOf(Meteor.user().username)];
+    return chatUserName;
+  }
 });
 
 Template.conversationsMenu.events({
@@ -21,5 +31,8 @@ Template.conversationsMenu.events({
   },
   'click #btnShowMessages' : function(){
     Session.set('showMessages', true);
+  },
+  'click .goToConversation' : function(event){
+    Meteor.call('createChat', event.currentTarget.id);
   }
 });

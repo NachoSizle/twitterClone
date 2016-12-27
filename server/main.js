@@ -44,4 +44,14 @@ Meteor.startup(() => {
       return true;
     }
   });
+
+  Chats.allow({
+    insert: function(userId, disconnect){
+      return true;
+    }, 
+    update: function(userId, doc) {
+      return true;
+    }
+
+  });
 });
