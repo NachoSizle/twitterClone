@@ -6,23 +6,7 @@ Template.showConver.onCreated(function() {
 
 Template.showConver.helpers({
   'messagesInChat' : function(){
-    var userNameToFindChat = Session.get('recepUsernameChat');
-
-    Meteor.call('findChatFromUser', userNameToFindChat, function(err, res){
-      if(res){
-        Session.set('chatFound', res);
-        if(res.length === 0){
-          Session.set('chatEmpty', true);
-        } else {
-          Session.set('nameChat', res[0].nameChat);
-          Session.set('chatEmpty', false);
-        }
-      } 
-
-      if(err){
-        console.log(err);
-      }
-    });
+    recoverChat();
     return Session.get('chatFound');
   },
 
@@ -68,6 +52,13 @@ Template.showConver.events({
       chatData.nameChat = Session.get('nameChat');
       Meteor.call('insertMsg', chatData);
     }
+    //HAY QUE MANDAR UNA NOTIFICACIÓN AL OTRO USUARIO PARA QUE SE ENTERE DE 
+    //QUE LE HEMOS ESCRITO UN MENSAJE
+    
+    //INSERTAR UN NUEVO MENSAJE PARA PRODUCIR EL EFECTO DE QUE SE HA ENVIADO
+    recoverChat();
+    //LIMPIAMOS EL TEXTO QUE HEMOS PUESTO EN EL #inputMessage
+    $('#inputMessage').val("");
   },
 
   'input #inputMessage' : function(){
@@ -83,3 +74,23 @@ Template.showConver.events({
     Meteor.call('removeChat', Session.get('recepUsernameChat'));
   }
 });
+
+function recoverChat(){
+  var userNameToFindChat = Session.get('recepUsernameChat');
+
+  Meteor.call('findChatFromUser', userNameToFindChat, function(err, res){
+    if(res){
+      Session.set('chatFound', res);
+      if(res.length === 0){
+        Session.set('chatEmpty', true);
+      } else {
+        Session.set('nameChat', res[0].nameChat);
+        Session.set('chatEmpty', false);
+      }
+    } 
+
+    if(err){
+      console.log(err);
+    }
+  });
+}

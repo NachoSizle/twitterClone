@@ -15,7 +15,13 @@ Template.conversationsMenu.helpers({
   },
 
   'showChatsForThisUser' : function(){
-    return Meteor.call('findChatsAvailable');
+    Meteor.call('findChatsAvailable', function(err, res){
+      console.log(res);
+      if(err){
+        console.log(err);
+      }
+    });
+    
   },
 
   'chatName' : function(nameChat){
@@ -33,6 +39,11 @@ Template.conversationsMenu.events({
     Session.set('showMessages', true);
   },
   'click .goToConversation' : function(event){
-    Meteor.call('createChat', event.currentTarget.id);
+    //COMPROBAMOS SI EL CHAT ESTA CREADO
+    Meteor.call('checkChat', event.currentTarget.id, function(err, res){
+      if(res){
+        Meteor.call('createChat', event.currentTarget.id);
+      }
+    });
   }
 });

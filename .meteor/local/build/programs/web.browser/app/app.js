@@ -2790,46 +2790,56 @@ Template.conversationsMenu.helpers({                                            
                                                                                                                        //
   'showChatsForThisUser': function () {                                                                                // 17
     function showChatsForThisUser() {                                                                                  // 17
-      return Meteor.call('findChatsAvailable');                                                                        // 18
-    }                                                                                                                  // 19
+      Meteor.call('findChatsAvailable', function (err, res) {                                                          // 18
+        console.log(res);                                                                                              // 19
+        if (err) {                                                                                                     // 20
+          console.log(err);                                                                                            // 21
+        }                                                                                                              // 22
+      });                                                                                                              // 23
+    }                                                                                                                  // 25
                                                                                                                        //
     return showChatsForThisUser;                                                                                       // 17
   }(),                                                                                                                 // 17
                                                                                                                        //
-  'chatName': function () {                                                                                            // 21
-    function chatName(nameChat) {                                                                                      // 21
-      var usersInChat = nameChat.split('_');                                                                           // 22
-      var chatUserName = usersInChat[usersInChat.indexOf(Meteor.user().username)];                                     // 23
-      return chatUserName;                                                                                             // 24
-    }                                                                                                                  // 25
-                                                                                                                       //
-    return chatName;                                                                                                   // 21
-  }()                                                                                                                  // 21
-});                                                                                                                    // 5
-                                                                                                                       //
-Template.conversationsMenu.events({                                                                                    // 28
-  'click #btnShowContacts': function () {                                                                              // 29
-    function clickBtnShowContacts() {                                                                                  // 29
-      Session.set('showMessages', false);                                                                              // 30
+  'chatName': function () {                                                                                            // 27
+    function chatName(nameChat) {                                                                                      // 27
+      var usersInChat = nameChat.split('_');                                                                           // 28
+      var chatUserName = usersInChat[usersInChat.indexOf(Meteor.user().username)];                                     // 29
+      return chatUserName;                                                                                             // 30
     }                                                                                                                  // 31
                                                                                                                        //
-    return clickBtnShowContacts;                                                                                       // 29
-  }(),                                                                                                                 // 29
-  'click #btnShowMessages': function () {                                                                              // 32
-    function clickBtnShowMessages() {                                                                                  // 32
-      Session.set('showMessages', true);                                                                               // 33
-    }                                                                                                                  // 34
+    return chatName;                                                                                                   // 27
+  }()                                                                                                                  // 27
+});                                                                                                                    // 5
                                                                                                                        //
-    return clickBtnShowMessages;                                                                                       // 32
-  }(),                                                                                                                 // 32
-  'click .goToConversation': function () {                                                                             // 35
-    function clickGoToConversation(event) {                                                                            // 35
-      Meteor.call('createChat', event.currentTarget.id);                                                               // 36
+Template.conversationsMenu.events({                                                                                    // 34
+  'click #btnShowContacts': function () {                                                                              // 35
+    function clickBtnShowContacts() {                                                                                  // 35
+      Session.set('showMessages', false);                                                                              // 36
     }                                                                                                                  // 37
                                                                                                                        //
-    return clickGoToConversation;                                                                                      // 35
-  }()                                                                                                                  // 35
-});                                                                                                                    // 28
+    return clickBtnShowContacts;                                                                                       // 35
+  }(),                                                                                                                 // 35
+  'click #btnShowMessages': function () {                                                                              // 38
+    function clickBtnShowMessages() {                                                                                  // 38
+      Session.set('showMessages', true);                                                                               // 39
+    }                                                                                                                  // 40
+                                                                                                                       //
+    return clickBtnShowMessages;                                                                                       // 38
+  }(),                                                                                                                 // 38
+  'click .goToConversation': function () {                                                                             // 41
+    function clickGoToConversation(event) {                                                                            // 41
+      //COMPROBAMOS SI EL CHAT ESTA CREADO                                                                             // 42
+      Meteor.call('checkChat', event.currentTarget.id, function (err, res) {                                           // 43
+        if (res) {                                                                                                     // 44
+          Meteor.call('createChat', event.currentTarget.id);                                                           // 45
+        }                                                                                                              // 46
+      });                                                                                                              // 47
+    }                                                                                                                  // 48
+                                                                                                                       //
+    return clickGoToConversation;                                                                                      // 41
+  }()                                                                                                                  // 41
+});                                                                                                                    // 34
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"editLicenses.js":function(){
@@ -3926,114 +3936,125 @@ Template.showConver.onCreated(function () {                                     
 Template.showConver.helpers({                                                                                          // 7
   'messagesInChat': function () {                                                                                      // 8
     function messagesInChat() {                                                                                        // 8
-      var userNameToFindChat = Session.get('recepUsernameChat');                                                       // 9
-                                                                                                                       //
-      Meteor.call('findChatFromUser', userNameToFindChat, function (err, res) {                                        // 11
-        if (res) {                                                                                                     // 12
-          Session.set('chatFound', res);                                                                               // 13
-          if (res.length === 0) {                                                                                      // 14
-            Session.set('chatEmpty', true);                                                                            // 15
-          } else {                                                                                                     // 16
-            Session.set('nameChat', res[0].nameChat);                                                                  // 17
-            Session.set('chatEmpty', false);                                                                           // 18
-          }                                                                                                            // 19
-        }                                                                                                              // 20
-                                                                                                                       //
-        if (err) {                                                                                                     // 22
-          console.log(err);                                                                                            // 23
-        }                                                                                                              // 24
-      });                                                                                                              // 25
-      return Session.get('chatFound');                                                                                 // 26
-    }                                                                                                                  // 27
+      recoverChat();                                                                                                   // 9
+      return Session.get('chatFound');                                                                                 // 10
+    }                                                                                                                  // 11
                                                                                                                        //
     return messagesInChat;                                                                                             // 8
   }(),                                                                                                                 // 8
                                                                                                                        //
-  'btnDisabled': function () {                                                                                         // 29
-    function btnDisabled() {                                                                                           // 29
-      return Session.get('messageInputEmpty');                                                                         // 30
-    }                                                                                                                  // 31
+  'btnDisabled': function () {                                                                                         // 13
+    function btnDisabled() {                                                                                           // 13
+      return Session.get('messageInputEmpty');                                                                         // 14
+    }                                                                                                                  // 15
                                                                                                                        //
-    return btnDisabled;                                                                                                // 29
-  }(),                                                                                                                 // 29
+    return btnDisabled;                                                                                                // 13
+  }(),                                                                                                                 // 13
                                                                                                                        //
-  'recepUserChat': function () {                                                                                       // 33
-    function recepUserChat() {                                                                                         // 33
-      var user = new Object();                                                                                         // 34
-      user.name = Session.get('recepUsernameChat');                                                                    // 35
-      return user;                                                                                                     // 36
-    }                                                                                                                  // 37
+  'recepUserChat': function () {                                                                                       // 17
+    function recepUserChat() {                                                                                         // 17
+      var user = new Object();                                                                                         // 18
+      user.name = Session.get('recepUsernameChat');                                                                    // 19
+      return user;                                                                                                     // 20
+    }                                                                                                                  // 21
                                                                                                                        //
-    return recepUserChat;                                                                                              // 33
-  }(),                                                                                                                 // 33
+    return recepUserChat;                                                                                              // 17
+  }(),                                                                                                                 // 17
                                                                                                                        //
-  'messageIsMine': function () {                                                                                       // 39
-    function messageIsMine(isMine) {                                                                                   // 39
-      if (isMine === Session.get('currentUser')) {                                                                     // 40
-        return "messageIsMine";                                                                                        // 41
-      } else {                                                                                                         // 42
-        return "messageNotMine";                                                                                       // 43
-      }                                                                                                                // 44
-    }                                                                                                                  // 45
+  'messageIsMine': function () {                                                                                       // 23
+    function messageIsMine(isMine) {                                                                                   // 23
+      if (isMine === Session.get('currentUser')) {                                                                     // 24
+        return "messageIsMine";                                                                                        // 25
+      } else {                                                                                                         // 26
+        return "messageNotMine";                                                                                       // 27
+      }                                                                                                                // 28
+    }                                                                                                                  // 29
                                                                                                                        //
-    return messageIsMine;                                                                                              // 39
-  }(),                                                                                                                 // 39
+    return messageIsMine;                                                                                              // 23
+  }(),                                                                                                                 // 23
                                                                                                                        //
-  'convertDateTime': function () {                                                                                     // 47
-    function convertDateTime(dateToConvert) {                                                                          // 47
-      var dateNew = new Date(dateToConvert);                                                                           // 48
-      var dateCon = dateNew.toLocaleString();                                                                          // 49
+  'convertDateTime': function () {                                                                                     // 31
+    function convertDateTime(dateToConvert) {                                                                          // 31
+      var dateNew = new Date(dateToConvert);                                                                           // 32
+      var dateCon = dateNew.toLocaleString();                                                                          // 33
                                                                                                                        //
-      var elem = dateCon.split(' ');                                                                                   // 51
+      var elem = dateCon.split(' ');                                                                                   // 35
                                                                                                                        //
-      return elem[0];                                                                                                  // 53
-    }                                                                                                                  // 54
+      return elem[0];                                                                                                  // 37
+    }                                                                                                                  // 38
                                                                                                                        //
-    return convertDateTime;                                                                                            // 47
-  }()                                                                                                                  // 47
+    return convertDateTime;                                                                                            // 31
+  }()                                                                                                                  // 31
 });                                                                                                                    // 7
                                                                                                                        //
-Template.showConver.events({                                                                                           // 57
-  'click #btnSendMessage': function () {                                                                               // 58
-    function clickBtnSendMessage() {                                                                                   // 58
-      var chatData = new Object();                                                                                     // 59
-      var contentMessage = $('#inputMessage').val();                                                                   // 60
-      var userRecepMsg = Session.get('recepUsernameChat');                                                             // 61
+Template.showConver.events({                                                                                           // 41
+  'click #btnSendMessage': function () {                                                                               // 42
+    function clickBtnSendMessage() {                                                                                   // 42
+      var chatData = new Object();                                                                                     // 43
+      var contentMessage = $('#inputMessage').val();                                                                   // 44
+      var userRecepMsg = Session.get('recepUsernameChat');                                                             // 45
                                                                                                                        //
-      chatData.contentMessage = contentMessage;                                                                        // 63
-      chatData.userRecepMsg = userRecepMsg;                                                                            // 64
-      if (Session.get('chatEmpty')) {                                                                                  // 65
-        Meteor.call('insertMsgChat', chatData);                                                                        // 66
-      } else {                                                                                                         // 67
-        chatData.nameChat = Session.get('nameChat');                                                                   // 68
-        Meteor.call('insertMsg', chatData);                                                                            // 69
+      chatData.contentMessage = contentMessage;                                                                        // 47
+      chatData.userRecepMsg = userRecepMsg;                                                                            // 48
+      if (Session.get('chatEmpty')) {                                                                                  // 49
+        Meteor.call('insertMsgChat', chatData);                                                                        // 50
+      } else {                                                                                                         // 51
+        chatData.nameChat = Session.get('nameChat');                                                                   // 52
+        Meteor.call('insertMsg', chatData);                                                                            // 53
+      }                                                                                                                // 54
+      //HAY QUE MANDAR UNA NOTIFICACIÓN AL OTRO USUARIO PARA QUE SE ENTERE DE                                          // 55
+      //QUE LE HEMOS ESCRITO UN MENSAJE                                                                                // 56
+                                                                                                                       //
+      //INSERTAR UN NUEVO MENSAJE PARA PRODUCIR EL EFECTO DE QUE SE HA ENVIADO                                         // 58
+      recoverChat();                                                                                                   // 59
+      //LIMPIAMOS EL TEXTO QUE HEMOS PUESTO EN EL #inputMessage                                                        // 60
+      $('#inputMessage').val("");                                                                                      // 61
+    }                                                                                                                  // 62
+                                                                                                                       //
+    return clickBtnSendMessage;                                                                                        // 42
+  }(),                                                                                                                 // 42
+                                                                                                                       //
+  'input #inputMessage': function () {                                                                                 // 64
+    function inputInputMessage() {                                                                                     // 64
+      var lengthMessage = $('#inputMessage').val().length;                                                             // 65
+      if (lengthMessage > 0) {                                                                                         // 66
+        Session.set('messageInputEmpty', false);                                                                       // 67
+      } else if (lengthMessage === 0) {                                                                                // 68
+        Session.set('messageInputEmpty', true);                                                                        // 69
       }                                                                                                                // 70
     }                                                                                                                  // 71
                                                                                                                        //
-    return clickBtnSendMessage;                                                                                        // 58
-  }(),                                                                                                                 // 58
+    return inputInputMessage;                                                                                          // 64
+  }(),                                                                                                                 // 64
                                                                                                                        //
-  'input #inputMessage': function () {                                                                                 // 73
-    function inputInputMessage() {                                                                                     // 73
-      var lengthMessage = $('#inputMessage').val().length;                                                             // 74
-      if (lengthMessage > 0) {                                                                                         // 75
-        Session.set('messageInputEmpty', false);                                                                       // 76
-      } else if (lengthMessage === 0) {                                                                                // 77
-        Session.set('messageInputEmpty', true);                                                                        // 78
-      }                                                                                                                // 79
-    }                                                                                                                  // 80
+  'click #cleanHistory': function () {                                                                                 // 73
+    function clickCleanHistory() {                                                                                     // 73
+      Meteor.call('removeChat', Session.get('recepUsernameChat'));                                                     // 74
+    }                                                                                                                  // 75
                                                                                                                        //
-    return inputInputMessage;                                                                                          // 73
-  }(),                                                                                                                 // 73
+    return clickCleanHistory;                                                                                          // 73
+  }()                                                                                                                  // 73
+});                                                                                                                    // 41
                                                                                                                        //
-  'click #cleanHistory': function () {                                                                                 // 82
-    function clickCleanHistory() {                                                                                     // 82
-      Meteor.call('removeChat', Session.get('recepUsernameChat'));                                                     // 83
-    }                                                                                                                  // 84
+function recoverChat() {                                                                                               // 78
+  var userNameToFindChat = Session.get('recepUsernameChat');                                                           // 79
                                                                                                                        //
-    return clickCleanHistory;                                                                                          // 82
-  }()                                                                                                                  // 82
-});                                                                                                                    // 57
+  Meteor.call('findChatFromUser', userNameToFindChat, function (err, res) {                                            // 81
+    if (res) {                                                                                                         // 82
+      Session.set('chatFound', res);                                                                                   // 83
+      if (res.length === 0) {                                                                                          // 84
+        Session.set('chatEmpty', true);                                                                                // 85
+      } else {                                                                                                         // 86
+        Session.set('nameChat', res[0].nameChat);                                                                      // 87
+        Session.set('chatEmpty', false);                                                                               // 88
+      }                                                                                                                // 89
+    }                                                                                                                  // 90
+                                                                                                                       //
+    if (err) {                                                                                                         // 92
+      console.log(err);                                                                                                // 93
+    }                                                                                                                  // 94
+  });                                                                                                                  // 95
+}                                                                                                                      // 96
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"showSocialNetwork.js":function(){

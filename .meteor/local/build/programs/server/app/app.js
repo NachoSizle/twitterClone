@@ -369,87 +369,100 @@ Meteor.methods({                                                                
                                                                                                        //
   'findChatsAvailable': function () {                                                                  // 3
     function findChatsAvailable() {                                                                    // 3
-      return Chats.find({});                                                                           // 4
-    }                                                                                                  // 5
+      console.log("Buscando chats");                                                                   // 4
+      return Chats.find({ $or: [{ userCreatedChat: Meteor.user().username }, { userToChat: Meteor.user().username }] }, { sort: { messageTimestamp: -1 } });
+    }                                                                                                  // 6
                                                                                                        //
     return findChatsAvailable;                                                                         // 3
   }(),                                                                                                 // 3
                                                                                                        //
-  'findChatFromUser': function () {                                                                    // 7
-    function findChatFromUser(username) {                                                              // 7
-      var nameChat = username + "_" + Meteor.user().username;                                          // 8
-      var msgFound = ChatsMsg.find({ "nameChat": nameChat }).fetch();                                  // 9
-      if (msgFound.length === 0) {                                                                     // 10
-        console.log(msgFound);                                                                         // 11
-        nameChat = Meteor.user().username + "_" + username;                                            // 12
-        msgFound = ChatsMsg.find({ "nameChat": nameChat }).fetch();                                    // 13
-      }                                                                                                // 14
-      return msgFound;                                                                                 // 15
-    }                                                                                                  // 16
+  'findChatFromUser': function () {                                                                    // 8
+    function findChatFromUser(username) {                                                              // 8
+      var nameChat = username + "_" + Meteor.user().username;                                          // 9
+      var msgFound = ChatsMsg.find({ "nameChat": nameChat }).fetch();                                  // 10
+      if (msgFound.length === 0) {                                                                     // 11
+        console.log(msgFound);                                                                         // 12
+        nameChat = Meteor.user().username + "_" + username;                                            // 13
+        msgFound = ChatsMsg.find({ "nameChat": nameChat }).fetch();                                    // 14
+      }                                                                                                // 15
+      return msgFound;                                                                                 // 16
+    }                                                                                                  // 17
                                                                                                        //
-    return findChatFromUser;                                                                           // 7
-  }(),                                                                                                 // 7
+    return findChatFromUser;                                                                           // 8
+  }(),                                                                                                 // 8
                                                                                                        //
-  'insertMsgChat': function () {                                                                       // 18
-    function insertMsgChat(messageData) {                                                              // 18
-      var userToSentMsg = Meteor.call('findUserFromDB', messageData.userRecepMsg);                     // 19
+  'insertMsgChat': function () {                                                                       // 19
+    function insertMsgChat(messageData) {                                                              // 19
+      var userToSentMsg = Meteor.call('findUserFromDB', messageData.userRecepMsg);                     // 20
                                                                                                        //
-      if (Meteor.user()) {                                                                             // 21
-        ChatsMsg.insert({                                                                              // 22
-          userIdSentMsg: Meteor.user()._id,                                                            // 23
-          userNameSentMsg: Meteor.user().username,                                                     // 24
-          userRecepMsg: messageData.userRecepMsg,                                                      // 25
-          userIdRecepMsg: userToSentMsg._id,                                                           // 26
-          nameChat: messageData.userRecepMsg + "_" + Meteor.user().username,                           // 27
-          contentMsg: messageData.contentMessage,                                                      // 28
-          messageTimestamp: new Date()                                                                 // 29
-        });                                                                                            // 22
-      }                                                                                                // 31
-    }                                                                                                  // 32
+      if (Meteor.user()) {                                                                             // 22
+        ChatsMsg.insert({                                                                              // 23
+          userIdSentMsg: Meteor.user()._id,                                                            // 24
+          userNameSentMsg: Meteor.user().username,                                                     // 25
+          userRecepMsg: messageData.userRecepMsg,                                                      // 26
+          userIdRecepMsg: userToSentMsg._id,                                                           // 27
+          nameChat: messageData.userRecepMsg + "_" + Meteor.user().username,                           // 28
+          contentMsg: messageData.contentMessage,                                                      // 29
+          messageTimestamp: new Date()                                                                 // 30
+        });                                                                                            // 23
+      }                                                                                                // 32
+    }                                                                                                  // 33
                                                                                                        //
-    return insertMsgChat;                                                                              // 18
-  }(),                                                                                                 // 18
+    return insertMsgChat;                                                                              // 19
+  }(),                                                                                                 // 19
                                                                                                        //
-  'insertMsg': function () {                                                                           // 34
-    function insertMsg(messageData) {                                                                  // 34
-      var userToSentMsg = Meteor.call('findUserFromDB', messageData.userRecepMsg);                     // 35
+  'insertMsg': function () {                                                                           // 35
+    function insertMsg(messageData) {                                                                  // 35
+      var userToSentMsg = Meteor.call('findUserFromDB', messageData.userRecepMsg);                     // 36
                                                                                                        //
-      if (Meteor.user()) {                                                                             // 37
-        ChatsMsg.insert({                                                                              // 38
-          userIdSentMsg: Meteor.user()._id,                                                            // 39
-          userNameSentMsg: Meteor.user().username,                                                     // 40
-          userRecepMsg: messageData.userRecepMsg,                                                      // 41
-          userIdRecepMsg: userToSentMsg._id,                                                           // 42
-          nameChat: messageData.nameChat,                                                              // 43
-          contentMsg: messageData.contentMessage,                                                      // 44
-          messageTimestamp: new Date()                                                                 // 45
-        });                                                                                            // 38
-      }                                                                                                // 47
-    }                                                                                                  // 48
+      if (Meteor.user()) {                                                                             // 38
+        ChatsMsg.insert({                                                                              // 39
+          userIdSentMsg: Meteor.user()._id,                                                            // 40
+          userNameSentMsg: Meteor.user().username,                                                     // 41
+          userRecepMsg: messageData.userRecepMsg,                                                      // 42
+          userIdRecepMsg: userToSentMsg._id,                                                           // 43
+          nameChat: messageData.nameChat,                                                              // 44
+          contentMsg: messageData.contentMessage,                                                      // 45
+          messageTimestamp: new Date()                                                                 // 46
+        });                                                                                            // 39
+      }                                                                                                // 48
+    }                                                                                                  // 49
                                                                                                        //
-    return insertMsg;                                                                                  // 34
-  }(),                                                                                                 // 34
+    return insertMsg;                                                                                  // 35
+  }(),                                                                                                 // 35
                                                                                                        //
-  'createChat': function () {                                                                          // 50
-    function createChat(userNameToCreateChat) {                                                        // 50
-      Chats.insert({                                                                                   // 51
-        userCreatedChat: Meteor.user().username,                                                       // 52
-        userToChat: userNameToCreateChat,                                                              // 53
-        nameChat: userNameToCreateChat + "_" + Meteor.user().username                                  // 54
-      });                                                                                              // 51
-    }                                                                                                  // 56
+  'checkChat': function () {                                                                           // 51
+    function checkChat(userNameToCheckChat) {                                                          // 51
+      if (Chats.findOne({ "nameChat": userNameToCheckChat + "_" + Meteor.user().username })) {         // 52
+        return false;                                                                                  // 53
+      } else {                                                                                         // 54
+        return true;                                                                                   // 55
+      }                                                                                                // 56
+    }                                                                                                  // 57
                                                                                                        //
-    return createChat;                                                                                 // 50
-  }(),                                                                                                 // 50
+    return checkChat;                                                                                  // 51
+  }(),                                                                                                 // 51
                                                                                                        //
-  'removeChat': function () {                                                                          // 58
-    function removeChat(nameChat) {                                                                    // 58
-      ChatsMsg.remove({ "nameChat": nameChat });                                                       // 59
-      Chats.remove({ "nameChat": nameChat });                                                          // 60
-    }                                                                                                  // 61
+  'createChat': function () {                                                                          // 59
+    function createChat(userNameToCreateChat) {                                                        // 59
+      Chats.insert({                                                                                   // 60
+        userCreatedChat: Meteor.user().username,                                                       // 61
+        userToChat: userNameToCreateChat,                                                              // 62
+        nameChat: userNameToCreateChat + "_" + Meteor.user().username                                  // 63
+      });                                                                                              // 60
+    }                                                                                                  // 65
                                                                                                        //
-    return removeChat;                                                                                 // 58
-  }()                                                                                                  // 58
+    return createChat;                                                                                 // 59
+  }(),                                                                                                 // 59
+                                                                                                       //
+  'removeChat': function () {                                                                          // 67
+    function removeChat(nameChat) {                                                                    // 67
+      ChatsMsg.remove({ "nameChat": nameChat });                                                       // 68
+      Chats.remove({ "nameChat": nameChat });                                                          // 69
+    }                                                                                                  // 70
+                                                                                                       //
+    return removeChat;                                                                                 // 67
+  }()                                                                                                  // 67
                                                                                                        //
 });                                                                                                    // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -655,7 +668,7 @@ Meteor.publish('chatsMsg', function () {                                        
                                                                                                        //
 Meteor.publish('chats', function () {                                                                  // 52
   if (Meteor.userId) {                                                                                 // 53
-    return Chats.find({ userIdRecepMsg: this.userId });                                                // 54
+    return Chats.find({});                                                                             // 54
   }                                                                                                    // 55
 });                                                                                                    // 56
                                                                                                        //
