@@ -1,4 +1,5 @@
 Template.conversationsMenu.onCreated(function() {  
+  this.subscribe('chats');
   Session.set('showMessages', true);
 });
 
@@ -16,18 +17,27 @@ Template.conversationsMenu.helpers({
 
   'showChatsForThisUser' : function(){
     Meteor.call('findChatsAvailable', function(err, res){
-      console.log(res);
+      Session.set('chatsAvailable', res);
       if(err){
         console.log(err);
       }
     });
-    
+    return Session.get('chatsAvailable');
   },
 
   'chatName' : function(nameChat){
-    var usersInChat = nameChat.split('_');
-    var chatUserName = usersInChat[usersInChat.indexOf(Meteor.user().username)];
-    return chatUserName;
+    if(nameChat){
+      var usersInChat = nameChat.split('_');
+      var posCurrentUser = usersInChat.indexOf(Meteor.user().username);
+      if(posCurrentUser === 0){
+        posCurrentUser = 1;
+      } else {
+        posCurrentUser = 0;
+      }
+      var chatUserName = usersInChat[posCurrentUser];
+      Session.set('chatUserName', chatUserName);
+    }
+    return Session.get('chatUserName');
   }
 });
 
@@ -41,6 +51,7 @@ Template.conversationsMenu.events({
   'click .goToConversation' : function(event){
     //COMPROBAMOS SI EL CHAT ESTA CREADO
     Meteor.call('checkChat', event.currentTarget.id, function(err, res){
+      console.log(res);
       if(res){
         Meteor.call('createChat', event.currentTarget.id);
       }

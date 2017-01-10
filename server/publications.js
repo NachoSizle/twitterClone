@@ -51,7 +51,7 @@ Meteor.publish('chatsMsg', function() {
 
 Meteor.publish('chats', function() {
   if (Meteor.userId) {
-    return Chats.find({});
+    return Chats.find();
   }
 });
 

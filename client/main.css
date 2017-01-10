@@ -711,3 +711,7 @@ form input:focus:required:invalid{
   padding: 0px;
   margin: 0px;
 }
+
+.spinner-container{
+  margin-top: 65% !important;
+}

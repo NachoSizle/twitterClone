@@ -2,7 +2,8 @@ Meteor.methods({
 
   'findChatsAvailable' : function(){
     console.log("Buscando chats");
-    return Chats.find({$or: [ { userCreatedChat : Meteor.user().username}, { userToChat : Meteor.user().username } ] }, {sort: {messageTimestamp: -1}});
+    var chatsAvailable = Chats.find({}, {$or: [ { userCreatedChat : Meteor.user().username}, { userToChat : Meteor.user().username } ] }, {sort: {messageTimestamp: -1}}).fetch();;
+    return chatsAvailable;
   },
 
   'findChatFromUser': function(username) {
@@ -49,7 +50,9 @@ Meteor.methods({
   },
 
   'checkChat' : function(userNameToCheckChat){
-    if(Chats.findOne({"nameChat" : userNameToCheckChat + "_" + Meteor.user().username})){
+    var chatIsAvailable = Chats.findOne({"nameChat" : userNameToCheckChat + "_" + Meteor.user().username});
+    console.log(chatIsAvailable);
+    if(chatIsAvailable){
       return false;
     } else {
       return true;
