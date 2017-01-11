@@ -54,7 +54,7 @@ Template.showConver.events({
     }
     //HAY QUE MANDAR UNA NOTIFICACIÓN AL OTRO USUARIO PARA QUE SE ENTERE DE 
     //QUE LE HEMOS ESCRITO UN MENSAJE
-    
+
     //INSERTAR UN NUEVO MENSAJE PARA PRODUCIR EL EFECTO DE QUE SE HA ENVIADO
     recoverChat();
     //LIMPIAMOS EL TEXTO QUE HEMOS PUESTO EN EL #inputMessage
@@ -71,6 +71,7 @@ Template.showConver.events({
   },
 
   'click #cleanHistory' : function(){
+    console.log(Session.get('recepUsernameChat'));
     Meteor.call('removeChat', Session.get('recepUsernameChat'));
   }
 });

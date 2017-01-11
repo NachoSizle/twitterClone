@@ -2,7 +2,7 @@ Meteor.methods({
 
   'findChatsAvailable' : function(){
     console.log("Buscando chats");
-    var chatsAvailable = Chats.find({}, {$or: [ { userCreatedChat : Meteor.user().username}, { userToChat : Meteor.user().username } ] }, {sort: {messageTimestamp: -1}}).fetch();;
+    var chatsAvailable = Chats.find({}, {$or: [ { userCreatedChat : Meteor.user().username}, { userToChat : Meteor.user().username } ] }).fetch();;
     return chatsAvailable;
   },
 
@@ -67,9 +67,30 @@ Meteor.methods({
     });
   },
 
-  'removeChat': function(nameChat){
-    ChatsMsg.remove({"nameChat" : nameChat});
-    Chats.remove({"nameChat" : nameChat});
+  'removeChat': function(nameUserRecepChat){
+    ChatsMsg.remove({"nameChat" : nameUserRecepChat + "_" + Meteor.user().username});
+    Chats.remove({"nameChat" : nameUserRecepChat + "_" + Meteor.user().username});
   },
 
+  'findLastMessage' : function(nameChat){
+    var chats = ChatsMsg.find({"nameChat" : nameChat}, {sort: {messageTimestamp: -1}}).fetch();
+    if(chats.length > 0){
+      return chats;
+    }
+  },
+
+  'findContactsAvailable' : function(){
+    /*OBTENEMOS LOS USUARIOS A LOS QUE SIGUE EL CURRENTUSER*/
+    var currentFollowings = UserUtils.findFollowings(Meteor.user().username);
+    var currentFollowers = UserUtils.findFollowers(Meteor.user().username);
+    var currentContacts = [];
+
+    currentFollowings.forEach(function(elem, pos){
+      if(currentFollowers.indexOf(elem) >= 0){
+        currentContacts.push(elem);
+      }
+    });
+
+    return currentContacts;
+  }
 }); 
