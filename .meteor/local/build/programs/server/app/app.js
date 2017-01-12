@@ -469,33 +469,41 @@ Meteor.methods({                                                                
                                                                                                                //
   'findLastMessage': function () {                                                                             // 75
     function findLastMessage(nameChat) {                                                                       // 75
-      var chats = ChatsMsg.find({ "nameChat": nameChat }, { sort: { messageTimestamp: -1 } }).fetch();         // 76
-      if (chats.length > 0) {                                                                                  // 77
-        return chats;                                                                                          // 78
-      }                                                                                                        // 79
-    }                                                                                                          // 80
+      var users = nameChat.split('_');                                                                         // 76
+      var chats = ChatsMsg.findOne({ "nameChat": nameChat }, { sort: { messageTimestamp: -1 } });              // 77
+                                                                                                               //
+      if (!chats) {                                                                                            // 79
+        chats = ChatsMsg.findOne({ "userNameSentMsg": users[1], "userRecepMsg": users[0] }, { sort: { messageTimestamp: -1 } });
+      }                                                                                                        // 81
+                                                                                                               //
+      console.log(chats);                                                                                      // 83
+                                                                                                               //
+      if (chats) {                                                                                             // 85
+        return chats;                                                                                          // 86
+      }                                                                                                        // 87
+    }                                                                                                          // 88
                                                                                                                //
     return findLastMessage;                                                                                    // 75
   }(),                                                                                                         // 75
                                                                                                                //
-  'findContactsAvailable': function () {                                                                       // 82
-    function findContactsAvailable() {                                                                         // 82
-      /*OBTENEMOS LOS USUARIOS A LOS QUE SIGUE EL CURRENTUSER*/                                                // 83
-      var currentFollowings = UserUtils.findFollowings(Meteor.user().username);                                // 84
-      var currentFollowers = UserUtils.findFollowers(Meteor.user().username);                                  // 85
-      var currentContacts = [];                                                                                // 86
+  'findContactsAvailable': function () {                                                                       // 90
+    function findContactsAvailable() {                                                                         // 90
+      /*OBTENEMOS LOS USUARIOS A LOS QUE SIGUE EL CURRENTUSER*/                                                // 91
+      var currentFollowings = UserUtils.findFollowings(Meteor.user().username);                                // 92
+      var currentFollowers = UserUtils.findFollowers(Meteor.user().username);                                  // 93
+      var currentContacts = [];                                                                                // 94
                                                                                                                //
-      currentFollowings.forEach(function (elem, pos) {                                                         // 88
-        if (currentFollowers.indexOf(elem) >= 0) {                                                             // 89
-          currentContacts.push(elem);                                                                          // 90
-        }                                                                                                      // 91
-      });                                                                                                      // 92
+      currentFollowings.forEach(function (elem, pos) {                                                         // 96
+        if (currentFollowers.indexOf(elem) >= 0) {                                                             // 97
+          currentContacts.push(elem);                                                                          // 98
+        }                                                                                                      // 99
+      });                                                                                                      // 100
                                                                                                                //
-      return currentContacts;                                                                                  // 94
-    }                                                                                                          // 95
+      return currentContacts;                                                                                  // 102
+    }                                                                                                          // 103
                                                                                                                //
-    return findContactsAvailable;                                                                              // 82
-  }()                                                                                                          // 82
+    return findContactsAvailable;                                                                              // 90
+  }()                                                                                                          // 90
 });                                                                                                            // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

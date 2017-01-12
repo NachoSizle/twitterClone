@@ -73,8 +73,16 @@ Meteor.methods({
   },
 
   'findLastMessage' : function(nameChat){
-    var chats = ChatsMsg.find({"nameChat" : nameChat}, {sort: {messageTimestamp: -1}}).fetch();
-    if(chats.length > 0){
+    var users = nameChat.split('_');
+    var chats = ChatsMsg.findOne({"nameChat" : nameChat}, {sort: {messageTimestamp: -1}});
+
+    if(!chats){
+      chats = ChatsMsg.findOne({"userNameSentMsg" : users[1], "userRecepMsg" : users[0]}, {sort: {messageTimestamp: -1}});
+    } 
+
+    console.log(chats);
+
+    if(chats){
       return chats;
     }
   },
