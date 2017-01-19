@@ -1,10 +1,10 @@
 Template.conversationsMenu.onCreated(function() {  
   this.subscribe('chats');
   Session.set('showMessages', true);
-  var lastMsgFound = "";
-  if(Session.get('lastMessageFound')){
-    lastMsgFound = Session.get('lastMessageFound');
-  }
+});
+
+Template.conversationsMenu.onRendered(function(){
+  var lastMsg
 });
 
 Template.conversationsMenu.helpers({
@@ -61,13 +61,17 @@ Template.conversationsMenu.helpers({
       Session.set('lastMessageFound', res);
     });
     */
-    var lastMsg = "";
+    console.log(nameChat);
+  
     (async function() {
       res = await Meteor.callPromise('findLastMessage', nameChat);
       lastMsg = res.contentMsg;
+      console.log(lastMsg);
+      Session.set('lastMessage', res);
     }());
-    
-    return lastMsg;
+    if(Session.get('lastMessage')){
+      return Session.get('lastMessage').contentMsg;
+    }
   },
 
   'getTimeLastMessageFromThisChat' : function(){
