@@ -1,0 +1,69 @@
+<template name="tweetFeedMod">
+  {{#if Template.subscriptionsReady}}
+    {{infoNotif}}
+    <div class="tweetfeed-container ampliacionMarginTopAllViews">
+      <div class="panel panel-default tweetfeed">
+        <div class="panel-body">
+          <!-- Texto para el contenido del Twitt -->
+          {{#each tweetMessage}}
+            <div class="panel panel-info"><!--Contenido de la cabecera + el mensaje del twiit-->
+              <div class="panel-heading"><!--Cabecera del twiit-->
+                <h3 class="panel-title">
+                  <a href="{{pathFor 'userProfile' username=this.user}}">
+                    <strong>@{{this.user}}</strong>
+                  </a>
+                  <div id="containerDateTime">
+                    <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
+                    {{convertDateTime}}
+                  </div>
+                </h3>
+              </div><!--Cabecera del twiit-->
+              <!--////////////////////////////////////////////////////////////-->
+              <!--AQUÍ ES DONDE VA EL VIDEO QUE SE VA A MOSTRAR EN EL TIMELINE-->
+              <!--////////////////////////////////////////////////////////////-->
+              <div>
+                <video class="containerPublication" controls>
+                  <source src="mov_bbb.mp4" type="video/mp4">
+                  <source src="mov_bbb.ogg" type="video/ogg">
+                  Your browser does not support HTML5 video.
+                </video>
+              </div>
+              <!--////////////////////////////////////////////////////////////-->
+              <div class="panel-body"><!--Contenido del twiit-->
+                {{this.message}}
+              </div><!--Contenido del twiit-->
+
+              <div class="btn-group" role="group" id="btnGroupInteractions">
+                <a class="btn btn-secondary">
+                  <span class="glyphicon glyphicon-bullhorn"></span>
+                </a>
+                {{#if numComment}}
+                  <a href="{{pathFor 'twiitCommentPage' _id=this._id}}" class="btn">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    <span class="badge badge-numFav ">{{this.numComment}}</span>
+                  </a>
+                {{else}}
+                  <a id="btnComm" class="btn btn-secondary">
+                    <span class="glyphicon glyphicon-comment"></span>
+                </a>
+                {{/if}}
+                {{#if numFav}}
+                <a id="btnFav" class="btn btn-secondary">
+                  <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                  <span class="badge badge-numFav">{{this.numFav}}</span>
+                </a>
+                {{else}}
+                  <a id="btnFav" class="btn btn-secondary">
+                  <span id="{{idToFavBtn}}" class="glyphicon glyphicon-heart {{classFav}}"></span>
+                </a>
+                {{/if}}
+              </div>
+            </div><!--Contenido de la cabecera + el mensaje del twiit-->
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{> loading}}
+  {{/if}}
+</template>
