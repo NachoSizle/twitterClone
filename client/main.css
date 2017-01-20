@@ -174,12 +174,12 @@ textarea {
 }
 
 #spinner {
-  height: 300px; 
+  height: 300px;
 }
 
 #notificationsCont {
   margin-left: 40px;
-  background-color: #1e88e5; 
+  background-color: #1e88e5;
   width: 50px;
   height: 100%;
 }
@@ -406,7 +406,7 @@ form input:focus:required:invalid{
 #sentYes{
   font-size: 15px;
   float: left;
-  margin-left: 25%; 
+  margin-left: 25%;
 }
 
 #sentNo{
@@ -591,7 +591,7 @@ form input:focus:required:invalid{
 }
 
 .panel-info-messaging{
-  margin-bottom: 2px !important; 
+  margin-bottom: 2px !important;
 }
 
 .goToConversation{
@@ -600,7 +600,7 @@ form input:focus:required:invalid{
 }
 
 .containerContact{
-  padding-top: 15px; 
+  padding-top: 15px;
 }
 
 #imgUserCardContact{
@@ -635,13 +635,13 @@ form input:focus:required:invalid{
 }
 
 .containerHeaderChat{
-  padding-top: 13px; 
+  padding-top: 13px;
   padding-left: 0px !important;
 }
 
 .messageInChat-container{
   margin: 10px;
-  
+
   margin-bottom: 0px;
   display: inline-block;
 }
@@ -688,7 +688,7 @@ form input:focus:required:invalid{
 
 .panel-headerChat{
   margin-bottom: 0px;
-  border: 0px; 
+  border: 0px;
 }
 
 .containerMessageInThatConver{
@@ -711,4 +711,8 @@ form input:focus:required:invalid{
 
 .spinner-container{
   margin-top: 65% !important;
+}
+
+.containerPublication{
+  width: 100%;
 }

@@ -4,7 +4,11 @@
 		    {{# if currentUser}}
 		    	{{> navBarTemplate}}
 		    	{{# if mainPage}}
-		    		<div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
+						<!--PARA LA CARGA DE TWIITS DISPONIBLES COMO SIEMPRE
+						<div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeed}}</div>
+						-->
+						<!--PARA LA CARGA DE TWIITS CON VIDEO-->
+		    		<div id="divTweetFeed" class="col-md-8 col-sm-8">{{> tweetFeedMod}}</div>
 		    	{{/if}}
 
 		    	<div class="modal fade" id="dialog-NewTwiit">
