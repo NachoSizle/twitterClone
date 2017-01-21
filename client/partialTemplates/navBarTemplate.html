@@ -24,7 +24,6 @@
     	  </button>
     	  <a href="/"><img id="imgLogTwiiterClone" src="/imgLogTwiiterClone.png" class="img-responsive navbar-brand"></a>
 	    </div>
-
 		<!--PARTE DERECHA DE LA BARRA DE NAVEGACION-->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	    	{{# if currentUser}}
@@ -38,7 +37,7 @@
 			      	<li>
 			            {{> notificationsNew}}
 			      	</li>
-			      	
+
 			        <li>
 			        	<a href="/whoToFollow" id="recommendationsBtn">
 			        		<span class="glyphicon glyphicon-search"></span>
@@ -58,6 +57,13 @@
 		    			</a>
 			        </li>
 			        -->
+
+							<li>
+			        	<a id="uploadFile" href="/uploadFile" type="button" class="navbar-btn">
+			        		<span class="glyphicon glyphicon-folder-open"></span>
+		    				</a>
+			        </li>
+
 			        <li>
 			        	<a href="{{pathFor 'conversationsMenu'}}" id="btnShowConver" type="button" class="navbar-btn">
 			        		<span class="glyphicon glyphicon-envelope"></span>

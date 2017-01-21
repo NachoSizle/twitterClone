@@ -17,7 +17,7 @@ Template.navBarTemplate.onCreated( function() {
 
 Template.navBarTemplate.events({
 	'click #recommendationsBtn' : function(){
-		//Contraer el dropDownMenu 
+		//Contraer el dropDownMenu
 		$('#btnMenuNavBar').click();
 		Session.set('pathActualApp', '/whoToFollow');
 	},
@@ -39,6 +39,12 @@ Template.navBarTemplate.events({
   			window.location = "/videoTrans";
   		}
   	},*/
+
+		'click #uploadFile': function(){
+			$('#btnMenuNavBar').click();
+  		Session.set('pathActualApp', '/uploadFile');
+		},
+
   	'click .imgProfileNavBar': function(){
   		$('#btnMenuNavBar').click();
   		Session.set('pathActualApp', '/Profile/' + Meteor.user().username);
@@ -55,7 +61,7 @@ Template.navBarTemplate.helpers({
 	    return resultNotif;
 	},
 	'whatsNotifCount' : function(){
-		//OBTENEMOS EL NUMERO DE NOTIFICACIONES DE LAS PETICIONES DE WHATSAPP Y LAS 
+		//OBTENEMOS EL NUMERO DE NOTIFICACIONES DE LAS PETICIONES DE WHATSAPP Y LAS
 		//RESPUESTAS A LAS PETICIONES REALIZADAS POR EL USUARIO
 		resultNotifRequest = Notifications.find({recepNotif: Meteor.user().username, read: false, typeOfNotif: "whatsAppNotif"});
 		resultNotifResponse = Notifications.find({recepNotif: Meteor.user().username, read: false, typeOfNotif: "responseWhatsAppNotif"});
@@ -94,9 +100,9 @@ Template.navBarTemplate.helpers({
 	    resultNotifResponse.forEach(function(item){
 	       res.push(item._id);
 	       cont++;
-	    }); 
+	    });
 
-	    if(cont > 0){      
+	    if(cont > 0){
 	      Session.set('whatsAppRequest', true);
 	      Session.set('requestWhats', req);
 	      Session.set('responseWhats', res);
@@ -113,12 +119,12 @@ Template.navBarTemplate.helpers({
 		Meteor.call('findUserData', Meteor.user().username, function(err, res) {
 			if(res.userImg){
 				Meteor.call('findUserImg', res.userImg, function(err, res) {
-					$('#imgProfile').attr("src", res);	
+					$('#imgProfile').attr("src", res);
 			  	});
 			} else {
 				$('#imgProfile').attr("src", "/profileImgTest.png");
 			}
-			
+
 	  	});
 	},
 	'currentUser': function(){
