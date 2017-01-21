@@ -5,14 +5,12 @@ Template.navBarTemplate.onCreated( function() {
 
 	//PEDIMOS PERMISO AL USUARIO PARA MOSTRARLE NOTIFICACIONES
 	console.log(navigator.platform);
-
 	/*
 	HAY QUE CONTROLAR ESTO PORQUE NO FUNCIONA EL NOTIFICATION EN IPHONE
 	if(navigator.platform != 'iPad' || navigator.platform != 'iPhone' || navigator.platform != 'iPod'){
 		Notification.requestPermission();
 	}
 	*/
-
 });
 
 Template.navBarTemplate.events({

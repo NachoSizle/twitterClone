@@ -1,10 +1,16 @@
 <template name="uploadFile">
     <div align="center" class="ampliacionMarginTopAllViews">
-      <input id="btnSelectFile" class="myFileInput" type="file">
-      <button id="btnUploadFile" type="button" class="btn btn-primary">Upload File</button>
-    </div>
+      {{#with currentUpload}}
+        Uploading <b>{{file.name}}</b>:
+        <span id="progress">{{progress.get}}%</span>
+      {{else}}
+        <input id="selectFile" class="myFileInput" type="file" />
+      {{/with}}
 
-    <div id="prevContainer">
-      <img src="" class="fileSelected">
+      <div class="filesInBBDD">
+        {{#each fileUpload}}
+          <p>{{this.name}}</p>
+        {{/each}}
+      </div>
     </div>
 </template>

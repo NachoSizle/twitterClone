@@ -716,3 +716,16 @@ form input:focus:required:invalid{
 .containerPublication{
   width: 100%;
 }
+
+.videoTwiitBox{
+  background-color: rgb(240, 247, 254);
+  padding: 0px;
+}
+
+.modalSelectVideoToUpload{
+  margin: 0px;
+}
+
+.activeBtnModeVideoUpload{
+  background-color: rgb(240, 247, 254);
+}

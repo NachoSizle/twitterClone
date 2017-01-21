@@ -1,4 +1,4 @@
-Meteor.publish('twitts', function() {  
+Meteor.publish('twitts', function() {
   if (Meteor.userId) {
     var username = Meteor.users.findOne({_id: this.userId}).username;
     var currentFollowings = UserUtils.findFollowings(username);
@@ -7,13 +7,13 @@ Meteor.publish('twitts', function() {
   }
 });
 
-Meteor.publish('twittsProfile', function(username) {  
+Meteor.publish('twittsProfile', function(username) {
   if (Meteor.userId) {
     return Twitts.find();
   }
 });
 
-Meteor.publish('twittsWithComment', function(idTweet) {  
+Meteor.publish('twittsWithComment', function(idTweet) {
   if (Meteor.userId) {
     return Twitts.find();
   }
@@ -55,8 +55,11 @@ Meteor.publish('chats', function() {
   }
 });
 
+Meteor.publish('files', function () {
+  return Files.find().cursor;
+});
 /*
-Meteor.publishComposite('twitts', function(username) {  
+Meteor.publishComposite('twitts', function(username) {
   return {
     find: function() {
       // Comprobar los usuarios a los que se está siguiendo
