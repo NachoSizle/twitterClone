@@ -2,7 +2,7 @@
   {{#if Template.subscriptionsReady}}
     {{# if currentUser}}
       {{# if dataUserFound}}
-        <div class="user-container ampliacionMarginTopAllViews">
+        <div class="user-container">
           <div class="panel panel-default userBox">
             <div class="panel-body">
               <!--Mensaje para el usuario registrado-->
@@ -49,7 +49,7 @@
                         <button class="btn btn-info pull-right btnOptFol" type="button" id="btnFollow">Seguir</button>
                       {{/if}}
                     {{/unless}}
-                    {{# each existsSocialNetwork}}  
+                    {{# each existsSocialNetwork}}
                       {{# if showProfileOtherUser}}
                         {{# if isWhatsapp}}
                           <button type='button' id="{{this.id}}" class='btn btn-{{this.color}} btn-circle optionsUserProfile btnShowSN' data-toggle="tooltip" title="{{dataUserFound.userWhats}}" data-placement="top">
@@ -75,12 +75,12 @@
                   </div>
                 </div>
               </div>
-                
+
               <!--
               <button type="button" class="btn btn-info fullbutton" id="modProfile">Editar Perfil</button>
               <button type="button" class="btn btn-info fullbutton" id="logout">Salir</button>
               -->
-              <table class="table">  
+              <table class="table">
                 <tr>
                   <td class="tableHeader">Twitts</td>
                   <td class="tableHeader">Siguiendo</td>
@@ -92,7 +92,7 @@
                   <td class="tableContent showFollowers">{{followers}}</td>
                 </tr>
               </table>
-              
+
               <div class="modal fade" id="dialog-showSocialNetwork">
                 {{> sendRequest}}
               </div>

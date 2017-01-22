@@ -1,7 +1,8 @@
-Template.notificationsNew.onCreated(function() { 
-  //console.log("Usuario: "); 
+Template.notificationsNew.onCreated(function() {
+  //console.log("Usuario: ");
   //console.log(Meteor.user().username);
   Meteor.subscribe('notifications', Meteor.user().username);
+  $('#selectFileLbl').css('margin-bottom', '50px');
 });
 
 Template.notificationsNew.helpers({
@@ -36,12 +37,12 @@ Template.notificationsNew.helpers({
 });
 
 Template.notificationsNew.events({
-  
+
   'click #linkToNotif' : function(){
     if(numNotif > 0){
 
       window.location = "/Notifications/" + Meteor.user().username;
     }
   }
-  
+
 });

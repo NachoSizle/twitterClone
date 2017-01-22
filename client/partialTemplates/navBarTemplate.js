@@ -11,6 +11,11 @@ Template.navBarTemplate.onCreated( function() {
 		Notification.requestPermission();
 	}
 	*/
+
+	$( window ).scroll(function() {
+
+	});
+
 });
 
 Template.navBarTemplate.events({
@@ -26,11 +31,12 @@ Template.navBarTemplate.events({
 		Session.set('navBarCollapse', false);
 	},
 	'click #btnNewTweet' : function(){
-	    Session.set('commentMode', false);
-  	},
-  	'click #btnNewTwiit' : function(){
-	    Session.set('commentMode', false);
-  	},/*
+    Session.set('commentMode', false);
+		$('#selectFileLbl').hide();
+	},
+	'click #btnNewTwiit' : function(){
+    Session.set('commentMode', false);
+	},/*
   	'click #videoTrans' : function(){
   		console.log(Session.get('currentUser'));
   		if(Session.get('currentUser') === "nachosizle"){
@@ -38,19 +44,22 @@ Template.navBarTemplate.events({
   		}
   	},*/
 
-		'click #uploadFile': function(){
-			$('#btnMenuNavBar').click();
-  		Session.set('pathActualApp', '/uploadFile');
-		},
+	'click #uploadFile': function(){
+		$('#btnMenuNavBar').click();
+		Session.set('pathActualApp', '/ShowFiles');
+	},
 
-  	'click .imgProfileNavBar': function(){
-  		$('#btnMenuNavBar').click();
-  		Session.set('pathActualApp', '/Profile/' + Meteor.user().username);
-  	},
-  	'click #btnShowConver': function(){
-  		$('#btnMenuNavBar').click();
-  		Session.set('pathActualApp', '/Conversations/' + Meteor.user().username);
-  	}
+	'click .imgProfileNavBar': function(){
+		$('#btnMenuNavBar').click();
+		Session.set('pathActualApp', '/Profile/' + Meteor.user().username);
+	},
+	'click #btnShowConver': function(){
+		$('#btnMenuNavBar').click();
+		Session.set('pathActualApp', '/Conversations/' + Meteor.user().username);
+	},
+	'click #btnVideoTweet' : function(){
+		$('#selectFileLbl').hide();
+	}
 });
 
 Template.navBarTemplate.helpers({
@@ -136,3 +145,58 @@ $(window).resize(function(){
 	console.log("Change Display Size");
 	Session.set('sizeDisplay', $(window).width());
 });
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*++++++++++++++++MANEJAR EVENTOS DEL BOTON DE SUBIR NUEVO VIDEO++++++++++++++++*/
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+Template.uploadFile.onCreated(function() {
+  Meteor.subscribe('files');
+  this.currentUpload = new ReactiveVar(false);
+});
+
+Template.uploadFile.helpers({
+  'currentUpload': function () {
+    return Template.instance().currentUpload.get();
+  },
+});
+
+Template.uploadFile.events({
+  'change #selectFile': function (e, template) {
+    if (e.currentTarget.files && e.currentTarget.files[0]) {
+      // We upload only one file, in case
+      // multiple files were selected
+      var upload = Files.insert({
+        file: e.currentTarget.files[0],
+        streams: 'dynamic',
+        chunkSize: 'dynamic'
+      }, false);
+
+			/*++++++++++CUANDO EMPIEZA LA SUBIDA DEL ARCHIVO++++++++++*/
+      upload.on('start', function () {
+				/*HAY QUE ABRIR EL MODAL dialog-StateVideoUpload*/
+				$('#dialog-StateVideoUpload').modal();
+        template.currentUpload.set(this);
+				console.log(this);
+      });
+
+			/*++++++++++CUANDO ACABA LA SUBIDA DEL ARCHIVO++++++++++++*/
+      upload.on('end', function (error, fileObj) {
+				/*
+        if (error) {
+          alert('Error during upload: ' + error);
+        } else {
+          alert('File "' + fileObj.name + '" successfully uploaded');
+        }
+				*/
+				/*HAY QUE CERRAR EL MODAL dialog-StateVideoUpload*/
+				//$('#dialog-StateVideoUpload').modal('hide');
+        template.currentUpload.set(false);
+      });
+
+      upload.start();
+    }
+  }
+});
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/

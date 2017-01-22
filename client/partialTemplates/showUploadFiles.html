@@ -1,0 +1,26 @@
+<template name="showUploadFiles">
+    <div id="containerShowFiles" align="center" class="ampliacionMarginTopAllViews" style="margin-top:0% !important">
+      <div class="filesInBBDD">
+          <div class="container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Size</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each fileUpload}}
+                  <tr>
+                    <td>{{this.name}}</td>
+                    <td>{{this.type}}</td>
+                    <td>{{this.size}}</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+</template>

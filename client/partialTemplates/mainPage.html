@@ -18,7 +18,17 @@
 					<div class="modal fade" id="dialog-VideoTwiit">
 			    	{{> videoTwiitBox}}
 			    </div>
-
+					
+					<div class="modal fade" id="dialog-StateVideoUpload">
+						<div class="tweetbox-container ampliacionMarginTopAllViews">
+							<div class="panel panel-default tweetbox col-md-6">
+								<div class="panel-body">
+									Uploading <b>{{file.name}}</b>:
+									<span id="progress">{{progress.get}}%</span>
+								</div>
+							</div>
+						</div>
+					</div>
 		  	{{/if}}
 	  	{{else}}
 		    {{> loading}}

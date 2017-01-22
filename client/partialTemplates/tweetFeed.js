@@ -1,9 +1,10 @@
-Template.tweetFeed.onCreated(function() {  
+Template.tweetFeed.onCreated(function() {
 	this.subscribe('twitts');
   this.subscribe('favs');
+	$('#selectFileLbl').css('margin-bottom', '0px');
 });
 
-Template.tweetFeed.helpers({  
+Template.tweetFeed.helpers({
   'tweetMessage': function() {
     var tweet =  Twitts.find({}, {sort: {timestamp: -1}} );
     return tweet;
@@ -21,7 +22,7 @@ Template.tweetFeed.helpers({
     if(num > 0){
       return true;
     } else return false;
-  }, 
+  },
   'idToFavBtn': function(){
     return this._id;
   },
@@ -65,7 +66,7 @@ Template.tweetFeed.events({
     } else {
       var arrAux = userTapFav.idUserTapFav;
     }
-    
+
     //SI EL USUARIO YA LE HA DADO FAV A UN TWIIT, NO SE PERMITE DARLE MAS FAVS
     if(arrAux.indexOf(idUser) === -1){
       UserUtils.addFavToTwiit(this._id, idUser);
@@ -91,7 +92,7 @@ Template.tweetFeed.events({
   },
   'click #btnComm' : function(){
     var numComment = UserUtils.findNumComment(this._id);
-    //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A 
+    //SI EL TWIIT TIENE POR LO MENOS 1 COMENTARIO, ENTONCES REDIRIGIMOS AL USUARIO A
     //LA RUTA /Comments. SI NO, SE ABRE EL MODAL Y SE PUEDE HACER EL COMENTARIO
     if(numComment === 0){
         $("#dialog-NewTwiit").modal();

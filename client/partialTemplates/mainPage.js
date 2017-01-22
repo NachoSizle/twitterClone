@@ -9,3 +9,13 @@ Template.mainPage.helpers({
 		}
 	}
 })
+
+Template.mainPage.events({
+	'hidden.bs.modal #dialog-VideoTwiit' : function(event){
+		$('#selectFileLbl').show();
+	},
+
+	'hidden.bs.modal #dialog-NewTwiit' : function(event){
+		$('#selectFileLbl').show();
+	},
+});

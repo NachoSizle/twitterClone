@@ -1,10 +1,11 @@
 Template.userProfile.onCreated(function(){
 	currentUserName = this.data.name;
   Session.set('pathActualApp', '/Profile/'+currentUserName);
+	$('#selectFileLbl').css('margin-bottom', '0px');
 });
 
-Template.userProfile.events({  
-	'click #logout': function() {  
+Template.userProfile.events({
+	'click #logout': function() {
     	Meteor.logout();
     	window.location = "/";
   	},
@@ -22,7 +23,7 @@ Template.userProfile.events({
   			Session.set('userToSentPet', currentUserName);
 
   			var userActName = Meteor.user().username;
-    			
+
   			var arrWhats = dataUser.showWhatsTo;
   			Meteor.call('findUserData', userActName, function(err,res){
     			if(arrWhats.length > 0){
@@ -30,15 +31,15 @@ Template.userProfile.events({
                 console.log("TOOLTIP");
     	  				//MOSTRAMOS EL WHATSAPP
                 $('[data-toggle="tooltip"]').attr("title", dataUser.userWhats);
-      					$('[data-toggle="tooltip"]').tooltip('show'); 
+      					$('[data-toggle="tooltip"]').tooltip('show');
       	  			} else {
-                  $('[data-toggle="tooltip"]').tooltip('show'); 
+                  $('[data-toggle="tooltip"]').tooltip('show');
                 }
         			} else if(!Session.get('showProfileOtherUser')){
       					//ESTE PROCESO NO ES INSTANTANEO YA QUE EL USUARIO TIENE QUE ACEPTAR LA PETICION
       					$('#dialog-showSocialNetwork').modal('show');
       				} else {
-                $('[data-toggle="tooltip"]').tooltip('show'); 
+                $('[data-toggle="tooltip"]').tooltip('show');
               }
   			});
   		}
@@ -123,11 +124,11 @@ Template.userProfile.helpers({
         Session.set('userIsFollowMe', false);
       }
     }
-    
+
   	return Session.get('numFollowers');
 	},
 	'existsSocialNetwork': function(){
-		
+
 		var btnSocial = [];
 
 		if(dataUser.userFb){
@@ -166,7 +167,7 @@ Template.userProfile.helpers({
 	},
   'userIsFollowMe': function(){
     return Session.get('userIsFollowMe');
-  }, 
+  },
   'currentUser': function(){
     return currentUserName;
   }

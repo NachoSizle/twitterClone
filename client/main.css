@@ -692,7 +692,7 @@ form input:focus:required:invalid{
 }
 
 .containerMessageInThatConver{
-  margin-top: 24%;
+  margin-top: 8%;
   margin-bottom: 14%;
 }
 
@@ -720,6 +720,8 @@ form input:focus:required:invalid{
 .videoTwiitBox{
   background-color: rgb(240, 247, 254);
   padding: 0px;
+  border-radius: 0px;
+  margin-bottom: 0px;
 }
 
 .modalSelectVideoToUpload{
@@ -728,4 +730,34 @@ form input:focus:required:invalid{
 
 .activeBtnModeVideoUpload{
   background-color: rgb(240, 247, 254);
+}
+
+#selectFileLbl {
+  display: inline-block;
+  position: absolute;
+  right: 5%;
+  top: auto;
+  bottom: 2%;
+  padding: 10px;
+  padding-top: 7px;
+  padding-bottom: 5px;
+  width: 40px;
+  margin: 0;
+  /* Decorative */
+  background: #337ab7;
+  color: #fff;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1000000;
+}
+
+/* Hide the file input using
+opacity */
+#selectFile {
+    position: absolute;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    width: 0px !important;
+    height: 0px !important;
 }

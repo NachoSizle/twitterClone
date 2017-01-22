@@ -1,17 +1,17 @@
-Template.conversationsMenu.onCreated(function() {  
+Template.conversationsMenu.onCreated(function() {
   this.subscribe('chats');
   Session.set('showMessages', true);
 });
 
 Template.conversationsMenu.onRendered(function(){
-  var lastMsg
+  var lastMsg;
 });
 
 Template.conversationsMenu.helpers({
   'setStyleNavBar': function(){
     var widthNav = $(window).width();
     //RESTAMOS DOS PIXELES POR LOS BORDES
-    widthNav -= 2; 
+    widthNav -= 2;
     return widthNav/2 + "px";
   },
 
@@ -32,7 +32,7 @@ Template.conversationsMenu.helpers({
         return true;
       } else {
         return false;
-      }  
+      }
     };
   },
 
@@ -62,7 +62,7 @@ Template.conversationsMenu.helpers({
     });
     */
     console.log(nameChat);
-  
+
     (async function() {
       res = await Meteor.callPromise('findLastMessage', nameChat);
       lastMsg = res.contentMsg;
@@ -95,7 +95,7 @@ Template.conversationsMenu.helpers({
         return true;
       } else {
         return false;
-      }  
+      }
     };
   },
 
