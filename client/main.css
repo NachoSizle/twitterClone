@@ -734,10 +734,10 @@ form input:focus:required:invalid{
 
 #selectFileLbl {
   display: inline-block;
-  position: absolute;
+  position: fixed;
   right: 5%;
-  top: auto;
-  bottom: 2%;
+  top: 92%;
+  bottom: auto;
   padding: 10px;
   padding-top: 7px;
   padding-bottom: 5px;

@@ -8,6 +8,7 @@
                   <th>Name</th>
                   <th>Type</th>
                   <th>Size</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -16,6 +17,7 @@
                     <td>{{this.name}}</td>
                     <td>{{this.type}}</td>
                     <td>{{this.size}}</td>
+                    <td align="center"><span id="{{this._id}}" class="glyphicon glyphicon-remove remThisFile" style="color: #f44336"></span></td>
                   </tr>
                 {{/each}}
               </tbody>

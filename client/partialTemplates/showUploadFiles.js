@@ -9,5 +9,8 @@ Template.showUploadFiles.helpers({
 });
 
 Template.showUploadFiles.events({
-
+  'click .remThisFile': function(e, template){
+      console.log(e.currentTarget.id);
+      Meteor.call('removeThisFile', e.currentTarget.id);
+  }
 });

@@ -4,9 +4,7 @@ Template.videoTwiitBox.onRendered(function(){
 });
 
 Template.videoTwiitBox.events({
-  	'input #tweetText':function(){
 
-    }
 });
 
 
@@ -17,4 +15,16 @@ Template.videoTwiitBox.helpers({
     widthNav -= 2;
     return widthNav/2 + "px";
   },
+
+  'filesInDevice' : function(){
+    var filesFound = Files.find().fetch();
+    console.log(filesFound);
+
+    if(filesFound.length > 0){
+      console.log(Files.findOne({_id: filesFound[0]._id}).link());
+      return filesFound;
+    } else {
+      return false;
+    }
+  }
 });
