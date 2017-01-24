@@ -58,6 +58,19 @@ Meteor.publish('chats', function() {
 Meteor.publish('files', function () {
   return Files.find().cursor;
 });
+
+if (Meteor.isServer) {
+  Files.denyClient();
+
+  Meteor.startup(() => {
+    if (!Files.findOne()) {
+      Files.load('https://raw.githubusercontent.com/VeliovGroup/Meteor-Files/master/logo.png', {
+        fileName: 'logo.png'
+      });
+    }
+  });
+}
+
 /*
 Meteor.publishComposite('twitts', function(username) {
   return {

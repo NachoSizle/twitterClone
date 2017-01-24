@@ -11,11 +11,32 @@ Template.navBarTemplate.onCreated( function() {
 		Notification.requestPermission();
 	}
 	*/
+	/* PARA CONTROLAR EL SCROLL DEL #selectFileLbl
+	var previousScroll = 0;
+	var posTopLblUploadFile = 0;
+	var moveToPosition = 0;
 
-	$( window ).scroll(function() {
+	$( window ).scroll(function(event) {
+		console.log(event);
 
+		if(window.scrollY % 100 === 0){
+			posTopLblUploadFile = $('#selectFileLbl').offset().top;
+			if(previousScroll < window.scrollY){
+				moveToPosition = posTopLblUploadFile + 100;
+				previousScroll += 100;
+			} else {
+				moveToPosition = posTopLblUploadFile - 100;
+				previousScroll -= 100;
+			}
+			$('#selectFileLbl').css('top', moveToPosition);
+			posTopLblUploadFile = $('#selectFileLbl').offset().top;
+		} else if(window.scrollY === 0){
+			$('#selectFileLbl').css('top', '92%');
+		}
+		console.log(window.scrollY);
 	});
-
+	AL FINAL LO SOLUCIONAMOS PONIENDO LA POSITION A FIXED POR CSS
+	*/
 });
 
 Template.navBarTemplate.events({
@@ -174,9 +195,10 @@ Template.uploadFile.events({
 			/*++++++++++CUANDO EMPIEZA LA SUBIDA DEL ARCHIVO++++++++++*/
       upload.on('start', function () {
 				/*HAY QUE ABRIR EL MODAL dialog-StateVideoUpload*/
+				console.log(this.file.name);
+				Session.set('modalStateVideoUploadContent', this.file.name);
 				$('#dialog-StateVideoUpload').modal();
         template.currentUpload.set(this);
-				console.log(this);
       });
 
 			/*++++++++++CUANDO ACABA LA SUBIDA DEL ARCHIVO++++++++++++*/
@@ -188,9 +210,11 @@ Template.uploadFile.events({
           alert('File "' + fileObj.name + '" successfully uploaded');
         }
 				*/
-				/*HAY QUE CERRAR EL MODAL dialog-StateVideoUpload*/
-				//$('#dialog-StateVideoUpload').modal('hide');
-        template.currentUpload.set(false);
+				/*INFORMAMOS AL USUARIO DE QUE SE HA SUBIDO EL ARCHIVO*/
+				$('#dialog-StateVideoUpload').find('div .panel-body').empty();
+				$('#dialog-StateVideoUpload').find('div .panel-body').append("Upload: " + fileObj.name + "<span class='glyphicon glyphicon-ok' style='color: #4caf50'></span>");
+
+				template.currentUpload.set(false);
       });
 
       upload.start();

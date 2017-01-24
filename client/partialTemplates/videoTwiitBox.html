@@ -7,6 +7,39 @@
         DE LA GALERIA O SE DARA LA OPCION AL USUARIO EL PODER UTILIZAR LA CAMARA
         PARA SUBIR EL VIDEO-->
 
+        <!--VAMOS A PONER UNA VISTA DE GALERÍA CON LOS ARCHIVOS QUE
+        TENEMOS SUBIDOS A MODO DE SIMULACIÓN DE LA GALERÍA DEL TELEFONO-->
+
+        <!--***********************************************************************-->
+        <!--***************************VISTA DE GALERIA****************************-->
+        <!--***********************************************************************-->
+        <div class="row containerMediaFilesFound">
+          <div class="containerInitialTextAndExit">
+            <p align="center" class="textToVideoTwiitBox">Selecciona una imagen
+              <span class="glyphicon glyphicon-remove"></span>
+            </p>
+          </div>
+          {{#each filesInDevice}}
+            <div class="col-xs-4 col-sm-4 containerMediaInDevice">
+              {{#if this.isImage}}
+                <img style="height: 120px" src="{{fileURL this}}" alt="{{this.name}}" />
+              {{else}}
+                {{#if this.isVideo}}
+                <video height="120px" controls="controls">
+                  <source src="{{fileURL this}}?play=true" type="{{this.type}}" />
+                </video>
+                {{/if}}
+              {{/if}}
+            </div>
+          {{else}}
+            NOT FOUND FILES
+          {{/each}}
+        </div>
+
+        <!--***********************************************************************-->
+        <!--***********************************************************************-->
+        <!--***********************************************************************-->
+
         <!--***********************************************************************-->
         <!--********************NAVBAR FIJA AL FONDO DE LA VISTA*******************-->
         <!--***********************************************************************-->
