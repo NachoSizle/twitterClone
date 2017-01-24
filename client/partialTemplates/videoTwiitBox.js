@@ -1,10 +1,13 @@
 Template.videoTwiitBox.onRendered(function(){
+  Meteor.subscribe('files');
   $('#dialog-VideoTwiit').height(window.innerHeight - 50);
   $('#btnSelectGalery').addClass('activeBtnModeVideoUpload');
 });
 
 Template.videoTwiitBox.events({
-
+  'click .textToVideoTwiitBox span' : function(event){
+    $('#dialog-VideoTwiit').modal('hide');
+  }
 });
 
 
@@ -17,14 +20,22 @@ Template.videoTwiitBox.helpers({
   },
 
   'filesInDevice' : function(){
-    var filesFound = Files.find().fetch();
-    console.log(filesFound);
+    var filesFound = [];
+    console.log('Searching files in device');
+    Meteor.call('searchFiles', function(err, res){
+      filesFound = res;
+      console.log(res);
+      Session.set('filesFound', res);
+    });
 
-    if(filesFound.length > 0){
-      console.log(Files.findOne({_id: filesFound[0]._id}).link());
-      return filesFound;
-    } else {
-      return false;
+    if(Session.get('filesFound')){
+      filesFound = Session.get('filesFound');
+      if(filesFound.length > 0){
+        return filesFound;
+      } else {
+        return false;
+      }
     }
+
   }
 });
