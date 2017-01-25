@@ -22,24 +22,25 @@ Files = new FilesCollection({                                                   
   onBeforeUpload: function () {                                                                                // 14
     function onBeforeUpload(file) {                                                                            // 14
       console.log('onBeforeUpload');                                                                           // 15
-      // Allow upload files under 10MB, and only in png/jpg/jpeg formats                                       // 16
-      if (file.size <= 10485760 && /png|jpg|jpeg|mp4/i.test(file.extension)) {                                 // 17
-        return true;                                                                                           // 18
-      } else {                                                                                                 // 19
-        return 'Please upload image, with size equal or less than 10MB';                                       // 20
-      }                                                                                                        // 21
-    }                                                                                                          // 22
+                                                                                                               //
+      // Allow upload files under 10MB, and only in png/jpg/jpeg formats                                       // 17
+      if (file.size <= 10485760 && /png|jpg|jpeg|mp4/i.test(file.extension)) {                                 // 18
+        return true;                                                                                           // 19
+      } else {                                                                                                 // 20
+        return 'Please upload image, with size equal or less than 10MB';                                       // 21
+      }                                                                                                        // 22
+    }                                                                                                          // 23
                                                                                                                //
     return onBeforeUpload;                                                                                     // 14
   }(),                                                                                                         // 14
-  onAfterupload: function () {                                                                                 // 23
-    function onAfterupload(file) {                                                                             // 23
-      console.log('onAfterupload');                                                                            // 24
-      console.log(file);                                                                                       // 25
-    }                                                                                                          // 26
+  onAfterupload: function () {                                                                                 // 24
+    function onAfterupload(file) {                                                                             // 24
+      console.log('onAfterupload');                                                                            // 25
+      console.log(file);                                                                                       // 26
+    }                                                                                                          // 27
                                                                                                                //
-    return onAfterupload;                                                                                      // 23
-  }()                                                                                                          // 23
+    return onAfterupload;                                                                                      // 24
+  }()                                                                                                          // 24
 });                                                                                                            // 11
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -52,215 +53,215 @@ Files = new FilesCollection({                                                   
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                //
 Router.configure({                                                                                             // 1
-	loadingTemplate: 'loading',                                                                                   // 2
-	notFoundTemplate: 'notFound'                                                                                  // 3
+		loadingTemplate: 'loading',                                                                                  // 2
+		notFoundTemplate: 'notFound'                                                                                 // 3
 });                                                                                                            // 1
                                                                                                                //
 Router.route('/', {                                                                                            // 6
-	name: 'userManagement',                                                                                       // 7
-	data: function () {                                                                                           // 8
-		function data() {                                                                                            // 8
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 9
-			$('#selectFileLbl').show();                                                                                 // 10
-			Session.set('pathActualApp', '/');                                                                          // 11
-		}                                                                                                            // 12
+		name: 'userManagement',                                                                                      // 7
+		data: function () {                                                                                          // 8
+				function data() {                                                                                          // 8
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 9
+						$('#selectFileLbl').show();                                                                              // 10
+						Session.set('pathActualApp', '/');                                                                       // 11
+				}                                                                                                          // 12
                                                                                                                //
-		return data;                                                                                                 // 8
-	}()                                                                                                           // 8
+				return data;                                                                                               // 8
+		}()                                                                                                          // 8
 });                                                                                                            // 6
 /*SE ACCEDE POR WINDOW.LOCATION*/                                                                              // 14
 Router.route('/whoToFollow', {                                                                                 // 15
-	name: 'followUsers',                                                                                          // 16
-	data: function () {                                                                                           // 17
-		function data() {                                                                                            // 17
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 18
-			$('#selectFileLbl').show();                                                                                 // 19
-		}                                                                                                            // 20
+		name: 'followUsers',                                                                                         // 16
+		data: function () {                                                                                          // 17
+				function data() {                                                                                          // 17
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 18
+						$('#selectFileLbl').show();                                                                              // 19
+				}                                                                                                          // 20
                                                                                                                //
-		return data;                                                                                                 // 17
-	}()                                                                                                           // 17
+				return data;                                                                                               // 17
+		}()                                                                                                          // 17
 });                                                                                                            // 15
 Router.route('/Profile/:username', {                                                                           // 22
-	name: 'userProfile',                                                                                          // 23
-	data: function () {                                                                                           // 24
-		function data() {                                                                                            // 24
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 25
-			$('#selectFileLbl').show();                                                                                 // 26
+		name: 'userProfile',                                                                                         // 23
+		data: function () {                                                                                          // 24
+				function data() {                                                                                          // 24
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 25
+						$('#selectFileLbl').show();                                                                              // 26
                                                                                                                //
-			var user = new Object();                                                                                    // 28
-			user.name = this.params.username;                                                                           // 29
+						var user = new Object();                                                                                 // 28
+						user.name = this.params.username;                                                                        // 29
                                                                                                                //
-			var currentUser = Session.get('currentUser');                                                               // 31
+						var currentUser = Session.get('currentUser');                                                            // 31
                                                                                                                //
-			Meteor.call('findUserData', user.name, function (err, res) {                                                // 33
-				Session.set('dataUserShowProfile', res);                                                                   // 34
-			});                                                                                                         // 35
+						Meteor.call('findUserData', user.name, function (err, res) {                                             // 33
+								Session.set('dataUserShowProfile', res);                                                               // 34
+						});                                                                                                      // 35
                                                                                                                //
-			dataUserShowProfile = Session.get('dataUserShowProfile');                                                   // 37
+						dataUserShowProfile = Session.get('dataUserShowProfile');                                                // 37
                                                                                                                //
-			if (dataUserShowProfile) {                                                                                  // 39
-				if (dataUserShowProfile.userNameProfile != currentUser) {                                                  // 40
-					Session.set('showProfileOtherUser', false);                                                               // 41
-				} else {                                                                                                   // 42
-					Session.set('showProfileOtherUser', true);                                                                // 43
-				}                                                                                                          // 44
-			}                                                                                                           // 45
+						if (dataUserShowProfile) {                                                                               // 39
+								if (dataUserShowProfile.userNameProfile != currentUser) {                                              // 40
+										Session.set('showProfileOtherUser', false);                                                          // 41
+								} else {                                                                                               // 42
+										Session.set('showProfileOtherUser', true);                                                           // 43
+								}                                                                                                      // 44
+						}                                                                                                        // 45
                                                                                                                //
-			Session.set('pathActualApp', "/Profile/" + this.params.username);                                           // 47
+						Session.set('pathActualApp', "/Profile/" + this.params.username);                                        // 47
                                                                                                                //
-			return user;                                                                                                // 49
-		}                                                                                                            // 50
+						return user;                                                                                             // 49
+				}                                                                                                          // 50
                                                                                                                //
-		return data;                                                                                                 // 24
-	}()                                                                                                           // 24
+				return data;                                                                                               // 24
+		}()                                                                                                          // 24
 });                                                                                                            // 22
 Router.route('/Notifications/:userName', {                                                                     // 52
-	name: 'twiitPageNew',                                                                                         // 53
-	data: function () {                                                                                           // 54
-		function data() {                                                                                            // 54
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 55
-			$('#selectFileLbl').show();                                                                                 // 56
+		name: 'twiitPageNew',                                                                                        // 53
+		data: function () {                                                                                          // 54
+				function data() {                                                                                          // 54
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 55
+						$('#selectFileLbl').show();                                                                              // 56
                                                                                                                //
-			var user = new Object();                                                                                    // 58
-			user.name = this.params.userName;                                                                           // 59
-			Session.set('pathActualApp', "/Notifications/" + this.params.username);                                     // 60
-			return user;                                                                                                // 61
-		}                                                                                                            // 62
+						var user = new Object();                                                                                 // 58
+						user.name = this.params.userName;                                                                        // 59
+						Session.set('pathActualApp', "/Notifications/" + this.params.username);                                  // 60
+						return user;                                                                                             // 61
+				}                                                                                                          // 62
                                                                                                                //
-		return data;                                                                                                 // 54
-	}()                                                                                                           // 54
+				return data;                                                                                               // 54
+		}()                                                                                                          // 54
 });                                                                                                            // 52
                                                                                                                //
 Router.route('/RequestWhatsApp/:userName', {                                                                   // 65
-	name: 'whatsAppRequestPage',                                                                                  // 66
-	data: function () {                                                                                           // 67
-		function data() {                                                                                            // 67
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 68
-			$('#selectFileLbl').show();                                                                                 // 69
+		name: 'whatsAppRequestPage',                                                                                 // 66
+		data: function () {                                                                                          // 67
+				function data() {                                                                                          // 67
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 68
+						$('#selectFileLbl').show();                                                                              // 69
                                                                                                                //
-			var user = new Object();                                                                                    // 71
-			user.name = this.params.userName;                                                                           // 72
-			Session.set('pathActualApp', "/RequestWhatsApp/" + this.params.username);                                   // 73
-			return user;                                                                                                // 74
-		}                                                                                                            // 75
+						var user = new Object();                                                                                 // 71
+						user.name = this.params.userName;                                                                        // 72
+						Session.set('pathActualApp', "/RequestWhatsApp/" + this.params.username);                                // 73
+						return user;                                                                                             // 74
+				}                                                                                                          // 75
                                                                                                                //
-		return data;                                                                                                 // 67
-	}()                                                                                                           // 67
+				return data;                                                                                               // 67
+		}()                                                                                                          // 67
 });                                                                                                            // 65
                                                                                                                //
 //Router.route('/Comments', {name: 'twiitCommentPage'});                                                       // 78
 /*SE ACCEDE POR PATHFOR*/                                                                                      // 79
 Router.route('/Comments/:_id', {                                                                               // 80
-	name: 'twiitCommentPage',                                                                                     // 81
-	data: function () {                                                                                           // 82
-		function data() {                                                                                            // 82
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 83
-			$('#selectFileLbl').show();                                                                                 // 84
+		name: 'twiitCommentPage',                                                                                    // 81
+		data: function () {                                                                                          // 82
+				function data() {                                                                                          // 82
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 83
+						$('#selectFileLbl').show();                                                                              // 84
                                                                                                                //
-			var mode = Session.get('notificationsModeOn');                                                              // 86
-			var idTwiit = new Object();                                                                                 // 87
-			idTwiit._id = this.params._id;                                                                              // 88
+						var mode = Session.get('notificationsModeOn');                                                           // 86
+						var idTwiit = new Object();                                                                              // 87
+						idTwiit._id = this.params._id;                                                                           // 88
                                                                                                                //
-			if (mode) {                                                                                                 // 90
-				idTwiit.mode = mode;                                                                                       // 91
-			}                                                                                                           // 92
+						if (mode) {                                                                                              // 90
+								idTwiit.mode = mode;                                                                                   // 91
+						}                                                                                                        // 92
                                                                                                                //
-			Session.set('pathActualApp', "/Comments/" + this.params.username);                                          // 94
+						Session.set('pathActualApp', "/Comments/" + this.params.username);                                       // 94
                                                                                                                //
-			return idTwiit;                                                                                             // 96
-		}                                                                                                            // 97
+						return idTwiit;                                                                                          // 96
+				}                                                                                                          // 97
                                                                                                                //
-		return data;                                                                                                 // 82
-	}()                                                                                                           // 82
+				return data;                                                                                               // 82
+		}()                                                                                                          // 82
 });                                                                                                            // 80
 Router.route('/twiits/:_id', {                                                                                 // 99
-	name: 'twiitPage',                                                                                            // 100
-	data: function () {                                                                                           // 101
-		function data() {                                                                                            // 101
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 102
-			$('#selectFileLbl').show();                                                                                 // 103
-			return this.params;                                                                                         // 104
-		}                                                                                                            // 105
+		name: 'twiitPage',                                                                                           // 100
+		data: function () {                                                                                          // 101
+				function data() {                                                                                          // 101
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 102
+						$('#selectFileLbl').show();                                                                              // 103
+						return this.params;                                                                                      // 104
+				}                                                                                                          // 105
                                                                                                                //
-		return data;                                                                                                 // 101
-	}()                                                                                                           // 101
+				return data;                                                                                               // 101
+		}()                                                                                                          // 101
 });                                                                                                            // 99
                                                                                                                //
 Router.route('/editProfile/:userName', {                                                                       // 108
-	name: 'editProfile',                                                                                          // 109
-	data: function () {                                                                                           // 110
-		function data() {                                                                                            // 110
-			ç;                                                                                                          // 110
-			$('#selectFileLbl').show();                                                                                 // 111
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 112
+		name: 'editProfile',                                                                                         // 109
+		data: function () {                                                                                          // 110
+				function data() {                                                                                          // 110
+						ç;                                                                                                       // 110
+						$('#selectFileLbl').show();                                                                              // 111
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 112
                                                                                                                //
-			Session.set('pathActualApp', "/editProfile/" + this.params.username);                                       // 114
-			return this.params.userName;                                                                                // 115
-		}                                                                                                            // 116
+						Session.set('pathActualApp', "/editProfile/" + this.params.username);                                    // 114
+						return this.params.userName;                                                                             // 115
+				}                                                                                                          // 116
                                                                                                                //
-		return data;                                                                                                 // 110
-	}()                                                                                                           // 110
+				return data;                                                                                               // 110
+		}()                                                                                                          // 110
 });                                                                                                            // 108
                                                                                                                //
 Router.route('/followAnts/:userName', {                                                                        // 119
-	name: 'followAnts',                                                                                           // 120
-	data: function () {                                                                                           // 121
-		function data() {                                                                                            // 121
-			$('#selectFileLbl').show();                                                                                 // 122
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 123
+		name: 'followAnts',                                                                                          // 120
+		data: function () {                                                                                          // 121
+				function data() {                                                                                          // 121
+						$('#selectFileLbl').show();                                                                              // 122
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 123
                                                                                                                //
-			var showData = new Object();                                                                                // 125
-			showData.user = this.params.userName;                                                                       // 126
-			showData.mode = true;                                                                                       // 127
-			Session.set('pathActualApp', "/followAnts/" + this.params.username);                                        // 128
-			return showData;                                                                                            // 129
-		}                                                                                                            // 130
+						var showData = new Object();                                                                             // 125
+						showData.user = this.params.userName;                                                                    // 126
+						showData.mode = true;                                                                                    // 127
+						Session.set('pathActualApp', "/followAnts/" + this.params.username);                                     // 128
+						return showData;                                                                                         // 129
+				}                                                                                                          // 130
                                                                                                                //
-		return data;                                                                                                 // 121
-	}()                                                                                                           // 121
+				return data;                                                                                               // 121
+		}()                                                                                                          // 121
 });                                                                                                            // 119
                                                                                                                //
 Router.route('/videoTrans', {                                                                                  // 133
-	name: 'videoTrans'                                                                                            // 134
+		name: 'videoTrans'                                                                                           // 134
 });                                                                                                            // 133
 Router.route('/ShowFiles', {                                                                                   // 136
-	name: 'showUploadFiles',                                                                                      // 137
-	data: function () {                                                                                           // 138
-		function data() {                                                                                            // 138
-			$('#selectFileLbl').show();                                                                                 // 139
-			$('#selectFileLbl').css('margin-bottom', '0px');                                                            // 140
-		}                                                                                                            // 141
+		name: 'showUploadFiles',                                                                                     // 137
+		data: function () {                                                                                          // 138
+				function data() {                                                                                          // 138
+						$('#selectFileLbl').show();                                                                              // 139
+						$('#selectFileLbl').css('margin-bottom', '0px');                                                         // 140
+				}                                                                                                          // 141
                                                                                                                //
-		return data;                                                                                                 // 138
-	}()                                                                                                           // 138
+				return data;                                                                                               // 138
+		}()                                                                                                          // 138
 });                                                                                                            // 136
                                                                                                                //
 Router.route('/Chats/', {                                                                                      // 145
-	name: 'conversationsMenu',                                                                                    // 146
-	data: function () {                                                                                           // 147
-		function data() {                                                                                            // 147
-			$('#selectFileLbl').hide();                                                                                 // 148
-			$('#selectFileLbl').css('margin-bottom', '50px');                                                           // 149
-		}                                                                                                            // 150
+		name: 'conversationsMenu',                                                                                   // 146
+		data: function () {                                                                                          // 147
+				function data() {                                                                                          // 147
+						$('#selectFileLbl').hide();                                                                              // 148
+						$('#selectFileLbl').css('margin-bottom', '50px');                                                        // 149
+				}                                                                                                          // 150
                                                                                                                //
-		return data;                                                                                                 // 147
-	}()                                                                                                           // 147
+				return data;                                                                                               // 147
+		}()                                                                                                          // 147
 });                                                                                                            // 145
                                                                                                                //
 Router.route('/Conversation/:username', {                                                                      // 153
-	name: 'showConver',                                                                                           // 154
-	data: function () {                                                                                           // 155
-		function data() {                                                                                            // 155
-			$('#selectFileLbl').hide();                                                                                 // 156
+		name: 'showConver',                                                                                          // 154
+		data: function () {                                                                                          // 155
+				function data() {                                                                                          // 155
+						$('#selectFileLbl').hide();                                                                              // 156
                                                                                                                //
-			var user = new Object();                                                                                    // 158
-			user.name = this.params.username;                                                                           // 159
+						var user = new Object();                                                                                 // 158
+						user.name = this.params.username;                                                                        // 159
                                                                                                                //
-			return user;                                                                                                // 161
-		}                                                                                                            // 162
+						return user;                                                                                             // 161
+				}                                                                                                          // 162
                                                                                                                //
-		return data;                                                                                                 // 155
-	}()                                                                                                           // 155
+				return data;                                                                                               // 155
+		}()                                                                                                          // 155
 });                                                                                                            // 153
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

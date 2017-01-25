@@ -186,8 +186,24 @@ Template.uploadFile.events({
     if (e.currentTarget.files && e.currentTarget.files[0]) {
       // We upload only one file, in case
       // multiple files were selected
+
+			var fileRead = e.currentTarget.files[0];
+			//HAY QUE REDIMENSIONAR LAS IMAGENES A TAMANIO 40x40
+			if(/png|jpg|jpeg|/i.test(fileRead.extension)){
+					var data = processImage(fileRead, 75, 75, function(data) {});
+					console.log('FileToImage');
+					console.log(data);
+
+					fileMod = new File([data], fileRead.name);
+					fileMod.type = "image/" + fileRead.extension;
+					console.log("fileMod");
+					console.log(fileMod);
+					console.log("fileRead");
+					console.log(fileRead);
+			}
+
       var upload = Files.insert({
-        file: e.currentTarget.files[0],
+        file: fileMod,
         streams: 'dynamic',
         chunkSize: 'dynamic'
       }, false);
@@ -196,6 +212,7 @@ Template.uploadFile.events({
       upload.on('start', function () {
 				/*HAY QUE ABRIR EL MODAL dialog-StateVideoUpload*/
 				console.log(this.file.name);
+
 				Session.set('modalStateVideoUploadContent', this.file.name);
 				$('#dialog-StateVideoUpload').modal();
         template.currentUpload.set(this);

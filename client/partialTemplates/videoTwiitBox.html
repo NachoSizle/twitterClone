@@ -1,7 +1,7 @@
 <template name="videoTwiitBox">
   <div class="tweetbox-container modalSelectVideoToUpload">
     <div class="panel panel-default videoTwiitBox col-md-6">
-      <div class="panel-body">
+      <div class="panel-body panel-body-modalSelectVideoToUpload">
 
         <!--AQUI HAY QUE AÑADIR AQUI EL CONTENIDO DEL MODAL DONDE IRAN LOS ARCHIVOS
         DE LA GALERIA O SE DARA LA OPCION AL USUARIO EL PODER UTILIZAR LA CAMARA
@@ -22,7 +22,7 @@
           {{#each filesInDevice}}
             <div class="col-xs-4 col-sm-4 containerMediaInDevice">
               {{#if this.isImage}}
-                <img style="height: 120px" src="{{fileURL this}}" alt="{{this.name}}" />
+                <img  src="{{fileURL this}}" alt="{{this.name}}" />
               {{else}}
                 {{#if this.isVideo}}
                 <video style="padding-left:0px" height="110px">

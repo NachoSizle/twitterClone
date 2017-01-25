@@ -11,30 +11,33 @@ Template.videoTwiitBox.events({
 
   'click #play-pause' : function(event){
     if ($('.containerMediaInDevice video')[0].paused === true) {
-      // Play the video
       $('.containerMediaInDevice video')[0].play();
-      // Update the button text to 'Pause'
       $("#play-pause").removeClass('glyphicon-play');
       $("#play-pause").addClass('glyphicon-pause');
-      console.log();
-      $(this)[0].hide();
-    } else if($(this).is(":visible")){
-      // Pause the video
+      $('#play-pause').animate({
+        opacity: 0
+      }, 1250);
+    } else if($('#play-pause').css("opacity") > 0){
       $('.containerMediaInDevice video')[0].pause();
-      // Update the button text to 'Play'
       $("#play-pause").removeClass('glyphicon-pause');
       $("#play-pause").addClass('glyphicon-play');
     } else {
-      $(this)[0].show();
+      $('#play-pause').animate({
+        opacity: 1
+      }, 1250);
     }
   },
 
   'mouseenter .containerMediaInDevice video' : function(event){
-    console.log("Enter");
+    $('#play-pause').animate({
+      opacity: 1
+    }, 1250);
   },
 
   'mouseleave .containerMediaInDevice video' : function(event){
-    console.log("Out");
+    $('#play-pause').animate({
+      opacity: 0
+    }, 1250);
   }
 });
 
