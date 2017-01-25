@@ -25,9 +25,13 @@
                 <img style="height: 120px" src="{{fileURL this}}" alt="{{this.name}}" />
               {{else}}
                 {{#if this.isVideo}}
-                <video height="120px" controls="controls">
+                <video style="padding-left:0px" height="110px">
                   <source src="{{fileURL this}}?play=true" type="{{this.type}}" />
                 </video>
+                <!-- Video Controls -->
+            		<div id="video-controls">
+            			<span id="play-pause" class="glyphicon glyphicon-play"></span>
+            		</div>
                 {{/if}}
               {{/if}}
             </div>
