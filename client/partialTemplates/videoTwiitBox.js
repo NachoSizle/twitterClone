@@ -16,6 +16,8 @@ Template.videoTwiitBox.events({
       // Update the button text to 'Pause'
       $("#play-pause").removeClass('glyphicon-play');
       $("#play-pause").addClass('glyphicon-pause');
+      console.log();
+      $(this)[0].hide();
     } else if($(this).is(":visible")){
       // Pause the video
       $('.containerMediaInDevice video')[0].pause();
@@ -23,6 +25,7 @@ Template.videoTwiitBox.events({
       $("#play-pause").removeClass('glyphicon-pause');
       $("#play-pause").addClass('glyphicon-play');
     } else {
+      $(this)[0].show();
     }
   },
 
