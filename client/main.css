@@ -771,8 +771,12 @@ form input:focus:required:invalid{
   padding: 0px;
 }
 
-.containerMediaInDevice img{
-  padding-left: 20px;
+.containerMediaInDevice video{
+  padding: 5px;
+  max-width:100%;
+  height:auto;
+  display:inline-block;
+  vertical-align:baseline;
 }
 
 .textToVideoTwiitBox{
@@ -790,8 +794,8 @@ form input:focus:required:invalid{
 
 /* ESTILOS DE LOS BOTONES DE REPRODUCCION PARA UN VIDEO*/
 #video-controls {
-	position: absolute;
-	top: 35%;
+	position: relative;
+	top: -72px;
 	left: 35%;
 	padding: 5px;
 }
@@ -806,4 +810,10 @@ form input:focus:required:invalid{
   background-color: #eeeeee;
   color: #424242;
   border-radius: 30px;
+}
+
+.msgNotMediaFound{
+  position: absolute;;
+  top: 35%;
+  left: 20%;
 }

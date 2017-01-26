@@ -2,47 +2,75 @@
   <div class="tweetbox-container modalSelectVideoToUpload">
     <div class="panel panel-default videoTwiitBox col-md-6">
       <div class="panel-body panel-body-modalSelectVideoToUpload">
+        <!--POR DEFECTO SE VA A MOSTRAR LA VISTA DE SELECCIONAR IMAGEN Y/O VIDEO
+         DESDE LA GALERIA DEL TELEFONO-->
+        {{#if modeSelectedToUploadMedia}}
+          <!--AQUI HAY QUE AÑADIR AQUI EL CONTENIDO DEL MODAL DONDE IRAN LOS ARCHIVOS
+          DE LA GALERIA O SE DARA LA OPCION AL USUARIO EL PODER UTILIZAR LA CAMARA
+          PARA SUBIR EL VIDEO-->
 
-        <!--AQUI HAY QUE AÑADIR AQUI EL CONTENIDO DEL MODAL DONDE IRAN LOS ARCHIVOS
-        DE LA GALERIA O SE DARA LA OPCION AL USUARIO EL PODER UTILIZAR LA CAMARA
-        PARA SUBIR EL VIDEO-->
+          <!--VAMOS A PONER UNA VISTA DE GALERÍA CON LOS ARCHIVOS QUE
+          TENEMOS SUBIDOS A MODO DE SIMULACIÓN DE LA GALERÍA DEL TELEFONO-->
 
-        <!--VAMOS A PONER UNA VISTA DE GALERÍA CON LOS ARCHIVOS QUE
-        TENEMOS SUBIDOS A MODO DE SIMULACIÓN DE LA GALERÍA DEL TELEFONO-->
-
-        <!--***********************************************************************-->
-        <!--***************************VISTA DE GALERIA****************************-->
-        <!--***********************************************************************-->
+          <!--***********************************************************************-->
+          <!--***************************VISTA DE GALERIA****************************-->
+          <!--***********************************************************************-->
+          <div class="row containerMediaFilesFound">
+            <div class="containerInitialTextAndExit">
+              <p align="center" class="textToVideoTwiitBox">Selecciona una imagen
+                <span class="glyphicon glyphicon-remove"></span>
+              </p>
+            </div>
+            {{#each filesInDevice}}
+              <div class="col-xs-4 col-sm-4 containerMediaInDevice">
+                {{#if this.isImage}}
+                  <img class="img-responsive" src="{{fileURL this}}" alt="{{this.name}}" />
+                {{else}}
+                  {{#if this.isVideo}}
+                  <video height="110px">
+                    <source src="{{fileURL this}}?play=true" type="{{this.type}}" />
+                  </video>
+                  <!-- Video Controls -->
+                  <div id="video-controls">
+                    <span id="play-pause" class="glyphicon glyphicon-play"></span>
+                  </div>
+                  {{/if}}
+                {{/if}}
+              </div>
+            {{else}}
+              <div class="msgNotMediaFound">
+                <p align="center" class="textToVideoTwiitBox">
+                  No hay ninguna foto en la galería.
+                </p>
+                <br/>
+                <p align="center" class="textToVideoTwiitBox">
+                  Usa la cámara
+                </p>
+              </div>
+            {{/each}}
+          </div>
+          <!--***********************************************************************-->
+          <!--***********************************************************************-->
+          <!--***********************************************************************-->
+      {{else}}
+        <!--SI EL USUARIO PINCHA EN EL BOTON btnSelectCamera DE LA NAVBAR navBarSelectMode
+        SE MOSTRARA LO QUE SE VERIA EN LA CAMARA-->
         <div class="row containerMediaFilesFound">
           <div class="containerInitialTextAndExit">
-            <p align="center" class="textToVideoTwiitBox">Selecciona una imagen
               <span class="glyphicon glyphicon-remove"></span>
-            </p>
           </div>
-          {{#each filesInDevice}}
-            <div class="col-xs-4 col-sm-4 containerMediaInDevice">
-              {{#if this.isImage}}
-                <img  src="{{fileURL this}}" alt="{{this.name}}" />
-              {{else}}
-                {{#if this.isVideo}}
-                <video style="padding-left:0px" height="110px">
-                  <source src="{{fileURL this}}?play=true" type="{{this.type}}" />
-                </video>
-                <!-- Video Controls -->
-            		<div id="video-controls">
-            			<span id="play-pause" class="glyphicon glyphicon-play"></span>
-            		</div>
-                {{/if}}
-              {{/if}}
-            </div>
+          {{#if accessToCamera}}
+            <!--SI PODEMOS ACCEDER A LA CAMARA DEL DISPOSITIVO, PLANTARIAMOS LA
+            IMAGEN QUE SE RECOJE AQUI-->
           {{else}}
-            NOT FOUND FILES
-          {{/each}}
+            <div class="msgNotMediaFound">
+              <p align="center" class="textToVideoTwiitBox">
+                No se puede acceder a la camara.
+              </p>
+            </div>
+          {{/if}}
         </div>
-
-        <!--***********************************************************************-->
-        <!--***********************************************************************-->
-        <!--***********************************************************************-->
+      {{/if}}
 
         <!--***********************************************************************-->
         <!--********************NAVBAR FIJA AL FONDO DE LA VISTA*******************-->

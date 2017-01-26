@@ -188,53 +188,61 @@ Template.uploadFile.events({
       // multiple files were selected
 
 			var fileRead = e.currentTarget.files[0];
-			//HAY QUE REDIMENSIONAR LAS IMAGENES A TAMANIO 40x40
-			if(/png|jpg|jpeg|/i.test(fileRead.extension)){
-					var data = processImage(fileRead, 75, 75, function(data) {});
-					console.log('FileToImage');
-					console.log(data);
-
-					fileMod = new File([data], fileRead.name);
-					fileMod.type = "image/" + fileRead.extension;
-					console.log("fileMod");
-					console.log(fileMod);
-					console.log("fileRead");
-					console.log(fileRead);
-			}
-
-      var upload = Files.insert({
-        file: fileMod,
-        streams: 'dynamic',
-        chunkSize: 'dynamic'
-      }, false);
+			var upload = Files.insert({
+				file: fileRead,
+				streams: 'dynamic',
+				chunkSize: 'dynamic'
+			}, false);
 
 			/*++++++++++CUANDO EMPIEZA LA SUBIDA DEL ARCHIVO++++++++++*/
-      upload.on('start', function () {
+			upload.on('start', function () {
 				/*HAY QUE ABRIR EL MODAL dialog-StateVideoUpload*/
 				console.log(this.file.name);
 
 				Session.set('modalStateVideoUploadContent', this.file.name);
 				$('#dialog-StateVideoUpload').modal();
-        template.currentUpload.set(this);
-      });
+				template.currentUpload.set(this);
+			});
 
 			/*++++++++++CUANDO ACABA LA SUBIDA DEL ARCHIVO++++++++++++*/
-      upload.on('end', function (error, fileObj) {
-				/*
-        if (error) {
-          alert('Error during upload: ' + error);
-        } else {
-          alert('File "' + fileObj.name + '" successfully uploaded');
-        }
-				*/
+			upload.on('end', function (error, fileObj) {
+				if (error) {
+					alert('Error during upload: ' + error);
+				} else {
+					//alert('File "' + fileObj.name + '" successfully uploaded');
+				}
 				/*INFORMAMOS AL USUARIO DE QUE SE HA SUBIDO EL ARCHIVO*/
 				$('#dialog-StateVideoUpload').find('div .panel-body').empty();
 				$('#dialog-StateVideoUpload').find('div .panel-body').append("Upload: " + fileObj.name + "<span class='glyphicon glyphicon-ok' style='color: #4caf50'></span>");
 
 				template.currentUpload.set(false);
-      });
+			});
 
-      upload.start();
+			upload.start();
+
+			/*
+			console.log("fileRead antes de modificacion");
+			console.log(fileRead);
+
+			//HAY QUE REDIMENSIONAR LAS IMAGENES A TAMANIO 75x75 ANTES DE SER SUBIDAS
+			if(/png|jpg|jpeg|/i.test(fileRead.extension)){
+				var imageProcessed = processImage(fileRead, 75, 75, function(data) {
+					Session.set('newFileMod', data);
+					return newFileMod;
+				});
+				setTimeout(imageProcessed, 1000);
+			}
+
+			if(Session.get('newFileMod')){
+				var fileMod = Session.get('newFileMod');
+				console.log(fileMod);
+				var newFileMod = new File([fileMod], fileRead.name, {type: fileRead.type});
+
+				console.log("FileMod start upload");
+				console.log(newFileMod);
+				//ADJUNTAR EL CODIGO DE MAS ABAJO PARA HACER EL UPLOAD
+			}
+			****************************/
     }
   }
 });

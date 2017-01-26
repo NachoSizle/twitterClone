@@ -2,10 +2,11 @@ Template.videoTwiitBox.onRendered(function(){
   Meteor.subscribe('files');
   $('#dialog-VideoTwiit').height(window.innerHeight - 50);
   $('#btnSelectGalery').addClass('activeBtnModeVideoUpload');
+  Session.set('modeSelectedToUploadMedia', true);
 });
 
 Template.videoTwiitBox.events({
-  'click .textToVideoTwiitBox span' : function(event){
+  'click .containerInitialTextAndExit span' : function(event){
     $('#dialog-VideoTwiit').modal('hide');
   },
 
@@ -38,6 +39,19 @@ Template.videoTwiitBox.events({
     $('#play-pause').animate({
       opacity: 0
     }, 1250);
+  },
+
+  /*PARA MOSTRAR LA GALERIA DE IMAGENES*/
+  'click #btnSelectGalery': function(event){
+    Session.set('modeSelectedToUploadMedia', true);
+    $('#btnSelectGalery').addClass('activeBtnModeVideoUpload');
+    $('#btnSelectCamera').removeClass('activeBtnModeVideoUpload');
+  },
+  /*PARA ACCEDER A LA CAMARA*/
+  'click #btnSelectCamera': function(event){
+    Session.set('modeSelectedToUploadMedia', false);
+    $('#btnSelectCamera').addClass('activeBtnModeVideoUpload');
+    $('#btnSelectGalery').removeClass('activeBtnModeVideoUpload');
   }
 });
 
@@ -68,4 +82,8 @@ Template.videoTwiitBox.helpers({
         }
       };
    },
+
+   'modeSelectedToUploadMedia' : function() {
+     return Session.get('modeSelectedToUploadMedia');
+   }
 });
