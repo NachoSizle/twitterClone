@@ -263,6 +263,30 @@ Router.route('/Conversation/:username', {                                       
 				return data;                                                                                               // 155
 		}()                                                                                                          // 155
 });                                                                                                            // 153
+                                                                                                               //
+Router.route('/download-data', function () {                                                                   // 165
+		var data = DataUser.find().fetch();                                                                          // 166
+		var fields = [{                                                                                              // 167
+				key: 'userId',                                                                                             // 169
+				title: 'IDUser'                                                                                            // 170
+		}, {                                                                                                         // 168
+				key: 'userNameProfile',                                                                                    // 173
+				title: 'Username'                                                                                          // 174
+		}, {                                                                                                         // 172
+				key: 'userName',                                                                                           // 177
+				title: 'Name'                                                                                              // 178
+		}];                                                                                                          // 176
+                                                                                                               //
+		var title = 'DataUsers';                                                                                     // 182
+		var file = Excel['export'](title, fields, data);                                                             // 183
+		var headers = {                                                                                              // 184
+				'Content-type': 'application/vnd.openxmlformats',                                                          // 185
+				'Content-Disposition': 'attachment; filename=' + title + '.xlsx'                                           // 186
+		};                                                                                                           // 184
+                                                                                                               //
+		this.response.writeHead(200, headers);                                                                       // 189
+		this.response.end(file, 'binary');                                                                           // 190
+}, { where: 'server' });                                                                                       // 191
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 },"userUtils.js":function(){
@@ -1162,6 +1186,7 @@ Meteor.methods({                                                                
                                                                                                                //
     return searchThisFile;                                                                                     // 27
   }()                                                                                                          // 27
+                                                                                                               //
 });                                                                                                            // 1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

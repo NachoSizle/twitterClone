@@ -73,8 +73,9 @@ Template.videoTwiitBox.helpers({
         Session.set('filesFound', res);
       });
 
-      if(Session.get('filesFound')){
-        filesFound = Session.get('filesFound');
+      var filesFound = Session.get('filesFound');
+
+      if(filesFound){
         if(filesFound.length > 0){
           return filesFound;
         } else {

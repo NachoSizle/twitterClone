@@ -210,11 +210,16 @@ Template.uploadFile.events({
 					alert('Error during upload: ' + error);
 				} else {
 					//alert('File "' + fileObj.name + '" successfully uploaded');
-				}
-				/*INFORMAMOS AL USUARIO DE QUE SE HA SUBIDO EL ARCHIVO*/
-				$('#dialog-StateVideoUpload').find('div .panel-body').empty();
-				$('#dialog-StateVideoUpload').find('div .panel-body').append("Upload: " + fileObj.name + "<span class='glyphicon glyphicon-ok' style='color: #4caf50'></span>");
+					/*INFORMAMOS AL USUARIO DE QUE SE HA SUBIDO EL ARCHIVO*/
+					$('#dialog-StateVideoUpload').find('div .panel-body').empty();
+					$('#dialog-StateVideoUpload').find('div .panel-body').append("Upload: " + fileObj.name + "<span class='glyphicon glyphicon-ok' style='color: #4caf50'></span>");
 
+					Meteor.call('searchFiles', function(err, res){
+						filesFound = res;
+						console.log(res);
+						Session.set('filesFound', res);
+					});
+				}
 				template.currentUpload.set(false);
 			});
 

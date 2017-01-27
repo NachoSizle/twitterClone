@@ -30,5 +30,6 @@ Meteor.methods({
       var fileFound = Files.findOne({_id : idFile}).fetch();
       return fileFound;
     }
-  }
+  },
+
 });
